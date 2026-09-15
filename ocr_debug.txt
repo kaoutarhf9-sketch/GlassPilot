@@ -1,0 +1,19 @@
+Document généré à des fins de test technique uniquement — pas un document officiel.
+SPECIMEN - TEST
+GRIS
+Couleur du véhicule
+1650 kg                                                                      1180 kg
+F.2 - Poids en charge                                                                                G - Poids à vide
+M1                                                                              ESSENCE
+J - Catégorie du véhicule                                                                           P.3 - Carburant
+VF3TESTVIN0001234
+E - N° d'identification (VIN)
+PEUGEOT                                                                  208 STYLE
+D.1 - Marque                                                                                              D.3 - Dénomination commerciale
+MARTIN Jean                                                            12 Rue des Tests, 75001 Paris
+C.1 - Titulaire                                                                                             C.3 - Adresse
+AA-123-BB                                                                 05/06/2019
+A - N° d'immatriculation                                                                             B - Date de 1ère immatriculation
+Ceci est un document de TEST genere pour verification OCR. Aucune valeur legale.
+CERTIFICAT D'IMMATRICULATION - DOCUMENT SPECIMEN
+----------------Page (0) Break----------------
