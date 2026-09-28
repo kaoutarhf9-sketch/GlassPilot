@@ -131,12 +131,20 @@ export async function POST(req) {
       }
     }
 
-    const actionLink = linkData?.properties?.action_link || linkData?.action_link;
+    let actionLink = linkData?.properties?.action_link || linkData?.action_link;
     if (!actionLink) {
       return NextResponse.json(
         { error: "Impossible de générer le lien de confirmation." },
         { status: 500 }
       );
+    }
+    
+    // CORRECTION BUG VERCEL: Supabase génère parfois le lien avec le Site URL par défaut (localhost:3000)
+    // On force l'utilisation du vrai domaine (origin) si on n'est pas en local
+    if (origin && !origin.includes("localhost")) {
+      actionLink = actionLink.replace("http://localhost:3000", origin);
+      // Au cas où Supabase génère l'URL avec un autre host local
+      actionLink = actionLink.replace("http://127.0.0.1:3000", origin);
     }
 
     // 5. Envoyer l'email via Gmail SMTP avec Nodemailer
