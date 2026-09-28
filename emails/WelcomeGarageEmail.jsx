@@ -50,7 +50,7 @@ export default function WelcomeGarageEmail({
           </Text>
 
           <Section style={buttonContainer}>
-            <Link href="https://votredomaine.com" style={button}>
+            <Link href="https://glass-pilot-894m.vercel.app/connexion" style={button}>
               Activer mon espace Pro
             </Link>
           </Section>

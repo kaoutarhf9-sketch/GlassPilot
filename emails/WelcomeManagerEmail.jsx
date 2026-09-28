@@ -46,7 +46,7 @@ export default function WelcomeManagerEmail({
           </Text>
 
           <Section style={buttonContainer}>
-            <Link href="https://votredomaine.com" style={button}>
+            <Link href="https://glass-pilot-894m.vercel.app/connexion" style={button}>
               Se connecter à mon espace
             </Link>
           </Section>
