@@ -37,6 +37,15 @@ export default function ConfirmSignupEmail({
               Confirmer mon adresse email
             </Link>
           </Section>
+          
+          <Text style={textSecondary}>
+            Si le bouton ne s'affiche pas ou ne fonctionne pas, vous pouvez copier et coller ce lien complet dans votre navigateur :
+            <br />
+            <br />
+            <Link href={confirmLink} style={{ color: '#1454FF', wordBreak: 'break-all' }}>
+              {confirmLink}
+            </Link>
+          </Text>
 
           <Text style={textSecondary}>
             Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail en toute sécurité.
