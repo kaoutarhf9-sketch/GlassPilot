@@ -56,7 +56,7 @@ export async function POST(req) {
     );
 
     // 4. Générer le lien de confirmation de type 'signup'
-    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_APP_URL || "https://glass-pilot-894m.vercel.app";
     
     const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
       type: 'signup',
@@ -141,10 +141,10 @@ export async function POST(req) {
     
     // CORRECTION BUG VERCEL: Supabase génère parfois le lien avec le Site URL par défaut (localhost:3000)
     // On force l'utilisation du vrai domaine (origin) si on n'est pas en local
+    const siteUrl = "https://glass-pilot-894m.vercel.app";
     if (origin && !origin.includes("localhost")) {
-      actionLink = actionLink.replace("http://localhost:3000", origin);
-      // Au cas où Supabase génère l'URL avec un autre host local
-      actionLink = actionLink.replace("http://127.0.0.1:3000", origin);
+      actionLink = actionLink.replace("http://localhost:3000", siteUrl);
+      actionLink = actionLink.replace("http://127.0.0.1:3000", siteUrl);
     }
 
     // 5. Envoyer l'email via Gmail SMTP avec Nodemailer
