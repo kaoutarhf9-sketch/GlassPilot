@@ -858,6 +858,7 @@ Gestionnaire administratif du garage ${garageNom}
             <ArrowLeft size={18} />
           </Link>
           <div>
+            <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold text-[var(--ink)] flex items-center gap-3 flex-wrap">
                 Dossier {dossier?.numero}
                 {formData.type === 'prestige' ? (
