@@ -54,7 +54,7 @@ export async function POST(request) {
     }
 
     const clientNom = `${dossier.clients?.prenom || ''} ${dossier.clients?.nom || ''}`.trim() || 'Sociétaire Inconnu';
-    const garageNom = dossier.garages?.nom_garage || 'GlassPilot';
+    const garageNom = dossier.garages?.nom_garage || 'GLASS PILOT GESTION';
     const immat = dossier.immatriculation || 'Non renseignée';
     const numSinistre = dossier.num_sinistre || 'En attente';
     const typeVitrage = dossier.type_vitrage || 'Vitrage';

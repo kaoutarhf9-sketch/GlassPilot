@@ -531,7 +531,7 @@ Référence sinistre : ${numSinistre}
 Dans l’attente du traitement, nous vous souhaitons bonne réception.
 
 Cordialement,
-GlassPilot
+GLASS PILOT GESTION
 Gestionnaire administratif du garage ${garageNom}
 07 56 99 35 83`);
 
