@@ -858,20 +858,29 @@ Gestionnaire administratif du garage ${garageNom}
             <ArrowLeft size={18} />
           </Link>
           <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-[var(--ink)] flex items-center gap-3 flex-wrap">
-                Dossier {dossier?.numero}
-                {formData.type === 'prestige' ? (
-                  <span className="px-2.5 py-1 text-xs font-black tracking-widest text-amber-900 bg-gradient-to-r from-amber-200 to-yellow-400 rounded-lg shadow-sm border border-yellow-500/30">PRESTIGE</span>
-                ) : (
-                  <span className="px-2.5 py-1 text-xs font-black tracking-widest text-slate-700 bg-slate-100 rounded-lg border border-slate-200">SIMPLE</span>
-                )}
-                <span className="text-sm font-bold text-[var(--blue)] bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 ml-2 flex items-center gap-2 shadow-sm">
-                  <Building2 size={16} />
-                  {dossier?.garages?.nom_garage || 'Aucun garage assigné'}
-                </span>
-              </h1>
-            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h1 className="text-2xl font-bold text-[var(--ink)]">
+                  Dossier {dossier?.numero}
+                </h1>
+                
+                <div className="flex items-center gap-2">
+                  {formData.type === 'prestige' ? (
+                    <span className="px-2.5 py-1 text-[11px] font-black tracking-widest text-amber-900 bg-gradient-to-r from-amber-200 to-yellow-400 rounded-lg shadow-sm border border-yellow-500/30">
+                      PRESTIGE
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 text-[11px] font-black tracking-widest text-slate-700 bg-slate-100 rounded-lg border border-slate-200">
+                      SIMPLE
+                    </span>
+                  )}
+                  
+                  <span className="px-2.5 py-1 text-xs font-bold text-[var(--blue)] bg-blue-50 rounded-lg border border-blue-100 flex items-center gap-1.5 shadow-sm">
+                    <Building2 size={12} />
+                    {dossier?.garages?.nom_garage || 'Aucun garage assigné'}
+                  </span>
+                </div>
+              </div>
             <p className="text-sm text-slate-500 mt-0.5 flex items-center gap-1.5">
               <Calendar size={14} /> Créé le {new Date(dossier?.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
             </p>
