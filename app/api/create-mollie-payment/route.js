@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createMollieClient } from '@mollie/api-client';
 
-const mollieClient = createMollieClient({ apiKey: process.env.MOLLIE_API_KEY });
-
 export async function POST(request) {
   try {
+    const mollieClient = createMollieClient({ apiKey: process.env.MOLLIE_API_KEY });
     const { forfait, garageId, garageName, userEmail, consent, consentDate } = await request.json();
 
     // Vérification RGPD obligatoire

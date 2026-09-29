@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { createMollieClient } from '@mollie/api-client';
 import { createClient } from '@supabase/supabase-js';
 
-const mollieClient = createMollieClient({ apiKey: process.env.MOLLIE_API_KEY });
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -10,6 +9,7 @@ const supabase = createClient(
 
 export async function POST(request) {
   try {
+    const mollieClient = createMollieClient({ apiKey: process.env.MOLLIE_API_KEY });
     // Le webhook de Mollie envoie l'ID du paiement dans le body en urlencoded ou json
     // Mollie envoie form-urlencoded by default (id=tr_xxx)
     const text = await request.text();
