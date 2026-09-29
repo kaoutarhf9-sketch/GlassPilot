@@ -246,13 +246,13 @@ export default function ProfilPage() {
             </button>
           </nav>
 
-          <div className="mt-8 bg-gradient-to-r from-[#F0F5FF] to-white rounded-2xl border border-[var(--stone)] p-5">
+          <div className="mt-8 bg-gradient-to-r from-[#F0F5FF] to-white rounded-2xl border border-slate-200 p-5 shadow-sm">
             <div className="flex items-center gap-3 mb-3">
               <Award size={16} className="text-[#1454FF]" />
-              <h2 className="text-sm font-semibold text-[var(--ink)]">Jetons GlassPilot</h2>
+              <h2 className="text-sm font-semibold text-slate-900">Jetons GlassPilot</h2>
             </div>
-            <p className="text-xs text-[var(--muted)] mb-4">Gérez vos crédits pour soumettre des dossiers.</p>
-            <Link href="/dashboard/abonnement" className="text-xs font-medium text-[#1454FF] flex items-center gap-1 hover:underline">
+            <p className="text-xs text-slate-600 mb-4 leading-relaxed">Gérez vos crédits pour soumettre des dossiers.</p>
+            <Link href="/dashboard/abonnement" className="inline-flex text-xs font-medium text-[#1454FF] items-center gap-1 hover:underline bg-[#1454FF]/5 px-3 py-1.5 rounded-lg transition-colors">
               Voir mon solde <ArrowRight size={12} />
             </Link>
           </div>
