@@ -23,8 +23,19 @@ export async function POST(request) {
     // Description du produit
     const description = `${forfait.quantite} jeton${forfait.quantite > 1 ? 's' : ''} ${forfait.type === 'simple' ? 'Simple' : 'Prestige'}`;
 
-    // L'URL de notre application
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+    // Détermination dynamique de l'URL
+    let appUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!appUrl) {
+      // Sur Vercel, VERCEL_URL est automatiquement défini (sans https://)
+      appUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    }
+
+    // Mollie rejette catégoriquement les webhooks pointant vers localhost
+    let webhookUrl = `${appUrl}/api/mollie-webhook`;
+    if (webhookUrl.includes('localhost')) {
+      // En développement local, on met une URL publique bidon juste pour que Mollie accepte de créer le paiement
+      webhookUrl = 'https://glasspilot.vercel.app/api/mollie-webhook';
+    }
 
     // Création du paiement Mollie
     const payment = await mollieClient.payments.create({
@@ -34,7 +45,7 @@ export async function POST(request) {
       },
       description: description,
       redirectUrl: `${appUrl}/dashboard/abonnement?success=true`,
-      webhookUrl: `${appUrl}/api/mollie-webhook`,
+      webhookUrl: webhookUrl,
       metadata: {
         garage_id: garageId,
         garage_name: garageName,
