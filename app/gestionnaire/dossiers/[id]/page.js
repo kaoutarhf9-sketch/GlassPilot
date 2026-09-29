@@ -1026,69 +1026,20 @@ Gestionnaire administratif du garage ${garageNom}
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* SEPARATEUR VEHICULE */}
-              <div className="pt-6 mt-6 border-t border-slate-100">
-                <h3 className="text-sm font-bold text-[var(--ink)] mb-4 flex items-center gap-2">
-                  <Car size={16} className="text-[var(--blue)]" /> Véhicule et Jeton
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de jeton utilisé</label>
-                    <select
-                      value={formData.type}
-                      onChange={(e) => setFormData({...formData, type: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    >
-                      <option value="simple">Simple</option>
-                      <option value="prestige">Prestige</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Immatriculation</label>
-                    <input
-                      type="text"
-                      value={formData.immatriculation}
-                      onChange={(e) => setFormData({...formData, immatriculation: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Modèle du véhicule</label>
-                    <input
-                      type="text"
-                      value={formData.modele_vehicule}
-                      onChange={(e) => setFormData({...formData, modele_vehicule: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Kilométrage</label>
-                    <input
-                      type="number"
-                      value={formData.kilometrage}
-                      onChange={(e) => setFormData({...formData, kilometrage: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    />
-                  </div>
-                  <div className="sm:col-span-2">
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de vitrage</label>
-                    <input
-                      type="text"
-                      value={formData.type_vitrage}
-                      onChange={(e) => setFormData({...formData, type_vitrage: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    />
-                  </div>
-                </div>
+          {/* CARTE CLIENT */}
+          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
+                <User size={16} className="text-indigo-600" />
               </div>
-
-              {/* SEPARATEUR CLIENT */}
-              <div className="pt-6 mt-6 border-t border-slate-100">
-                <h3 className="text-sm font-bold text-[var(--ink)] mb-4 flex items-center gap-2">
-                  <User size={16} className="text-[var(--blue)]" /> Coordonnées Client
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <h2 className="text-lg font-bold text-[var(--ink)]">Coordonnées Client</h2>
+            </div>
+            
+            <div className="p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Prénom</label>
                     <input
@@ -1152,8 +1103,72 @@ Gestionnaire administratif du garage ${garageNom}
                       className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
-                </div>
               </div>
+            </div>
+          </div>
+
+          {/* CARTE VEHICULE ET JETON */}
+          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center">
+                <Car size={16} className="text-teal-600" />
+              </div>
+              <h2 className="text-lg font-bold text-[var(--ink)]">Véhicule et Jeton</h2>
+            </div>
+            
+            <div className="p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de jeton utilisé</label>
+                    <select
+                      value={formData.type}
+                      onChange={(e) => setFormData({...formData, type: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    >
+                      <option value="simple">Simple</option>
+                      <option value="prestige">Prestige</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Immatriculation</label>
+                    <input
+                      type="text"
+                      value={formData.immatriculation}
+                      onChange={(e) => setFormData({...formData, immatriculation: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Modèle du véhicule</label>
+                    <input
+                      type="text"
+                      value={formData.modele_vehicule}
+                      onChange={(e) => setFormData({...formData, modele_vehicule: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Kilométrage</label>
+                    <input
+                      type="number"
+                      value={formData.kilometrage}
+                      onChange={(e) => setFormData({...formData, kilometrage: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de vitrage</label>
+                    <input
+                      type="text"
+                      value={formData.type_vitrage}
+                      onChange={(e) => setFormData({...formData, type_vitrage: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+              </div>
+            </div>
+          </div>
+
 
               <div className="pt-2 border-t border-slate-100">
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Note (Commentaire interne)</label>
