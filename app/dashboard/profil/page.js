@@ -246,15 +246,22 @@ export default function ProfilPage() {
             </button>
           </nav>
 
-          <div className="mt-8 bg-gradient-to-r from-[#F0F5FF] to-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-            <div className="flex items-center gap-3 mb-3">
-              <Award size={16} className="text-[#1454FF]" />
-              <h2 className="text-sm font-semibold text-slate-900">Jetons GlassPilot</h2>
+          <div className="mt-8 relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1454FF] to-[#0ea5e9] p-6 shadow-lg shadow-blue-500/20 text-white">
+            <div className="absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/10 shadow-sm">
+                  <Award size={16} className="text-white" />
+                </div>
+                <h2 className="text-sm font-bold text-white tracking-wide">JETONS GLASSPILOT</h2>
+              </div>
+              <p className="text-xs text-blue-100 mb-5 leading-relaxed font-light">Gérez vos crédits pour soumettre vos dossiers d'assurance.</p>
+              <Link href="/dashboard/abonnement" className="inline-flex text-xs font-semibold text-[#1454FF] items-center gap-2 bg-white hover:bg-blue-50 px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow group">
+                Voir mon solde <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
-            <p className="text-xs text-slate-600 mb-4 leading-relaxed">Gérez vos crédits pour soumettre des dossiers.</p>
-            <Link href="/dashboard/abonnement" className="inline-flex text-xs font-medium text-[#1454FF] items-center gap-1 hover:underline bg-[#1454FF]/5 px-3 py-1.5 rounded-lg transition-colors">
-              Voir mon solde <ArrowRight size={12} />
-            </Link>
           </div>
         </div>
 
