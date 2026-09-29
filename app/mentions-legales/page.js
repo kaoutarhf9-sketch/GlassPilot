@@ -56,17 +56,17 @@ export default function MentionsLegales() {
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <CreditCard size={20} className="text-[#1454FF]" />
-                <h2 className="text-xl font-semibold text-[#18170F]">3. Paiements sécurisés (Stripe)</h2>
+                <h2 className="text-xl font-semibold text-[#18170F]">3. Paiements sécurisés (Mollie)</h2>
               </div>
               <div className="bg-[#FAFAF8] rounded-xl p-5 text-[#89867A] text-sm space-y-3">
-                <p>Les paiements sont traités par <strong className="text-[#18170F]">Stripe</strong>, prestataire de services de paiement agréé.</p>
+                <p>Les paiements sont traités par <strong className="text-[#18170F]">Mollie</strong>, prestataire de services de paiement agréé.</p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Certification PCI DSS Level 1 (le plus haut niveau de sécurité)</li>
                   <li>Conforme au RGPD et au Privacy Shield</li>
                   <li>Aucune donnée bancaire n'est stockée sur nos serveurs</li>
                   <li>Les informations de carte sont chiffrées et tokenisées</li>
                 </ul>
-                <p className="mt-3">Pour en savoir plus : <a href="https://stripe.com/fr/privacy" target="_blank" rel="noopener noreferrer" className="text-[#1454FF] underline">Politique de confidentialité Stripe</a></p>
+                <p className="mt-3">Pour en savoir plus : <a href="https://www.mollie.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#1454FF] underline">Politique de confidentialité Mollie</a></p>
               </div>
             </section>
 
@@ -98,7 +98,7 @@ export default function MentionsLegales() {
               <div className="bg-[#FAFAF8] rounded-xl p-5 text-[#89867A] text-sm space-y-2">
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Gestion de votre compte professionnel</li>
-                  <li>Traitement des paiements (via Stripe)</li>
+                  <li>Traitement des paiements (via Mollie)</li>
                   <li>Gestion des jetons et des dossiers</li>
                   <li>Envoi des factures et reçus</li>
                   <li>Amélioration de nos services (analytics anonymisés)</li>
@@ -152,7 +152,7 @@ export default function MentionsLegales() {
                 <p>Notre site utilise uniquement :</p>
                 <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
                   <li>Cookies techniques (authentification, panier)</li>
-                  <li>Cookies de session Stripe (paiement sécurisé)</li>
+                  <li>Cookies de session Mollie (paiement sécurisé)</li>
                   <li>Cookies d'analyse anonymisés (amélioration du service)</li>
                 </ul>
                 <p className="mt-3">Aucun cookie publicitaire n'est utilisé.</p>

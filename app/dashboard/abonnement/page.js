@@ -49,8 +49,11 @@ function AbonnementContent() {
       setActiveTab(typeParam);
     }
 
-    if (successParam === 'true' && sessionId) {
-      verifyAndRefresh(sessionId);
+    if (successParam === 'true') {
+      setSuccess('✅ Transaction validée ! Vos jetons seront crédités d\'ici quelques instants.');
+      setTimeout(() => setSuccess(''), 6000);
+      router.replace('/dashboard/abonnement');
+      fetchData();
       return;
     }
 
@@ -114,32 +117,10 @@ function AbonnementContent() {
     }
   };
 
-  const verifyAndRefresh = async (sessionId) => {
-    setLoading(true);
-    setError('');
-    setSuccess('');
-    try {
-      const res = await fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setSuccess('✅ Paiement réussi ! Vos jetons ont été ajoutés instantanément.');
-        setTimeout(() => setSuccess(''), 6000);
-      } else {
-        setError(data.error || 'Erreur lors de la validation du paiement.');
-        setTimeout(() => setError(''), 6000);
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Erreur réseau lors de la validation du paiement.');
-      setTimeout(() => setError(''), 6000);
-    } finally {
-      await fetchData();
-      router.replace('/dashboard/abonnement');
-    }
+  const verifyAndRefresh = async () => {
+    // With Mollie, the webhook handles the database update.
+    // We just refresh the local state to see if the tokens arrived.
+    await fetchData();
   };
 
   const handlePurchase = (forfait) => {
@@ -172,7 +153,7 @@ function AbonnementContent() {
     setError('');
     
     try {
-      const response = await fetch('/api/create-payment-intent', {
+      const response = await fetch('/api/create-mollie-payment', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -631,7 +612,7 @@ function AbonnementContent() {
             <div className="hidden md:block w-px h-4 bg-[var(--stone)]" />
             <div className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--ink-2)] transition-colors">
               <Shield size={15} className="text-[var(--muted)]" />
-              <span className="text-xs font-semibold">Certifié Stripe</span>
+              <span className="text-xs font-semibold">Paiement sécurisé</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-[var(--stone)]" />
             <div className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--ink-2)] transition-colors">
@@ -718,7 +699,7 @@ function AbonnementContent() {
                   className="w-5 h-5 mt-0.5 rounded border-[var(--stone)] text-[var(--blue)] focus:ring-[#1454FF] cursor-pointer shrink-0 transition-colors"
                 />
                 <span className="text-xs text-[var(--muted)] leading-relaxed font-normal">
-                  J'accepte que mes données soient utilisées pour le paiement sécurisé via Stripe, conformément aux{' '}
+                  J'accepte que mes données soient utilisées pour le paiement sécurisé via Mollie, conformément aux{' '}
                   <Link href="/politique-confidentialite" target="_blank" className="text-[var(--blue)] hover:underline font-semibold">
                     politiques de confidentialité
                   </Link>

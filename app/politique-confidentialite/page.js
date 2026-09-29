@@ -34,7 +34,7 @@ export default function PolitiqueConfidentialite() {
             <p>Vos données sont utilisées pour :</p>
             <ul className="list-disc list-inside ml-4 space-y-1 mt-2">
               <li>Créer et gérer votre compte</li>
-              <li>Traiter vos paiements via Stripe</li>
+              <li>Traiter vos paiements via Mollie</li>
               <li>Vous envoyer vos factures</li>
               <li>Améliorer nos services</li>
             </ul>
@@ -42,7 +42,7 @@ export default function PolitiqueConfidentialite() {
             <h2 className="text-lg font-semibold text-[#18170F] mt-6">3. Partage des données</h2>
             <p>Vos données ne sont jamais vendues. Elles sont partagées uniquement avec :</p>
             <ul className="list-disc list-inside ml-4 space-y-1 mt-2">
-              <li><strong>Stripe</strong> : pour le traitement des paiements</li>
+              <li><strong>Mollie</strong> : pour le traitement des paiements</li>
               <li><strong>Supabase</strong> : pour l'hébergement sécurisé</li>
               <li><strong>Autorités légales</strong> : si requis par la loi</li>
             </ul>
