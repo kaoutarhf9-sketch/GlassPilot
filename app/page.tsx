@@ -734,7 +734,11 @@ footer{
 @media(max-width:640px){
   .features-grid{grid-template-columns:1fr}
   .hero-ctas{flex-direction:column;align-items:flex-start}
-  nav .nav-links,.nav-right{display:none}
+  nav .nav-links{display:none}
+  .nav-right{gap:0.5rem}
+  .nav-login{font-size:0.75rem}
+  .btn-primary{padding:0.4rem 0.8rem;font-size:0.75rem}
+  nav{padding:0 1rem}
   .section{padding:4.5rem 1.5rem}
   .hero{padding:100px 1.5rem 60px}
   .footer-grid{grid-template-columns:1fr}
