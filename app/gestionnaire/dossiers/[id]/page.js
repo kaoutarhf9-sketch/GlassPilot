@@ -1168,21 +1168,24 @@ Gestionnaire administratif du garage ${garageNom}
               </div>
             </div>
           </div>
-
-
-              <div className="pt-2 border-t border-slate-100">
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Note (Commentaire interne)</label>
-                <textarea
-                  rows={4}
-                  placeholder="Ajouter une note ou une remarque sur ce dossier..."
-                  value={formData.commentaire}
-                  onChange={(e) => setFormData({...formData, commentaire: e.target.value})}
-                  className="w-full px-4 py-3 bg-transparent/50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
-                />
+          {/* CARTE NOTE */}
+          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                <FileText size={16} className="text-amber-600" />
               </div>
+              <h2 className="text-lg font-bold text-[var(--ink)]">Note & Commentaire interne</h2>
+            </div>
+            <div className="p-6">
+              <textarea
+                rows={4}
+                placeholder="Ajouter une note ou une remarque sur ce dossier..."
+                value={formData.commentaire}
+                onChange={(e) => setFormData({...formData, commentaire: e.target.value})}
+                className="w-full px-4 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
+              />
             </div>
           </div>
-
           {/* Documents / Photos */}
           <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center justify-between">
