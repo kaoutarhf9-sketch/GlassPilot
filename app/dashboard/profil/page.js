@@ -246,15 +246,15 @@ export default function ProfilPage() {
             </button>
           </nav>
 
-          <div className="mt-8 rounded-2xl bg-[#EEF2FF] border border-[var(--blue)]/20 p-6 shadow-sm">
+          <div className="mt-8 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-6">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-8 rounded-xl bg-[var(--blue)]/10 flex items-center justify-center">
                 <Award size={16} className="text-[var(--blue)]" />
               </div>
-              <h2 className="text-sm font-bold text-[var(--blue)] tracking-wide">JETONS GLASSPILOT</h2>
+              <h2 className="text-sm font-bold text-[var(--ink)] tracking-wide">JETONS GLASSPILOT</h2>
             </div>
-            <p className="text-xs text-[var(--ink)] mb-5 leading-relaxed font-medium">Gérez vos crédits pour soumettre vos dossiers d'assurance.</p>
-            <Link href="/dashboard/abonnement" className="inline-flex text-xs font-semibold text-white items-center gap-2 bg-[var(--blue)] hover:opacity-90 px-4 py-2 rounded-xl transition-all shadow-md group">
+            <p className="text-xs text-[var(--muted)] mb-5 leading-relaxed font-medium">Gérez vos crédits pour soumettre vos dossiers d'assurance.</p>
+            <Link href="/dashboard/abonnement" className="inline-flex text-xs font-semibold text-[#1454FF] items-center gap-2 bg-[#1454FF]/5 hover:bg-[#1454FF]/10 px-4 py-2 rounded-xl transition-all group">
               Voir mon solde <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
