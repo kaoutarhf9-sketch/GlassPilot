@@ -12,7 +12,8 @@ import {
   X,
   Shield,
   FolderKanban,
-  Building2
+  Building2,
+  Settings
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -54,6 +55,7 @@ export default function AdminLayout({ children }) {
     { href: '/admin/gestionnaires', label: 'Gestionnaires', icon: Users },
     { href: '/admin/garages', label: 'Garages', icon: Building2 },
     { href: '/admin/dossiers', label: 'Assigner Dossiers', icon: FolderKanban },
+    { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
   ];
 
   const isActive = (href, exact = false) => {
