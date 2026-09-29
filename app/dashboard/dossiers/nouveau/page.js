@@ -687,7 +687,7 @@ export default function NouveauDossier() {
                         className="text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 self-start sm:self-auto"
                       >
                         <Euro size={12} />
-                        Acheter 1 jeton ({selectedType === 'simple' ? '8€ TTC' : '25€ TTC'})
+                        Acheter 1 jeton ({selectedType === 'simple' ? '9.60€ TTC' : '30€ TTC'})
                       </Link>
                     </div>
                   )}

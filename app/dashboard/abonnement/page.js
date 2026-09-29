@@ -30,10 +30,10 @@ function AbonnementContent() {
   // Forfaits disponibles
   const forfaits = {
     simple: [
-      { id: 's_unit', nom: 'À l\'unité', type: 'simple', quantite: 1, prixHT: 6.67, prix: 8, description: '1 jeton Simple', popular: true, badge: 'Standard' }
+      { id: 's_unit', nom: 'À l\'unité', type: 'simple', quantite: 1, prixHT: 8.00, prix: 9.60, description: '1 jeton Simple', popular: true, badge: 'Standard' }
     ],
     prestige: [
-      { id: 'p_unit', nom: 'À l\'unité', type: 'prestige', quantite: 1, prixHT: 20.83, prix: 25, description: '1 jeton Prestige', popular: true, badge: 'Premium' }
+      { id: 'p_unit', nom: 'À l\'unité', type: 'prestige', quantite: 1, prixHT: 25.00, prix: 30.00, description: '1 jeton Prestige', popular: true, badge: 'Premium' }
     ]
   };
 
