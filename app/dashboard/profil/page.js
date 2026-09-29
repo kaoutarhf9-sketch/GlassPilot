@@ -92,10 +92,23 @@ export default function ProfilPage() {
         }
       }
 
+      let defaultPrenom = authUser.user_metadata?.prenom || authUser.user_metadata?.first_name || '';
+      let defaultNom = authUser.user_metadata?.nom || authUser.user_metadata?.last_name || '';
+
+      if (!defaultPrenom && !defaultNom && garageData?.responsable) {
+        const nameParts = garageData.responsable.trim().split(' ');
+        if (nameParts.length > 1) {
+          defaultNom = nameParts.pop();
+          defaultPrenom = nameParts.join(' ');
+        } else {
+          defaultNom = garageData.responsable;
+        }
+      }
+
       setFormData(prev => ({
         ...prev,
-        prenom: authUser.user_metadata?.prenom || authUser.user_metadata?.first_name || '',
-        nom: authUser.user_metadata?.nom || authUser.user_metadata?.last_name || '',
+        prenom: defaultPrenom,
+        nom: defaultNom,
         email: authUser.email || '',
         telephone: garageData?.telephone || '',
         adresse: street,
