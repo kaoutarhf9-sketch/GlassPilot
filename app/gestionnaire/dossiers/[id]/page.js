@@ -531,9 +531,9 @@ Référence sinistre : ${numSinistre}
 Dans l’attente du traitement, nous vous souhaitons bonne réception.
 
 Cordialement,
-BRIGLASS GESTION
+GlassPilot
 Gestionnaire administratif du garage ${garageNom}
-07 45 10 96 06`);
+07 56 99 35 83`);
 
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(formData.assurance_email)}&su=${subject}&body=${body}`;
     window.open(gmailUrl, '_blank');
@@ -1274,7 +1274,7 @@ Gestionnaire administratif du garage ${garageNom}
                   if (dossier?.signature_url) {
                     window.open(dossier.signature_url, '_blank');
                   } else {
-                    alert("Cession de créance non disponible ou non signée pour le moment.");
+                    window.open(`/dashboard/dossiers/${dossier.id}/cession`, '_blank');
                   }
                 }}
                 className="w-full py-3 px-4 border border-[#00bcd4] hover:bg-[#00bcd4]/10 text-[#00bcd4] font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm active:scale-98"

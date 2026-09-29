@@ -961,7 +961,7 @@ footer{
   <div className="section-inner">
     <div className="features-header">
       <div>
-        <p className="section-label">Assistant Briglass</p>
+        <p className="section-label">Assistant GlassPilot</p>
         <h2>Pourquoi choisir notre solution ?</h2>
       </div>
       <p className="section-sub">Une organisation plus claire, plus rapide, plus rentable.</p>
