@@ -23,8 +23,14 @@ export default function CessionDeCreance() {
   const [dossier, setDossier] = useState(null);
   const [isSigned, setIsSigned] = useState(false);
   const [generatedPdfBlob, setGeneratedPdfBlob] = useState(null);
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) setUserRole(user.user_metadata?.role);
+    };
+    checkUser();
     if (params?.id) fetchDossier(params.id);
   }, [params?.id]);
 
@@ -515,6 +521,8 @@ export default function CessionDeCreance() {
 
   const client = dossier.clients;
 
+  const backUrl = userRole === 'gestionnaire' ? `/gestionnaire/dossiers/${params.id}` : `/dashboard/dossiers/${params.id}`;
+
   if (isSigned) {
     return (
       <div className="min-h-screen bg-transparent flex items-center justify-center p-6">
@@ -525,7 +533,7 @@ export default function CessionDeCreance() {
           <h1 className="text-2xl md:text-3xl font-serif text-[var(--ink)] mb-4">Documents générés !</h1>
           <p className="text-[var(--muted)] mb-8 font-light">Le PDF a été téléchargé automatiquement et le statut du dossier est mis à jour.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href={`/dashboard/dossiers/${params.id}`} className="px-6 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-slate-700 rounded-xl font-medium border border-[var(--stone)] hover:bg-[var(--white)]/40 transition-colors">
+            <Link href={backUrl} className="px-6 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-slate-700 rounded-xl font-medium border border-[var(--stone)] hover:bg-[var(--white)]/40 transition-colors">
               Retour au dossier
             </Link>
             <button onClick={handleDownload} className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-xl font-medium transition-all shadow-md">
@@ -545,7 +553,7 @@ export default function CessionDeCreance() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20">
         
         <div className="mb-8">
-          <Link href={`/dashboard/dossiers/${params.id}`} className="inline-flex items-center gap-2 text-[var(--muted)] hover:text-[var(--blue)] transition-colors text-sm font-medium mb-4 group">
+          <Link href={backUrl} className="inline-flex items-center gap-2 text-[var(--muted)] hover:text-[var(--blue)] transition-colors text-sm font-medium mb-4 group">
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Retour au dossier
           </Link>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -570,18 +578,6 @@ export default function CessionDeCreance() {
 
         <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
           
-          <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-gradient-to-r from-[#EEF2FF]/50 to-white/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
-                <FileSignature size={18} className="text-[var(--blue)]" />
-              </div>
-              <div>
-                <h2 className="font-bold text-[var(--ink)]">Signature électronique</h2>
-                <p className="text-xs text-[var(--muted)]">Apposez votre signature dans le cadre ci-dessous</p>
-              </div>
-            </div>
-          </div>
-
           <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-transparent/50">
             <h3 className="text-sm font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
               <ShieldCheck size={16} className="text-[var(--blue)]" />
@@ -611,52 +607,74 @@ export default function CessionDeCreance() {
             </div>
           </div>
 
-          <div className="p-5 md:p-6">
-            <div className="bg-transparent border-2 border-dashed border-[var(--stone)] rounded-xl p-4 md:p-6">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-                <h3 className="font-bold text-[var(--ink)] flex items-center gap-2">
-                  <FileSignature size={18} className="text-[var(--blue)]" />
-                  Signature de {client?.prenom} {client?.nom}
-                </h3>
-                <button onClick={clearCanvas} className="text-xs font-medium text-[var(--muted)] hover:text-red-500 flex items-center gap-1 transition-colors">
-                  <Eraser size={14} /> Effacer la signature
-                </button>
+          {userRole !== 'gestionnaire' ? (
+            <>
+              <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-gradient-to-r from-[#EEF2FF]/50 to-white/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
+                    <FileSignature size={18} className="text-[var(--blue)]" />
+                  </div>
+                  <div>
+                    <h2 className="font-bold text-[var(--ink)]">Signature électronique</h2>
+                    <p className="text-xs text-[var(--muted)]">Apposez votre signature dans le cadre ci-dessous</p>
+                  </div>
+                </div>
               </div>
-              <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl overflow-hidden shadow-inner">
-                <canvas
-                  ref={canvasRef}
-                  width={600}
-                  height={150}
-                  className="w-full h-[150px] cursor-crosshair bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
-                  style={{ touchAction: 'none' }}
-                  onMouseDown={startDrawing}
-                  onMouseMove={draw}
-                  onMouseUp={stopDrawing}
-                  onMouseLeave={stopDrawing}
-                  onTouchStart={startDrawing}
-                  onTouchMove={draw}
-                  onTouchEnd={stopDrawing}
-                />
-              </div>
-              <p className="text-xs text-slate-400 mt-3 text-center">
-                Signez dans le cadre ci-dessus avec votre souris ou votre doigt
-              </p>
-            </div>
-          </div>
 
-          <div className="p-5 md:p-6 border-t border-[var(--stone)] bg-transparent/50">
-            <button
-              onClick={handleSaveAndGeneratePDF}
-              disabled={saving}
-              className="w-full py-4 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3 transition-all disabled:opacity-70 text-base"
-            >
-              {saving ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
-              {saving ? 'Génération des documents en cours...' : 'Générer tous les documents officiels'}
-            </button>
-            <p className="text-xs text-slate-400 text-center mt-3">
-              Les documents générés seront automatiquement téléchargés et sauvegardés
-            </p>
-          </div>
+              <div className="p-5 md:p-6">
+                <div className="bg-transparent border-2 border-dashed border-[var(--stone)] rounded-xl p-4 md:p-6">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h3 className="font-bold text-[var(--ink)] flex items-center gap-2">
+                      <FileSignature size={18} className="text-[var(--blue)]" />
+                      Signature de {client?.prenom} {client?.nom}
+                    </h3>
+                    <button onClick={clearCanvas} className="text-xs font-medium text-[var(--muted)] hover:text-red-500 flex items-center gap-1 transition-colors">
+                      <Eraser size={14} /> Effacer la signature
+                    </button>
+                  </div>
+                  <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl overflow-hidden shadow-inner">
+                    <canvas
+                      ref={canvasRef}
+                      width={600}
+                      height={150}
+                      className="w-full h-[150px] cursor-crosshair bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+                      style={{ touchAction: 'none' }}
+                      onMouseDown={startDrawing}
+                      onMouseMove={draw}
+                      onMouseUp={stopDrawing}
+                      onMouseLeave={stopDrawing}
+                      onTouchStart={startDrawing}
+                      onTouchMove={draw}
+                      onTouchEnd={stopDrawing}
+                    />
+                  </div>
+                  <p className="text-xs text-slate-400 mt-3 text-center">
+                    Signez dans le cadre ci-dessus avec votre souris ou votre doigt
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 md:p-6 border-t border-[var(--stone)] bg-transparent/50">
+                <button
+                  onClick={handleSaveAndGeneratePDF}
+                  disabled={saving}
+                  className="w-full py-4 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3 transition-all disabled:opacity-70 text-base"
+                >
+                  {saving ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
+                  {saving ? 'Génération des documents en cours...' : 'Générer tous les documents officiels'}
+                </button>
+                <p className="text-xs text-slate-400 text-center mt-3">
+                  Les documents générés seront automatiquement téléchargés et sauvegardés
+                </p>
+              </div>
+            </>
+          ) : (
+            <div className="p-12 text-center text-[var(--muted)] font-medium flex flex-col items-center gap-3 bg-slate-50/50">
+              <FileSignature size={32} className="text-slate-300" />
+              <p>En attente de la signature par le client / garagiste.</p>
+              <p className="text-xs font-normal">Vous ne pouvez pas signer ce document à leur place.</p>
+            </div>
+          )}
         </div>
 
         <div className="mt-6 text-center">
