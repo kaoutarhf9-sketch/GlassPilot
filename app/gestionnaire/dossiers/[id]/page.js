@@ -881,9 +881,10 @@ Gestionnaire administratif du garage ${garageNom}
                   </span>
                 </div>
               </div>
-            <p className="text-sm text-slate-500 mt-0.5 flex items-center gap-1.5">
-              <Calendar size={14} /> Créé le {new Date(dossier?.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
-            </p>
+              <p className="text-sm text-slate-500 mt-0.5 flex items-center gap-1.5">
+                <Calendar size={14} /> Créé le {new Date(dossier?.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-3">
