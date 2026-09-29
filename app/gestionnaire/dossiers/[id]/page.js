@@ -1420,21 +1420,27 @@ Gestionnaire administratif du garage ${garageNom}
       {chatOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-[380px] bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-2xl shadow-blue-900/10 border border-slate-200 overflow-hidden flex flex-col animate-in slide-in-from-bottom-8 duration-300">
           {/* Chat Header */}
-          <div className="bg-gradient-to-r from-[#1454FF] to-blue-600 px-5 py-4 flex items-center justify-between shadow-md">
+          <div 
+            className="bg-gradient-to-r from-[#1454FF] to-blue-600 px-5 py-4 flex items-center justify-between shadow-md cursor-pointer group"
+            onClick={() => setChatOpen(false)}
+            title="Cliquez pour fermer la discussion"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-xl flex items-center justify-center border border-white/10">
                 <Building2 size={18} className="text-white" />
               </div>
               <div>
-                <p className="text-white font-bold text-sm leading-tight">{dossier?.garages?.nom_garage || 'Garagiste'}</p>
+                <p className="text-white font-bold text-sm leading-tight group-hover:underline">{dossier?.garages?.nom_garage || 'Garagiste'}</p>
                 <p className="text-blue-100 text-xs">Chat en direct</p>
               </div>
             </div>
             <button
-              onClick={() => setChatOpen(false)}
+              type="button"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setChatOpen(false); }}
               className="text-blue-100 hover:text-white hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/10 p-1.5 rounded-lg transition-colors"
+              title="Fermer la discussion"
             >
-              <Minimize2 size={18} />
+              <X size={18} />
             </button>
           </div>
 

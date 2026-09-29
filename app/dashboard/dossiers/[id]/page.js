@@ -1574,13 +1574,17 @@ export default function DetailDossierPremium() {
       {chatOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-96 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-2xl border border-[var(--stone)] overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
           {/* Header du chat */}
-          <div className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] px-4 py-3 flex items-center justify-between">
+          <div 
+            className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] px-4 py-3 flex items-center justify-between cursor-pointer group"
+            onClick={() => setChatOpen(false)}
+            title="Cliquez pour fermer la discussion"
+          >
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-lg flex items-center justify-center">
                 <MessageSquare size={14} className="text-white" />
               </div>
               <div>
-                <span className="text-white font-semibold text-sm">Discussion avec le gestionnaire</span>
+                <span className="text-white font-semibold text-sm group-hover:underline">Discussion avec le gestionnaire</span>
                 <p className="text-white/70 text-xs">Dossier {dossier.numero}</p>
               </div>
             </div>
