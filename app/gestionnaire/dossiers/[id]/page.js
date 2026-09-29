@@ -148,17 +148,22 @@ export default function GestionnaireDetailDossier() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data: gestionnaireData, error: gError } = await supabase
-        .from('gestionnaires')
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
-      
-      if (gError || !gestionnaireData) {
-        throw new Error("Impossible de récupérer les informations du gestionnaire");
-      }
+      const isAdmin = user.user_metadata?.role === 'admin';
+      let gestionnaireId = null;
 
-      const gestionnaireId = gestionnaireData.id;
+      if (!isAdmin) {
+        const { data: gestionnaireData, error: gError } = await supabase
+          .from('gestionnaires')
+          .select('id')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        
+        if (gestionnaireData) {
+          gestionnaireId = gestionnaireData.id;
+        } else {
+          console.warn("Utilisateur authentifié mais non trouvé dans la table gestionnaires.");
+        }
+      }
 
       const { data, error } = await supabase
         .from('dossiers')
@@ -168,7 +173,7 @@ export default function GestionnaireDetailDossier() {
 
       if (error) throw error;
 
-      if (data.gestionnaire_id !== gestionnaireId) {
+      if (!isAdmin && gestionnaireId && data.gestionnaire_id !== gestionnaireId) {
         setDossier(null);
         setError("Accès refusé. Ce dossier ne vous est pas affecté.");
         return;

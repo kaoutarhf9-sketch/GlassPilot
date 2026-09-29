@@ -127,7 +127,7 @@ export default function GestionnaireLayout({ children }) {
           .from('gestionnaires')
           .select('id')
           .eq('user_id', user.id)
-          .single();
+          .maybeSingle();
         targetGId = managerData?.id;
       }
       
@@ -195,7 +195,7 @@ export default function GestionnaireLayout({ children }) {
         .from('gestionnaires')
         .select('id')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
       
       if (managerData?.id) {
         setGestionnaireId(managerData.id);
@@ -218,7 +218,7 @@ export default function GestionnaireLayout({ children }) {
           .from('gestionnaires')
           .select('id')
           .eq('user_id', user.id)
-          .single();
+          .maybeSingle();
         targetGId = managerData?.id;
       }
       
