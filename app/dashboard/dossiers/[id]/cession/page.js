@@ -24,6 +24,7 @@ export default function CessionDeCreance() {
   const [isSigned, setIsSigned] = useState(false);
   const [generatedPdfBlob, setGeneratedPdfBlob] = useState(null);
   const [userRole, setUserRole] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -442,6 +443,21 @@ export default function CessionDeCreance() {
     return doc;
   };
 
+  // Preview Generation Effect
+  useEffect(() => {
+    if (dossier && !isSigned) {
+      try {
+        const doc = generatePDF(null);
+        const pdfBlob = doc.output('blob');
+        const url = URL.createObjectURL(pdfBlob);
+        setPreviewUrl(url);
+        return () => URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error("Preview generation error:", err);
+      }
+    }
+  }, [dossier, isSigned]);
+
   // ============================================================
   // HANDLERS PRINCIPAUX
   // ============================================================
@@ -606,6 +622,18 @@ export default function CessionDeCreance() {
               </div>
             </div>
           </div>
+
+          {previewUrl && (
+            <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-slate-50/30">
+              <h3 className="text-sm font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
+                <FileText size={16} className="text-[var(--blue)]" />
+                Aperçu du document (Non signé)
+              </h3>
+              <div className="w-full h-[600px] rounded-xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
+                <iframe src={`${previewUrl}#toolbar=0&navpanes=0`} className="w-full h-full" title="Prévisualisation PDF" />
+              </div>
+            </div>
+          )}
 
           {userRole !== 'gestionnaire' ? (
             <>
