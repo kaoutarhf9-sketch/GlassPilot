@@ -1585,10 +1585,12 @@ export default function DetailDossierPremium() {
               </div>
             </div>
             <button
-              onClick={() => setChatOpen(false)}
-              className="text-white/70 hover:text-white transition-colors"
+              type="button"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setChatOpen(false); }}
+              className="text-white/70 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10"
+              title="Fermer la discussion"
             >
-              <Minimize2 size={16} />
+              <X size={18} />
             </button>
           </div>
 
