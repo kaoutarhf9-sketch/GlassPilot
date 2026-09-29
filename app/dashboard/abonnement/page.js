@@ -51,6 +51,22 @@ function AbonnementContent() {
 
     if (successParam === 'true') {
       setSuccess('✅ Transaction validée ! Vos jetons seront crédités d\'ici quelques instants.');
+      
+      // HACK LOCAL : Simulation du webhook pour le développement local
+      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+        const localForfait = localStorage.getItem('local_pending_forfait');
+        if (localForfait) {
+           fetch('/api/simulate-webhook', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: localForfait
+           }).then(() => {
+             localStorage.removeItem('local_pending_forfait');
+             fetchData();
+           });
+        }
+      }
+
       setTimeout(() => setSuccess(''), 6000);
       router.replace('/dashboard/abonnement');
       fetchData();
@@ -153,6 +169,16 @@ function AbonnementContent() {
     setError('');
     
     try {
+      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+        localStorage.setItem('local_pending_forfait', JSON.stringify({
+          garageId,
+          forfaitId: selectedForfait.id,
+          quantite: selectedForfait.quantite,
+          type: selectedForfait.type,
+          prix: selectedForfait.prix
+        }));
+      }
+
       const response = await fetch('/api/create-mollie-payment', {
         method: 'POST',
         headers: { 
