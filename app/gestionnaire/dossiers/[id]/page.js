@@ -535,7 +535,8 @@ BRIGLASS GESTION
 Gestionnaire administratif du garage ${garageNom}
 07 45 10 96 06`);
 
-    window.location.href = `mailto:${formData.assurance_email}?subject=${subject}&body=${body}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(formData.assurance_email)}&su=${subject}&body=${body}`;
+    window.open(gmailUrl, '_blank');
   };
 
   const handleAddNote = async () => {
