@@ -8,7 +8,7 @@ import {
   LayoutDashboard, FileText, Users, Settings, LogOut,
   Menu, X, Sparkles, ChevronRight, HelpCircle, ShieldCheck,
   Bell, TrendingUp, Calendar, MessageSquare, Archive, Filter,
-  Building2, FolderKanban
+  Building2, FolderKanban, CheckCheck, Trash2
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -45,6 +45,9 @@ export default function GestionnaireLayout({ children }) {
   const [globalUnreadCount, setGlobalUnreadCount] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [latestMessage, setLatestMessage] = useState(null);
+  
+  const [notifications, setNotifications] = useState([]);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   useEffect(() => {
     const initialize = async () => {
@@ -133,16 +136,41 @@ export default function GestionnaireLayout({ children }) {
         return;
       }
 
-      const { count } = await supabase
+      const { data: msgs, count } = await supabase
         .from('messages')
-        .select('*', { count: 'exact', head: true })
+        .select(`*, dossiers(numero)`, { count: 'exact' })
         .eq('sender_role', 'garagiste')
         .eq('is_read', false)
-        .in('dossier_id', dossierIds);
+        .in('dossier_id', dossierIds)
+        .order('created_at', { ascending: false });
       
       setGlobalUnreadCount(count || 0);
+      setNotifications(msgs || []);
     } catch (err) {
       console.error("Erreur unread count:", err);
+    }
+  };
+
+  const markAsRead = async (msgId) => {
+    try {
+      await supabase.from('messages').update({ is_read: true }).eq('id', msgId);
+      setNotifications(prev => prev.filter(n => n.id !== msgId));
+      setGlobalUnreadCount(prev => Math.max(0, prev - 1));
+    } catch (err) {
+      console.error("Erreur markAsRead:", err);
+    }
+  };
+
+  const markAllAsRead = async () => {
+    try {
+      const msgIds = notifications.map(n => n.id);
+      if (msgIds.length === 0) return;
+      await supabase.from('messages').update({ is_read: true }).in('id', msgIds);
+      setNotifications([]);
+      setGlobalUnreadCount(0);
+      setNotificationsOpen(false);
+    } catch (err) {
+      console.error("Erreur markAllAsRead:", err);
     }
   };
 
@@ -409,12 +437,94 @@ export default function GestionnaireLayout({ children }) {
 
             <div className="flex items-center gap-2 sm:gap-4">
               {/* Notifications */}
-              <button className="relative p-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
-                <Bell size={18} />
-                {globalUnreadCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse ring-2 ring-white"></span>
+              <div className="relative">
+                <button 
+                  onClick={() => setNotificationsOpen(!notificationsOpen)}
+                  className="relative p-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                >
+                  <Bell size={18} />
+                  {globalUnreadCount > 0 && (
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse ring-2 ring-white"></span>
+                  )}
+                </button>
+
+                {/* Dropdown Notifications */}
+                {notificationsOpen && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-40"
+                      onClick={() => setNotificationsOpen(false)}
+                    />
+                    <div className="absolute right-0 mt-3 w-[350px] sm:w-[380px] bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl border border-slate-200 shadow-2xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
+                      <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-transparent/50">
+                        <h3 className="font-semibold text-[var(--ink)]">Notifications</h3>
+                        {globalUnreadCount > 0 && (
+                          <button 
+                            onClick={markAllAsRead}
+                            className="text-xs font-medium text-indigo-600 hover:text-indigo-700 flex items-center gap-1 transition-colors"
+                          >
+                            <CheckCheck size={14} /> Tout marquer lu
+                          </button>
+                        )}
+                      </div>
+                      <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+                        {notifications.length === 0 ? (
+                          <div className="p-8 text-center flex flex-col items-center">
+                            <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
+                              <Bell size={20} className="text-slate-400" />
+                            </div>
+                            <p className="text-sm font-medium text-slate-600">Aucune notification</p>
+                            <p className="text-xs text-slate-400 mt-1">Vous êtes à jour !</p>
+                          </div>
+                        ) : (
+                          notifications.map((notif) => (
+                            <div 
+                              key={notif.id}
+                              className={clsx(
+                                "p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer relative group",
+                                !notif.is_read && "bg-indigo-50/30"
+                              )}
+                              onClick={() => {
+                                markAsRead(notif.id);
+                                router.push(`/gestionnaire/dossiers/${notif.dossier_id}`);
+                                setNotificationsOpen(false);
+                              }}
+                            >
+                              {!notif.is_read && (
+                                <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-indigo-500"></div>
+                              )}
+                              <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0 mt-1 bg-white p-2 rounded-lg border border-slate-200 shadow-sm group-hover:border-indigo-200 transition-colors">
+                                  <MessageSquare size={16} className="text-indigo-500" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-semibold text-[var(--ink)]">
+                                    Nouveau message {notif.dossiers?.numero ? `(${notif.dossiers.numero})` : ''}
+                                  </p>
+                                  <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
+                                  <p className="text-[10px] font-medium text-slate-400 mt-2 uppercase tracking-wider">
+                                    {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+                                  </p>
+                                </div>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    markAsRead(notif.id);
+                                  }}
+                                  className="text-slate-400 hover:text-rose-500 hover:bg-rose-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                  title="Supprimer la notification"
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  </>
                 )}
-              </button>
+              </div>
               
               <div className="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
               
