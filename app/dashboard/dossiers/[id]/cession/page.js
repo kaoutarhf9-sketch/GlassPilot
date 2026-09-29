@@ -181,8 +181,17 @@ export default function CessionDeCreance() {
     doc.text(`Date du sinistre : ${dateSinistre}`, w - marginX, y, { align: 'right' });
     y += 5;
     
+    let notesObj = {};
+    try { if (dossier.notes) notesObj = JSON.parse(dossier.notes); } catch(e){}
+
     doc.text(client?.telephone || '', marginX, y);
-    doc.text(`Date de déclaration : ${dateAuj}`, w - marginX, y, { align: 'right' });
+    doc.text(`N° Sinistre : ${dossier.num_sinistre || 'Non renseigné'}`, w - marginX, y, { align: 'right' });
+    y += 5;
+
+    doc.text(`Tél : ${notesObj.assurance_telephone || 'Non renseigné'}`, w - marginX, y, { align: 'right' });
+    y += 5;
+    
+    doc.text(`Email : ${notesObj.assurance_email || 'Non renseigné'}`, w - marginX, y, { align: 'right' });
     y += 10;
 
     // Ligne séparatrice
@@ -253,11 +262,20 @@ export default function CessionDeCreance() {
     doc.text(`${assurance?.nom?.toUpperCase() || 'ASSURANCE'}`, marginX, y);
     y += 5;
     doc.setFont('helvetica', 'normal');
-    doc.text(`Contrat n° ${dossier.num_contrat || ''}`, marginX, y);
+    doc.text(`Contrat n° ${dossier.num_contrat || 'Non renseigné'}`, marginX, y);
+    y += 5;
+    doc.text(`Sinistre n° ${dossier.num_sinistre || 'Non renseigné'}`, marginX, y);
     y += 5;
     doc.text(`Accident du ${dateSinistre}`, marginX, y);
     y += 5;
-    doc.text(`Sinistre : ${dossier.raison_sinistre || 'Bris de glace'}`, marginX, y);
+    doc.text(`Nature du sinistre : ${dossier.raison_sinistre || dossier.type_vitrage || 'Bris de glace'}`, marginX, y);
+    y += 5;
+    
+    let notesObj2 = {};
+    try { if (dossier.notes) notesObj2 = JSON.parse(dossier.notes); } catch(e){}
+    doc.text(`Tél Assurance : ${notesObj2.assurance_telephone || 'Non renseigné'}`, marginX, y);
+    y += 5;
+    doc.text(`Email Assurance : ${notesObj2.assurance_email || 'Non renseigné'}`, marginX, y);
     y += 12;
 
     doc.setFont('helvetica', 'italic');
@@ -300,8 +318,13 @@ export default function CessionDeCreance() {
     y += 15;
 
     doc.setFont('helvetica', 'normal');
+    let notesObj3 = {};
+    try { if (dossier.notes) notesObj3 = JSON.parse(dossier.notes); } catch(e){}
+
     y = writeText(`Entre le Client/Assuré et le Réparateur professionnel — Compagnie d'assurances : ${assurance?.nom?.toUpperCase() || '____________'}`, y, 'bold');
-    y = writeText(`N° de contrat : ${dossier.num_contrat || '____________'} — Sinistre du ${dateSinistre}`, y);
+    y = writeText(`N° de contrat : ${dossier.num_contrat || '____________'} — N° de sinistre : ${dossier.num_sinistre || '____________'}`, y);
+    y = writeText(`Sinistre du : ${dateSinistre} — Nature : ${dossier.raison_sinistre || dossier.type_vitrage || 'Bris de glace'}`, y);
+    y = writeText(`Tél assurance : ${notesObj3.assurance_telephone || '____________'} — Email assurance : ${notesObj3.assurance_email || '____________'}`, y);
     y += 5;
 
     const articles = [
@@ -394,10 +417,14 @@ export default function CessionDeCreance() {
     doc.text(`Objet : Déclaration d'intervention pour impact ${dossier.type_vitrage || 'Pare-brise'}.`, marginX, y);
     y += 10;
 
+    let notesObj5 = {};
+    try { if (dossier.notes) notesObj5 = JSON.parse(dossier.notes); } catch(e){}
+
     y = writeText('Madame, Monsieur,', y, 'normal', 10);
     y += 2;
-    y = writeText(`Je soussigné(e) ${client?.prenom} ${client?.nom} déclare avoir reçu un impact sur le ${dossier.type_vitrage || 'Pare-brise'} de mon véhicule ${dossier.modele_vehicule} immatriculé ${dossier.immatriculation}, assuré auprès de l'assurance ${assurance?.nom || '________'} (n° de police ${dossier.num_contrat || ''}).`, y);
+    y = writeText(`Je soussigné(e) ${client?.prenom} ${client?.nom} déclare avoir reçu un impact sur le ${dossier.type_vitrage || 'Pare-brise'} de mon véhicule ${dossier.modele_vehicule} immatriculé ${dossier.immatriculation}, assuré auprès de l'assurance ${assurance?.nom || '________'} (n° de police ${dossier.num_contrat || ''}, n° de sinistre ${dossier.num_sinistre || ''}).`, y);
     y = writeText(`Je déclare à ce jour avoir fait intervenir la société ${garage?.nom_garage} pour remplacer ${dossier.type_vitrage || 'Pare-brise'}.`, y);
+    y = writeText(`Coordonnées de l'assurance enregistrées : Tél ${notesObj5.assurance_telephone || 'Non renseigné'} / Email ${notesObj5.assurance_email || 'Non renseigné'}.`, y);
     y = writeText(`Adresse d'intervention : ${client?.adresse || ''} , ${client?.code_postal || ''} ${client?.ville || ''} .`, y);
     y = writeText(`En cas de non-paiement ou de résiliation anticipée du contrat avant indemnisation par mon assureur, je m'engage à régler l'intégralité des frais engagés pour le remplacement. Le montant dû me sera communiqué par facture.`, y);
     y = writeText(`Je certifie sur l'honneur avoir signé la cession de créance le ${dateAuj}.`, y);
