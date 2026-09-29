@@ -593,50 +593,71 @@ export default function CessionDeCreance() {
         </div>
 
         <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
-          
-          <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-transparent/50">
-            <h3 className="text-sm font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
-              <ShieldCheck size={16} className="text-[var(--blue)]" />
-              Récapitulatif du dossier
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              <div className="flex items-center gap-2">
-                <User size={14} className="text-slate-400" />
-                <span className="text-slate-600">Client :</span>
-                <span className="font-medium text-slate-800">{client?.prenom} {client?.nom}</span>
+          {userRole === 'gestionnaire' ? (
+            <div className="p-12 text-center text-[var(--muted)] font-medium flex flex-col items-center gap-6 bg-slate-50/50">
+              <div className="w-20 h-20 bg-[var(--blue)]/10 rounded-full flex items-center justify-center">
+                <FileSignature size={36} className="text-[var(--blue)]" />
               </div>
-              <div className="flex items-center gap-2">
-                <Car size={14} className="text-slate-400" />
-                <span className="text-slate-600">Véhicule :</span>
-                <span className="font-medium text-slate-800">{dossier.modele_vehicule} - {dossier.immatriculation}</span>
+              <div>
+                <p className="text-xl text-[var(--ink)] font-bold">En attente de signature</p>
+                <p className="text-sm mt-2 max-w-md mx-auto">La cession de créance n'a pas encore été signée par le garagiste ou le client. Vous ne pouvez pas signer ce document à leur place.</p>
               </div>
-              <div className="flex items-center gap-2">
-                <Building2 size={14} className="text-slate-400" />
-                <span className="text-slate-600">Assurance :</span>
-                <span className="font-medium text-slate-800">{dossier.assurances?.nom || 'Non renseignée'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Euro size={14} className="text-slate-400" />
-                <span className="text-slate-600">Franchise :</span>
-                <span className="font-medium text-slate-800">{dossier.franchise_montant || 0} €</span>
-              </div>
+              
+              {previewUrl && (
+                <a 
+                  href={previewUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-xl font-medium transition-all shadow-md shadow-blue-500/20"
+                >
+                  <FileText size={18} />
+                  Prévisualiser le document PDF (Non signé)
+                </a>
+              )}
             </div>
-          </div>
-
-          {previewUrl && (
-            <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-slate-50/30">
-              <h3 className="text-sm font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
-                <FileText size={16} className="text-[var(--blue)]" />
-                Aperçu du document (Non signé)
-              </h3>
-              <div className="w-full h-[600px] rounded-xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
-                <iframe src={`${previewUrl}#toolbar=0&navpanes=0`} className="w-full h-full" title="Prévisualisation PDF" />
-              </div>
-            </div>
-          )}
-
-          {userRole !== 'gestionnaire' ? (
+          ) : (
             <>
+              <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-transparent/50">
+                <h3 className="text-sm font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-[var(--blue)]" />
+                  Récapitulatif du dossier
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-center gap-2">
+                    <User size={14} className="text-slate-400" />
+                    <span className="text-slate-600">Client :</span>
+                    <span className="font-medium text-slate-800">{client?.prenom} {client?.nom}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Car size={14} className="text-slate-400" />
+                    <span className="text-slate-600">Véhicule :</span>
+                    <span className="font-medium text-slate-800">{dossier.modele_vehicule} - {dossier.immatriculation}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Building2 size={14} className="text-slate-400" />
+                    <span className="text-slate-600">Assurance :</span>
+                    <span className="font-medium text-slate-800">{dossier.assurances?.nom || 'Non renseignée'}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Euro size={14} className="text-slate-400" />
+                    <span className="text-slate-600">Franchise :</span>
+                    <span className="font-medium text-slate-800">{dossier.franchise_montant || 0} €</span>
+                  </div>
+                </div>
+              </div>
+
+              {previewUrl && (
+                <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-slate-50/30">
+                  <h3 className="text-sm font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
+                    <FileText size={16} className="text-[var(--blue)]" />
+                    Aperçu du document (Non signé)
+                  </h3>
+                  <div className="w-full h-[600px] rounded-xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
+                    <iframe src={`${previewUrl}#toolbar=0&navpanes=0`} className="w-full h-full" title="Prévisualisation PDF" />
+                  </div>
+                </div>
+              )}
+
               <div className="p-5 md:p-6 border-b border-[var(--stone)] bg-gradient-to-r from-[#EEF2FF]/50 to-white/50">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
@@ -696,12 +717,6 @@ export default function CessionDeCreance() {
                 </p>
               </div>
             </>
-          ) : (
-            <div className="p-12 text-center text-[var(--muted)] font-medium flex flex-col items-center gap-3 bg-slate-50/50">
-              <FileSignature size={32} className="text-slate-300" />
-              <p>En attente de la signature par le client / garagiste.</p>
-              <p className="text-xs font-normal">Vous ne pouvez pas signer ce document à leur place.</p>
-            </div>
           )}
         </div>
 
