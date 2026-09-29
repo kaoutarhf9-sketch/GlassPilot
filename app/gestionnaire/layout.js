@@ -79,6 +79,14 @@ export default function GestionnaireLayout({ children }) {
               setLatestMessage(newMsg);
               setShowToast(true);
               
+              // Jouer le son de notification
+              try {
+                const audio = new Audio('/notification.mp3');
+                audio.play().catch(e => console.log('Autoplay empêché par le navigateur:', e));
+              } catch (e) {
+                console.error("Erreur lecture son:", e);
+              }
+              
               // Notification navigateur (si autorisé)
               if (Notification.permission === 'granted') {
                 new Notification(newMsg.sender_name || 'Garagiste', {

@@ -97,6 +97,14 @@ export default function DashboardLayout({ children }) {
               });
               setUnreadCount(prev => prev + 1);
               
+              // Jouer le son de notification
+              try {
+                const audio = new Audio('/notification.mp3');
+                audio.play().catch(e => console.log('Autoplay empêché:', e));
+              } catch (e) {
+                console.error("Erreur lecture son:", e);
+              }
+              
               if (Notification.permission === 'granted') {
                 new Notification('Nouveau message du gestionnaire', {
                   body: newMsg.message,
@@ -229,6 +237,14 @@ export default function DashboardLayout({ children }) {
           setNotifications(prev => [payload.new, ...prev]);
           if (!payload.new.is_read) {
             setUnreadCount(prev => prev + 1);
+            
+            // Jouer le son de notification
+            try {
+              const audio = new Audio('/notification.mp3');
+              audio.play().catch(e => console.log('Autoplay empêché:', e));
+            } catch (e) {
+              console.error("Erreur lecture son:", e);
+            }
           }
         }
       )
