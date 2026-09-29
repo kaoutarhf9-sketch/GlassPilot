@@ -66,7 +66,20 @@ export default function GestionnaireDetailDossier() {
     num_sinistre: '',
     assurance_telephone: '',
     assurance_email: '',
-    commentaire: ''
+    commentaire: '',
+    immatriculation: '',
+    modele_vehicule: '',
+    kilometrage: '',
+    type_vitrage: '',
+    type: '',
+    num_contrat: '',
+    client_nom: '',
+    client_prenom: '',
+    client_telephone: '',
+    client_email: '',
+    client_adresse: '',
+    client_cp: '',
+    client_ville: ''
   });
 
   // Chat states
@@ -183,7 +196,20 @@ export default function GestionnaireDetailDossier() {
         num_sinistre: data.num_sinistre || '',
         assurance_telephone: data.assurance_telephone || parsedNotes.assurance_telephone || '',
         assurance_email: data.assurance_email || parsedNotes.assurance_email || '',
-        commentaire: data.commentaire || ''
+        commentaire: data.commentaire || '',
+        immatriculation: data.immatriculation || '',
+        modele_vehicule: data.modele_vehicule || '',
+        kilometrage: data.kilometrage || '',
+        type_vitrage: data.type_vitrage || '',
+        type: data.type || '',
+        num_contrat: data.num_contrat || '',
+        client_nom: data.clients?.nom || '',
+        client_prenom: data.clients?.prenom || '',
+        client_telephone: data.clients?.telephone || '',
+        client_email: data.clients?.email || '',
+        client_adresse: data.clients?.adresse || '',
+        client_cp: data.clients?.code_postal || '',
+        client_ville: data.clients?.ville || ''
       });
 
       // Documents
@@ -723,7 +749,13 @@ Gestionnaire administratif du garage ${garageNom}
         franchise_montant: parseFloat(formData.franchise_montant) || 0,
         num_sinistre: formData.num_sinistre,
         commentaire: formData.commentaire,
-        notes: JSON.stringify(updatedNotesObj)
+        notes: JSON.stringify(updatedNotesObj),
+        immatriculation: formData.immatriculation,
+        modele_vehicule: formData.modele_vehicule,
+        kilometrage: formData.kilometrage ? parseInt(formData.kilometrage) : null,
+        type_vitrage: formData.type_vitrage,
+        type: formData.type,
+        num_contrat: formData.num_contrat
       };
 
       // 4. Mettre à jour dans Supabase
@@ -733,6 +765,24 @@ Gestionnaire administratif du garage ${garageNom}
         .eq('id', dossierId);
 
       if (error) throw error;
+
+      // 4b. Mettre à jour le client si nécessaire
+      if (dossier.clients_id) {
+        const clientUpdate = {
+          nom: formData.client_nom,
+          prenom: formData.client_prenom,
+          telephone: formData.client_telephone,
+          email: formData.client_email,
+          adresse: formData.client_adresse,
+          code_postal: formData.client_cp,
+          ville: formData.client_ville
+        };
+        const { error: clientErr } = await supabase
+          .from('clients')
+          .update(clientUpdate)
+          .eq('id', dossier.clients_id);
+        if (clientErr) throw clientErr;
+      }
 
       // 5. Mettre à jour l'état local
       setDossier(prev => ({ ...prev, statut: formData.statut, notes: JSON.stringify(updatedNotesObj) }));
@@ -946,6 +996,20 @@ Gestionnaire administratif du garage ${garageNom}
                   </div>
                 </div>
 
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">N° de contrat</label>
+                  <div className="relative">
+                    <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <input
+                      type="text"
+                      placeholder="Numéro de contrat"
+                      value={formData.num_contrat}
+                      onChange={(e) => setFormData({...formData, num_contrat: e.target.value})}
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                </div>
+
                 <div className="col-span-1 sm:col-span-2 flex justify-end">
                   <button
                     onClick={handleSendEmailToAssurance}
@@ -955,6 +1019,134 @@ Gestionnaire administratif du garage ${garageNom}
                     <Send size={16} />
                     Rédiger l'email d'envoi à l'assurance
                   </button>
+                </div>
+              </div>
+
+              {/* SEPARATEUR VEHICULE */}
+              <div className="pt-6 mt-6 border-t border-slate-100">
+                <h3 className="text-sm font-bold text-[var(--ink)] mb-4 flex items-center gap-2">
+                  <Car size={16} className="text-[var(--blue)]" /> Véhicule et Jeton
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de jeton utilisé</label>
+                    <select
+                      value={formData.type}
+                      onChange={(e) => setFormData({...formData, type: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    >
+                      <option value="simple">Simple</option>
+                      <option value="prestige">Prestige</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Immatriculation</label>
+                    <input
+                      type="text"
+                      value={formData.immatriculation}
+                      onChange={(e) => setFormData({...formData, immatriculation: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Modèle du véhicule</label>
+                    <input
+                      type="text"
+                      value={formData.modele_vehicule}
+                      onChange={(e) => setFormData({...formData, modele_vehicule: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Kilométrage</label>
+                    <input
+                      type="number"
+                      value={formData.kilometrage}
+                      onChange={(e) => setFormData({...formData, kilometrage: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de vitrage</label>
+                    <input
+                      type="text"
+                      value={formData.type_vitrage}
+                      onChange={(e) => setFormData({...formData, type_vitrage: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* SEPARATEUR CLIENT */}
+              <div className="pt-6 mt-6 border-t border-slate-100">
+                <h3 className="text-sm font-bold text-[var(--ink)] mb-4 flex items-center gap-2">
+                  <User size={16} className="text-[var(--blue)]" /> Coordonnées Client
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Prénom</label>
+                    <input
+                      type="text"
+                      value={formData.client_prenom}
+                      onChange={(e) => setFormData({...formData, client_prenom: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nom</label>
+                    <input
+                      type="text"
+                      value={formData.client_nom}
+                      onChange={(e) => setFormData({...formData, client_nom: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Téléphone</label>
+                    <input
+                      type="tel"
+                      value={formData.client_telephone}
+                      onChange={(e) => setFormData({...formData, client_telephone: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
+                    <input
+                      type="email"
+                      value={formData.client_email}
+                      onChange={(e) => setFormData({...formData, client_email: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Adresse postale</label>
+                    <input
+                      type="text"
+                      value={formData.client_adresse}
+                      onChange={(e) => setFormData({...formData, client_adresse: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Code postal</label>
+                    <input
+                      type="text"
+                      value={formData.client_cp}
+                      onChange={(e) => setFormData({...formData, client_cp: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Ville</label>
+                    <input
+                      type="text"
+                      value={formData.client_ville}
+                      onChange={(e) => setFormData({...formData, client_ville: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                  </div>
                 </div>
               </div>
 
