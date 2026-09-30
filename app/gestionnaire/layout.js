@@ -719,6 +719,9 @@ export default function GestionnaireLayout({ children }) {
                   </Link>
                 );
               })}
+                </div>
+              </div>
+            ))}
             </nav>
 
             <div className="p-4 border-t border-[#18CDEC]/20/60">
