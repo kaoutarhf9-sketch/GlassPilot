@@ -334,6 +334,18 @@ export default function DetailDossierPremium() {
 
       if (uploadError) throw uploadError;
 
+      // NOTIFY GESTIONNAIRE
+      if (dossier.gestionnaire_id) {
+        await supabase.from('notifications').insert({
+          gestionnaire_id: dossier.gestionnaire_id,
+          dossier_id: dossier.id,
+          type: 'document',
+          title: 'Nouvelle pièce jointe',
+          message: `Une pièce jointe a été ajoutée au dossier ${dossier.numero}`,
+          link: `/gestionnaire/dossiers/${dossier.id}`
+        });
+      }
+
       await fetchDossierAndDocs(dossier.id);
     } catch (err) {
       console.error(err);
@@ -389,6 +401,18 @@ export default function DetailDossierPremium() {
           .upload(path, file);
           
         if (uploadError) throw uploadError;
+      }
+      
+      // NOTIFY GESTIONNAIRE
+      if (dossier?.gestionnaire_id) {
+        await supabase.from('notifications').insert({
+          gestionnaire_id: dossier.gestionnaire_id,
+          dossier_id: dossier.id,
+          type: 'document',
+          title: 'Nouvelle(s) pièce(s) jointe(s)',
+          message: `${files.length} pièce(s) jointe(s) ont été ajoutées au dossier ${dossier.numero}`,
+          link: `/gestionnaire/dossiers/${dossier.id}`
+        });
       }
       
       await fetchDossierAndDocs(params.id);
