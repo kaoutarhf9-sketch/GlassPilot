@@ -252,7 +252,7 @@ export default function GaragesPage() {
         </button>
 
         {/* Garage Hero Details */}
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md relative overflow-hidden">
+        <div className="bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
             <Building2 size={120} />
           </div>
@@ -285,7 +285,7 @@ export default function GaragesPage() {
         </div>
 
         {/* Dossiers List for this Garage */}
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden">
+        <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden">
           <div className="p-6 border-b border-[var(--stone)]/60 bg-[var(--white)]/40">
             <h3 className="text-lg font-bold font-serif-premium text-[var(--ink)] flex items-center gap-2">
               <FileText size={20} className="text-[var(--blue)]" /> Dossiers de ce garage
@@ -381,14 +381,14 @@ export default function GaragesPage() {
   // --- GARAGES LIST VIEW (CARDS) ---
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
         <div>
           <h2 className="text-3xl font-serif-premium text-[var(--ink)]">Garages partenaires</h2>
           <p className="text-xs font-semibold text-[var(--muted)] mt-1.5">Consultez les fiches garages, analysez leurs dossiers et gérez leurs accès.</p>
         </div>
         <button
           onClick={() => { setIsModalOpen(true); setSubmitResult(null); setCopied(false); }}
-          className="flex items-center gap-2 bg-[var(--blue)] hover:bg-[#003BDE] text-white px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#1454FF]/10 hover:-translate-y-0.5 cursor-pointer"
+          className="flex items-center gap-2 bg-[var(--blue)] hover:bg-[#003BDE] text-[var(--ink)] px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#1454FF]/10 hover:-translate-y-0.5 cursor-pointer"
         >
           <Plus size={16} />
           Nouveau Garagiste
@@ -404,7 +404,7 @@ export default function GaragesPage() {
           placeholder="Rechercher par garage, responsable, SIRET, email..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="block w-full pl-11 pr-4 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] transition-all shadow-sm"
+          className="block w-full pl-11 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] transition-all shadow-sm"
         />
       </div>
 
@@ -414,7 +414,7 @@ export default function GaragesPage() {
           <p className="mt-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Chargement des garages...</p>
         </div>
       ) : filteredGarages.length === 0 ? (
-        <div className="py-20 text-center bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)]">
+        <div className="py-20 text-center bg-[var(--white)] rounded-3xl border border-[var(--stone)]">
           <Building2 size={48} className="mx-auto text-[var(--stone)] mb-4" />
           <h3 className="text-lg font-bold text-[var(--ink)]">Aucun garage trouvé</h3>
           <p className="text-xs text-[var(--muted)] font-semibold mt-1">Ajustez vos filtres de recherche.</p>
@@ -424,7 +424,7 @@ export default function GaragesPage() {
           {filteredGarages.map((garage) => (
             <div 
               key={garage.id} 
-              className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col overflow-hidden relative hover:-translate-y-1"
+              className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col overflow-hidden relative hover:-translate-y-1"
             >
               {/* Subtle Radial Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#1454FF]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -466,7 +466,7 @@ export default function GaragesPage() {
               <div className="border-t border-[var(--stone)]/60 p-4 bg-[#F8FAFC]/50 flex justify-between items-center relative z-10">
                 <button
                   onClick={() => setSelectedGarage(garage)}
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[var(--white)] border border-[#C2CFFF] text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white rounded-xl text-xs font-bold transition-all shadow-sm flex-1 group/btn"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[var(--white)] border border-[#C2CFFF] text-[var(--blue)] hover:bg-[var(--blue)] hover:text-[var(--ink)] rounded-xl text-xs font-bold transition-all shadow-sm flex-1 group/btn"
                 >
                   <FileText size={14} /> 
                   Voir les dossiers
@@ -489,7 +489,7 @@ export default function GaragesPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-[#090D16]/60 backdrop-blur-sm" onClick={() => !isSubmitting && setIsModalOpen(false)}></div>
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl max-w-lg w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[var(--stone)] overflow-hidden">
+          <div className="bg-[var(--white)] rounded-3xl max-w-lg w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[var(--stone)] overflow-hidden">
             {/* Same form as before */}
             <div className="p-6 border-b border-[var(--stone)]/60 bg-[var(--white)]/40">
               <h3 className="text-xl font-bold font-serif-premium text-[var(--ink)]">Ajouter un Garagiste</h3>
@@ -549,7 +549,7 @@ export default function GaragesPage() {
               <div className="flex gap-3 pt-4 border-t">
                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-2.5 border rounded-xl text-xs font-bold uppercase hover:bg-gray-50 transition-colors">Annuler</button>
                 {!submitResult && (
-                  <button type="submit" disabled={isSubmitting} className="flex-1 py-2.5 bg-[#1454FF] text-white rounded-xl text-xs font-bold uppercase hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                  <button type="submit" disabled={isSubmitting} className="flex-1 py-2.5 bg-[#1454FF] text-[var(--ink)] rounded-xl text-xs font-bold uppercase hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
                     {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : 'Créer'}
                   </button>
                 )}
@@ -563,13 +563,13 @@ export default function GaragesPage() {
       {garageToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-[#090D16]/60 backdrop-blur-sm" onClick={() => !isDeleting && setGarageToDelete(null)}></div>
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl max-w-sm w-full relative z-10 p-8 text-center border border-[var(--stone)]">
+          <div className="bg-[var(--white)] rounded-3xl max-w-sm w-full relative z-10 p-8 text-center border border-[var(--stone)]">
             <Trash2 size={40} className="mx-auto text-rose-500 mb-4" />
             <h3 className="text-xl font-bold font-serif-premium text-[var(--ink)] mb-2">Supprimer le garage</h3>
             <p className="text-xs text-[var(--muted)] mb-6">Confirmez-vous la suppression de {garageToDelete.nom_garage} ?</p>
             <div className="flex gap-3">
               <button onClick={() => setGarageToDelete(null)} disabled={isDeleting} className="flex-1 py-2.5 border rounded-xl text-xs font-bold">Annuler</button>
-              <button onClick={confirmDelete} disabled={isDeleting} className="flex-1 py-2.5 bg-rose-600 text-white rounded-xl text-xs font-bold flex justify-center">
+              <button onClick={confirmDelete} disabled={isDeleting} className="flex-1 py-2.5 bg-rose-600 text-[var(--ink)] rounded-xl text-xs font-bold flex justify-center">
                 {isDeleting ? <Loader2 size={16} className="animate-spin" /> : 'Supprimer'}
               </button>
             </div>

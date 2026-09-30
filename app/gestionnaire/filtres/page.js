@@ -50,11 +50,9 @@ export default function FiltresPage() {
 
       const { data, error } = await supabase
         .from('dossiers')
-        .select(`
-          *,
-          clients (nom, prenom, telephone),
-          garages (nom_garage)
-        `)
+        .select(`*,
+ clients (nom, prenom, telephone),
+ garages (nom_garage)`)
         .eq('gestionnaire_id', gestionnaireId)
         .order('created_at', { ascending: false });
 
@@ -148,7 +146,7 @@ export default function FiltresPage() {
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
           <Filter size={14} className="text-[var(--blue)]" />
           <span className="text-xs font-medium text-[var(--blue)] uppercase tracking-wider">Filtres avancés</span>
         </div>
@@ -166,7 +164,7 @@ export default function FiltresPage() {
               key={statut.id}
               onClick={() => setSelectedStatut(statut.id)}
               className={clsx(
-                "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl p-4 border transition-all text-left",
+                "bg-[var(--white)]   rounded-xl p-4 border transition-all text-left",
                 isSelected 
                   ? `border-${statut.color}-400 shadow-md ring-2 ring-${statut.color}-400/20` 
                   : "border-[var(--stone)] hover:border-[#1454FF]"
@@ -188,7 +186,7 @@ export default function FiltresPage() {
       </div>
 
       {/* Résultats */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
+      <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
         <div className="p-5 border-b border-[var(--stone)] flex justify-between items-center">
           <div className="flex items-center gap-2">
             <BarChart3 size={18} className="text-[var(--blue)]" />

@@ -26,7 +26,7 @@ const TYPES_VITRAGE = [
   'Latérale AR Droite', 'Toit pano.', 'Optique phare', 'Autre',
 ];
 
-const inputClass = "w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition-all";
+const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]   border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-[var(--muted)] focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition-all";
 const labelClass = "block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5";
 const requiredMark = <span className="text-rose-500 ml-1">*</span>;
 
@@ -51,12 +51,12 @@ function FileUpload({ label, hint, accept = '.pdf,.jpg,.jpeg,.png', onChange, fi
   
   return (
     <div className="w-full">
-      <label className={labelClass}>{label}{optional && <span className="text-slate-400 text-xs font-normal ml-1">(optionnel)</span>}</label>
+      <label className={labelClass}>{label}{optional && <span className="text-[var(--muted)] text-xs font-normal ml-1">(optionnel)</span>}</label>
       <div
         onClick={() => ref.current?.click()}
         className={clsx(
           'border-2 border-dashed rounded-xl p-4 cursor-pointer transition-all text-center group flex flex-col items-center justify-center h-28',
-          file ? 'border-indigo-400 bg-indigo-50' : 'border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]'
+          file ? 'border-indigo-400 bg-indigo-50' : 'border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 bg-[var(--white)]  '
         )}
       >
         <input ref={ref} type="file" accept={accept} className="hidden" onChange={e => onChange(e.target.files[0])} />
@@ -73,7 +73,7 @@ function FileUpload({ label, hint, accept = '.pdf,.jpg,.jpeg,.png', onChange, fi
               <button 
                 type="button" 
                 onClick={e => { e.stopPropagation(); onChange(null); }} 
-                className="text-slate-400 hover:text-rose-500 transition-colors"
+                className="text-[var(--muted)] hover:text-rose-500 transition-colors"
               >
                 <X size={14} />
               </button>
@@ -81,9 +81,9 @@ function FileUpload({ label, hint, accept = '.pdf,.jpg,.jpeg,.png', onChange, fi
           </div>
         ) : (
           <>
-            <Upload size={20} className="text-slate-400 group-hover:text-indigo-500 mb-2 transition-colors" />
+            <Upload size={20} className="text-[var(--muted)] group-hover:text-indigo-500 mb-2 transition-colors" />
             <p className="text-xs font-medium text-slate-700">Importer un fichier</p>
-            <p className="text-[10px] font-medium text-slate-400 mt-1">{hint}</p>
+            <p className="text-[10px] font-medium text-[var(--muted)] mt-1">{hint}</p>
           </>
         )}
       </div>
@@ -470,7 +470,7 @@ export default function NouveauDossier() {
       <div className="fixed bottom-0 -right-48 w-96 h-96 bg-[var(--blue)]/5 rounded-full mix-blend-multiply filter blur-3xl opacity-30 pointer-events-none"></div>
 
       {/* Top Bar */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/95 backdrop-blur-sm border-b border-[var(--stone)] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10 shadow-md sticky top-0">
+      <div className="bg-[var(--white)] backdrop-blur-sm border-b border-[var(--stone)] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10 shadow-md sticky top-0">
         <button onClick={() => router.back()} className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--blue)] text-sm font-medium transition-colors group">
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Quitter
         </button>
@@ -487,7 +487,7 @@ export default function NouveauDossier() {
         {/* Stepper latéral */}
         <div className="w-full md:w-64 lg:w-72 flex-shrink-0">
           <div className="sticky top-24">
-            <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-6 shadow-md">
+            <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-6 shadow-md">
               <h3 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-4">Progression</h3>
               <div className="space-y-4">
                 {STEPS.map((s, i) => {
@@ -498,7 +498,7 @@ export default function NouveauDossier() {
                     <div key={s.id} className="flex items-center gap-3">
                       <div className={clsx(
                         "w-8 h-8 rounded-xl flex items-center justify-center transition-all",
-                        isActive ? "bg-[var(--blue)] text-white shadow-md" : 
+                        isActive ? "bg-[var(--blue)] text-[var(--ink)] shadow-md" : 
                         isCompleted ? "bg-emerald-100 text-emerald-600" : "bg-[var(--white)] text-[var(--muted)]"
                       )}>
                         {isCompleted ? <Check size={14} /> : <Icon size={14} />}
@@ -518,7 +518,7 @@ export default function NouveauDossier() {
             </div>
 
             {/* Récapitulatif */}
-            <div className="mt-4 bg-[var(--white)]/20 backdrop-blur-xl rounded-2xl border border-[var(--stone)] p-4">
+            <div className="mt-4 bg-[var(--white)]/20 rounded-2xl border border-[var(--stone)] p-4">
               <p className="text-[10px] font-bold text-[var(--blue)] uppercase tracking-wider mb-2">En cours de saisie</p>
               <p className="text-sm font-semibold text-[var(--ink)] truncate">{client.nom_societe || 'Nouveau Client'}</p>
               <p className="text-xs text-[var(--muted)] truncate">{vehicule.immatriculation || 'Véhicule non renseigné'}</p>
@@ -534,7 +534,7 @@ export default function NouveauDossier() {
             <p className="text-[var(--muted)] text-sm mt-1">{STEPS[step-1].desc}</p>
           </div>
 
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md p-6 md:p-8">
+          <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-6 md:p-8">
             
             {/* STEP 1 : CLIENT */}
             {step === 1 && (
@@ -633,7 +633,7 @@ export default function NouveauDossier() {
                         </span>
                       </div>
                       {selectedType === 'simple' && (
-                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-white rounded-full flex items-center justify-center">
+                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-[var(--ink)] rounded-full flex items-center justify-center">
                           <Check size={10} />
                         </div>
                       )}
@@ -669,7 +669,7 @@ export default function NouveauDossier() {
                         </span>
                       </div>
                       {selectedType === 'prestige' && (
-                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-white rounded-full flex items-center justify-center">
+                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-[var(--ink)] rounded-full flex items-center justify-center">
                           <Check size={10} />
                         </div>
                       )}
@@ -684,7 +684,7 @@ export default function NouveauDossier() {
                       </div>
                       <Link
                         href={`/dashboard/abonnement?type=${selectedType}`}
-                        className="text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 self-start sm:self-auto"
+                        className="text-xs font-semibold text-[var(--ink)] bg-rose-600 hover:bg-rose-700 px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 self-start sm:self-auto"
                       >
                         <Euro size={12} />
                         Acheter 1 jeton ({selectedType === 'simple' ? '9.60€ TTC' : '30€ TTC'})
@@ -1004,19 +1004,19 @@ export default function NouveauDossier() {
           <div className="flex gap-3 mt-6">
             {step > 1 && (
               <button type="button" onClick={prev}
-                className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl text-[var(--ink)] font-medium hover:bg-[var(--white)]/40 transition-all">
+                className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-[var(--ink)] font-medium hover:bg-[var(--white)]/40 transition-all">
                 Retour
               </button>
             )}
             
             {step < STEPS.length ? (
               <button type="button" onClick={next}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-white font-medium bg-[var(--blue)] hover:bg-[#0ea5e9] transition-all shadow-md shadow-[#1454FF]/25">
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-[var(--ink)] font-medium bg-[var(--blue)] hover:bg-[#0ea5e9] transition-all shadow-md shadow-[#1454FF]/25">
                 Continuer <ArrowRight size={16} />
               </button>
             ) : (
               <button type="button" onClick={handleSubmit} disabled={loading}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[var(--blue)] text-white rounded-xl font-medium hover:bg-[#0ea5e9] transition-all disabled:opacity-70 shadow-md shadow-[#1454FF]/25">
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[var(--blue)] text-[var(--ink)] rounded-xl font-medium hover:bg-[#0ea5e9] transition-all disabled:opacity-70 shadow-md shadow-[#1454FF]/25">
                 {loading ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Save size={16} />}
                 {loading ? 'Création...' : 'Créer le dossier'}
               </button>
@@ -1033,12 +1033,12 @@ export default function NouveauDossier() {
       {showScanner && (
         <div className="fixed inset-0 z-50 bg-black flex flex-col justify-between">
           <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
-            <h2 className="text-white font-semibold shadow-black drop-shadow-md">
+            <h2 className="text-[var(--ink)] font-semibold shadow-black drop-shadow-md">
               Scanner {scannerType === 'carte_grise' ? 'la Carte Grise' : 'l\'Attestation'}
             </h2>
             <button 
               onClick={() => { setShowScanner(false); setScannerType(null); setCameraError(false); }}
-              className="p-2 bg-white/20 rounded-full text-white backdrop-blur-md"
+              className="p-2 bg-white/20 rounded-full text-[var(--ink)]"
             >
               <X size={24} />
             </button>
@@ -1067,10 +1067,10 @@ export default function NouveauDossier() {
                 </div>
               </>
             ) : (
-              <div className="text-white p-6 text-center space-y-4">
+              <div className="text-[var(--ink)] p-6 text-center space-y-4">
                 <AlertCircle size={48} className="text-rose-500 mx-auto" />
                 <p>Accès à la caméra refusé ou impossible.</p>
-                <p className="text-xs text-white/70">Vérifiez les permissions de votre navigateur ou importez un fichier classiquement ci-dessous.</p>
+                <p className="text-xs text-[var(--ink)]/70">Vérifiez les permissions de votre navigateur ou importez un fichier classiquement ci-dessous.</p>
               </div>
             )}
           </div>
@@ -1084,7 +1084,7 @@ export default function NouveauDossier() {
               <div className="w-16 h-16 bg-white rounded-full border-2 border-slate-200 shadow-inner"></div>
             </button>
             
-            <label className="text-white/80 hover:text-white text-sm font-medium flex items-center gap-2 cursor-pointer mt-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 transition-colors rounded-full">
+            <label className="text-[var(--ink)]/80 hover:text-[var(--ink)] text-sm font-medium flex items-center gap-2 cursor-pointer mt-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 transition-colors rounded-full">
               <Upload size={16} /> Ou importer un fichier
               <input 
                 type="file" 

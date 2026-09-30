@@ -99,14 +99,14 @@ export default function AdminParametresPage() {
     );
   }
 
-  const inputClass = "w-full px-4 py-2.5 bg-transparent border border-slate-200 rounded-xl text-sm text-[var(--ink)] focus:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] transition-all outline-none placeholder:text-slate-400";
+  const inputClass = "w-full px-4 py-2.5 bg-transparent border border-slate-200 rounded-xl text-sm text-[var(--ink)] focus:bg-[var(--white)]   focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] transition-all outline-none placeholder:text-[var(--muted)]";
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-slate-200">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-slate-200">
           <Sparkles size={14} className="text-[#1454FF]" />
           <span className="text-xs font-medium text-[#1454FF] uppercase tracking-wider">Super Admin</span>
         </div>
@@ -123,14 +123,14 @@ export default function AdminParametresPage() {
               onClick={() => { setActiveTab('profil'); setError(''); setSuccess(''); }}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'profil' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-[var(--ink)]'}`}
             >
-              <User size={18} className={activeTab === 'profil' ? 'text-[#1454FF]' : 'text-slate-400'} />
+              <User size={18} className={activeTab === 'profil' ? 'text-[#1454FF]' : 'text-[var(--muted)]'} />
               Mon Profil
             </button>
             <button 
               onClick={() => { setActiveTab('securite'); setError(''); setSuccess(''); }}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'securite' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-[var(--ink)]'}`}
             >
-              <Shield size={18} className={activeTab === 'securite' ? 'text-[#1454FF]' : 'text-slate-400'} />
+              <Shield size={18} className={activeTab === 'securite' ? 'text-[#1454FF]' : 'text-[var(--muted)]'} />
               Sécurité & Mot de passe
             </button>
           </nav>
@@ -152,7 +152,7 @@ export default function AdminParametresPage() {
             </div>
           )}
 
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <form onSubmit={handleSubmit}>
               
               {activeTab === 'profil' && (
@@ -188,7 +188,7 @@ export default function AdminParametresPage() {
                         disabled
                         className={clsx(inputClass, "opacity-70 cursor-not-allowed")}
                       />
-                      <p className="text-xs text-slate-400 mt-1.5">L'adresse email ne peut pas être modifiée ici.</p>
+                      <p className="text-xs text-[var(--muted)] mt-1.5">L'adresse email ne peut pas être modifiée ici.</p>
                     </div>
                   </div>
                 </div>
@@ -228,7 +228,7 @@ export default function AdminParametresPage() {
                 <button 
                   type="submit"
                   disabled={saving}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-[#1454FF] hover:bg-[#0ea5e9] text-white text-sm font-medium rounded-xl transition-all shadow-md shadow-[#1454FF]/20 disabled:opacity-70"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-[#1454FF] hover:bg-[#0ea5e9] text-[var(--ink)] text-sm font-medium rounded-xl transition-all shadow-md shadow-[#1454FF]/20 disabled:opacity-70"
                 >
                   {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                   {saving ? 'Enregistrement...' : 'Enregistrer les modifications'}

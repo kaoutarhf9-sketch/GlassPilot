@@ -854,7 +854,7 @@ Gestionnaire administratif du garage ${garageNom}
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Link href="/gestionnaire/dossiers" className="p-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl border border-slate-200 text-slate-500 hover:text-[var(--blue)] hover:border-[#1454FF] transition-all shadow-md">
+          <Link href="/gestionnaire/dossiers" className="p-2 bg-[var(--white)] rounded-xl border border-slate-200 text-slate-500 hover:text-[var(--blue)] hover:border-[#1454FF] transition-all shadow-md">
             <ArrowLeft size={18} />
           </Link>
           <div>
@@ -890,12 +890,12 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="flex items-center gap-3">
           <button
             onClick={handleOpenChat}
-            className="relative flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-slate-700 font-medium rounded-xl border border-slate-200 hover:border-[#1454FF] hover:text-[var(--blue)] hover:bg-blue-50 transition-all shadow-md"
+            className="relative flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--white)] text-slate-700 font-medium rounded-xl border border-slate-200 hover:border-[#1454FF] hover:text-[var(--blue)] hover:bg-blue-50 transition-all shadow-md"
           >
             <MessageSquare size={16} />
             <span className="hidden sm:inline">Message Garagiste</span>
             {unreadCount > 0 && !chatOpen && (
-              <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
+              <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-[var(--ink)] text-xs font-bold rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
                 {unreadCount > 9 ? '9+' : unreadCount}
               </span>
             )}
@@ -903,7 +903,7 @@ Gestionnaire administratif du garage ${garageNom}
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[var(--blue)] text-white font-medium rounded-xl hover:bg-[var(--blue)] transition-all shadow-md shadow-blue-200 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[var(--blue)] text-[var(--ink)] font-medium rounded-xl hover:bg-[var(--blue)] transition-all shadow-md shadow-blue-200 disabled:opacity-50"
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
             <span className="hidden sm:inline">Enregistrer</span>
@@ -931,7 +931,7 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="lg:col-span-2 space-y-6">
           
           {/* Formulaire */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                 <FileText size={16} className="text-[var(--blue)]" />
@@ -946,7 +946,7 @@ Gestionnaire administratif du garage ${garageNom}
                   <select
                     value={formData.statut}
                     onChange={(e) => setFormData({...formData, statut: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                   >
                     {STATUTS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                   </select>
@@ -954,12 +954,12 @@ Gestionnaire administratif du garage ${garageNom}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Date du sinistre</label>
                   <div className="relative">
-                    <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="date"
                       value={formData.date_sinistre}
                       onChange={(e) => setFormData({...formData, date_sinistre: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -967,13 +967,13 @@ Gestionnaire administratif du garage ${garageNom}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">N° de sinistre</label>
                   <div className="relative">
-                    <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="text"
                       placeholder="Ex: 3545081056"
                       value={formData.num_sinistre}
                       onChange={(e) => setFormData({...formData, num_sinistre: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -981,7 +981,7 @@ Gestionnaire administratif du garage ${garageNom}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Franchise (€)</label>
                   <div className="relative">
-                    <ReceiptEuro className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <ReceiptEuro className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="number"
                       min="0"
@@ -989,7 +989,7 @@ Gestionnaire administratif du garage ${garageNom}
                       placeholder="0.00"
                       value={formData.franchise_montant}
                       onChange={(e) => setFormData({...formData, franchise_montant: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -997,13 +997,13 @@ Gestionnaire administratif du garage ${garageNom}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Téléphone assurance</label>
                   <div className="relative">
-                    <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="tel"
                       placeholder="Ex: 09 70 80 82 82"
                       value={formData.assurance_telephone}
                       onChange={(e) => setFormData({...formData, assurance_telephone: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -1011,13 +1011,13 @@ Gestionnaire administratif du garage ${garageNom}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email assurance</label>
                   <div className="relative">
-                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="email"
                       placeholder="Ex: contact@assurance.fr"
                       value={formData.assurance_email}
                       onChange={(e) => setFormData({...formData, assurance_email: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -1025,13 +1025,13 @@ Gestionnaire administratif du garage ${garageNom}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">N° de contrat</label>
                   <div className="relative">
-                    <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="text"
                       placeholder="Numéro de contrat"
                       value={formData.num_contrat}
                       onChange={(e) => setFormData({...formData, num_contrat: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -1051,7 +1051,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* CARTE CLIENT */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
                 <User size={16} className="text-indigo-600" />
@@ -1067,7 +1067,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.client_prenom}
                       onChange={(e) => setFormData({...formData, client_prenom: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1076,7 +1076,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.client_nom}
                       onChange={(e) => setFormData({...formData, client_nom: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1085,7 +1085,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="tel"
                       value={formData.client_telephone}
                       onChange={(e) => setFormData({...formData, client_telephone: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1094,7 +1094,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="email"
                       value={formData.client_email}
                       onChange={(e) => setFormData({...formData, client_email: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div className="sm:col-span-2">
@@ -1103,7 +1103,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.client_adresse}
                       onChange={(e) => setFormData({...formData, client_adresse: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1112,7 +1112,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.client_cp}
                       onChange={(e) => setFormData({...formData, client_cp: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1121,7 +1121,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.client_ville}
                       onChange={(e) => setFormData({...formData, client_ville: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
               </div>
@@ -1129,7 +1129,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* CARTE VEHICULE ET JETON */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center">
                 <Car size={16} className="text-teal-600" />
@@ -1144,7 +1144,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <select
                       value={formData.type}
                       onChange={(e) => setFormData({...formData, type: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     >
                       <option value="simple">Simple</option>
                       <option value="prestige">Prestige</option>
@@ -1156,7 +1156,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.immatriculation}
                       onChange={(e) => setFormData({...formData, immatriculation: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1165,7 +1165,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.modele_vehicule}
                       onChange={(e) => setFormData({...formData, modele_vehicule: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
@@ -1174,7 +1174,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="number"
                       value={formData.kilometrage}
                       onChange={(e) => setFormData({...formData, kilometrage: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div className="sm:col-span-2">
@@ -1183,14 +1183,14 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       value={formData.type_vitrage}
                       onChange={(e) => setFormData({...formData, type_vitrage: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
               </div>
             </div>
           </div>
           {/* CARTE NOTE */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
                 <FileText size={16} className="text-amber-600" />
@@ -1203,12 +1203,12 @@ Gestionnaire administratif du garage ${garageNom}
                 placeholder="Ajouter une note ou une remarque sur ce dossier..."
                 value={formData.commentaire}
                 onChange={(e) => setFormData({...formData, commentaire: e.target.value})}
-                className="w-full px-4 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
+                className="w-full px-4 py-3 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
               />
             </div>
           </div>
           {/* Documents / Photos */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
@@ -1221,7 +1221,7 @@ Gestionnaire administratif du garage ${garageNom}
                   {documents.length} fichier{documents.length !== 1 ? 's' : ''}
                 </span>
 
-                <label className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--blue)] hover:bg-[var(--blue)] text-white rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md shadow-blue-200">
+                <label className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--blue)] hover:bg-[var(--blue)] text-[var(--ink)] rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md shadow-blue-200">
                   {uploading && !uploadingSlot ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
                   Ajouter des photos/docs
                   <input 
@@ -1257,7 +1257,7 @@ Gestionnaire administratif du garage ${garageNom}
                         className={clsx(
                           "group relative rounded-xl border overflow-hidden transition-all flex flex-col justify-between aspect-[4/3]",
                           doc 
-                            ? "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-slate-200 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
+                            ? "bg-[var(--white)]   border-slate-200 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
                             : "bg-[var(--white)]/40 border-dashed border-2 border-slate-200 hover:border-[#1454FF] hover:bg-blue-50/20"
                         )}
                         onClick={() => {
@@ -1277,16 +1277,16 @@ Gestionnaire administratif du garage ${garageNom}
                                 />
                               ) : (
                                 <div className="flex flex-col items-center justify-center w-full h-full">
-                                  <FileText size={32} className="text-slate-400" />
+                                  <FileText size={32} className="text-[var(--muted)]" />
                                   <span className="text-[10px] text-slate-500 mt-1 font-semibold">PDF</span>
                                 </div>
                               )}
                               
-                              <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                              <div className="absolute inset-0 bg-[var(--white)]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                                 {doc.isImage && (
                                   <button 
                                     onClick={(e) => { e.stopPropagation(); setSelectedImage(doc.url); }}
-                                    className="p-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 text-white rounded-lg transition-colors"
+                                    className="p-2 bg-[var(--white)] hover:bg-[var(--white)] text-[var(--ink)] rounded-lg transition-colors"
                                   >
                                     <Maximize2 size={16} />
                                   </button>
@@ -1297,7 +1297,7 @@ Gestionnaire administratif du garage ${garageNom}
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   onClick={(e) => e.stopPropagation()}
-                                  className="p-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 text-white rounded-lg transition-colors"
+                                  className="p-2 bg-[var(--white)] hover:bg-[var(--white)] text-[var(--ink)] rounded-lg transition-colors"
                                 >
                                   <Download size={16} />
                                 </a>
@@ -1309,7 +1309,7 @@ Gestionnaire administratif du garage ${garageNom}
                                 </button>
                               </div>
                             </div>
-                            <div className="p-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-t border-slate-200">
+                            <div className="p-3 bg-[var(--white)] border-t border-slate-200">
                               <p className="text-xs font-bold text-slate-800 truncate">{slot.label}</p>
                               <p className="text-[10px] text-slate-500 mt-0.5 truncate">{doc.name}</p>
                             </div>
@@ -1319,7 +1319,7 @@ Gestionnaire administratif du garage ${garageNom}
                             {isSlotUploading ? (
                               <Loader2 size={24} className="animate-spin text-[var(--blue)]" />
                             ) : (
-                              <Upload size={24} className="text-slate-400 group-hover:text-[var(--blue)] transition-colors mb-2" />
+                              <Upload size={24} className="text-[var(--muted)] group-hover:text-[var(--blue)] transition-colors mb-2" />
                             )}
                             <span className="text-xs font-bold text-slate-800 group-hover:text-[var(--blue)] transition-colors">
                               {slot.label}
@@ -1361,15 +1361,15 @@ Gestionnaire administratif du garage ${garageNom}
                             />
                           ) : (
                             <div className="flex flex-col items-center justify-center w-full h-full">
-                              <FileText size={32} className="text-slate-400" />
-                              <span className="text-[10px] text-slate-400 mt-1">PDF</span>
+                              <FileText size={32} className="text-[var(--muted)]" />
+                              <span className="text-[10px] text-[var(--muted)] mt-1">PDF</span>
                             </div>
                           )}
                           
-                          <div className="absolute inset-0 bg-slate-900/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                          <div className="absolute inset-0 bg-[var(--white)]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                             {doc.isImage && (
-                              <button className="p-1.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-lg hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 transition-colors">
-                                <Maximize2 className="text-white" size={16} />
+                              <button className="p-1.5 bg-[var(--white)] rounded-lg hover:bg-[var(--white)] transition-colors">
+                                <Maximize2 className="text-[var(--ink)]" size={16} />
                               </button>
                             )}
                             <a 
@@ -1378,9 +1378,9 @@ Gestionnaire administratif du garage ${garageNom}
                               target="_blank" 
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="p-1.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-lg hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 transition-colors"
+                              className="p-1.5 bg-[var(--white)] rounded-lg hover:bg-[var(--white)] transition-colors"
                             >
-                              <Download className="text-white" size={16} />
+                              <Download className="text-[var(--ink)]" size={16} />
                             </a>
                             <button 
                               onClick={(e) => { e.stopPropagation(); handleDeleteFile(doc.name); }}
@@ -1406,7 +1406,7 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="space-y-6">
           
           {/* Widget 1: RELANCE & INFORMATION */}
-          <div className="bg-[#224e63] rounded-2xl shadow-md border border-[#224e63] p-6 text-white overflow-hidden relative space-y-5">
+          <div className="bg-[#224e63] rounded-2xl shadow-md border border-[#224e63] p-6 text-[var(--ink)] overflow-hidden relative space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
               RELANCE & INFORMATION
             </h3>
@@ -1417,12 +1417,12 @@ Gestionnaire administratif du garage ${garageNom}
                 placeholder="Contenu..."
                 value={newNoteContent}
                 onChange={(e) => setNewNoteContent(e.target.value)}
-                className="w-full px-4 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-slate-800 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 shadow-inner outline-none transition-all resize-none"
+                className="w-full px-4 py-3 bg-[var(--white)] text-slate-800 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 shadow-inner outline-none transition-all resize-none"
               />
               <button
                 onClick={handleAddNote}
                 disabled={!newNoteContent.trim()}
-                className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#f39c12] hover:bg-[#e67e22] text-white font-bold rounded-xl transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:pointer-events-none text-sm"
+                className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#f39c12] hover:bg-[#e67e22] text-[var(--ink)] font-bold rounded-xl transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:pointer-events-none text-sm"
               >
                 <span className="text-base leading-none">+</span> Ajouter la note
               </button>
@@ -1431,8 +1431,8 @@ Gestionnaire administratif du garage ${garageNom}
             {/* Note feed */}
             <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
               {relanceNotes.length === 0 ? (
-                <div className="text-center py-6 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/5 rounded-xl border border-white/10">
-                  <p className="text-slate-300 text-xs font-medium">Aucune note de relance pour le moment.</p>
+                <div className="text-center py-6 bg-[var(--white)] rounded-xl border border-white/10">
+                  <p className="text-[var(--muted)] text-xs font-medium">Aucune note de relance pour le moment.</p>
                 </div>
               ) : (
                 relanceNotes.map((note) => {
@@ -1453,7 +1453,7 @@ Gestionnaire administratif du garage ${garageNom}
                         "p-4 rounded-2xl relative shadow-md text-[var(--ink)] text-sm border transition-all",
                         note.isSystem
                           ? "bg-sky-50 border-sky-100 text-sky-950 font-semibold"
-                          : "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-[var(--stone)]"
+                          : "bg-[var(--white)]   border-[var(--stone)]"
                       )}
                     >
                       {/* Three dot actions */}
@@ -1461,13 +1461,13 @@ Gestionnaire administratif du garage ${garageNom}
                         <div className="absolute top-3 right-3">
                           <button
                             onClick={() => setShowMenuId(showMenuId === note.id ? null : note.id)}
-                            className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-transparent transition-colors"
+                            className="p-1 text-[var(--muted)] hover:text-slate-600 rounded-lg hover:bg-transparent transition-colors"
                           >
                             <MoreVertical size={16} />
                           </button>
                           
                           {showMenuId === note.id && (
-                            <div className="absolute right-0 top-7 z-20 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-100 rounded-xl shadow-lg py-1 text-xs min-w-[100px] animate-in fade-in zoom-in-95 duration-100">
+                            <div className="absolute right-0 top-7 z-20 bg-[var(--white)] border border-slate-100 rounded-xl shadow-lg py-1 text-xs min-w-[100px] animate-in fade-in zoom-in-95 duration-100">
                               <button
                                 onClick={() => {
                                   handleDeleteNote(note.id);
@@ -1487,7 +1487,7 @@ Gestionnaire administratif du garage ${garageNom}
                         {note.text}
                       </div>
                       
-                      <div className="text-right text-[10px] text-slate-400 font-semibold mt-3">
+                      <div className="text-right text-[10px] text-[var(--muted)] font-semibold mt-3">
                         {formattedDate}
                       </div>
                     </div>
@@ -1498,7 +1498,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* Widget 2: Actions rapides */}
-          <div className="bg-[#224e63] rounded-2xl shadow-md border border-[#224e63] p-6 text-white overflow-hidden space-y-5">
+          <div className="bg-[#224e63] rounded-2xl shadow-md border border-[#224e63] p-6 text-[var(--ink)] overflow-hidden space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
               Actions rapides
             </h3>
@@ -1523,7 +1523,7 @@ Gestionnaire administratif du garage ${garageNom}
               {dossier?.statut === 'reglement_recu' && (
                 <button
                   onClick={() => handleUpdateStatus('termine')}
-                  className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm shadow-md active:scale-98"
+                  className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-[var(--ink)] font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm shadow-md active:scale-98"
                 >
                   <CheckCircle size={16} />
                   Archiver le dossier
@@ -1536,7 +1536,7 @@ Gestionnaire administratif du garage ${garageNom}
                   <select
                     value={selectedQuickStatus}
                     onChange={(e) => setSelectedQuickStatus(e.target.value)}
-                    className="w-full pl-4 pr-10 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-slate-800 border border-slate-200 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
+                    className="w-full pl-4 pr-10 py-3 bg-[var(--white)] text-slate-800 border border-slate-200 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
                   >
                     <option value="relance">Relance</option>
                     <option value="reglement_en_cours">Règlement en cours</option>
@@ -1545,7 +1545,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <option value="recouvrement">Recouvrement</option>
                     <option value="desistement">Désistement</option>
                   </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[var(--muted)]">
                     <ChevronRight className="rotate-90" size={16} />
                   </div>
                 </div>
@@ -1553,7 +1553,7 @@ Gestionnaire administratif du garage ${garageNom}
                 <button
                   onClick={() => handleUpdateStatus(selectedQuickStatus)}
                   title="Confirmer le changement de statut"
-                  className="w-12 h-12 bg-[#224e63] hover:bg-[#2c617a] border border-white/20 text-white rounded-xl flex items-center justify-center transition-colors shadow-md shrink-0 active:scale-95"
+                  className="w-12 h-12 bg-[#224e63] hover:bg-[#2c617a] border border-white/20 text-[var(--ink)] rounded-xl flex items-center justify-center transition-colors shadow-md shrink-0 active:scale-95"
                 >
                   <CheckCircle size={20} className="text-teal-400" />
                 </button>
@@ -1581,10 +1581,10 @@ Gestionnaire administratif du garage ${garageNom}
 
       {/* Modal image */}
       {selectedImage && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--white)]/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
              onClick={() => setSelectedImage(null)}>
           <button 
-            className="absolute top-6 right-6 text-slate-300 hover:text-white transition-colors bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/10 rounded-full p-2.5 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20"
+            className="absolute top-6 right-6 text-[var(--muted)] hover:text-[var(--ink)] transition-colors bg-[var(--white)] rounded-full p-2.5 hover:bg-[var(--white)]"
             onClick={() => setSelectedImage(null)}
           >
             <X size={24} />
@@ -1600,7 +1600,7 @@ Gestionnaire administratif du garage ${garageNom}
 
       {/* Chat Window */}
       {chatOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-2xl shadow-blue-900/10 border border-slate-200 overflow-hidden flex flex-col animate-in slide-in-from-bottom-8 duration-300">
+        <div className="fixed bottom-6 right-6 z-50 w-[380px] bg-[var(--white)] rounded-2xl shadow-2xl shadow-blue-900/10 border border-slate-200 overflow-hidden flex flex-col animate-in slide-in-from-bottom-8 duration-300">
           {/* Chat Header */}
           <div 
             className="bg-gradient-to-r from-[#1454FF] to-blue-600 px-5 py-4 flex items-center justify-between shadow-md cursor-pointer group"
@@ -1608,18 +1608,18 @@ Gestionnaire administratif du garage ${garageNom}
             title="Cliquez pour fermer la discussion"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-xl flex items-center justify-center border border-white/10">
-                <Building2 size={18} className="text-white" />
+              <div className="w-10 h-10 bg-[var(--white)] rounded-xl flex items-center justify-center border border-white/10">
+                <Building2 size={18} className="text-[var(--ink)]" />
               </div>
               <div>
-                <p className="text-white font-bold text-sm leading-tight group-hover:underline">{dossier?.garages?.nom_garage || 'Garagiste'}</p>
+                <p className="text-[var(--ink)] font-bold text-sm leading-tight group-hover:underline">{dossier?.garages?.nom_garage || 'Garagiste'}</p>
                 <p className="text-blue-100 text-xs">Chat en direct</p>
               </div>
             </div>
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setChatOpen(false); }}
-              className="text-blue-100 hover:text-white hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/10 p-1.5 rounded-lg transition-colors"
+              className="text-blue-100 hover:text-[var(--ink)] hover:bg-[var(--white)] p-1.5 rounded-lg transition-colors"
               title="Fermer la discussion"
             >
               <X size={18} />
@@ -1630,9 +1630,9 @@ Gestionnaire administratif du garage ${garageNom}
           <div className="h-96 overflow-y-auto p-5 space-y-4 bg-transparent/50">
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center">
-                <MessageSquare size={32} className="text-slate-300 mb-3" />
+                <MessageSquare size={32} className="text-[var(--muted)] mb-3" />
                 <p className="text-sm font-medium text-slate-500">Aucun message</p>
-                <p className="text-xs text-slate-400 mt-1">Échangez directement avec le garagiste ici.</p>
+                <p className="text-xs text-[var(--muted)] mt-1">Échangez directement avec le garagiste ici.</p>
               </div>
             ) : (
               messages.map((msg, idx) => {
@@ -1648,8 +1648,8 @@ Gestionnaire administratif du garage ${garageNom}
                     <div className={clsx(
                       "px-4 py-2.5 rounded-2xl shadow-md text-sm",
                       isMe
-                        ? "bg-[var(--blue)] text-white rounded-br-sm animate-in fade-in slide-in-from-right-4 duration-200"
-                        : "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 text-slate-800 rounded-bl-sm animate-in fade-in slide-in-from-left-4 duration-200"
+                        ? "bg-[var(--blue)] text-[var(--ink)] rounded-br-sm animate-in fade-in slide-in-from-right-4 duration-200"
+                        : "bg-[var(--white)]   border border-slate-200 text-slate-800 rounded-bl-sm animate-in fade-in slide-in-from-left-4 duration-200"
                     )}>
                       {msg.message.startsWith('📎 Fichier :') ? (
                         (() => {
@@ -1678,7 +1678,7 @@ Gestionnaire administratif du garage ${garageNom}
                                 className={clsx(
                                   "inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all mt-1",
                                   isMe
-                                    ? "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/30 text-white"
+                                    ? "bg-[var(--white)]   hover:bg-[var(--white)]   text-[var(--ink)]"
                                     : "bg-blue-50 hover:bg-blue-100 text-[var(--blue)]"
                                 )}
                               >
@@ -1691,7 +1691,7 @@ Gestionnaire administratif du garage ${garageNom}
                         <p className="break-words leading-relaxed">{msg.message}</p>
                       )}
                     </div>
-                    <span className="text-[10px] text-slate-400 font-medium mt-1.5 px-1">
+                    <span className="text-[10px] text-[var(--muted)] font-medium mt-1.5 px-1">
                       {new Date(msg.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
@@ -1720,7 +1720,7 @@ Gestionnaire administratif du garage ${garageNom}
                 key={idx}
                 onClick={() => sendQuickMessage(pill.text)}
                 disabled={sendingMessage}
-                className="px-3 py-1.5 bg-[#1F4E66] hover:bg-[#15384B] disabled:opacity-50 text-white border border-white/20 rounded-full text-xs font-semibold whitespace-nowrap transition-all shadow-md active:scale-95 shrink-0 cursor-pointer"
+                className="px-3 py-1.5 bg-[#1F4E66] hover:bg-[#15384B] disabled:opacity-50 text-[var(--ink)] border border-white/20 rounded-full text-xs font-semibold whitespace-nowrap transition-all shadow-md active:scale-95 shrink-0 cursor-pointer"
               >
                 {pill.label}
               </button>
@@ -1728,7 +1728,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* Input Area */}
-          <div className="p-4 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-t border-slate-100 shrink-0">
+          <div className="p-4 bg-[var(--white)] border-t border-slate-100 shrink-0">
             <div className="flex items-center gap-2">
               <input
                 type="file"
@@ -1759,7 +1759,7 @@ Gestionnaire administratif du garage ${garageNom}
               <button
                 onClick={sendMessage}
                 disabled={!newMessage.trim() || sendingMessage || chatUploading}
-                className="w-11 h-11 bg-[var(--blue)] text-white rounded-xl flex items-center justify-center hover:bg-[var(--blue)] disabled:opacity-50 disabled:hover:bg-[var(--blue)] transition-all shadow-md shrink-0 active:scale-95 cursor-pointer"
+                className="w-11 h-11 bg-[var(--blue)] text-[var(--ink)] rounded-xl flex items-center justify-center hover:bg-[var(--blue)] disabled:opacity-50 disabled:hover:bg-[var(--blue)] transition-all shadow-md shrink-0 active:scale-95 cursor-pointer"
               >
                 {sendingMessage ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} className="ml-0.5" />}
               </button>

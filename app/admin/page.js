@@ -56,7 +56,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Welcome Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
         <div>
           <h2 className="text-3xl sm:text-4xl font-serif-premium text-[var(--ink)]">
             Bonjour, <span className="italic text-[var(--blue)]">Administrateur</span>
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
         
         {/* Card 1: Gestionnaires */}
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+        <div className="bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
           {/* Subtle Radial Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#1454FF]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
           
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Card 2: Garages */}
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+        <div className="bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
           {/* Subtle Radial Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#1454FF]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Card 3: Dossiers */}
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+        <div className="bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
           {/* Subtle Radial Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#1454FF]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 

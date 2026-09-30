@@ -13,10 +13,14 @@
   --badge-bg: #E8F7F0;
   --badge-text: #0E4327;
   
+  --white: #FFFFFF;
+  --page-bg: #ECFEFF;
+  --paper: #F8FAFC;
+  --stone: rgba(10, 0, 48, 0.08);
   --ink: #0A0030;
   --ink-2: #120052;
   --muted: #64748B;
-  --blue: #18CDEC;
+  --blue: #3B0FAA;
   --paper: #FFFFFF;
 }
 

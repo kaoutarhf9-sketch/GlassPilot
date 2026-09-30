@@ -120,21 +120,21 @@ export default function GestionnairesPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
         <div>
           <h2 className="text-3xl font-serif-premium text-[var(--ink)]">Gestionnaires</h2>
           <p className="text-xs font-semibold text-[var(--muted)] mt-1.5">Gérez l'équipe des gestionnaires et supervisez leurs accès de traitement.</p>
         </div>
         <button
           onClick={() => { setIsModalOpen(true); setSubmitResult(null); }}
-          className="flex items-center gap-2 bg-[var(--blue)] hover:bg-[#003BDE] text-white px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#1454FF]/10 hover:-translate-y-0.5 cursor-pointer"
+          className="flex items-center gap-2 bg-[var(--blue)] hover:bg-[#003BDE] text-[var(--ink)] px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#1454FF]/10 hover:-translate-y-0.5 cursor-pointer"
         >
           <Plus size={16} />
           Nouveau Gestionnaire
         </button>
       </div>
 
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden">
+      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden">
         <div className="p-5 border-b border-[var(--stone)]/60 flex flex-col sm:flex-row justify-between gap-4">
           <div className="relative max-w-md w-full">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -171,7 +171,7 @@ export default function GestionnairesPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] divide-y divide-[#E6E4DD]/40">
+            <tbody className="bg-[var(--white)] divide-y divide-[#E6E4DD]/40">
               {fetchError ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center">
@@ -181,12 +181,12 @@ export default function GestionnairesPage() {
                         <span>Erreur de chargement</span>
                       </div>
                       <p className="text-xs text-[var(--muted)] font-semibold">Impossible de charger la liste des gestionnaires.</p>
-                      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-3 border border-[var(--stone)]/60 text-[10px] font-mono text-[var(--ink)] overflow-x-auto text-left whitespace-pre-wrap max-h-32 shadow-inner">
+                      <div className="bg-[var(--white)] rounded-2xl p-3 border border-[var(--stone)]/60 text-[10px] font-mono text-[var(--ink)] overflow-x-auto text-left whitespace-pre-wrap max-h-32 shadow-inner">
                         {fetchError}
                       </div>
                       <button
                         onClick={() => fetchGestionnaires()}
-                        className="px-4 py-2.5 bg-[var(--blue)] hover:bg-[#003BDE] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-[#1454FF]/10 cursor-pointer"
+                        className="px-4 py-2.5 bg-[var(--blue)] hover:bg-[#003BDE] text-[var(--ink)] rounded-xl text-xs font-bold transition-all shadow-md shadow-[#1454FF]/10 cursor-pointer"
                       >
                         Réessayer
                       </button>
@@ -256,7 +256,7 @@ export default function GestionnairesPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-[#090D16]/60 backdrop-blur-sm" onClick={() => !isSubmitting && setIsModalOpen(false)}></div>
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl shadow-2xl max-w-md w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[var(--stone)] overflow-hidden">
+          <div className="bg-[var(--white)] rounded-3xl shadow-2xl max-w-md w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[var(--stone)] overflow-hidden">
             <div className="p-6 sm:p-8 border-b border-[var(--stone)]/60 bg-[var(--white)]/40">
               <h3 className="text-xl font-bold font-serif-premium text-[var(--ink)]">Ajouter un Gestionnaire</h3>
               <p className="text-xs font-semibold text-[var(--muted)] mt-1.5">
@@ -278,7 +278,7 @@ export default function GestionnairesPage() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-bold">{submitResult.message}</p>
                     {submitResult.password && (
-                      <div className="mt-2.5 p-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl border border-emerald-200 text-[10px] font-mono text-emerald-800">
+                      <div className="mt-2.5 p-2.5 bg-[var(--white)] rounded-xl border border-emerald-200 text-[10px] font-mono text-emerald-800">
                         Mot de passe temporaire : <span className="font-bold">{submitResult.password}</span>
                       </div>
                     )}
@@ -299,7 +299,7 @@ export default function GestionnairesPage() {
                       disabled={isSubmitting}
                       value={formData.prenom}
                       onChange={(e) => setFormData({...formData, prenom: e.target.value})}
-                      className="block w-full pl-9 pr-3 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] disabled:opacity-50"
+                      className="block w-full pl-9 pr-3 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] disabled:opacity-50"
                       placeholder="Jean"
                     />
                   </div>
@@ -312,7 +312,7 @@ export default function GestionnairesPage() {
                     disabled={isSubmitting}
                     value={formData.nom}
                     onChange={(e) => setFormData({...formData, nom: e.target.value})}
-                    className="block w-full px-3.5 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] disabled:opacity-50"
+                    className="block w-full px-3.5 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] disabled:opacity-50"
                     placeholder="Dupont"
                   />
                 </div>
@@ -330,7 +330,7 @@ export default function GestionnairesPage() {
                     disabled={isSubmitting}
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="block w-full pl-9 pr-3 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] disabled:opacity-50"
+                    className="block w-full pl-9 pr-3 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] disabled:opacity-50"
                     placeholder="jean.dupont@exemple.com"
                   />
                 </div>
@@ -348,7 +348,7 @@ export default function GestionnairesPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting || submitResult?.type === 'success'}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[var(--blue)] text-white rounded-2xl text-xs font-bold uppercase tracking-wider hover:bg-[#003BDE] transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-[#1454FF]/10"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[var(--blue)] text-[var(--ink)] rounded-2xl text-xs font-bold uppercase tracking-wider hover:bg-[#003BDE] transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-[#1454FF]/10"
                 >
                   {isSubmitting ? (
                     <>
@@ -369,7 +369,7 @@ export default function GestionnairesPage() {
       {managerToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-[#090D16]/60 backdrop-blur-sm" onClick={() => !isDeleting && setManagerToDelete(null)}></div>
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl shadow-2xl max-w-sm w-full relative z-10 animate-in zoom-in-95 duration-200 p-6 sm:p-8 text-center border border-[var(--stone)]">
+          <div className="bg-[var(--white)] rounded-3xl shadow-2xl max-w-sm w-full relative z-10 animate-in zoom-in-95 duration-200 p-6 sm:p-8 text-center border border-[var(--stone)]">
             <div className="w-14 h-14 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-rose-100">
               <Trash2 size={20} />
             </div>
@@ -389,7 +389,7 @@ export default function GestionnairesPage() {
               <button
                 onClick={confirmDelete}
                 disabled={isDeleting}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-rose-600 text-white rounded-2xl text-xs font-bold uppercase tracking-wider hover:bg-rose-700 transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-rose-600/10"
+                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-rose-600 text-[var(--ink)] rounded-2xl text-xs font-bold uppercase tracking-wider hover:bg-rose-700 transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-rose-600/10"
               >
                 {isDeleting ? <Loader2 size={13} className="animate-spin" /> : 'Supprimer'}
               </button>

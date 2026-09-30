@@ -230,7 +230,7 @@ export default function ProfilPage() {
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-slate-200">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-slate-200">
           <Sparkles size={14} className="text-[#1454FF]" />
           <span className="text-xs font-medium text-[#1454FF] uppercase tracking-wider">Configuration</span>
         </div>
@@ -247,19 +247,19 @@ export default function ProfilPage() {
               onClick={() => { setActiveTab('profil'); setError(''); setSuccess(''); }}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'profil' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-[var(--ink)]'}`}
             >
-              <User size={18} className={activeTab === 'profil' ? 'text-[#1454FF]' : 'text-slate-400'} />
+              <User size={18} className={activeTab === 'profil' ? 'text-[#1454FF]' : 'text-[var(--muted)]'} />
               Personnel & Garage
             </button>
             <button 
               onClick={() => { setActiveTab('securite'); setError(''); setSuccess(''); }}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'securite' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-[var(--ink)]'}`}
             >
-              <Shield size={18} className={activeTab === 'securite' ? 'text-[#1454FF]' : 'text-slate-400'} />
+              <Shield size={18} className={activeTab === 'securite' ? 'text-[#1454FF]' : 'text-[var(--muted)]'} />
               Sécurité du compte
             </button>
           </nav>
 
-          <div className="mt-8 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-6">
+          <div className="mt-8 bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-6">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-8 rounded-xl bg-[var(--blue)]/10 flex items-center justify-center">
                 <Award size={16} className="text-[var(--blue)]" />
@@ -289,7 +289,7 @@ export default function ProfilPage() {
             </div>
           )}
 
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
+          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
             <form onSubmit={handleSubmit}>
               
               {activeTab === 'profil' && (
@@ -302,10 +302,10 @@ export default function ProfilPage() {
                         {logoPreview ? (
                           <img src={logoPreview} alt="Logo preview" className="w-full h-full object-contain p-2" />
                         ) : (
-                          <ImageIcon size={32} className="text-slate-300" />
+                          <ImageIcon size={32} className="text-[var(--muted)]" />
                         )}
                         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Camera size={20} className="text-white" />
+                          <Camera size={20} className="text-[var(--ink)]" />
                         </div>
                       </div>
                       <div>
@@ -339,7 +339,7 @@ export default function ProfilPage() {
                           <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input type="email" name="email" value={formData.email} disabled className={clsx(inputClass, "pl-10 opacity-70 cursor-not-allowed")} />
                         </div>
-                        <p className="text-xs text-slate-400 mt-1.5">L'adresse email de connexion ne peut pas être modifiée ici.</p>
+                        <p className="text-xs text-[var(--muted)] mt-1.5">L'adresse email de connexion ne peut pas être modifiée ici.</p>
                       </div>
                     </div>
                   </div>
@@ -422,7 +422,7 @@ export default function ProfilPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2.5 bg-[#1454FF] hover:bg-[#0ea5e9] text-white font-medium rounded-xl transition-all shadow-md flex items-center gap-2 disabled:opacity-70"
+                  className="px-6 py-2.5 bg-[#1454FF] hover:bg-[#0ea5e9] text-[var(--ink)] font-medium rounded-xl transition-all shadow-md flex items-center gap-2 disabled:opacity-70"
                 >
                   {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                   {saving ? 'Enregistrement...' : 'Enregistrer'}

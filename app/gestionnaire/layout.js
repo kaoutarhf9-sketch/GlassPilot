@@ -277,15 +277,15 @@ export default function GestionnaireLayout({ children }) {
     <div className="min-h-screen bg-transparent font-sans text-[var(--ink)] selection:bg-indigo-100 selection:text-indigo-900">
       
       {/* Sidebar Desktop (Dark Premium) */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950 border-r border-slate-800 flex-col z-30">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950 border-r border-[var(--stone)] flex-col z-30">
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-slate-800/60">
+        <div className="h-16 flex items-center px-6 border-b border-[var(--stone)]/60">
           <Link href="/gestionnaire/dashboard" className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-8 h-8 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-600/20 group-hover:bg-indigo-500 transition-colors">
-              <Sparkles size={16} className="text-white" />
+              <Sparkles size={16} className="text-[var(--ink)]" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-xl font-bold tracking-tight text-[var(--ink)]">
                 Glass<span className="text-indigo-400">Pilot</span>
               </span>
             </div>
@@ -293,14 +293,14 @@ export default function GestionnaireLayout({ children }) {
         </div>
 
         {/* User context info */}
-        <div className="px-6 py-5 border-b border-slate-800/60">
+        <div className="px-6 py-5 border-b border-[var(--stone)]/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-inner text-white font-bold border border-slate-700">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-inner text-[var(--ink)] font-bold border border-[var(--stone)]">
               {gestionnaireName.charAt(0).toUpperCase() || 'G'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white truncate">{gestionnaireName || 'Gestionnaire'}</p>
-              <p className="text-xs text-slate-400 truncate">Espace d'administration</p>
+              <p className="text-sm font-semibold text-[var(--ink)] truncate">{gestionnaireName || 'Gestionnaire'}</p>
+              <p className="text-xs text-[var(--muted)] truncate">Espace d'administration</p>
             </div>
           </div>
         </div>
@@ -319,12 +319,12 @@ export default function GestionnaireLayout({ children }) {
                     className={clsx(
                       "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group text-left",
                       active 
-                        ? "bg-slate-800/80 text-white" 
-                        : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
+                        ? "bg-[var(--paper)]/80 text-[var(--ink)]" 
+                        : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon size={18} className={clsx("transition-colors", active ? "text-slate-200" : "text-slate-500 group-hover:text-slate-300")} />
+                      <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink-2)]" : "text-slate-500 group-hover:text-[var(--muted)]")} />
                       <span>{item.label}</span>
                     </div>
                     <ChevronRight 
@@ -347,8 +347,8 @@ export default function GestionnaireLayout({ children }) {
                             className={clsx(
                               "flex items-center gap-2.5 py-1.5 px-3 rounded-md text-xs font-medium transition-all duration-150",
                               isSubActive
-                                ? "text-white bg-indigo-600/30 font-semibold"
-                                : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                                ? "text-[var(--ink)] bg-indigo-600/30 font-semibold"
+                                : "text-[var(--muted)] hover:text-[var(--ink-2)] hover:bg-[var(--white)]/30"
                             )}
                           >
                             <span className={clsx(
@@ -373,18 +373,18 @@ export default function GestionnaireLayout({ children }) {
                 className={clsx(
                   "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
                   active 
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" 
-                    : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
+                    ? "bg-indigo-600 text-[var(--ink)] shadow-md shadow-indigo-600/20" 
+                    : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <Icon size={18} className={clsx("transition-colors", active ? "text-white" : "text-slate-500 group-hover:text-slate-300")} />
+                  <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink)]" : "text-slate-500 group-hover:text-[var(--muted)]")} />
                   <span>{item.label}</span>
                 </div>
                 {item.badge !== undefined && item.badge > 0 && (
                   <span className={clsx(
                     "text-xs font-semibold px-2 py-0.5 rounded-full min-w-[20px] text-center",
-                    active ? "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 text-white" : "bg-slate-800 text-slate-300 group-hover:bg-slate-700"
+                    active ? "bg-[var(--white)]   text-[var(--ink)]" : "bg-[var(--paper)] text-[var(--muted)] group-hover:bg-slate-700"
                   )}>
                     {item.badge}
                   </span>
@@ -395,17 +395,17 @@ export default function GestionnaireLayout({ children }) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-800/60 space-y-1">
+        <div className="p-4 border-t border-[var(--stone)]/60 space-y-1">
           <Link 
             href="/gestionnaire/aide" 
-            className="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper)]/50 rounded-lg text-sm font-medium transition-colors"
           >
             <HelpCircle size={18} className="text-slate-500" />
             Support technique
           </Link>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
           >
             <LogOut size={18} className="text-slate-500 group-hover:text-rose-400" />
             Se déconnecter
@@ -417,7 +417,7 @@ export default function GestionnaireLayout({ children }) {
       <div className="lg:pl-72 flex flex-col min-h-screen">
         
         {/* Topbar (Light Glassmorphism) */}
-        <header className="sticky top-0 z-20 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/80 backdrop-blur-md border-b border-slate-200 shadow-md transition-all h-16 flex-shrink-0">
+        <header className="sticky top-0 z-20 bg-[var(--white)] border-b border-slate-200 shadow-md transition-all h-16 flex-shrink-0">
           <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-full">
             <div className="flex items-center gap-4">
               <button 
@@ -463,7 +463,7 @@ export default function GestionnaireLayout({ children }) {
                       className="fixed inset-0 z-40"
                       onClick={() => setNotificationsOpen(false)}
                     />
-                    <div className="absolute right-0 mt-3 w-[350px] sm:w-[380px] bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl border border-slate-200 shadow-2xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
+                    <div className="absolute right-0 mt-3 w-[350px] sm:w-[380px] bg-[var(--white)] rounded-xl border border-slate-200 shadow-2xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
                       <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-transparent/50">
                         <h3 className="font-semibold text-[var(--ink)]">Notifications</h3>
                         {globalUnreadCount > 0 && (
@@ -479,10 +479,10 @@ export default function GestionnaireLayout({ children }) {
                         {notifications.length === 0 ? (
                           <div className="p-8 text-center flex flex-col items-center">
                             <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                              <Bell size={20} className="text-slate-400" />
+                              <Bell size={20} className="text-[var(--muted)]" />
                             </div>
                             <p className="text-sm font-medium text-slate-600">Aucune notification</p>
-                            <p className="text-xs text-slate-400 mt-1">Vous êtes à jour !</p>
+                            <p className="text-xs text-[var(--muted)] mt-1">Vous êtes à jour !</p>
                           </div>
                         ) : (
                           notifications.map((notif) => (
@@ -510,7 +510,7 @@ export default function GestionnaireLayout({ children }) {
                                     Nouveau message {notif.dossiers?.numero ? `(${notif.dossiers.numero})` : ''}
                                   </p>
                                   <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
-                                  <p className="text-[10px] font-medium text-slate-400 mt-2 uppercase tracking-wider">
+                                  <p className="text-[10px] font-medium text-[var(--muted)] mt-2 uppercase tracking-wider">
                                     {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
                                   </p>
                                 </div>
@@ -519,7 +519,7 @@ export default function GestionnaireLayout({ children }) {
                                     e.stopPropagation();
                                     markAsRead(notif.id);
                                   }}
-                                  className="text-slate-400 hover:text-rose-500 hover:bg-rose-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                  className="text-[var(--muted)] hover:text-rose-500 hover:bg-rose-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
                                   title="Supprimer la notification"
                                 >
                                   <Trash2 size={14} />
@@ -558,7 +558,7 @@ export default function GestionnaireLayout({ children }) {
       {/* Toast de Notification Globale */}
       {showToast && latestMessage && (
         <div className="fixed top-20 right-4 sm:right-6 z-50 animate-in slide-in-from-top-4 fade-in duration-300">
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl shadow-2xl shadow-indigo-900/10 border border-slate-200/60 p-4 w-[320px] flex items-start gap-3 cursor-pointer hover:border-indigo-300 hover:shadow-indigo-900/20 transition-all"
+          <div className="bg-[var(--white)] rounded-xl shadow-2xl shadow-indigo-900/10 border border-slate-200/60 p-4 w-[320px] flex items-start gap-3 cursor-pointer hover:border-indigo-300 hover:shadow-indigo-900/20 transition-all"
                onClick={() => {
                  router.push(`/gestionnaire/dossiers/${latestMessage.dossier_id}`);
                  setShowToast(false);
@@ -569,7 +569,7 @@ export default function GestionnaireLayout({ children }) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-0.5">
                 <h4 className="text-sm font-semibold text-[var(--ink)] truncate">{latestMessage.sender_name || 'Garagiste'}</h4>
-                <button onClick={(e) => { e.stopPropagation(); setShowToast(false); }} className="text-slate-400 hover:text-slate-600 focus:outline-none p-1 -mr-1 rounded-md">
+                <button onClick={(e) => { e.stopPropagation(); setShowToast(false); }} className="text-[var(--muted)] hover:text-slate-600 focus:outline-none p-1 -mr-1 rounded-md">
                   <X size={14} />
                 </button>
               </div>
@@ -583,28 +583,28 @@ export default function GestionnaireLayout({ children }) {
       {/* Menu mobile (Dark Premium) */}
       {mobileMenuOpen && (
         <>
-          <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-slate-950 z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-slate-800">
-            <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800/60">
+          <div className="fixed inset-0 bg-[var(--white)]/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
+          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-slate-950 z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
+            <div className="h-16 flex items-center justify-between px-6 border-b border-[var(--stone)]/60">
               <Link href="/gestionnaire/dashboard" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                 <div className="flex items-center justify-center w-8 h-8 bg-indigo-600 rounded-lg">
-                  <Sparkles size={16} className="text-white" />
+                  <Sparkles size={16} className="text-[var(--ink)]" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-white">Glass<span className="text-indigo-400">Pilot</span></span>
+                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-indigo-400">Pilot</span></span>
               </Link>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-slate-400 hover:text-white rounded-lg">
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[var(--muted)] hover:text-[var(--ink)] rounded-lg">
                 <X size={20} />
               </button>
             </div>
             
-            <div className="px-6 py-5 border-b border-slate-800/60">
+            <div className="px-6 py-5 border-b border-[var(--stone)]/60">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold border border-slate-700">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-[var(--ink)] font-bold border border-[var(--stone)]">
                   {gestionnaireName.charAt(0).toUpperCase() || 'G'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{gestionnaireName || 'Gestionnaire'}</p>
-                  <p className="text-xs text-slate-400 truncate">Espace d'administration</p>
+                  <p className="text-sm font-semibold text-[var(--ink)] truncate">{gestionnaireName || 'Gestionnaire'}</p>
+                  <p className="text-xs text-[var(--muted)] truncate">Espace d'administration</p>
                 </div>
               </div>
             </div>
@@ -621,11 +621,11 @@ export default function GestionnaireLayout({ children }) {
                         onClick={() => setStatusFiltersOpen(!statusFiltersOpen)}
                         className={clsx(
                           "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left",
-                          active ? "bg-slate-800/80 text-white" : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
+                          active ? "bg-[var(--paper)]/80 text-[var(--ink)]" : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
                         )}
                       >
                         <div className="flex items-center gap-3">
-                          <Icon size={18} className={clsx(active ? "text-white" : "text-slate-500")} />
+                          <Icon size={18} className={clsx(active ? "text-[var(--ink)]" : "text-slate-500")} />
                           <span>{item.label}</span>
                         </div>
                         <ChevronRight 
@@ -649,8 +649,8 @@ export default function GestionnaireLayout({ children }) {
                                 className={clsx(
                                   "flex items-center gap-2.5 py-1.5 px-3 rounded-md text-xs font-medium transition-all",
                                   isSubActive
-                                    ? "text-white bg-indigo-600/30 font-semibold"
-                                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                                    ? "text-[var(--ink)] bg-indigo-600/30 font-semibold"
+                                    : "text-[var(--muted)] hover:text-[var(--ink-2)] hover:bg-[var(--white)]/30"
                                 )}
                               >
                                 <span className={clsx(
@@ -675,15 +675,15 @@ export default function GestionnaireLayout({ children }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={clsx(
                       "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
+                      active ? "bg-indigo-600 text-[var(--ink)] shadow-md" : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon size={18} className={clsx(active ? "text-white" : "text-slate-500")} />
+                      <Icon size={18} className={clsx(active ? "text-[var(--ink)]" : "text-slate-500")} />
                       <span>{item.label}</span>
                     </div>
                     {item.badge !== undefined && item.badge > 0 && (
-                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[var(--paper)] text-[var(--muted)]">
                         {item.badge}
                       </span>
                     )}
@@ -692,13 +692,13 @@ export default function GestionnaireLayout({ children }) {
               })}
             </nav>
 
-            <div className="p-4 border-t border-slate-800/60">
+            <div className="p-4 border-t border-[var(--stone)]/60">
               <button 
                 onClick={() => {
                   setMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
               >
                 <LogOut size={18} />
                 Déconnexion

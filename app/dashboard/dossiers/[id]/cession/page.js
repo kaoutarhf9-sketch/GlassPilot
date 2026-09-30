@@ -273,22 +273,22 @@ export default function CessionDeCreance() {
     doc.text(`${assurance?.nom?.toUpperCase() || 'ASSURANCE'}`, marginX, y);
     y += 5;
     doc.setFont('helvetica', 'normal');
-    doc.text(`Contrat n° `, marginX, y);
+    doc.text(`Contrat n°`, marginX, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${dossier.num_contrat || 'Non renseigné'}`, marginX + 18, y);
     doc.setFont('helvetica', 'normal');
     y += 5;
-    doc.text(`Sinistre n° `, marginX, y);
+    doc.text(`Sinistre n°`, marginX, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${dossier.num_sinistre || 'Non renseigné'}`, marginX + 18, y);
     doc.setFont('helvetica', 'normal');
     y += 5;
-    doc.text(`Accident du `, marginX, y);
+    doc.text(`Accident du`, marginX, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${dateSinistre}`, marginX + 22, y);
     doc.setFont('helvetica', 'normal');
     y += 5;
-    doc.text(`Nature du sinistre : `, marginX, y);
+    doc.text(`Nature du sinistre :`, marginX, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${dossier.raison_sinistre || dossier.type_vitrage || 'Bris de glace'}`, marginX + 32, y);
     doc.setFont('helvetica', 'normal');
@@ -335,7 +335,7 @@ export default function CessionDeCreance() {
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    doc.text(`Entre le Client/Assuré et le Réparateur professionnel — `, marginX, y);
+    doc.text(`Entre le Client/Assuré et le Réparateur professionnel —`, marginX, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${assurance?.nom?.toUpperCase() || '____________'}`, marginX + 90, y);
     doc.setFont('helvetica', 'normal');
@@ -345,7 +345,7 @@ export default function CessionDeCreance() {
     doc.setFont('helvetica', 'bold');
     doc.text(`${dossier.num_contrat || '____________'}`, marginX + 25, y);
     doc.setFont('helvetica', 'normal');
-    doc.text(` —  N° de sinistre :`, marginX + 60, y);
+    doc.text(`— N° de sinistre :`, marginX + 60, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${dossier.num_sinistre || '____________'}`, marginX + 90, y);
     doc.setFont('helvetica', 'normal');
@@ -355,7 +355,7 @@ export default function CessionDeCreance() {
     doc.setFont('helvetica', 'bold');
     doc.text(`${dateSinistre}`, marginX + 20, y);
     doc.setFont('helvetica', 'normal');
-    doc.text(` —  Nature :`, marginX + 50, y);
+    doc.text(`— Nature :`, marginX + 50, y);
     doc.setFont('helvetica', 'bold');
     doc.text(`${dossier.raison_sinistre || dossier.type_vitrage || 'Bris de glace'}`, marginX + 70, y);
     doc.setFont('helvetica', 'normal');
@@ -572,10 +572,10 @@ export default function CessionDeCreance() {
           <h1 className="text-2xl md:text-3xl font-serif text-[var(--ink)] mb-4">Documents générés !</h1>
           <p className="text-[var(--muted)] mb-8 font-light">Le PDF a été téléchargé automatiquement et le statut du dossier est mis à jour.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href={backUrl} className="px-6 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-slate-700 rounded-xl font-medium border border-[var(--stone)] hover:bg-[var(--white)]/40 transition-colors">
+            <Link href={backUrl} className="px-6 py-3 bg-[var(--white)] text-slate-700 rounded-xl font-medium border border-[var(--stone)] hover:bg-[var(--white)]/40 transition-colors">
               Retour au dossier
             </Link>
-            <button onClick={handleDownload} className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-xl font-medium transition-all shadow-md">
+            <button onClick={handleDownload} className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] rounded-xl font-medium transition-all shadow-md">
               <Download size={18} /> Télécharger le PDF
             </button>
           </div>
@@ -600,7 +600,7 @@ export default function CessionDeCreance() {
               <div className="relative">
                 <div className="absolute inset-0 bg-[var(--blue)]/25 rounded-xl blur opacity-60"></div>
                 <div className="relative w-12 h-12 bg-[var(--blue)] rounded-xl flex items-center justify-center shadow-lg">
-                  <FileText size={22} className="text-white" />
+                  <FileText size={22} className="text-[var(--ink)]" />
                 </div>
               </div>
               <div>
@@ -608,14 +608,14 @@ export default function CessionDeCreance() {
                 <p className="text-[var(--muted)] text-sm mt-1 font-light">Déclaration de sinistre • Cession de créance • Ordre de réparation</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-full border border-[var(--stone)] shadow-md self-start">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--white)] rounded-full border border-[var(--stone)] shadow-md self-start">
               <Sparkles size={14} className="text-[var(--blue)]" />
               <span className="text-xs text-[var(--muted)] font-medium">Documents officiels</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
+        <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
           {userRole === 'gestionnaire' ? (
             <div className="p-12 text-center text-[var(--muted)] font-medium flex flex-col items-center gap-6 bg-slate-50/50">
               <div className="w-20 h-20 bg-[var(--blue)]/10 rounded-full flex items-center justify-center">
@@ -631,7 +631,7 @@ export default function CessionDeCreance() {
                   href={previewUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="mt-2 inline-flex items-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-xl font-medium transition-all shadow-md shadow-blue-500/20"
+                  className="mt-2 inline-flex items-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] rounded-xl font-medium transition-all shadow-md shadow-blue-500/20"
                 >
                   <FileText size={18} />
                   Prévisualiser le document PDF (Non signé)
@@ -647,22 +647,22 @@ export default function CessionDeCreance() {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-center gap-2">
-                    <User size={14} className="text-slate-400" />
+                    <User size={14} className="text-[var(--muted)]" />
                     <span className="text-slate-600">Client :</span>
                     <span className="font-medium text-slate-800">{client?.prenom} {client?.nom}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Car size={14} className="text-slate-400" />
+                    <Car size={14} className="text-[var(--muted)]" />
                     <span className="text-slate-600">Véhicule :</span>
                     <span className="font-medium text-slate-800">{dossier.modele_vehicule} - {dossier.immatriculation}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Building2 size={14} className="text-slate-400" />
+                    <Building2 size={14} className="text-[var(--muted)]" />
                     <span className="text-slate-600">Assurance :</span>
                     <span className="font-medium text-slate-800">{dossier.assurances?.nom || 'Non renseignée'}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Euro size={14} className="text-slate-400" />
+                    <Euro size={14} className="text-[var(--muted)]" />
                     <span className="text-slate-600">Franchise :</span>
                     <span className="font-medium text-slate-800">{dossier.franchise_montant || 0} €</span>
                   </div>
@@ -704,12 +704,12 @@ export default function CessionDeCreance() {
                       <Eraser size={14} /> Effacer la signature
                     </button>
                   </div>
-                  <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl overflow-hidden shadow-inner">
+                  <div className="bg-[var(--white)] border border-[var(--stone)] rounded-xl overflow-hidden shadow-inner">
                     <canvas
                       ref={canvasRef}
                       width={600}
                       height={150}
-                      className="w-full h-[150px] cursor-crosshair bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+                      className="w-full h-[150px] cursor-crosshair bg-[var(--white)]"
                       style={{ touchAction: 'none' }}
                       onMouseDown={startDrawing}
                       onMouseMove={draw}
@@ -720,7 +720,7 @@ export default function CessionDeCreance() {
                       onTouchEnd={stopDrawing}
                     />
                   </div>
-                  <p className="text-xs text-slate-400 mt-3 text-center">
+                  <p className="text-xs text-[var(--muted)] mt-3 text-center">
                     Signez dans le cadre ci-dessus avec votre souris ou votre doigt
                   </p>
                 </div>
@@ -730,12 +730,12 @@ export default function CessionDeCreance() {
                 <button
                   onClick={handleSaveAndGeneratePDF}
                   disabled={saving}
-                  className="w-full py-4 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3 transition-all disabled:opacity-70 text-base"
+                  className="w-full py-4 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] font-bold rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3 transition-all disabled:opacity-70 text-base"
                 >
                   {saving ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
                   {saving ? 'Génération des documents en cours...' : 'Générer tous les documents officiels'}
                 </button>
-                <p className="text-xs text-slate-400 text-center mt-3">
+                <p className="text-xs text-[var(--muted)] text-center mt-3">
                   Les documents générés seront automatiquement téléchargés et sauvegardés
                 </p>
               </div>
@@ -744,7 +744,7 @@ export default function CessionDeCreance() {
         </div>
 
         <div className="mt-6 text-center">
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[var(--muted)]">
             Les documents générés incluent : Déclaration de sinistre • Notification de cession • Convention de cession • Ordre de réparation • Déclaration d'intervention
           </p>
         </div>

@@ -37,11 +37,9 @@ export default function ArchivesPage() {
 
       const { data, error } = await supabase
         .from('dossiers')
-        .select(`
-          *,
-          clients (nom, prenom, telephone),
-          garages (nom_garage)
-        `)
+        .select(`*,
+ clients (nom, prenom, telephone),
+ garages (nom_garage)`)
         .eq('gestionnaire_id', gestionnaireId)
         .or('statut.eq.reglement_en_cours,statut.eq.termine')
         .order('created_at', { ascending: false });
@@ -114,7 +112,7 @@ export default function ArchivesPage() {
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
           <Archive size={14} className="text-[var(--blue)]" />
           <span className="text-xs font-medium text-[var(--blue)] uppercase tracking-wider">Archives</span>
         </div>
@@ -137,13 +135,13 @@ export default function ArchivesPage() {
 
       {/* Liste des archives */}
       {archives.length === 0 ? (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-12 text-center">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-12 text-center">
           <Archive size={48} className="text-[var(--muted)] mx-auto mb-4 opacity-50" />
           <p className="text-[var(--muted)] font-medium">Aucun dossier archivé</p>
           <p className="text-sm text-[var(--muted)] mt-1">Les dossiers réglés ou terminés depuis plus de 30 jours apparaîtront ici</p>
         </div>
       ) : (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
           <div className="divide-y divide-[#F4F3EF]">
             {archives.map((archive) => (
               <div key={archive.id} className="p-5 hover:bg-[var(--white)]/40 transition-colors">
@@ -172,7 +170,7 @@ export default function ArchivesPage() {
                     <button
                       onClick={() => restoreDossier(archive.id)}
                       disabled={restoring === archive.id}
-                      className="px-4 py-2 bg-[var(--blue)]/10 hover:bg-[var(--blue)] text-[var(--blue)] hover:text-white rounded-xl text-sm font-medium transition-all flex items-center gap-2 disabled:opacity-50"
+                      className="px-4 py-2 bg-[var(--blue)]/10 hover:bg-[var(--blue)] text-[var(--blue)] hover:text-[var(--ink)] rounded-xl text-sm font-medium transition-all flex items-center gap-2 disabled:opacity-50"
                     >
                       {restoring === archive.id ? (
                         <Loader2 size={14} className="animate-spin" />
@@ -183,7 +181,7 @@ export default function ArchivesPage() {
                     </button>
                     <Link 
                       href={`/gestionnaire/dossiers/${archive.id}`}
-                      className="px-4 py-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] hover:border-[#1454FF] text-[var(--muted)] hover:text-[var(--blue)] rounded-xl text-sm font-medium transition-all flex items-center gap-1"
+                      className="px-4 py-2 bg-[var(--white)] border border-[var(--stone)] hover:border-[#1454FF] text-[var(--muted)] hover:text-[var(--blue)] rounded-xl text-sm font-medium transition-all flex items-center gap-1"
                     >
                       Voir <ChevronRight size={14} />
                     </Link>

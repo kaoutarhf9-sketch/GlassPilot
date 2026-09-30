@@ -359,7 +359,7 @@ export default function DashboardLayout({ children }) {
       signature_validee: <ShieldCheck size={14} className="text-blue-500" />,
       paiement_recu: <Sparkles size={14} className="text-amber-500" />,
       message: <MessageSquare size={14} className="text-[var(--blue)]" />,
-      default: <Bell size={14} className="text-slate-400" />
+      default: <Bell size={14} className="text-[var(--muted)]" />
     };
     return icons[type] || icons.default;
   };
@@ -394,7 +394,7 @@ export default function DashboardLayout({ children }) {
   if (!onboardingCompleted || isOnboardingPage) {
     return (
       <div className="min-h-screen bg-[var(--white)]/40 font-sans text-[var(--ink)] flex flex-col">
-        <header className="h-16 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-b border-[var(--stone)] shadow-md flex items-center justify-between px-6 z-10">
+        <header className="h-16 bg-[var(--white)] border-b border-[var(--stone)] shadow-md flex items-center justify-between px-6 z-10">
           <div className="flex items-center gap-3">
             <div className="relative flex items-center justify-center w-10 h-10 rounded-lg overflow-hidden shadow-md">
               <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
@@ -424,15 +424,15 @@ export default function DashboardLayout({ children }) {
       {/* Background gradients removed for cleaner SaaS look */}
 
       {/* ===== SIDEBAR DESKTOP (Dark Premium) ===== */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950 border-r border-slate-800 flex-col z-30">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950 border-r border-[var(--stone)] flex-col z-30">
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-slate-800/60">
+        <div className="h-16 flex items-center px-6 border-b border-[var(--stone)]/60">
           <Link href="/dashboard" className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-10 h-10 rounded-lg shadow-lg shadow-indigo-600/20 overflow-hidden group-hover:scale-105 transition-transform">
               <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-xl font-bold tracking-tight text-[var(--ink)]">
                 Glass<span className="text-indigo-400">Pilot</span>
               </span>
             </div>
@@ -440,15 +440,15 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Garage Info */}
-        <div className="px-5 py-5 border-b border-slate-800/60">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-inner">
+        <div className="px-5 py-5 border-b border-[var(--stone)]/60">
+          <div className="bg-[var(--white)] border border-[var(--stone)] rounded-xl p-3 shadow-inner">
             <div className="flex items-center gap-2 mb-1.5">
               <div className="w-6 h-6 bg-indigo-500/10 rounded-md flex items-center justify-center">
                 <ShieldCheck size={12} className="text-indigo-400" />
               </div>
               <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Mon garage</span>
             </div>
-            <p className="font-bold text-white text-sm truncate">{garageName || 'Mon Garage'}</p>
+            <p className="font-bold text-[var(--ink)] text-sm truncate">{garageName || 'Mon Garage'}</p>
             <p className="text-xs text-slate-500 mt-0.5 truncate">Espace professionnel</p>
           </div>
         </div>
@@ -465,11 +465,11 @@ export default function DashboardLayout({ children }) {
                 className={clsx(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
                   active 
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" 
-                    : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
+                    ? "bg-indigo-600 text-[var(--ink)] shadow-md shadow-indigo-600/20" 
+                    : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
                 )}
               >
-                <Icon size={18} className={clsx("transition-colors", active ? "text-white" : "text-slate-500 group-hover:text-slate-300")} />
+                <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink)]" : "text-slate-500 group-hover:text-[var(--muted)]")} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -477,17 +477,17 @@ export default function DashboardLayout({ children }) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-800/60 space-y-1">
+        <div className="p-4 border-t border-[var(--stone)]/60 space-y-1">
           <Link 
             href="/dashboard/aide" 
-            className="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper)]/50 rounded-lg text-sm font-medium transition-colors"
           >
             <HelpCircle size={18} className="text-slate-500" />
             Centre d'aide
           </Link>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
           >
             <LogOut size={18} className="text-slate-500 group-hover:text-rose-400" />
             Se déconnecter
@@ -499,7 +499,7 @@ export default function DashboardLayout({ children }) {
       <div className="lg:pl-72 flex flex-col min-h-screen">
         
         {/* ===== TOPBAR (Light Glassmorphism) ===== */}
-        <header className="sticky top-0 z-20 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/80 backdrop-blur-md border-b border-slate-200 shadow-md transition-all h-16 flex-shrink-0">
+        <header className="sticky top-0 z-20 bg-[var(--white)] border-b border-slate-200 shadow-md transition-all h-16 flex-shrink-0">
           <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-full">
             
             <div className="flex items-center gap-4">
@@ -551,7 +551,7 @@ export default function DashboardLayout({ children }) {
                       className="fixed inset-0 z-40"
                       onClick={() => setNotificationsOpen(false)}
                     />
-                    <div className="absolute right-0 mt-3 w-[380px] bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl border border-slate-200 shadow-2xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
+                    <div className="absolute right-0 mt-3 w-[380px] bg-[var(--white)] rounded-xl border border-slate-200 shadow-2xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
                       <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-transparent/50">
                         <h3 className="font-semibold text-[var(--ink)]">Notifications</h3>
                         {unreadCount > 0 && (
@@ -567,10 +567,10 @@ export default function DashboardLayout({ children }) {
                         {notifications.length === 0 ? (
                           <div className="p-8 text-center flex flex-col items-center">
                             <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                              <Bell size={20} className="text-slate-400" />
+                              <Bell size={20} className="text-[var(--muted)]" />
                             </div>
                             <p className="text-sm font-medium text-slate-600">Aucune notification</p>
-                            <p className="text-xs text-slate-400 mt-1">Vous êtes à jour !</p>
+                            <p className="text-xs text-[var(--muted)] mt-1">Vous êtes à jour !</p>
                           </div>
                         ) : (
                           notifications.map((notif) => (
@@ -595,20 +595,20 @@ export default function DashboardLayout({ children }) {
                                   <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-indigo-500"></div>
                                 )}
                               <div className="flex items-start gap-3">
-                                <div className="flex-shrink-0 mt-1 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-2 rounded-lg border border-slate-200 shadow-md group-hover:border-indigo-200 transition-colors">
+                                <div className="flex-shrink-0 mt-1 bg-[var(--white)] p-2 rounded-lg border border-slate-200 shadow-md group-hover:border-indigo-200 transition-colors">
                                   {getNotificationIcon(notif.type)}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <p className={clsx("text-sm", !notif.is_read ? "font-semibold text-[var(--ink)]" : "font-medium text-slate-700")}>{notif.title}</p>
                                   <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
-                                  <p className="text-[10px] font-medium text-slate-400 mt-2 uppercase tracking-wider">{formatNotificationDate(notif.created_at)}</p>
+                                  <p className="text-[10px] font-medium text-[var(--muted)] mt-2 uppercase tracking-wider">{formatNotificationDate(notif.created_at)}</p>
                                 </div>
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     deleteNotification(notif.id);
                                   }}
-                                  className="text-slate-400 hover:text-rose-500 hover:bg-rose-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                  className="text-[var(--muted)] hover:text-rose-500 hover:bg-rose-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
                                   title="Supprimer"
                                 >
                                   <Trash2 size={14} />
@@ -634,10 +634,10 @@ export default function DashboardLayout({ children }) {
                   <div className="hidden md:block text-right mr-1">
                     <p className="text-sm font-semibold text-slate-700">{userName || 'Garagiste'}</p>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shadow-md text-white font-bold border border-slate-700">
+                  <div className="w-8 h-8 rounded-full bg-[var(--white)] flex items-center justify-center shadow-md text-[var(--ink)] font-bold border border-[var(--stone)]">
                     {userName.charAt(0).toUpperCase() || 'G'}
                   </div>
-                  <ChevronRight size={14} className={clsx("text-slate-400 transition-transform", profileMenuOpen && "rotate-90")} />
+                  <ChevronRight size={14} className={clsx("text-[var(--muted)] transition-transform", profileMenuOpen && "rotate-90")} />
                 </button>
 
                 {/* Menu déroulant profil */}
@@ -647,7 +647,7 @@ export default function DashboardLayout({ children }) {
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileMenuOpen(false)}
                     />
-                    <div className="absolute right-0 mt-3 w-64 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl border border-slate-200 shadow-xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
+                    <div className="absolute right-0 mt-3 w-64 bg-[var(--white)] rounded-xl border border-slate-200 shadow-xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
                       <div className="px-4 py-3 border-b border-slate-100 bg-transparent/50">
                         <p className="text-sm font-semibold text-[var(--ink)] truncate">{userName}</p>
                         <p className="text-xs text-slate-500 truncate">{userEmail}</p>
@@ -658,7 +658,7 @@ export default function DashboardLayout({ children }) {
                           onClick={() => setProfileMenuOpen(false)}
                           className="flex items-center gap-3 px-3 py-2.5 hover:bg-transparent rounded-lg transition-colors group"
                         >
-                          <UserCircle size={16} className="text-slate-400 group-hover:text-indigo-600 transition-colors" />
+                          <UserCircle size={16} className="text-[var(--muted)] group-hover:text-indigo-600 transition-colors" />
                           <span className="text-sm font-medium text-slate-700 group-hover:text-[var(--ink)]">Mon profil</span>
                         </Link>
                       </div>
@@ -670,7 +670,7 @@ export default function DashboardLayout({ children }) {
                           }}
                           className="flex items-center gap-3 px-3 py-2.5 w-full text-left hover:bg-rose-50 rounded-lg transition-colors group"
                         >
-                          <LogOut size={16} className="text-slate-400 group-hover:text-rose-600 transition-colors" />
+                          <LogOut size={16} className="text-[var(--muted)] group-hover:text-rose-600 transition-colors" />
                           <span className="text-sm font-medium text-slate-700 group-hover:text-rose-600">Déconnexion</span>
                         </button>
                       </div>
@@ -690,7 +690,7 @@ export default function DashboardLayout({ children }) {
       {/* Toast de Notification Globale (Messages) */}
       {showToast && latestMessage && (
         <div className="fixed top-20 right-4 sm:right-6 z-50 animate-in slide-in-from-top-4 fade-in duration-300">
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl shadow-2xl shadow-indigo-900/10 border border-slate-200/60 p-4 w-[320px] flex items-start gap-3 cursor-pointer hover:border-indigo-300 hover:shadow-indigo-900/20 transition-all"
+          <div className="bg-[var(--white)] rounded-xl shadow-2xl shadow-indigo-900/10 border border-slate-200/60 p-4 w-[320px] flex items-start gap-3 cursor-pointer hover:border-indigo-300 hover:shadow-indigo-900/20 transition-all"
                onClick={() => {
                  router.push(`/dashboard/dossiers/${latestMessage.dossier_id}`);
                  setShowToast(false);
@@ -701,7 +701,7 @@ export default function DashboardLayout({ children }) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-0.5">
                 <h4 className="text-sm font-semibold text-[var(--ink)] truncate">Gestionnaire</h4>
-                <button onClick={(e) => { e.stopPropagation(); setShowToast(false); }} className="text-slate-400 hover:text-slate-600 focus:outline-none p-1 -mr-1 rounded-md">
+                <button onClick={(e) => { e.stopPropagation(); setShowToast(false); }} className="text-[var(--muted)] hover:text-slate-600 focus:outline-none p-1 -mr-1 rounded-md">
                   <X size={14} />
                 </button>
               </div>
@@ -715,30 +715,30 @@ export default function DashboardLayout({ children }) {
       {/* MENU MOBILE (Dark Premium) */}
       {mobileMenuOpen && (
         <>
-          <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-slate-950 z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-slate-800">
-            <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800/60">
+          <div className="fixed inset-0 bg-[var(--white)]/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
+          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-slate-950 z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
+            <div className="h-16 flex items-center justify-between px-6 border-b border-[var(--stone)]/60">
               <Link href="/dashboard" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                 <div className="relative w-8 h-8 rounded-lg overflow-hidden">
                   <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-white">Glass<span className="text-indigo-400">Pilot</span></span>
+                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-indigo-400">Pilot</span></span>
               </Link>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-slate-400 hover:text-white rounded-lg">
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[var(--muted)] hover:text-[var(--ink)] rounded-lg">
                 <X size={20} />
               </button>
             </div>
 
             {/* Garage Info */}
-            <div className="px-5 py-5 border-b border-slate-800/60">
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-3">
+            <div className="px-5 py-5 border-b border-[var(--stone)]/60">
+              <div className="bg-[var(--white)] border border-[var(--stone)] rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-6 h-6 bg-indigo-500/10 rounded-md flex items-center justify-center">
                     <ShieldCheck size={12} className="text-indigo-400" />
                   </div>
                   <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Mon garage</span>
                 </div>
-                <p className="font-bold text-white text-sm truncate">{garageName || 'Mon Garage'}</p>
+                <p className="font-bold text-[var(--ink)] text-sm truncate">{garageName || 'Mon Garage'}</p>
                 <p className="text-xs text-slate-500 mt-0.5 truncate">Espace professionnel</p>
               </div>
             </div>
@@ -754,21 +754,21 @@ export default function DashboardLayout({ children }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={clsx(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
+                      active ? "bg-indigo-600 text-[var(--ink)] shadow-md" : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
                     )}
                   >
-                    <Icon size={18} className={clsx(active ? "text-white" : "text-slate-500")} />
+                    <Icon size={18} className={clsx(active ? "text-[var(--ink)]" : "text-slate-500")} />
                     <span>{item.label}</span>
                   </Link>
                 );
               })}
             </nav>
 
-            <div className="p-4 border-t border-slate-800/60 space-y-1">
+            <div className="p-4 border-t border-[var(--stone)]/60 space-y-1">
               <Link 
                 href="/dashboard/aide" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg text-sm font-medium transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper)]/50 rounded-lg text-sm font-medium transition-colors"
               >
                 <HelpCircle size={18} className="text-slate-500" />
                 Centre d'aide
@@ -778,7 +778,7 @@ export default function DashboardLayout({ children }) {
                   setMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
               >
                 <LogOut size={18} className="text-slate-500 group-hover:text-rose-400" />
                 Déconnexion

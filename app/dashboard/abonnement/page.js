@@ -238,7 +238,7 @@ function AbonnementContent() {
       
       {/* En-tête de page moderne */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/80 backdrop-blur-md shadow-md rounded-full px-4.5 py-1.5 border border-[var(--stone)]">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4.5 py-1.5 border border-[var(--stone)]">
           <Sparkles size={13} className="text-[var(--blue)] animate-pulse" />
           <span className="text-xs font-bold text-[var(--blue)] uppercase tracking-wider">Achat de crédits</span>
         </div>
@@ -273,7 +273,7 @@ function AbonnementContent() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Wallet Simple Tokens */}
-        <div className="relative overflow-hidden rounded-3xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/75 backdrop-blur-xl border border-[var(--stone)] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(245,158,11,0.06)] hover:-translate-y-1 group">
+        <div className="relative overflow-hidden rounded-3xl bg-[var(--white)] border border-[var(--stone)] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(245,158,11,0.06)] hover:-translate-y-1 group">
           <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-br from-amber-400/10 to-orange-400/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-500" />
           
           <div className="flex justify-between items-start mb-10">
@@ -306,7 +306,7 @@ function AbonnementContent() {
         </div>
 
         {/* Wallet Prestige Tokens */}
-        <div className="relative overflow-hidden rounded-3xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/75 backdrop-blur-xl border border-[var(--stone)] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(20,84,255,0.06)] hover:-translate-y-1 group">
+        <div className="relative overflow-hidden rounded-3xl bg-[var(--white)] border border-[var(--stone)] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(20,84,255,0.06)] hover:-translate-y-1 group">
           <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-br from-blue-400/10 to-indigo-400/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-500" />
           
           <div className="flex justify-between items-start mb-10">
@@ -347,7 +347,7 @@ function AbonnementContent() {
         {forfaits.simple.map((forfait) => (
           <div 
             key={forfait.id} 
-            className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/80 backdrop-blur-xl rounded-3xl p-8 border border-[var(--stone)] shadow-[0_20px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.8)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
+            className="bg-[var(--white)] rounded-3xl p-8 border border-[var(--stone)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.8)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
           >
             <div>
               {/* Header */}
@@ -397,10 +397,10 @@ function AbonnementContent() {
                       type="button"
                       onClick={() => setPurchaseQty(p => ({ ...p, simple: qty }))}
                       className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all border ${
-                        purchaseQty.simple === qty
-                          ? 'bg-[var(--blue)] text-white border-slate-900 shadow-md'
-                          : 'bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-[var(--muted)] border-[var(--stone)] hover:border-amber-500 hover:text-amber-700'
-                      }`}
+ purchaseQty.simple === qty
+ ? 'bg-[var(--blue)] text-[var(--ink)] border-slate-900 shadow-md'
+ : 'bg-[var(--white)] text-[var(--muted)] border-[var(--stone)] hover:border-amber-500 hover:text-amber-700'
+ }`}
                     >
                       {qty}
                     </button>
@@ -414,7 +414,7 @@ function AbonnementContent() {
                     <button
                       type="button"
                       onClick={() => setPurchaseQty(p => ({ ...p, simple: Math.max(1, p.simple - 1) }))}
-                      className="w-8 h-8 rounded-lg bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
+                      className="w-8 h-8 rounded-lg bg-[var(--white)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
                     >
                       <Minus size={14} />
                     </button>
@@ -432,7 +432,7 @@ function AbonnementContent() {
                     <button
                       type="button"
                       onClick={() => setPurchaseQty(p => ({ ...p, simple: Math.min(100, p.simple + 1) }))}
-                      className="w-8 h-8 rounded-lg bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
+                      className="w-8 h-8 rounded-lg bg-[var(--white)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
                     >
                       <Plus size={14} />
                     </button>
@@ -475,7 +475,7 @@ function AbonnementContent() {
             {/* Commande */}
             <button
               onClick={() => handlePurchase(forfait)}
-              className="w-full py-4 bg-[var(--blue)] text-white rounded-2xl font-bold hover:bg-[var(--blue)] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--blue)]/10 hover:shadow-blue-500/20"
+              className="w-full py-4 bg-[var(--blue)] text-[var(--ink)] rounded-2xl font-bold hover:bg-[var(--blue)] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--blue)]/10 hover:shadow-blue-500/20"
             >
               Commander Simple <ArrowRight size={16} />
             </button>
@@ -486,9 +486,9 @@ function AbonnementContent() {
         {forfaits.prestige.map((forfait) => (
           <div 
             key={forfait.id} 
-            className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/80 backdrop-blur-xl rounded-3xl p-8 border border-[var(--blue)]/40 shadow-[0_20px_60px_rgba(56,189,248,0.15)] hover:shadow-[0_20px_60px_rgba(56,189,248,0.3)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
+            className="bg-[var(--white)] rounded-3xl p-8 border border-[var(--blue)]/40 shadow-[0_20px_60px_rgba(56,189,248,0.15)] hover:shadow-[0_20px_60px_rgba(56,189,248,0.3)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
           >
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[var(--blue)] to-[#0284c7] text-white text-[10px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[var(--blue)] to-[#0284c7] text-[var(--ink)] text-[10px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">
               Recommandé
             </div>
             
@@ -540,10 +540,10 @@ function AbonnementContent() {
                       type="button"
                       onClick={() => setPurchaseQty(p => ({ ...p, prestige: qty }))}
                       className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all border ${
-                        purchaseQty.prestige === qty
-                          ? 'bg-[var(--blue)] text-white border-[var(--blue)] shadow-md'
-                          : 'bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-[var(--muted)] border-[var(--stone)] hover:border-[var(--blue)] hover:text-[var(--blue)]'
-                      }`}
+ purchaseQty.prestige === qty
+ ? 'bg-[var(--blue)] text-[var(--ink)] border-[var(--blue)] shadow-md'
+ : 'bg-[var(--white)] text-[var(--muted)] border-[var(--stone)] hover:border-[var(--blue)] hover:text-[var(--blue)]'
+ }`}
                     >
                       {qty}
                     </button>
@@ -557,7 +557,7 @@ function AbonnementContent() {
                     <button
                       type="button"
                       onClick={() => setPurchaseQty(p => ({ ...p, prestige: Math.max(1, p.prestige - 1) }))}
-                      className="w-8 h-8 rounded-lg bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
+                      className="w-8 h-8 rounded-lg bg-[var(--white)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
                     >
                       <Minus size={14} />
                     </button>
@@ -575,7 +575,7 @@ function AbonnementContent() {
                     <button
                       type="button"
                       onClick={() => setPurchaseQty(p => ({ ...p, prestige: Math.min(100, p.prestige + 1) }))}
-                      className="w-8 h-8 rounded-lg bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
+                      className="w-8 h-8 rounded-lg bg-[var(--white)] border border-[var(--stone)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all shadow-md active:scale-95"
                     >
                       <Plus size={14} />
                     </button>
@@ -618,7 +618,7 @@ function AbonnementContent() {
             {/* Commande */}
             <button
               onClick={() => handlePurchase(forfait)}
-              className="w-full py-4 bg-[var(--blue)] text-white rounded-2xl font-bold hover:bg-[var(--blue)] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 hover:shadow-[var(--blue)]/20"
+              className="w-full py-4 bg-[var(--blue)] text-[var(--ink)] rounded-2xl font-bold hover:bg-[var(--blue)] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 hover:shadow-[var(--blue)]/20"
             >
               Commander Prestige <ArrowRight size={16} />
             </button>
@@ -628,7 +628,7 @@ function AbonnementContent() {
       </div>
 
       {/* Trust & Securité Banner */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/60 backdrop-blur-md rounded-3xl border border-[var(--stone)] p-6 shadow-md">
+      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] p-6 shadow-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <div className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--ink-2)] transition-colors">
@@ -660,11 +660,11 @@ function AbonnementContent() {
       {showConfirmModal && selectedForfait && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div 
-            className="absolute inset-0 bg-[var(--blue)]/40 backdrop-blur-md transition-opacity duration-300" 
+            className="absolute inset-0 bg-[var(--blue)]/40 transition-opacity duration-300" 
             onClick={() => setShowConfirmModal(false)} 
           />
           
-          <div className="relative bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl max-w-md w-full p-8 shadow-2xl border border-[var(--stone)] animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+          <div className="relative bg-[var(--white)] rounded-3xl max-w-md w-full p-8 shadow-2xl border border-[var(--stone)] animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
             {/* Header Modal */}
             <button
               onClick={() => setShowConfirmModal(false)}
@@ -749,10 +749,10 @@ function AbonnementContent() {
                 onClick={confirmPurchase}
                 disabled={!rgpdConsent || purchasing}
                 className={`flex-1 py-3 rounded-2xl text-sm font-bold transition-all flex items-center justify-center gap-2 active:scale-98 shadow-md ${
-                  !rgpdConsent || purchasing
-                    ? 'bg-[var(--stone)] text-[var(--muted)] border border-[var(--stone)]/50 cursor-not-allowed shadow-none'
-                    : 'bg-[var(--blue)] text-white hover:bg-[var(--blue)] hover:shadow-[#1454FF]/10'
-                }`}
+ !rgpdConsent || purchasing
+ ? 'bg-[var(--stone)] text-[var(--muted)] border border-[var(--stone)]/50 cursor-not-allowed shadow-none'
+ : 'bg-[var(--blue)] text-[var(--ink)] hover:bg-[var(--blue)] hover:shadow-[#1454FF]/10'
+ }`}
               >
                 {purchasing ? (
                   <>

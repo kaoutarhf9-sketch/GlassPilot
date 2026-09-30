@@ -52,10 +52,8 @@ export default function ModifierDossier() {
     try {
       const { data, error } = await supabase
         .from('dossiers')
-        .select(`
-          *,
-          clients:clients_id (*)
-        `)
+        .select(`*,
+ clients:clients_id (*)`)
         .eq('id', id)
         .single();
 
@@ -158,8 +156,8 @@ export default function ModifierDossier() {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/20 transition-all";
-  const textareaClass = "w-full px-4 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/20 transition-all resize-none";
+  const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]   border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/20 transition-all";
+  const textareaClass = "w-full px-4 py-2.5 bg-[var(--white)]   border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/20 transition-all resize-none";
   const labelClass = "block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-2";
 
   const TYPES_VITRAGE = [
@@ -190,7 +188,7 @@ export default function ModifierDossier() {
       <div className="fixed bottom-0 -right-48 w-96 h-96 bg-[var(--blue)]/5 rounded-full mix-blend-multiply filter blur-3xl opacity-30 pointer-events-none"></div>
 
       {/* Header */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/95 backdrop-blur-sm border-b border-[var(--stone)] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10 shadow-md sticky top-0">
+      <div className="bg-[var(--white)] backdrop-blur-sm border-b border-[var(--stone)] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10 shadow-md sticky top-0">
         <Link 
           href={`/dashboard/dossiers/${params.id}`} 
           className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--blue)] text-sm font-medium transition-colors group"
@@ -210,7 +208,7 @@ export default function ModifierDossier() {
       <div className="flex-1 overflow-hidden flex flex-col md:flex-row">
         
         {/* STEPPER */}
-        <div className="w-full md:w-80 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/50 backdrop-blur-sm border-b md:border-b-0 md:border-r border-[var(--stone)] p-4 md:p-6 flex-shrink-0 overflow-x-auto">
+        <div className="w-full md:w-80 bg-[var(--white)] backdrop-blur-sm border-b md:border-b-0 md:border-r border-[var(--stone)] p-4 md:p-6 flex-shrink-0 overflow-x-auto">
           <div className="flex md:flex-col gap-3 md:gap-4 min-w-max md:min-w-0">
             {STEPS.map((s, idx) => {
               const Icon = s.icon;
@@ -221,14 +219,14 @@ export default function ModifierDossier() {
                 <div key={s.id} className="flex items-center gap-3">
                   <div className={clsx(
                     "w-10 h-10 rounded-xl flex items-center justify-center transition-all flex-shrink-0",
-                    isActive && "bg-[var(--blue)] text-white shadow-md",
+                    isActive && "bg-[var(--blue)] text-[var(--ink)] shadow-md",
                     isCompleted && "bg-emerald-100 text-emerald-600",
-                    !isActive && !isCompleted && "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] text-[var(--muted)]"
+                    !isActive && !isCompleted && "bg-[var(--white)]   border border-[var(--stone)] text-[var(--muted)]"
                   )}>
                     {isCompleted ? (
                       <Check size={18} className="text-emerald-600" />
                     ) : (
-                      <Icon size={18} className={isActive ? "text-white" : "text-[var(--muted)]"} />
+                      <Icon size={18} className={isActive ? "text-[var(--ink)]" : "text-[var(--muted)]"} />
                     )}
                   </div>
                   <div className="hidden md:block">
@@ -268,8 +266,8 @@ export default function ModifierDossier() {
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-8 h-8 bg-[var(--blue)] rounded-lg flex items-center justify-center">
-                  {step === 1 && <User size={16} className="text-white" />}
-                  {step === 2 && <Car size={16} className="text-white" />}
+                  {step === 1 && <User size={16} className="text-[var(--ink)]" />}
+                  {step === 2 && <Car size={16} className="text-[var(--ink)]" />}
                 </div>
                 <h2 className="text-2xl md:text-3xl font-serif text-[var(--ink)]">
                   {STEPS[step-1].label}
@@ -300,7 +298,7 @@ export default function ModifierDossier() {
               {/* STEP 1 : CLIENT */}
               {step === 1 && (
                 <div className="space-y-5 animate-in fade-in duration-300">
-                  <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] p-6">
+                  <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className={labelClass}>Nom complet *</label>
@@ -379,7 +377,7 @@ export default function ModifierDossier() {
               {/* STEP 2 : VÉHICULE */}
               {step === 2 && (
                 <div className="space-y-5 animate-in fade-in duration-300">
-                  <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] p-6">
+                  <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] p-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       <div>
                         <label className={labelClass}>Immatriculation *</label>
@@ -467,7 +465,7 @@ export default function ModifierDossier() {
                   <button 
                     type="button" 
                     onClick={prev}
-                    className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl text-[var(--muted)] font-medium hover:bg-[var(--white)]/40 hover:border-[#1454FF] transition-all"
+                    className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-[var(--muted)] font-medium hover:bg-[var(--white)]/40 hover:border-[#1454FF] transition-all"
                   >
                     Retour
                   </button>
@@ -477,7 +475,7 @@ export default function ModifierDossier() {
                   <button 
                     type="button" 
                     onClick={next}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-xl font-medium transition-all shadow-md shadow-[#1454FF]/25"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] rounded-xl font-medium transition-all shadow-md shadow-[#1454FF]/25"
                   >
                     Continuer <ChevronRight size={16} />
                   </button>
@@ -485,7 +483,7 @@ export default function ModifierDossier() {
                   <button 
                     type="submit" 
                     disabled={saving}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium transition-all shadow-md shadow-emerald-600/25 disabled:opacity-70"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-[var(--ink)] rounded-xl font-medium transition-all shadow-md shadow-emerald-600/25 disabled:opacity-70"
                   >
                     {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
                     {saving ? 'Enregistrement...' : 'Enregistrer'}

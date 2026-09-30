@@ -271,7 +271,7 @@ export default function OnboardingPage() {
   // --- Animation de succès ---
   if (onboardingSuccess) {
     return (
-      <div className="max-w-md w-full bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)] p-10 text-center shadow-xl relative overflow-hidden animate-in zoom-in duration-300">
+      <div className="max-w-md w-full bg-[var(--white)] rounded-3xl border border-[var(--stone)] p-10 text-center shadow-xl relative overflow-hidden animate-in zoom-in duration-300">
         {/* Background Sparkles */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-[40px]"></div>
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-[40px]"></div>
@@ -298,7 +298,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="max-w-2xl w-full bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)] shadow-lg p-6 md:p-10 relative overflow-hidden">
+    <div className="max-w-2xl w-full bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-lg p-6 md:p-10 relative overflow-hidden">
       
       {/* Sparkles decorations */}
       <div className="absolute top-0 right-0 w-48 h-48 bg-[var(--blue)]/5 rounded-full blur-[80px] pointer-events-none"></div>
@@ -328,17 +328,17 @@ export default function OnboardingPage() {
             return (
               <div key={item.num} className="relative">
                 <div className={`h-1 rounded-full transition-all duration-300 ${
-                  isPassed ? 'bg-indigo-600' : isActive ? 'bg-indigo-600/60' : 'bg-slate-100'
-                }`} />
+ isPassed ? 'bg-indigo-600' : isActive ? 'bg-indigo-600/60' : 'bg-slate-100'
+ }`} />
                 <div className="flex items-center gap-2 mt-2.5">
                   <div className={`w-6 h-6 rounded-md flex items-center justify-center transition-colors ${
-                    isPassed ? 'bg-indigo-50 border border-indigo-200 text-indigo-600' : isActive ? 'bg-indigo-600 text-white shadow-md' : 'bg-transparent border border-slate-100 text-slate-400'
-                  }`}>
+ isPassed ? 'bg-indigo-50 border border-indigo-200 text-indigo-600' : isActive ? 'bg-indigo-600 text-[var(--ink)] shadow-md' : 'bg-transparent border border-slate-100 text-[var(--muted)]'
+ }`}>
                     {isPassed ? <CheckCircle2 size={12} className="text-emerald-500" /> : <Icon size={12} />}
                   </div>
                   <span className={`text-[10px] font-bold tracking-tight uppercase hidden md:inline transition-colors ${
-                    isActive ? 'text-indigo-600 font-bold' : isPassed ? 'text-slate-700' : 'text-slate-400'
-                  }`}>
+ isActive ? 'text-indigo-600 font-bold' : isPassed ? 'text-slate-700' : 'text-[var(--muted)]'
+ }`}>
                     {item.label}
                   </span>
                 </div>
@@ -359,7 +359,7 @@ export default function OnboardingPage() {
 
           {/* ================= ÉTAPE 1 ================= */}
           {step === 1 && (
-            <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-6 sm:p-8 md:p-10 border border-slate-200">
+            <div className="bg-[var(--white)] rounded-2xl p-6 sm:p-8 md:p-10 border border-slate-200">
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center border border-indigo-100">
@@ -378,9 +378,9 @@ export default function OnboardingPage() {
                     value={siret}
                     onChange={(e) => setSiret(e.target.value.replace(/[^0-9\s]/g, ''))}
                     placeholder="123 456 789 00012"
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 outline-none transition-all placeholder:text-slate-400"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 outline-none transition-all placeholder:text-[var(--muted)]"
                   />
-                  <p className="text-xs text-slate-400 mt-2 flex items-center gap-1.5">
+                  <p className="text-xs text-[var(--muted)] mt-2 flex items-center gap-1.5">
                     <CheckCircle2 size={12} className="text-emerald-500" />
                     Utilisé pour la facturation et les contrats
                   </p>
@@ -391,9 +391,8 @@ export default function OnboardingPage() {
                     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Extrait KBIS <span className="text-rose-500">*</span></label>
                     <div 
                       className={`relative border-2 border-dashed rounded-xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[140px]
-                        ${kbisDragActive ? 'border-indigo-400 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}
-                        ${kbisFile ? 'border-emerald-400 bg-emerald-50/30' : ''}
-                      `}
+ ${kbisDragActive ? 'border-indigo-400 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}
+ ${kbisFile ? 'border-emerald-400 bg-emerald-50/30' : ''}`}
                       onDragEnter={(e) => handleDrag(e, setKbisDragActive)}
                       onDragLeave={(e) => handleDrag(e, setKbisDragActive)}
                       onDragOver={(e) => handleDrag(e, setKbisDragActive)}
@@ -415,7 +414,7 @@ export default function OnboardingPage() {
                             <Upload size={18} className="text-slate-500" />
                           </div>
                           <p className="text-sm font-semibold text-[var(--ink)]">Glissez ou cliquez</p>
-                          <p className="text-xs text-slate-400 mt-1">PDF, PNG ou JPG (Max 5Mo)</p>
+                          <p className="text-xs text-[var(--muted)] mt-1">PDF, PNG ou JPG (Max 5Mo)</p>
                         </>
                       )}
                     </div>
@@ -425,9 +424,8 @@ export default function OnboardingPage() {
                     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Carte d'Identité <span className="text-rose-500">*</span></label>
                     <div 
                       className={`relative border-2 border-dashed rounded-xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[140px]
-                        ${cniDragActive ? 'border-indigo-400 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}
-                        ${cniFile ? 'border-emerald-400 bg-emerald-50/30' : ''}
-                      `}
+ ${cniDragActive ? 'border-indigo-400 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}
+ ${cniFile ? 'border-emerald-400 bg-emerald-50/30' : ''}`}
                       onDragEnter={(e) => handleDrag(e, setCniDragActive)}
                       onDragLeave={(e) => handleDrag(e, setCniDragActive)}
                       onDragOver={(e) => handleDrag(e, setCniDragActive)}
@@ -449,7 +447,7 @@ export default function OnboardingPage() {
                             <Upload size={18} className="text-slate-500" />
                           </div>
                           <p className="text-sm font-semibold text-[var(--ink)]">Glissez ou cliquez</p>
-                          <p className="text-xs text-slate-400 mt-1">Recto/Verso (PDF, PNG, JPG)</p>
+                          <p className="text-xs text-[var(--muted)] mt-1">Recto/Verso (PDF, PNG, JPG)</p>
                         </>
                       )}
                     </div>
@@ -457,12 +455,11 @@ export default function OnboardingPage() {
                 </div>
 
                 <div className="pt-4 border-t border-slate-100">
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Logo du Garage <span className="text-slate-400 font-normal ml-1">(Optionnel)</span></label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Logo du Garage <span className="text-[var(--muted)] font-normal ml-1">(Optionnel)</span></label>
                   <div 
                     className={`relative border-2 border-dashed rounded-xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[120px]
-                      ${logoDragActive ? 'border-indigo-400 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}
-                      ${logoFile ? 'border-emerald-400 bg-emerald-50/30' : ''}
-                    `}
+ ${logoDragActive ? 'border-indigo-400 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}
+ ${logoFile ? 'border-emerald-400 bg-emerald-50/30' : ''}`}
                     onDragEnter={(e) => handleDrag(e, setLogoDragActive)}
                     onDragLeave={(e) => handleDrag(e, setLogoDragActive)}
                     onDragOver={(e) => handleDrag(e, setLogoDragActive)}
@@ -483,7 +480,7 @@ export default function OnboardingPage() {
                           <Upload size={18} className="text-slate-500" />
                         </div>
                         <p className="text-sm font-semibold text-[var(--ink)]">Logo de l'entreprise</p>
-                        <p className="text-xs text-slate-400 mt-1">Sera affiché sur vos factures</p>
+                        <p className="text-xs text-[var(--muted)] mt-1">Sera affiché sur vos factures</p>
                       </>
                     )}
                   </div>
@@ -533,12 +530,12 @@ export default function OnboardingPage() {
                 </label>
                 <div 
                   className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all cursor-pointer group ${
-                    ribDragActive 
-                      ? 'border-indigo-600 bg-indigo-50/20' 
-                      : ribFile 
-                        ? 'border-emerald-300 bg-emerald-50/10' 
-                        : 'border-[var(--stone)] hover:border-indigo-400 bg-[var(--white)]/40'
-                  }`}
+ ribDragActive 
+ ? 'border-indigo-600 bg-indigo-50/20' 
+ : ribFile 
+ ? 'border-emerald-300 bg-emerald-50/10' 
+ : 'border-[var(--stone)] hover:border-indigo-400 bg-[var(--white)]/40'
+ }`}
                   onDragEnter={(e) => handleDrag(e, setRibDragActive)}
                   onDragOver={(e) => handleDrag(e, setRibDragActive)}
                   onDragLeave={(e) => handleDrag(e, setRibDragActive)}
@@ -563,12 +560,12 @@ export default function OnboardingPage() {
                     </div>
                   ) : (
                     <div className="flex flex-col items-center">
-                      <div className="w-12 h-12 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-xl flex items-center justify-center mb-3 group-hover:border-indigo-200 group-hover:shadow-md transition-all">
-                        <Upload size={18} className="text-slate-400 group-hover:text-indigo-600 transition-colors animate-bounce" />
+                      <div className="w-12 h-12 bg-[var(--white)] border border-[var(--stone)] rounded-xl flex items-center justify-center mb-3 group-hover:border-indigo-200 group-hover:shadow-md transition-all">
+                        <Upload size={18} className="text-[var(--muted)] group-hover:text-indigo-600 transition-colors animate-bounce" />
                       </div>
                       <p className="text-sm font-medium text-[var(--ink)]">Glissez-déposez votre RIB ici</p>
                       <p className="text-xs text-[var(--muted)] font-light mt-1">ou cliquez pour parcourir les dossiers</p>
-                      <p className="text-[10px] text-slate-400 font-light mt-2 uppercase tracking-wide">PDF, PNG, JPG jusqu'à 10MB</p>
+                      <p className="text-[10px] text-[var(--muted)] font-light mt-2 uppercase tracking-wide">PDF, PNG, JPG jusqu'à 10MB</p>
                     </div>
                   )}
                 </div>
@@ -595,7 +592,7 @@ export default function OnboardingPage() {
               <button
                 type="button"
                 onClick={nextStep}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md shadow-indigo-600/10 flex items-center gap-2 hover:-translate-y-0.5 text-sm"
+                className="bg-indigo-600 hover:bg-indigo-700 text-[var(--ink)] font-semibold py-3 px-6 rounded-xl transition-all shadow-md shadow-indigo-600/10 flex items-center gap-2 hover:-translate-y-0.5 text-sm"
               >
                 Continuer <ArrowRight size={14} />
               </button>
@@ -603,7 +600,7 @@ export default function OnboardingPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md shadow-indigo-600/20 flex items-center gap-2 hover:-translate-y-0.5 disabled:opacity-75 disabled:pointer-events-none text-sm"
+                className="bg-indigo-600 hover:bg-indigo-700 text-[var(--ink)] font-semibold py-3 px-6 rounded-xl transition-all shadow-md shadow-indigo-600/20 flex items-center gap-2 hover:-translate-y-0.5 disabled:opacity-75 disabled:pointer-events-none text-sm"
               >
                 {loading ? (
                   <>

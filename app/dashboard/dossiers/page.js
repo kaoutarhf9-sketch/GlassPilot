@@ -44,10 +44,8 @@ export default function ListeDossiers() {
 
       const { data, error } = await supabase
         .from('dossiers')
-        .select(`
-          *,
-          clients (nom, prenom, telephone)
-        `)
+        .select(`*,
+ clients (nom, prenom, telephone)`)
         .eq('garage_id', garage.id)
         .order('created_at', { ascending: false });
 
@@ -131,7 +129,7 @@ export default function ListeDossiers() {
 
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
           <Sparkles size={14} className="text-[var(--blue)]" />
           <span className="text-xs font-medium text-[var(--blue)] uppercase tracking-wider">Gestion des dossiers</span>
         </div>
@@ -141,30 +139,30 @@ export default function ListeDossiers() {
 
       {/* Cartes statistiques */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
           <p className="text-2xl font-bold text-[var(--ink)]">{stats.total}</p>
           <p className="text-xs text-[var(--muted)]">Total dossiers</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
           <p className="text-2xl font-bold text-amber-600">{stats.en_attente}</p>
           <p className="text-xs text-[var(--muted)]">En attente</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
           <p className="text-2xl font-bold text-sky-600">{stats.en_cours}</p>
           <p className="text-xs text-[var(--muted)]">En cours</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
           <p className="text-2xl font-bold text-teal-600">{stats.signe}</p>
           <p className="text-xs text-[var(--muted)]">Signature validée</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)] shadow-md">
           <p className="text-2xl font-bold text-emerald-600">{stats.termine}</p>
           <p className="text-xs text-[var(--muted)]">Terminés</p>
         </div>
       </div>
 
       {/* Barre de recherche et filtres */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md p-4">
+      <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={18} />
@@ -197,7 +195,7 @@ export default function ListeDossiers() {
 
       {/* Liste des dossiers */}
       {dossiersFiltres.length === 0 ? (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-12 text-center">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-12 text-center">
           <div className="w-16 h-16 bg-[var(--white)] rounded-full flex items-center justify-center mx-auto mb-4">
             <FileText className="text-[var(--muted)]" size={28} />
           </div>
@@ -211,7 +209,7 @@ export default function ListeDossiers() {
           </Link>
         </div>
       ) : (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
           {/* Version Desktop */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left">
@@ -258,7 +256,7 @@ export default function ListeDossiers() {
                     <td className="p-4 pr-6 text-right">
                       <Link 
                         href={`/dashboard/dossiers/${dossier.id}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-[var(--blue)] hover:text-white bg-[var(--blue)]/10 hover:bg-[var(--blue)] rounded-lg transition-all"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-[var(--blue)] hover:text-[var(--ink)] bg-[var(--blue)]/10 hover:bg-[var(--blue)] rounded-lg transition-all"
                       >
                         Voir <ChevronRight size={14} />
                       </Link>
@@ -300,7 +298,7 @@ export default function ListeDossiers() {
                 <div className="mt-3 pt-3 border-t border-[#F4F3EF]">
                   <Link 
                     href={`/dashboard/dossiers/${dossier.id}`}
-                    className="w-full flex items-center justify-center gap-1 py-2 text-sm font-medium text-[var(--blue)] bg-[var(--blue)]/10 rounded-xl hover:bg-[var(--blue)] hover:text-white transition-colors"
+                    className="w-full flex items-center justify-center gap-1 py-2 text-sm font-medium text-[var(--blue)] bg-[var(--blue)]/10 rounded-xl hover:bg-[var(--blue)] hover:text-[var(--ink)] transition-colors"
                   >
                     Voir le dossier <ChevronRight size={14} />
                   </Link>

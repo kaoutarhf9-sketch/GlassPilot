@@ -86,11 +86,9 @@ export default function GestionnaireDashboard() {
       // Récupérer les dossiers
       const { data: dossiers, error } = await supabase
         .from('dossiers')
-        .select(`
-          *,
-          clients (nom, prenom, telephone),
-          garages (nom_garage)
-        `)
+        .select(`*,
+ clients (nom, prenom, telephone),
+ garages (nom_garage)`)
         .eq('gestionnaire_id', gestionnaireData.id)
         .order('created_at', { ascending: false });
 
@@ -189,7 +187,7 @@ export default function GestionnaireDashboard() {
     <div className="space-y-6">
       
       {/* Bannière de bienvenue */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative">
+      <div className="bg-[var(--white)] rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative">
         <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full blur-2xl"></div>
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 mb-4 border border-indigo-100">
@@ -204,7 +202,7 @@ export default function GestionnaireDashboard() {
           </p>
         </div>
         <div className="relative z-10 flex shrink-0 gap-3">
-          <Link href="/gestionnaire/dossiers/nouveau" className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-md shadow-indigo-600/20 flex items-center gap-2">
+          <Link href="/gestionnaire/dossiers/nouveau" className="bg-indigo-600 hover:bg-indigo-700 text-[var(--ink)] px-5 py-2.5 rounded-xl font-medium transition-colors shadow-md shadow-indigo-600/20 flex items-center gap-2">
             <Plus size={18} />
             Nouveau dossier
           </Link>
@@ -213,7 +211,7 @@ export default function GestionnaireDashboard() {
 
       {/* Cartes statistiques */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-slate-200 shadow-md hover:shadow-md hover:border-slate-300 transition-all group">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-slate-200 shadow-md hover:shadow-md hover:border-slate-300 transition-all group">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
               <FileText size={20} className="text-slate-600" />
@@ -224,7 +222,7 @@ export default function GestionnaireDashboard() {
           <p className="text-sm text-slate-500 mt-1">Dossiers traités</p>
         </div>
 
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-slate-200 shadow-md hover:shadow-md hover:border-slate-300 transition-all group">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-slate-200 shadow-md hover:shadow-md hover:border-slate-300 transition-all group">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform border border-amber-100">
               <Clock size={20} className="text-amber-600" />
@@ -235,7 +233,7 @@ export default function GestionnaireDashboard() {
           <p className="text-sm text-slate-500 mt-1">À traiter</p>
         </div>
 
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-slate-200 shadow-md hover:shadow-md hover:border-slate-300 transition-all group">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-slate-200 shadow-md hover:shadow-md hover:border-slate-300 transition-all group">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 bg-sky-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform border border-sky-100">
               <AlertCircle size={20} className="text-sky-600" />
@@ -246,18 +244,18 @@ export default function GestionnaireDashboard() {
           <p className="text-sm text-slate-500 mt-1">En traitement</p>
         </div>
 
-        <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl p-5 shadow-lg shadow-indigo-600/20 text-white relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/10 rounded-full blur-2xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+        <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl p-5 shadow-lg shadow-indigo-600/20 text-[var(--ink)] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--white)] rounded-full blur-2xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
           <div className="relative z-10 flex items-center justify-between mb-4">
-            <div className="w-10 h-10 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10">
-              <TrendingUp size={20} className="text-white" />
+            <div className="w-10 h-10 bg-[var(--white)] backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10">
+              <TrendingUp size={20} className="text-[var(--ink)]" />
             </div>
-            <span className="text-xs font-medium bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 backdrop-blur-sm px-2 py-1 rounded-md border border-white/10">Performance</span>
+            <span className="text-xs font-medium bg-[var(--white)] backdrop-blur-sm px-2 py-1 rounded-md border border-white/10">Performance</span>
           </div>
           <p className="relative z-10 text-3xl font-bold">{stats.dossiers_mois}</p>
           <p className="relative z-10 text-sm text-indigo-100 mt-1">Dossiers ce mois</p>
           <div className="relative z-10 mt-4 h-1.5 bg-black/20 rounded-full overflow-hidden">
-            <div className="h-full bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-full transition-all duration-1000" style={{ width: `${Math.min((stats.dossiers_mois / 50) * 100, 100)}%` }}></div>
+            <div className="h-full bg-[var(--white)] rounded-full transition-all duration-1000" style={{ width: `${Math.min((stats.dossiers_mois / 50) * 100, 100)}%` }}></div>
           </div>
         </div>
       </div>
@@ -269,16 +267,16 @@ export default function GestionnaireDashboard() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Barre de recherche et filtres */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-slate-200 shadow-md p-2 sm:p-3">
+          <div className="bg-[var(--white)] rounded-2xl border border-slate-200 shadow-md p-2 sm:p-3">
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={18} />
                 <input 
                   type="text"
                   placeholder="Rechercher un dossier (nom, immatriculation)..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-transparent border border-transparent rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder-slate-400"
+                  className="w-full pl-10 pr-4 py-2.5 bg-transparent border border-transparent rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:bg-[var(--white)] focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder-slate-400"
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -287,7 +285,7 @@ export default function GestionnaireDashboard() {
                   <select 
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="pl-10 pr-8 py-2.5 bg-transparent border border-transparent rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all appearance-none cursor-pointer"
+                    className="pl-10 pr-8 py-2.5 bg-transparent border border-transparent rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:bg-[var(--white)] focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all appearance-none cursor-pointer"
                   >
                     <option value="tous">Tous statuts</option>
                     <option value="en_attente">En attente</option>
@@ -301,7 +299,7 @@ export default function GestionnaireDashboard() {
           </div>
 
           {/* Liste des dossiers récents */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
+          <div className="bg-[var(--white)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
             <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-transparent/50">
               <h2 className="text-lg font-bold text-[var(--ink)]">Dossiers récents</h2>
               <Link href="/gestionnaire/dossiers" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors">
@@ -312,7 +310,7 @@ export default function GestionnaireDashboard() {
             {dossiersRecents.length === 0 ? (
               <div className="text-center py-16 px-4">
                 <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
-                  <FileText size={24} className="text-slate-400" />
+                  <FileText size={24} className="text-[var(--muted)]" />
                 </div>
                 <p className="text-[var(--ink)] font-semibold mb-1">Aucun dossier récent</p>
                 <p className="text-slate-500 text-sm">Les nouveaux dossiers apparaîtront ici.</p>
@@ -325,7 +323,7 @@ export default function GestionnaireDashboard() {
                     : '?';
                     
                   return (
-                    <div key={dossier.id} className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-lg transition-all overflow-hidden flex flex-col cursor-pointer" onClick={() => router.push(`/gestionnaire/dossiers/${dossier.id}`)}>
+                    <div key={dossier.id} className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-lg transition-all overflow-hidden flex flex-col cursor-pointer" onClick={() => router.push(`/gestionnaire/dossiers/${dossier.id}`)}>
                       {/* En-tête : Client & Statut */}
                       <div className="p-4 border-b border-[var(--stone)] bg-[var(--white)]/20 flex items-start justify-between gap-4">
                         <div className="flex items-center gap-3">
@@ -381,7 +379,7 @@ export default function GestionnaireDashboard() {
         <div className="space-y-6">
           
           {/* Garages Partenaires (remplace l'objectif fictif) */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-6 border border-slate-200 shadow-md">
+          <div className="bg-[var(--white)] rounded-2xl p-6 border border-slate-200 shadow-md">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
@@ -400,7 +398,7 @@ export default function GestionnaireDashboard() {
           </div>
 
           {/* Statistiques réelles */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-slate-200 p-6 shadow-md">
+          <div className="bg-[var(--white)] rounded-2xl border border-slate-200 p-6 shadow-md">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600">
                 <Award size={16} />
@@ -427,7 +425,7 @@ export default function GestionnaireDashboard() {
           </div>
 
           {/* Vrais Messages */}
-          <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
+          <div className="bg-[var(--white)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
             <div className="p-4 border-b border-slate-200 bg-transparent/50">
               <h3 className="font-bold text-[var(--ink)] flex items-center gap-2">
                 <MessageSquare size={16} className="text-indigo-600" />
@@ -450,7 +448,7 @@ export default function GestionnaireDashboard() {
                       <span className={clsx("text-sm", !msg.is_read ? "font-semibold text-[var(--ink)]" : "font-medium text-slate-700")}>
                         {msg.sender_name || 'Garagiste'}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-[var(--muted)]">
                         {new Date(msg.created_at).toLocaleDateString('fr-FR')}
                       </span>
                     </div>

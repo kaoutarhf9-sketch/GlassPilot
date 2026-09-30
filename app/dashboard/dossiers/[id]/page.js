@@ -760,7 +760,7 @@ export default function DetailDossierPremium() {
     <div className="min-h-screen bg-transparent font-sans">
       
       {/* Header */}
-      <div className="relative overflow-hidden bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-b border-[var(--stone)]">
+      <div className="relative overflow-hidden bg-[var(--white)] border-b border-[var(--stone)]">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#1454FF]/5 via-transparent to-transparent rounded-full blur-[80px] pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 relative z-10">
@@ -777,7 +777,7 @@ export default function DetailDossierPremium() {
               <div className="flex flex-wrap items-center gap-4 mb-3">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-[#18170F] rounded-2xl flex items-center justify-center shadow-md">
-                    <FileText size={22} className="text-white" />
+                    <FileText size={22} className="text-[var(--ink)]" />
                   </div>
                   <h1 className="text-3xl md:text-4xl font-serif text-[var(--ink)] tracking-tight">
                     {dossier.numero}
@@ -820,7 +820,7 @@ export default function DetailDossierPremium() {
             <div className="flex flex-wrap gap-3 print:hidden">
               <button 
                 onClick={() => window.print()}
-                className="px-5 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] hover:border-[#1454FF] hover:bg-[var(--blue)]/10 text-[var(--muted)] hover:text-[var(--blue)] rounded-xl font-medium transition-all flex items-center gap-2 text-sm shadow-md"
+                className="px-5 py-2.5 bg-[var(--white)] border border-[var(--stone)] hover:border-[#1454FF] hover:bg-[var(--blue)]/10 text-[var(--muted)] hover:text-[var(--blue)] rounded-xl font-medium transition-all flex items-center gap-2 text-sm shadow-md"
               >
                 <Printer size={16} /> 
                 <span className="hidden sm:inline">Imprimer</span>
@@ -828,12 +828,12 @@ export default function DetailDossierPremium() {
 
               <button
                 onClick={() => setChatOpen(true)}
-                className="relative px-5 py-2.5 bg-[var(--blue)]/10 hover:bg-[var(--blue)] text-[var(--blue)] hover:text-white rounded-xl font-medium transition-all flex items-center gap-2 text-sm shadow-md"
+                className="relative px-5 py-2.5 bg-[var(--blue)]/10 hover:bg-[var(--blue)] text-[var(--blue)] hover:text-[var(--ink)] rounded-xl font-medium transition-all flex items-center gap-2 text-sm shadow-md"
               >
                 <MessageSquare size={16} />
                 <span className="hidden sm:inline">Message</span>
                 {unreadCount > 0 && !chatOpen && (
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-[var(--ink)] text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -845,7 +845,7 @@ export default function DetailDossierPremium() {
                   "px-5 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2 text-sm shadow-md",
                   dossier.signature_url
                     ? "bg-teal-50 text-teal-600 border border-teal-200 hover:bg-teal-100"
-                    : "bg-[var(--blue)] text-white hover:bg-[#0ea5e9] shadow-md shadow-[#1454FF]/25"
+                    : "bg-[var(--blue)] text-[var(--ink)] hover:bg-[#0ea5e9] shadow-md shadow-[#1454FF]/25"
                 )}
               >
                 <FileSignature size={16} /> 
@@ -856,7 +856,7 @@ export default function DetailDossierPremium() {
 
               <Link 
                 href={`/dashboard/dossiers/${dossier.id}/modifier`}
-                className="px-5 py-2.5 bg-[#18170F] hover:bg-[#2A2820] text-white rounded-xl font-medium transition-all shadow-md flex items-center gap-2 text-sm"
+                className="px-5 py-2.5 bg-[#18170F] hover:bg-[#2A2820] text-[var(--ink)] rounded-xl font-medium transition-all shadow-md flex items-center gap-2 text-sm"
               >
                 <Edit size={16} /> 
                 <span className="hidden sm:inline">Modifier</span>
@@ -867,7 +867,7 @@ export default function DetailDossierPremium() {
       </div>
 
       {/* Tabs mobile */}
-      <div className="sticky top-0 z-30 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/95 backdrop-blur-sm border-b border-[var(--stone)] lg:hidden shadow-md">
+      <div className="sticky top-0 z-30 bg-[var(--white)] backdrop-blur-sm border-b border-[var(--stone)] lg:hidden shadow-md">
         <div className="flex justify-around px-4 py-2">
           {[
             { id: 'client', label: 'Client', icon: User },
@@ -901,7 +901,7 @@ export default function DetailDossierPremium() {
             
             {/* VÉHICULE & INTERVENTION */}
             <div className={clsx(
-              "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'vehicule' && "hidden lg:block"
             )}>
               {/* ... contenu existant ... */}
@@ -949,7 +949,7 @@ export default function DetailDossierPremium() {
 
             {/* CLIENT */}
             <div className={clsx(
-              "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'client' && "hidden lg:block"
             )}>
               {/* ... contenu existant ... */}
@@ -965,7 +965,7 @@ export default function DetailDossierPremium() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-12 bg-[#18170F] rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-white font-serif italic text-lg">
+                        <span className="text-[var(--ink)] font-serif italic text-lg">
                           {client?.prenom?.charAt(0)}{client?.nom?.charAt(0)}
                         </span>
                       </div>
@@ -1010,7 +1010,7 @@ export default function DetailDossierPremium() {
 
             {/* ASSURANCE & SINISTRE */}
             <div className={clsx(
-              "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'assurance' && "hidden lg:block"
             )}>
               {/* ... contenu existant ... */}
@@ -1069,7 +1069,7 @@ export default function DetailDossierPremium() {
 
             {/* FACTURATION */}
             <div className={clsx(
-              "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'facturation' && "hidden lg:block"
             )}>
               <div className="p-6 md:p-7">
@@ -1092,7 +1092,7 @@ export default function DetailDossierPremium() {
                     <button 
                       onClick={generateAndSaveInvoicePDF}
                       disabled={generatingPDF}
-                      className="px-3 py-1.5 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-md shadow-[#1454FF]/20"
+                      className="px-3 py-1.5 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-md shadow-[#1454FF]/20"
                     >
                       {generatingPDF ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
                       <span className="hidden sm:inline">Générer PDF</span>
@@ -1195,7 +1195,7 @@ export default function DetailDossierPremium() {
 
             {/* PIÈCES JOINTES */}
             <div className={clsx(
-              "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'documents' && "hidden lg:block"
             )}>
               <div className="px-6 py-4 border-b border-[var(--stone)] flex items-center justify-between">
@@ -1210,7 +1210,7 @@ export default function DetailDossierPremium() {
                     {documents.length} fichier(s)
                   </span>
                   
-                  <label className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--blue)] hover:bg-[#0ea5e9] text-white rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md shadow-[#1454FF]/25">
+                  <label className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md shadow-[#1454FF]/25">
                     {uploading && !uploadingSlot ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
                     Ajouter des photos/docs
                     <input 
@@ -1246,7 +1246,7 @@ export default function DetailDossierPremium() {
                           className={clsx(
                             "group relative rounded-xl border overflow-hidden transition-all flex flex-col justify-between aspect-[4/3]",
                             doc 
-                              ? "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-[var(--stone)] hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
+                              ? "bg-[var(--white)]   border-[var(--stone)] hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
                               : "bg-[var(--white)]/40 border-dashed border-2 border-[var(--stone)] hover:border-[#1454FF] hover:bg-blue-50/20"
                           )}
                           onClick={() => {
@@ -1275,7 +1275,7 @@ export default function DetailDossierPremium() {
                                   {doc.isImage && (
                                     <button 
                                       onClick={(e) => { e.stopPropagation(); setSelectedImage(doc.url); }}
-                                      className="p-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 text-white rounded-lg transition-colors"
+                                      className="p-2 bg-[var(--white)] hover:bg-[var(--white)] text-[var(--ink)] rounded-lg transition-colors"
                                     >
                                       <Maximize2 size={16} />
                                     </button>
@@ -1286,7 +1286,7 @@ export default function DetailDossierPremium() {
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="p-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 text-white rounded-lg transition-colors"
+                                    className="p-2 bg-[var(--white)] hover:bg-[var(--white)] text-[var(--ink)] rounded-lg transition-colors"
                                   >
                                     <Download size={16} />
                                   </a>
@@ -1298,7 +1298,7 @@ export default function DetailDossierPremium() {
                                   </button>
                                 </div>
                               </div>
-                              <div className="p-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border-t border-[var(--stone)]">
+                              <div className="p-3 bg-[var(--white)] border-t border-[var(--stone)]">
                                 <p className="text-xs font-bold text-[var(--ink)] truncate">{slot.label}</p>
                                 <p className="text-[10px] text-[var(--muted)] mt-0.5 truncate">{doc.name}</p>
                               </div>
@@ -1357,8 +1357,8 @@ export default function DetailDossierPremium() {
                             
                             <div className="absolute inset-0 bg-[#18170F]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                               {doc.isImage && (
-                                <button className="p-1.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-lg hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 transition-colors">
-                                  <Maximize2 className="text-white" size={16} />
+                                <button className="p-1.5 bg-[var(--white)] rounded-lg hover:bg-[var(--white)] transition-colors">
+                                  <Maximize2 className="text-[var(--ink)]" size={16} />
                                 </button>
                               )}
                               <a 
@@ -1367,9 +1367,9 @@ export default function DetailDossierPremium() {
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="p-1.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-lg hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/40 transition-colors"
+                                className="p-1.5 bg-[var(--white)] rounded-lg hover:bg-[var(--white)] transition-colors"
                               >
-                                <Download className="text-white" size={16} />
+                                <Download className="text-[var(--ink)]" size={16} />
                               </a>
                               <button 
                                 onClick={(e) => { e.stopPropagation(); handleDeleteFile(doc.name); }}
@@ -1392,7 +1392,7 @@ export default function DetailDossierPremium() {
 
             {/* Notes internes */}
             {dossier.commentaire && (
-              <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
+              <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-6 h-6 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
@@ -1412,7 +1412,7 @@ export default function DetailDossierPremium() {
           <div className="space-y-6">
             
             {/* Carte récapitulative */}
-            <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-6 shadow-md">
+            <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-6 shadow-md">
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
                   <Sparkles size={14} className="text-[var(--blue)]" />
@@ -1448,7 +1448,7 @@ export default function DetailDossierPremium() {
               <div className="mt-6 pt-4 border-t border-[var(--stone)]">
                 <Link 
                   href={`/dashboard/dossiers/${dossier.id}/modifier`}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] hover:bg-[var(--blue)]/10 rounded-xl text-[var(--blue)] font-semibold transition-all text-sm border border-[var(--stone)] hover:border-[#1454FF]"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[var(--white)] hover:bg-[var(--blue)]/10 rounded-xl text-[var(--blue)] font-semibold transition-all text-sm border border-[var(--stone)] hover:border-[#1454FF]"
                 >
                   Modifier le dossier <ChevronRight size={14} />
                 </Link>
@@ -1456,7 +1456,7 @@ export default function DetailDossierPremium() {
             </div>
 
             {/* Widget: Actions rapides (sans Glassphère) */}
-            <div className="bg-[#1C3D4E] rounded-2xl border border-[#2c617a] p-6 shadow-md text-white space-y-5">
+            <div className="bg-[#1C3D4E] rounded-2xl border border-[#2c617a] p-6 shadow-md text-[var(--ink)] space-y-5">
               <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
                 Actions rapides
               </h3>
@@ -1466,9 +1466,9 @@ export default function DetailDossierPremium() {
                 <button
                   onClick={handleSendSignatureLink}
                   disabled={sendingSignature}
-                  className="w-full py-3 px-4 border border-white hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/10 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm disabled:opacity-50 active:scale-98"
+                  className="w-full py-3 px-4 border border-white hover:bg-[var(--white)] text-[var(--ink)] font-semibold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm disabled:opacity-50 active:scale-98"
                 >
-                  {sendingSignature ? <Loader2 size={16} className="animate-spin text-white" /> : <Mail size={16} />}
+                  {sendingSignature ? <Loader2 size={16} className="animate-spin text-[var(--ink)]" /> : <Mail size={16} />}
                   Envoyer lien de signature
                 </button>
 
@@ -1487,7 +1487,7 @@ export default function DetailDossierPremium() {
                   Cession de créance
                 </button>
 
-                <div className="h-px bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/15 my-4" />
+                <div className="h-px bg-[var(--white)] my-4" />
 
                 {/* Pose terminée */}
                 <button
@@ -1513,9 +1513,9 @@ export default function DetailDossierPremium() {
                 <button
                   onClick={() => handleUpdateStatus('desistement')}
                   disabled={updatingStatut}
-                  className="w-full py-2.5 px-4 border border-slate-400 hover:bg-slate-400/10 text-slate-400 font-semibold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm active:scale-98"
+                  className="w-full py-2.5 px-4 border border-slate-400 hover:bg-slate-400/10 text-[var(--muted)] font-semibold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm active:scale-98"
                 >
-                  <AlertCircle size={16} className="text-slate-400" />
+                  <AlertCircle size={16} className="text-[var(--muted)]" />
                   Désistement
                 </button>
 
@@ -1531,7 +1531,7 @@ export default function DetailDossierPremium() {
             </div>
 
             {/* Badge satisfaction */}
-            <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-5 shadow-md text-center">
+            <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-5 shadow-md text-center">
               <div className="flex justify-center gap-1 mb-3">
                 {[1,2,3,4,5].map((i) => (
                   <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
@@ -1543,9 +1543,9 @@ export default function DetailDossierPremium() {
 
             {/* Badge GlassPilot */}
             <div className="bg-[#18170F] rounded-2xl p-5 text-center shadow-md">
-              <Award size={24} className="text-white/80 mx-auto mb-2" />
-              <p className="text-white font-bold text-sm">GlassPilot Pro</p>
-              <p className="text-white/60 text-xs mt-1">Gestion optimisée</p>
+              <Award size={24} className="text-[var(--ink)]/80 mx-auto mb-2" />
+              <p className="text-[var(--ink)] font-bold text-sm">GlassPilot Pro</p>
+              <p className="text-[var(--ink)]/60 text-xs mt-1">Gestion optimisée</p>
             </div>
           </div>
         </div>
@@ -1556,7 +1556,7 @@ export default function DetailDossierPremium() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#18170F]/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
              onClick={() => setSelectedImage(null)}>
           <button 
-            className="absolute top-4 right-4 text-white hover:text-rose-400 transition-colors bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/10 rounded-full p-2 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20"
+            className="absolute top-4 right-4 text-[var(--ink)] hover:text-rose-400 transition-colors bg-[var(--white)] rounded-full p-2 hover:bg-[var(--white)]"
             onClick={() => setSelectedImage(null)}
           >
             <X size={20} />
@@ -1572,7 +1572,7 @@ export default function DetailDossierPremium() {
 
       {/* Fenêtre de chat flottante */}
       {chatOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl shadow-2xl border border-[var(--stone)] overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+        <div className="fixed bottom-6 right-6 z-50 w-96 bg-[var(--white)] rounded-2xl shadow-2xl border border-[var(--stone)] overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
           {/* Header du chat */}
           <div 
             className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] px-4 py-3 flex items-center justify-between cursor-pointer group"
@@ -1580,18 +1580,18 @@ export default function DetailDossierPremium() {
             title="Cliquez pour fermer la discussion"
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-lg flex items-center justify-center">
-                <MessageSquare size={14} className="text-white" />
+              <div className="w-8 h-8 bg-[var(--white)] rounded-lg flex items-center justify-center">
+                <MessageSquare size={14} className="text-[var(--ink)]" />
               </div>
               <div>
-                <span className="text-white font-semibold text-sm group-hover:underline">Discussion avec le gestionnaire</span>
-                <p className="text-white/70 text-xs">Dossier {dossier.numero}</p>
+                <span className="text-[var(--ink)] font-semibold text-sm group-hover:underline">Discussion avec le gestionnaire</span>
+                <p className="text-[var(--ink)]/70 text-xs">Dossier {dossier.numero}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setChatOpen(false); }}
-              className="text-white/70 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10"
+              className="text-[var(--ink)]/70 hover:text-[var(--ink)] transition-colors p-1 rounded-full hover:bg-white/10"
               title="Fermer la discussion"
             >
               <X size={18} />
@@ -1620,8 +1620,8 @@ export default function DetailDossierPremium() {
                     <div className={clsx(
                       "px-4 py-2 rounded-2xl text-sm shadow-md",
                       isMe
-                        ? "bg-[var(--blue)] text-white rounded-br-none"
-                        : "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] text-[var(--ink)] rounded-bl-none"
+                        ? "bg-[var(--blue)] text-[var(--ink)] rounded-br-none"
+                        : "bg-[var(--white)]   border border-[var(--stone)] text-[var(--ink)] rounded-bl-none"
                     )}>
                       {msg.message.startsWith('📎 Fichier :') ? (
                         (() => {
@@ -1650,7 +1650,7 @@ export default function DetailDossierPremium() {
                                 className={clsx(
                                   "inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all mt-1",
                                   isMe
-                                    ? "bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/30 text-white"
+                                    ? "bg-[var(--white)]   hover:bg-[var(--white)]   text-[var(--ink)]"
                                     : "bg-blue-50 hover:bg-blue-100 text-[var(--blue)]"
                                 )}
                               >
@@ -1685,7 +1685,7 @@ export default function DetailDossierPremium() {
           </div>
 
           {/* Input du chat */}
-          <div className="border-t border-[var(--stone)] p-3 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+          <div className="border-t border-[var(--stone)] p-3 bg-[var(--white)]">
             <div className="flex items-end gap-2">
               <input
                 type="file"
@@ -1724,9 +1724,9 @@ export default function DetailDossierPremium() {
                 className="w-10 h-10 bg-[var(--blue)] hover:bg-[#0ea5e9] disabled:bg-[#E6E4DD] rounded-xl flex items-center justify-center transition-colors shrink-0 cursor-pointer active:scale-95"
               >
                 {sendingMessage ? (
-                  <Loader2 size={18} className="animate-spin text-white" />
+                  <Loader2 size={18} className="animate-spin text-[var(--ink)]" />
                 ) : (
-                  <Send size={18} className="text-white" />
+                  <Send size={18} className="text-[var(--ink)]" />
                 )}
               </button>
             </div>

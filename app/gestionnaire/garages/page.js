@@ -119,7 +119,7 @@ export default function GaragesPage() {
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
           <Building2 size={14} className="text-[var(--blue)]" />
           <span className="text-xs font-medium text-[var(--blue)] uppercase tracking-wider">Gestion des garages</span>
         </div>
@@ -129,7 +129,7 @@ export default function GaragesPage() {
 
       {/* Statistiques globales */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
               <Building2 size={20} className="text-[var(--blue)]" />
@@ -139,7 +139,7 @@ export default function GaragesPage() {
           <p className="text-3xl font-bold text-[var(--ink)]">{garages.length}</p>
           <p className="text-xs text-[var(--muted)] mt-1">Garages inscrits</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
               <FolderKanban size={20} className="text-[var(--blue)]" />
@@ -149,7 +149,7 @@ export default function GaragesPage() {
           <p className="text-3xl font-bold text-[var(--ink)]">{totalDossiers}</p>
           <p className="text-xs text-[var(--muted)] mt-1">Tous garages confondus</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
               <TrendingUp size={20} className="text-[var(--blue)]" />
@@ -163,18 +163,18 @@ export default function GaragesPage() {
         </div>
         <div className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] rounded-2xl p-5 shadow-md">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-xl flex items-center justify-center">
-              <Users size={20} className="text-white" />
+            <div className="w-10 h-10 bg-[var(--white)] rounded-xl flex items-center justify-center">
+              <Users size={20} className="text-[var(--ink)]" />
             </div>
-            <span className="text-xs text-white/70">Actifs</span>
+            <span className="text-xs text-[var(--ink)]/70">Actifs</span>
           </div>
-          <p className="text-3xl font-bold text-white">{garages.filter(g => g.is_active !== false).length}</p>
-          <p className="text-xs text-white/70 mt-1">Garages actifs</p>
+          <p className="text-3xl font-bold text-[var(--ink)]">{garages.filter(g => g.is_active !== false).length}</p>
+          <p className="text-xs text-[var(--ink)]/70 mt-1">Garages actifs</p>
         </div>
       </div>
 
       {/* Barre de recherche */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md p-4">
+      <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={18} />
           <input 
@@ -189,7 +189,7 @@ export default function GaragesPage() {
 
       {/* Liste des garages */}
       {garages.length === 0 && !error ? (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-12 text-center">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-12 text-center">
           <Building2 size={48} className="text-[var(--muted)] mx-auto mb-4 opacity-50" />
           <p className="text-[var(--muted)] font-medium">Aucun garage trouvé</p>
           <p className="text-sm text-[var(--muted)] mt-1">
@@ -197,13 +197,13 @@ export default function GaragesPage() {
           </p>
           <button 
             onClick={fetchGarages}
-            className="mt-4 px-4 py-2 bg-[var(--blue)] text-white rounded-xl text-sm font-medium hover:bg-[#0ea5e9] transition-colors"
+            className="mt-4 px-4 py-2 bg-[var(--blue)] text-[var(--ink)] rounded-xl text-sm font-medium hover:bg-[#0ea5e9] transition-colors"
           >
             Rafraîchir
           </button>
         </div>
       ) : garagesFiltres.length === 0 ? (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-12 text-center">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-12 text-center">
           <Building2 size={48} className="text-[var(--muted)] mx-auto mb-4 opacity-50" />
           <p className="text-[var(--muted)] font-medium">Aucun garage correspondant à votre recherche</p>
           {searchTerm && (
@@ -222,12 +222,12 @@ export default function GaragesPage() {
             const ribUrl = garage.onboarding_rib_url ? supabase.storage.from('documents').getPublicUrl(garage.onboarding_rib_url).data.publicUrl : null;
             
             return (
-            <div key={garage.id} className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-md transition-all overflow-hidden group">
+            <div key={garage.id} className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-md transition-all overflow-hidden group">
               {/* En-tête avec initiales */}
               <div className="p-5 border-b border-[var(--stone)] bg-[var(--white)]/20">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-[#18170F] rounded-xl flex items-center justify-center shadow-md">
-                    <span className="text-white font-serif italic text-lg">
+                    <span className="text-[var(--ink)] font-serif italic text-lg">
                       {garage.nom_garage?.charAt(0).toUpperCase() || 'G'}
                     </span>
                   </div>
@@ -312,7 +312,7 @@ export default function GaragesPage() {
               <div className="px-5 py-3 bg-[var(--white)]/40 border-t border-[var(--stone)]">
                 <Link 
                   href={`/gestionnaire/garages/${garage.id}`}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-[var(--blue)] hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl transition-all border border-transparent hover:border-[var(--stone)]"
+                  className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-[var(--blue)] hover:bg-[var(--white)] rounded-xl transition-all border border-transparent hover:border-[var(--stone)]"
                 >
                   Voir les détails du garage
                   <Eye size={14} />
@@ -326,7 +326,7 @@ export default function GaragesPage() {
 
       {/* Résumé des dossiers par garage (affichage supplémentaire) */}
       {garages.length > 0 && (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-5 shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-5 shadow-md">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp size={18} className="text-[var(--blue)]" />
             <h3 className="font-semibold text-[var(--ink)]">Classement des garages par nombre de dossiers</h3>

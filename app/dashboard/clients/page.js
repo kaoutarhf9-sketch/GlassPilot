@@ -36,10 +36,8 @@ export default function ListeClients() {
 
       const { data: dossiers, error } = await supabase
         .from('dossiers')
-        .select(`
-          immatriculation,
-          clients (*)
-        `)
+        .select(`immatriculation,
+ clients (*)`)
         .eq('garage_id', garage.id)
         .order('created_at', { ascending: false });
 
@@ -107,7 +105,7 @@ export default function ListeClients() {
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-[var(--stone)]">
           <Sparkles size={14} className="text-[var(--blue)]" />
           <span className="text-xs font-medium text-[var(--blue)] uppercase tracking-wider">Carnet de clients</span>
         </div>
@@ -117,7 +115,7 @@ export default function ListeClients() {
 
       {/* Cartes stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
               <Users size={18} className="text-[var(--blue)]" />
@@ -127,7 +125,7 @@ export default function ListeClients() {
           <p className="text-2xl font-bold text-[var(--ink)]">{clients.length}</p>
           <p className="text-xs text-[var(--muted)] mt-1">Clients actifs</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
               <FileText size={18} className="text-[var(--blue)]" />
@@ -137,7 +135,7 @@ export default function ListeClients() {
           <p className="text-2xl font-bold text-[var(--ink)]">{clients.reduce((acc, c) => acc + c.nb_dossiers, 0)}</p>
           <p className="text-xs text-[var(--muted)] mt-1">Interventions totales</p>
         </div>
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
               <Car size={18} className="text-[var(--blue)]" />
@@ -150,7 +148,7 @@ export default function ListeClients() {
       </div>
 
       {/* Barre de recherche */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md p-4">
+      <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-4">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={18} />
           <input 
@@ -165,7 +163,7 @@ export default function ListeClients() {
 
       {/* Liste des clients */}
       {clientsFiltres.length === 0 ? (
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] p-12 text-center">
+        <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-12 text-center">
           <div className="w-16 h-16 bg-[var(--white)] rounded-full flex items-center justify-center mx-auto mb-4">
             <User className="text-[var(--muted)]" size={28} />
           </div>
@@ -175,13 +173,13 @@ export default function ListeClients() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {clientsFiltres.map((client) => (
-            <div key={client.id} className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-md hover:border-[#1454FF]/30 transition-all duration-300 overflow-hidden group">
+            <div key={client.id} className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-md hover:border-[#1454FF]/30 transition-all duration-300 overflow-hidden group">
               
               {/* En-tête de la carte */}
               <div className="p-5 border-b border-[var(--stone)] bg-gradient-to-b from-[#FAFAF8] to-white">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-[#18170F] rounded-2xl flex items-center justify-center shadow-md text-white font-serif italic text-xl group-hover:scale-105 transition-transform">
+                    <div className="w-14 h-14 bg-[#18170F] rounded-2xl flex items-center justify-center shadow-md text-[var(--ink)] font-serif italic text-xl group-hover:scale-105 transition-transform">
                       {client.prenom?.charAt(0)}{client.nom?.charAt(0)}
                     </div>
                     <div>
@@ -252,7 +250,7 @@ export default function ListeClients() {
               <div className="px-5 py-3 bg-[var(--white)]/40 border-t border-[var(--stone)]">
                 <button 
                   onClick={() => handleFilterDossiers(client)}
-                  className="w-full py-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] hover:bg-[var(--blue)]/10 text-[var(--blue)] text-sm font-medium rounded-xl border border-[var(--stone)] hover:border-[#1454FF] transition-all flex items-center justify-center gap-2"
+                  className="w-full py-2 bg-[var(--white)] hover:bg-[var(--blue)]/10 text-[var(--blue)] text-sm font-medium rounded-xl border border-[var(--stone)] hover:border-[#1454FF] transition-all flex items-center justify-center gap-2"
                 >
                   <FolderOpen size={14} />
                   Voir ses dossiers <ChevronRight size={12} />

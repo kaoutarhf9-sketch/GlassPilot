@@ -259,7 +259,7 @@ export default function AdminDossiersPage() {
   if (fetchError) {
     return (
       <div className="flex items-center justify-center min-h-[60vh] p-4">
-        <div className="max-w-md w-full bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-3xl p-6 sm:p-8 shadow-md space-y-4">
+        <div className="max-w-md w-full bg-[var(--white)] border border-[var(--stone)] rounded-3xl p-6 sm:p-8 shadow-md space-y-4">
           <div className="flex items-center gap-3 text-rose-600">
             <div className="w-10 h-10 rounded-2xl bg-rose-50 flex items-center justify-center border border-rose-100 shrink-0">
               <AlertTriangle size={20} />
@@ -276,7 +276,7 @@ export default function AdminDossiersPage() {
 
           <button
             onClick={() => { setFetchError(null); fetchData(); }}
-            className="w-full py-3 bg-[var(--blue)] hover:bg-[#003BDE] text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#1454FF]/10 cursor-pointer"
+            className="w-full py-3 bg-[var(--blue)] hover:bg-[#003BDE] text-[var(--ink)] rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#1454FF]/10 cursor-pointer"
           >
             Réessayer
           </button>
@@ -294,8 +294,8 @@ export default function AdminDossiersPage() {
           <div className={clsx(
             "rounded-2xl shadow-2xl p-4 w-[340px] flex items-center gap-3 border transition-all",
             toast.type === 'success' 
-              ? "bg-emerald-50/90 backdrop-blur-md border-emerald-200 text-emerald-900 shadow-emerald-900/5 shadow-xl" 
-              : "bg-rose-50/90 backdrop-blur-md border-rose-200 text-rose-900 shadow-rose-900/5 shadow-xl"
+              ? "bg-emerald-50/90  border-emerald-200 text-emerald-900 shadow-emerald-900/5 shadow-xl" 
+              : "bg-rose-50/90  border-rose-200 text-rose-900 shadow-rose-900/5 shadow-xl"
           )}>
             <div className={clsx(
               "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border",
@@ -314,7 +314,7 @@ export default function AdminDossiersPage() {
       )}
 
       {/* ── En-tête ─────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
         <div>
           <h2 className="text-3xl font-serif-premium text-[var(--ink)]">Attribution des dossiers</h2>
           <p className="text-xs font-semibold text-[var(--muted)] mt-1.5">
@@ -339,7 +339,7 @@ export default function AdminDossiersPage() {
         <button
           onClick={() => { setStatusFilter('tous'); setSearchTerm(''); }}
           className={clsx(
-            "text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border transition-all relative overflow-hidden group cursor-pointer",
+            "text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)]   border transition-all relative overflow-hidden group cursor-pointer",
             statusFilter === 'tous' 
               ? "border-[#1454FF] ring-2 ring-[#1454FF]/20 shadow-md shadow-[#1454FF]/5 scale-[1.01]" 
               : "border-[var(--stone)] hover:border-[#89867A]/60 shadow-md"
@@ -356,7 +356,7 @@ export default function AdminDossiersPage() {
         <button
           onClick={() => { setStatusFilter('non_assignes'); setSearchTerm(''); }}
           className={clsx(
-            "text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border transition-all relative overflow-hidden group cursor-pointer",
+            "text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)]   border transition-all relative overflow-hidden group cursor-pointer",
             statusFilter === 'non_assignes' 
               ? "border-amber-500 ring-2 ring-amber-500/20 shadow-md shadow-amber-500/5 scale-[1.01]" 
               : "border-[var(--stone)] hover:border-amber-500/40 shadow-md"
@@ -372,7 +372,7 @@ export default function AdminDossiersPage() {
         </button>
 
         {/* Active dossiers */}
-        <div className="text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] shadow-md relative overflow-hidden group">
+        <div className="text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)] border border-[var(--stone)] shadow-md relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 text-[var(--muted)]/10 group-hover:scale-110 transition-transform duration-500">
             <Clock size={48} />
           </div>
@@ -381,7 +381,7 @@ export default function AdminDossiersPage() {
         </div>
 
         {/* Completed dossiers */}
-        <div className="text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] shadow-md relative overflow-hidden group">
+        <div className="text-left p-6 sm:p-8 rounded-3xl bg-[var(--white)] border border-[var(--stone)] shadow-md relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 text-emerald-500/10 group-hover:scale-110 transition-transform duration-500">
             <CheckCircle size={48} />
           </div>
@@ -391,7 +391,7 @@ export default function AdminDossiersPage() {
       </div>
 
       {/* ── Contenu Principal (Filtres & Table) ─────────────────── */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden flex flex-col">
+      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden flex flex-col">
         
         {/* Barre d'outils */}
         <div className="p-5 border-b border-[var(--stone)]/60 bg-[var(--white)]/40 flex flex-col sm:flex-row gap-4 justify-between items-center">
@@ -404,7 +404,7 @@ export default function AdminDossiersPage() {
               placeholder="Rechercher dossier, plaque, client, garage..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-10 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] transition-all"
+              className="block w-full pl-10 pr-10 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] transition-all"
             />
             {searchTerm && (
               <button
@@ -424,7 +424,7 @@ export default function AdminDossiersPage() {
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
-                className="w-full pl-10 pr-10 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[var(--stone)] rounded-2xl text-xs font-bold text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] appearance-none cursor-pointer transition-all"
+                className="w-full pl-10 pr-10 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-bold text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] appearance-none cursor-pointer transition-all"
               >
                 {STATUTS.map(s => (
                   <option key={s.value} value={s.value}>{s.label}</option>
@@ -574,7 +574,7 @@ export default function AdminDossiersPage() {
                               value={dossier.gestionnaire_id || ""}
                               onChange={e => handleAssignGestionnaire(dossier.id, e.target.value)}
                               className={clsx(
-                                "w-full pl-3.5 pr-8 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] appearance-none cursor-pointer transition-all",
+                                "w-full pl-3.5 pr-8 py-2.5 bg-[var(--white)]   border rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] appearance-none cursor-pointer transition-all",
                                 isUnassigned 
                                   ? "border-amber-300 text-amber-700 bg-amber-50/20" 
                                   : "border-[var(--stone)] text-[var(--ink)]"

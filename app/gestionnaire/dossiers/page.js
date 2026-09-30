@@ -194,7 +194,7 @@ function DossiersList() {
     <div className="space-y-8 px-4 py-6 max-w-7xl mx-auto">
 
       {/* ── En-tête ─────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 rounded-2xl border border-slate-200 shadow-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--white)] p-6 rounded-2xl border border-slate-200 shadow-md">
         <div>
           <div className="flex items-center gap-3 mb-1">
             <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
@@ -210,12 +210,12 @@ function DossiersList() {
           <button
             onClick={() => fetchData(true)}
             disabled={refreshing}
-            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-600 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-lg hover:bg-transparent hover:text-[var(--ink)] transition-all disabled:opacity-50 shadow-md"
+            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-600 bg-[var(--white)] border border-slate-200 rounded-lg hover:bg-transparent hover:text-[var(--ink)] transition-all disabled:opacity-50 shadow-md"
           >
             <RefreshCw size={16} className={refreshing ? 'animate-spin text-[var(--blue)]' : ''} />
             {refreshing ? 'Mise à jour' : 'Actualiser'}
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-[var(--blue)] rounded-lg hover:bg-[var(--blue)] transition-all shadow-md shadow-blue-200">
+          <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-[var(--ink)] bg-[var(--blue)] rounded-lg hover:bg-[var(--blue)] transition-all shadow-md shadow-blue-200">
             <span className="text-lg leading-none mb-0.5">+</span> Nouveau Dossier
           </button>
         </div>
@@ -231,12 +231,9 @@ function DossiersList() {
             <button
               key={key}
               onClick={() => setStatusFilter(key === 'total' ? 'tous' : key)}
-              className={`
-                group relative text-left p-5 rounded-2xl bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border transition-all duration-200
-                ${isActive 
-                  ? `border-transparent ring-2 ${style.activeRing} shadow-md scale-[1.02] z-10` 
-                  : 'border-slate-200 hover:border-slate-300 hover:shadow-md'}
-              `}
+              className={`group relative text-left p-5 rounded-2xl bg-[var(--white)] border transition-all duration-200
+ ${isActive 
+ ?`border-transparent ring-2 ${style.activeRing} shadow-md scale-[1.02] z-10`: 'border-slate-200 hover:border-slate-300 hover:shadow-md'}`}
             >
               <div className="flex items-center justify-between mb-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${style.iconBg} ${isActive ? 'ring-2 ring-white shadow-md' : ''}`}>
@@ -251,23 +248,23 @@ function DossiersList() {
       </div>
 
       {/* ── Contenu Principal (Filtres & Table) ─────────────────── */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
+      <div className="bg-[var(--white)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
         
         {/* Barre d'outils */}
         <div className="p-4 sm:p-5 border-b border-slate-100 bg-transparent/50 flex flex-col sm:flex-row gap-4 justify-between items-center">
           <div className="relative w-full sm:max-w-md">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)] pointer-events-none" size={18} />
             <input
               type="text"
               placeholder="Rechercher par numéro, plaque, client..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-10 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] transition-all shadow-md"
+              className="w-full pl-10 pr-10 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] transition-all shadow-md"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors"
               ><span className="sr-only">Effacer</span>×</button>
             )}
           </div>
@@ -275,19 +272,19 @@ function DossiersList() {
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative w-full sm:w-64">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                <SlidersHorizontal className="text-slate-400" size={16} />
+                <SlidersHorizontal className="text-[var(--muted)]" size={16} />
               </div>
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
-                className="w-full pl-10 pr-10 py-2.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md appearance-none cursor-pointer transition-all"
+                className="w-full pl-10 pr-10 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md appearance-none cursor-pointer transition-all"
               >
                 {STATUTS.map(s => (
                   <option key={s.value} value={s.value}>{s.label}</option>
                 ))}
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none">
-                <ChevronRight className="text-slate-400 rotate-90" size={16} />
+                <ChevronRight className="text-[var(--muted)] rotate-90" size={16} />
               </div>
             </div>
           </div>
@@ -327,7 +324,7 @@ function DossiersList() {
                   : '?';
                 
                 return (
-                  <div key={dossier.id} className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-lg transition-all overflow-hidden flex flex-col">
+                  <div key={dossier.id} className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-lg transition-all overflow-hidden flex flex-col">
                     {/* En-tête : Client & Statut */}
                     <div className="p-5 border-b border-[var(--stone)] bg-[var(--white)]/20 flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
@@ -391,7 +388,7 @@ function DossiersList() {
                     <div className="px-5 py-3 bg-[var(--white)]/40 border-t border-[var(--stone)] mt-auto">
                       <Link
                         href={`/gestionnaire/dossiers/${dossier.id}`}
-                        className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-[var(--blue)] hover:bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-xl transition-all border border-transparent hover:border-[var(--stone)]"
+                        className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-[var(--blue)] hover:bg-[var(--white)] rounded-xl transition-all border border-transparent hover:border-[var(--stone)]"
                       >
                         Voir le dossier
                         <ChevronRight size={14} />

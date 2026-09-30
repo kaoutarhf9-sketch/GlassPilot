@@ -65,10 +65,8 @@ export default function DashboardHome() {
 
       const { data: dossiers, error: dossiersError } = await supabase
         .from('dossiers')
-        .select(`
-          *,
-          clients (nom, prenom, telephone)
-        `)
+        .select(`*,
+ clients (nom, prenom, telephone)`)
         .eq('garage_id', garage.id)
         .order('created_at', { ascending: false });
 
@@ -233,7 +231,7 @@ export default function DashboardHome() {
       {/* En-tête */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-md rounded-full px-3 py-1.5 mb-4 border border-[var(--stone)]">
+          <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-3 py-1.5 mb-4 border border-[var(--stone)]">
             <Sparkles size={12} className="text-[var(--blue)]" />
             <span className="text-xs font-medium text-[var(--blue)]">Tableau de bord</span>
           </div>
@@ -246,7 +244,7 @@ export default function DashboardHome() {
         </div>
         <Link 
           href="/dashboard/dossiers/nouveau"
-          className="bg-[var(--blue)] hover:bg-[#0ea5e9] text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 shadow-md shadow-[#1454FF]/25 transition-all hover:-translate-y-0.5 w-fit"
+          className="bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 shadow-md shadow-[#1454FF]/25 transition-all hover:-translate-y-0.5 w-fit"
         >
           <Plus size={18} /> Nouveau dossier
         </Link>
@@ -255,7 +253,7 @@ export default function DashboardHome() {
       {/* Cartes statistiques */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-6 border border-[var(--stone)] shadow-md hover:shadow-md transition-all">
+        <div className="bg-[var(--white)] rounded-2xl p-6 border border-[var(--stone)] shadow-md hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
               <Clock size={18} className="text-amber-600" />
@@ -266,7 +264,7 @@ export default function DashboardHome() {
           <p className="text-xs text-[var(--muted)] mt-1">Dossiers à traiter</p>
         </div>
 
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-6 border border-[var(--stone)] shadow-md hover:shadow-md transition-all">
+        <div className="bg-[var(--white)] rounded-2xl p-6 border border-[var(--stone)] shadow-md hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center">
               <AlertCircle size={18} className="text-rose-600" />
@@ -277,7 +275,7 @@ export default function DashboardHome() {
           <p className="text-xs text-[var(--muted)] mt-1">Dossiers nécessitant une action</p>
         </div>
 
-        <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl p-6 border border-[var(--stone)] shadow-md hover:shadow-md transition-all">
+        <div className="bg-[var(--white)] rounded-2xl p-6 border border-[var(--stone)] shadow-md hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
               <CheckCircle2 size={18} className="text-emerald-600" />
@@ -290,26 +288,26 @@ export default function DashboardHome() {
 
         <div className="bg-[var(--blue)] rounded-2xl p-6 shadow-lg">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-xl flex items-center justify-center">
-              <Target size={18} className="text-white" />
+            <div className="w-10 h-10 bg-[var(--white)] rounded-xl flex items-center justify-center">
+              <Target size={18} className="text-[var(--ink)]" />
             </div>
-            <span className="text-xs text-white/70 font-medium">Total dossiers</span>
+            <span className="text-xs text-[var(--ink)]/70 font-medium">Total dossiers</span>
           </div>
-          <h3 className="text-3xl font-bold text-white mt-2">{stats.total_dossiers}</h3>
+          <h3 className="text-3xl font-bold text-[var(--ink)] mt-2">{stats.total_dossiers}</h3>
           <div className="mt-2 flex items-center justify-between">
-            <span className="text-xs text-white/70">Dossiers traités</span>
-            <span className="text-xs text-white/80 font-medium">
+            <span className="text-xs text-[var(--ink)]/70">Dossiers traités</span>
+            <span className="text-xs text-[var(--ink)]/80 font-medium">
               {stats.progression_mois > 0 ? `+${stats.progression_mois}%` : stats.progression_mois < 0 ? `${stats.progression_mois}%` : '='}
             </span>
           </div>
-          <div className="mt-1 h-1.5 bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]/20 rounded-full overflow-hidden">
-            <div className="h-full bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-full" style={{ width: `${Math.min((stats.termines_total / stats.total_dossiers) * 100 || 0, 100)}%` }}></div>
+          <div className="mt-1 h-1.5 bg-[var(--white)] rounded-full overflow-hidden">
+            <div className="h-full bg-[var(--white)] rounded-full" style={{ width: `${Math.min((stats.termines_total / stats.total_dossiers) * 100 || 0, 100)}%` }}></div>
           </div>
         </div>
       </div>
 
       {/* Graphique des revenus */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md p-6">
+      <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center border border-indigo-100">
@@ -325,30 +323,30 @@ export default function DashboardHome() {
             <button
               onClick={() => setChartFilter('jour')}
               className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                chartFilter === 'jour' 
-                  ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
-                  : 'text-slate-500 hover:text-slate-700'
-              }`}
+ chartFilter === 'jour' 
+ ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
+ : 'text-slate-500 hover:text-slate-700'
+ }`}
             >
               7 Jours
             </button>
             <button
               onClick={() => setChartFilter('semaine')}
               className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                chartFilter === 'semaine' 
-                  ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
-                  : 'text-slate-500 hover:text-slate-700'
-              }`}
+ chartFilter === 'semaine' 
+ ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
+ : 'text-slate-500 hover:text-slate-700'
+ }`}
             >
               4 Semaines
             </button>
             <button
               onClick={() => setChartFilter('mois')}
               className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                chartFilter === 'mois' 
-                  ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
-                  : 'text-slate-500 hover:text-slate-700'
-              }`}
+ chartFilter === 'mois' 
+ ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
+ : 'text-slate-500 hover:text-slate-700'
+ }`}
             >
               Année
             </button>
@@ -406,7 +404,7 @@ export default function DashboardHome() {
       </div>
 
       {/* Dossiers récents */}
-      <div className="bg-[var(--white)] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
+      <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
         <div className="p-6 border-b border-[var(--stone)] flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
