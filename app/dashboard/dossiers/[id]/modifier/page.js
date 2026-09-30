@@ -298,7 +298,7 @@ export default function ModifierDossier() {
               {/* STEP 1 : CLIENT */}
               {step === 1 && (
                 <div className="space-y-5 animate-in fade-in duration-300">
-                  <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] p-6">
+                  <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-[var(--stone)] p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className={labelClass}>Nom complet *</label>
@@ -377,7 +377,7 @@ export default function ModifierDossier() {
               {/* STEP 2 : VÉHICULE */}
               {step === 2 && (
                 <div className="space-y-5 animate-in fade-in duration-300">
-                  <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] p-6">
+                  <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-[var(--stone)] p-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       <div>
                         <label className={labelClass}>Immatriculation *</label>

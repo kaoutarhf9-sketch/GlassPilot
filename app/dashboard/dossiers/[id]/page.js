@@ -691,7 +691,7 @@ export default function DetailDossierPremium() {
       termine: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', dot: 'bg-emerald-500', label: 'Terminé', icon: CheckCircle2 },
       reglement_en_cours: { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200', dot: 'bg-purple-500', label: 'Règlement en cours', icon: Euro },
       reglement_recu: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', dot: 'bg-emerald-500', label: 'Règlement reçu', icon: CheckCircle2 },
-      desistement: { bg: 'bg-transparent', text: 'text-slate-700', border: 'border-slate-200', dot: 'bg-transparent0', label: 'Désistement', icon: AlertCircle },
+      desistement: { bg: 'bg-transparent', text: 'text-slate-300', border: 'border-white/10', dot: 'bg-transparent0', label: 'Désistement', icon: AlertCircle },
     };
     return styles[statut] || styles.en_attente;
   };
@@ -901,7 +901,7 @@ export default function DetailDossierPremium() {
             
             {/* VÉHICULE & INTERVENTION */}
             <div className={clsx(
-              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[#120052] text-white   rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'vehicule' && "hidden lg:block"
             )}>
               {/* ... contenu existant ... */}
@@ -911,7 +911,7 @@ export default function DetailDossierPremium() {
                     <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
                       <Car size={18} className="text-[var(--blue)]" />
                     </div>
-                    <h2 className="text-lg font-semibold text-[var(--ink)]">Véhicule & intervention</h2>
+                    <h2 className="text-lg font-semibold text-white">Véhicule & intervention</h2>
                   </div>
                   <div className="px-3 py-1.5 bg-[var(--white)]/40 rounded-lg text-[var(--blue)] font-mono font-semibold text-sm border border-[var(--stone)]">
                     {dossier.immatriculation}
@@ -949,7 +949,7 @@ export default function DetailDossierPremium() {
 
             {/* CLIENT */}
             <div className={clsx(
-              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[#120052] text-white   rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'client' && "hidden lg:block"
             )}>
               {/* ... contenu existant ... */}
@@ -1010,7 +1010,7 @@ export default function DetailDossierPremium() {
 
             {/* ASSURANCE & SINISTRE */}
             <div className={clsx(
-              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[#120052] text-white   rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'assurance' && "hidden lg:block"
             )}>
               {/* ... contenu existant ... */}
@@ -1019,7 +1019,7 @@ export default function DetailDossierPremium() {
                   <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
                     <ShieldCheck size={18} className="text-[var(--blue)]" />
                   </div>
-                  <h2 className="text-lg font-semibold text-[var(--ink)]">Sinistre & assurance</h2>
+                  <h2 className="text-lg font-semibold text-white">Sinistre & assurance</h2>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1069,7 +1069,7 @@ export default function DetailDossierPremium() {
 
             {/* FACTURATION */}
             <div className={clsx(
-              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[#120052] text-white   rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'facturation' && "hidden lg:block"
             )}>
               <div className="p-6 md:p-7">
@@ -1195,7 +1195,7 @@ export default function DetailDossierPremium() {
 
             {/* PIÈCES JOINTES */}
             <div className={clsx(
-              "bg-[var(--white)]   rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
+              "bg-[#120052] text-white   rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'documents' && "hidden lg:block"
             )}>
               <div className="px-6 py-4 border-b border-[var(--stone)] flex items-center justify-between">
@@ -1392,7 +1392,7 @@ export default function DetailDossierPremium() {
 
             {/* Notes internes */}
             {dossier.commentaire && (
-              <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
+              <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden">
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-6 h-6 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
@@ -1412,7 +1412,7 @@ export default function DetailDossierPremium() {
           <div className="space-y-6">
             
             {/* Carte récapitulative */}
-            <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-6 shadow-md">
+            <div className="bg-[#120052] text-white rounded-2xl border-white/10 border-[var(--stone)] p-6 shadow-md">
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
                   <Sparkles size={14} className="text-[var(--blue)]" />
@@ -1531,7 +1531,7 @@ export default function DetailDossierPremium() {
             </div>
 
             {/* Badge satisfaction */}
-            <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-5 shadow-md text-center">
+            <div className="bg-[#120052] text-white rounded-2xl border-white/10 border-[var(--stone)] p-5 shadow-md text-center">
               <div className="flex justify-center gap-1 mb-3">
                 {[1,2,3,4,5].map((i) => (
                   <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
@@ -1572,7 +1572,7 @@ export default function DetailDossierPremium() {
 
       {/* Fenêtre de chat flottante */}
       {chatOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 bg-[var(--white)] rounded-2xl shadow-2xl border border-[var(--stone)] overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+        <div className="fixed bottom-6 right-6 z-50 w-96 bg-[#120052] text-white rounded-2xl shadow-2xl border-white/10 border-[var(--stone)] overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
           {/* Header du chat */}
           <div 
             className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] px-4 py-3 flex items-center justify-between cursor-pointer group"
@@ -1639,7 +1639,7 @@ export default function DetailDossierPremium() {
                                 <img
                                   src={fileUrl}
                                   alt={fileName}
-                                  className="max-w-full max-h-48 object-cover rounded-lg border border-slate-200 mt-1 cursor-pointer hover:opacity-90 transition-opacity"
+                                  className="max-w-full max-h-48 object-cover rounded-lg border border-white/10 mt-1 cursor-pointer hover:opacity-90 transition-opacity"
                                   onClick={() => setSelectedImage(fileUrl)}
                                 />
                               )}
@@ -1697,7 +1697,7 @@ export default function DetailDossierPremium() {
               <label
                 htmlFor="chat-file-upload-garagiste"
                 className={clsx(
-                  "w-10 h-10 bg-transparent hover:bg-slate-100 text-slate-500 rounded-xl flex items-center justify-center cursor-pointer transition-all shrink-0 border border-slate-200 hover:border-slate-300 active:scale-95",
+                  "w-10 h-10 bg-transparent hover:bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center cursor-pointer transition-all shrink-0 border border-white/10 hover:border-slate-300 active:scale-95",
                   chatUploading && "opacity-50 pointer-events-none"
                 )}
               >

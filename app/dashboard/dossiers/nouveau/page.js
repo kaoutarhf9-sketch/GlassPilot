@@ -26,8 +26,8 @@ const TYPES_VITRAGE = [
   'Latérale AR Droite', 'Toit pano.', 'Optique phare', 'Autre',
 ];
 
-const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]   border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-[var(--muted)] focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition-all";
-const labelClass = "block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5";
+const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]   border border-white/10 rounded-xl text-sm text-slate-300 placeholder:text-[var(--muted)] focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition-all";
+const labelClass = "block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1.5";
 const requiredMark = <span className="text-rose-500 ml-1">*</span>;
 
 function Field({ label, required, children, error }) {
@@ -56,7 +56,7 @@ function FileUpload({ label, hint, accept = '.pdf,.jpg,.jpeg,.png', onChange, fi
         onClick={() => ref.current?.click()}
         className={clsx(
           'border-2 border-dashed rounded-xl p-4 cursor-pointer transition-all text-center group flex flex-col items-center justify-center h-28',
-          file ? 'border-indigo-400 bg-indigo-50' : 'border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 bg-[var(--white)]  '
+          file ? 'border-indigo-400 bg-indigo-50' : 'border-white/10 hover:border-indigo-400 hover:bg-indigo-50/50 bg-[var(--white)]  '
         )}
       >
         <input ref={ref} type="file" accept={accept} className="hidden" onChange={e => onChange(e.target.files[0])} />
@@ -69,7 +69,7 @@ function FileUpload({ label, hint, accept = '.pdf,.jpg,.jpeg,.png', onChange, fi
             )}
             <p className="text-xs font-medium text-slate-800 truncate w-full">{file.name}</p>
             <div className="flex items-center justify-between w-full mt-2">
-              <span className="text-[10px] font-medium text-slate-500">{(file.size / 1024).toFixed(0)} KB</span>
+              <span className="text-[10px] font-medium text-slate-400">{(file.size / 1024).toFixed(0)} KB</span>
               <button 
                 type="button" 
                 onClick={e => { e.stopPropagation(); onChange(null); }} 
@@ -82,7 +82,7 @@ function FileUpload({ label, hint, accept = '.pdf,.jpg,.jpeg,.png', onChange, fi
         ) : (
           <>
             <Upload size={20} className="text-[var(--muted)] group-hover:text-indigo-500 mb-2 transition-colors" />
-            <p className="text-xs font-medium text-slate-700">Importer un fichier</p>
+            <p className="text-xs font-medium text-slate-300">Importer un fichier</p>
             <p className="text-[10px] font-medium text-[var(--muted)] mt-1">{hint}</p>
           </>
         )}
@@ -487,7 +487,7 @@ export default function NouveauDossier() {
         {/* Stepper latéral */}
         <div className="w-full md:w-64 lg:w-72 flex-shrink-0">
           <div className="sticky top-24">
-            <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-6 shadow-md">
+            <div className="bg-[#120052] text-white rounded-2xl border-white/10 border-[var(--stone)] p-6 shadow-md">
               <h3 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-4">Progression</h3>
               <div className="space-y-4">
                 {STEPS.map((s, i) => {
@@ -518,7 +518,7 @@ export default function NouveauDossier() {
             </div>
 
             {/* Récapitulatif */}
-            <div className="mt-4 bg-[var(--white)]/20 rounded-2xl border border-[var(--stone)] p-4">
+            <div className="mt-4 bg-[#120052] text-white/20 rounded-2xl border-white/10 border-[var(--stone)] p-4">
               <p className="text-[10px] font-bold text-[var(--blue)] uppercase tracking-wider mb-2">En cours de saisie</p>
               <p className="text-sm font-semibold text-[var(--ink)] truncate">{client.nom_societe || 'Nouveau Client'}</p>
               <p className="text-xs text-[var(--muted)] truncate">{vehicule.immatriculation || 'Véhicule non renseigné'}</p>
@@ -534,7 +534,7 @@ export default function NouveauDossier() {
             <p className="text-[var(--muted)] text-sm mt-1">{STEPS[step-1].desc}</p>
           </div>
 
-          <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-6 md:p-8">
+          <div className="bg-[#120052] text-white rounded-2xl border-white/10 border-[var(--stone)] shadow-md p-6 md:p-8">
             
             {/* STEP 1 : CLIENT */}
             {step === 1 && (
@@ -1081,7 +1081,7 @@ export default function NouveauDossier() {
               disabled={cameraError}
               className="w-20 h-20 bg-white rounded-full border-4 border-slate-300 flex items-center justify-center active:scale-95 transition-transform disabled:opacity-50 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
             >
-              <div className="w-16 h-16 bg-white rounded-full border-2 border-slate-200 shadow-inner"></div>
+              <div className="w-16 h-16 bg-white rounded-full border-2 border-white/10 shadow-inner"></div>
             </button>
             
             <label className="text-[var(--ink)]/80 hover:text-[var(--ink)] text-sm font-medium flex items-center gap-2 cursor-pointer mt-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 transition-colors rounded-full">

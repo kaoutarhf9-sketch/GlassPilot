@@ -854,7 +854,7 @@ Gestionnaire administratif du garage ${garageNom}
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Link href="/gestionnaire/dossiers" className="p-2 bg-[var(--white)] rounded-xl border border-slate-200 text-slate-500 hover:text-[var(--blue)] hover:border-[#1454FF] transition-all shadow-md">
+          <Link href="/gestionnaire/dossiers" className="p-2 bg-[var(--white)] rounded-xl border border-white/10 text-slate-400 hover:text-[var(--blue)] hover:border-[#1454FF] transition-all shadow-md">
             <ArrowLeft size={18} />
           </Link>
           <div>
@@ -870,7 +870,7 @@ Gestionnaire administratif du garage ${garageNom}
                       PRESTIGE
                     </span>
                   ) : (
-                    <span className="px-2.5 py-1 text-[11px] font-black tracking-widest text-slate-700 bg-slate-100 rounded-lg border border-slate-200">
+                    <span className="px-2.5 py-1 text-[11px] font-black tracking-widest text-slate-300 bg-slate-100 rounded-lg border border-white/10">
                       SIMPLE
                     </span>
                   )}
@@ -881,7 +881,7 @@ Gestionnaire administratif du garage ${garageNom}
                   </span>
                 </div>
               </div>
-              <p className="text-sm text-slate-500 mt-0.5 flex items-center gap-1.5">
+              <p className="text-sm text-slate-400 mt-0.5 flex items-center gap-1.5">
                 <Calendar size={14} /> Créé le {new Date(dossier?.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
               </p>
             </div>
@@ -890,7 +890,7 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="flex items-center gap-3">
           <button
             onClick={handleOpenChat}
-            className="relative flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--white)] text-slate-700 font-medium rounded-xl border border-slate-200 hover:border-[#1454FF] hover:text-[var(--blue)] hover:bg-blue-50 transition-all shadow-md"
+            className="relative flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--white)] text-slate-300 font-medium rounded-xl border border-white/10 hover:border-[#1454FF] hover:text-[var(--blue)] hover:bg-blue-50 transition-all shadow-md"
           >
             <MessageSquare size={16} />
             <span className="hidden sm:inline">Message Garagiste</span>
@@ -931,8 +931,8 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="lg:col-span-2 space-y-6">
           
           {/* Formulaire */}
-          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-white/10 overflow-hidden">
+            <div className="px-6 py-5 border-b border-white/10 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                 <FileText size={16} className="text-[var(--blue)]" />
               </div>
@@ -942,30 +942,30 @@ Gestionnaire administratif du garage ${garageNom}
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Statut du dossier</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">Statut du dossier</label>
                   <select
                     value={formData.statut}
                     onChange={(e) => setFormData({...formData, statut: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm font-medium text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                   >
                     {STATUTS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Date du sinistre</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">Date du sinistre</label>
                   <div className="relative">
                     <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
                       type="date"
                       value={formData.date_sinistre}
                       onChange={(e) => setFormData({...formData, date_sinistre: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">N° de sinistre</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">N° de sinistre</label>
                   <div className="relative">
                     <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
@@ -973,13 +973,13 @@ Gestionnaire administratif du garage ${garageNom}
                       placeholder="Ex: 3545081056"
                       value={formData.num_sinistre}
                       onChange={(e) => setFormData({...formData, num_sinistre: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Franchise (€)</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">Franchise (€)</label>
                   <div className="relative">
                     <ReceiptEuro className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
@@ -989,13 +989,13 @@ Gestionnaire administratif du garage ${garageNom}
                       placeholder="0.00"
                       value={formData.franchise_montant}
                       onChange={(e) => setFormData({...formData, franchise_montant: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Téléphone assurance</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">Téléphone assurance</label>
                   <div className="relative">
                     <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
@@ -1003,13 +1003,13 @@ Gestionnaire administratif du garage ${garageNom}
                       placeholder="Ex: 09 70 80 82 82"
                       value={formData.assurance_telephone}
                       onChange={(e) => setFormData({...formData, assurance_telephone: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email assurance</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">Email assurance</label>
                   <div className="relative">
                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
@@ -1017,13 +1017,13 @@ Gestionnaire administratif du garage ${garageNom}
                       placeholder="Ex: contact@assurance.fr"
                       value={formData.assurance_email}
                       onChange={(e) => setFormData({...formData, assurance_email: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">N° de contrat</label>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">N° de contrat</label>
                   <div className="relative">
                     <FileDigit className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
                     <input
@@ -1031,7 +1031,7 @@ Gestionnaire administratif du garage ${garageNom}
                       placeholder="Numéro de contrat"
                       value={formData.num_contrat}
                       onChange={(e) => setFormData({...formData, num_contrat: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -1051,77 +1051,77 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* CARTE CLIENT */}
-          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-white/10 overflow-hidden">
+            <div className="px-6 py-5 border-b border-white/10 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
                 <User size={16} className="text-indigo-600" />
               </div>
-              <h2 className="text-lg font-bold text-[var(--ink)]">Coordonnées Client</h2>
+              <h2 className="text-lg font-bold text-white">Coordonnées Client</h2>
             </div>
             
             <div className="p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Prénom</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Prénom</label>
                     <input
                       type="text"
                       value={formData.client_prenom}
                       onChange={(e) => setFormData({...formData, client_prenom: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nom</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Nom</label>
                     <input
                       type="text"
                       value={formData.client_nom}
                       onChange={(e) => setFormData({...formData, client_nom: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Téléphone</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Téléphone</label>
                     <input
                       type="tel"
                       value={formData.client_telephone}
                       onChange={(e) => setFormData({...formData, client_telephone: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Email</label>
                     <input
                       type="email"
                       value={formData.client_email}
                       onChange={(e) => setFormData({...formData, client_email: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Adresse postale</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Adresse postale</label>
                     <input
                       type="text"
                       value={formData.client_adresse}
                       onChange={(e) => setFormData({...formData, client_adresse: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Code postal</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Code postal</label>
                     <input
                       type="text"
                       value={formData.client_cp}
                       onChange={(e) => setFormData({...formData, client_cp: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Ville</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Ville</label>
                     <input
                       type="text"
                       value={formData.client_ville}
                       onChange={(e) => setFormData({...formData, client_ville: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
               </div>
@@ -1129,69 +1129,69 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* CARTE VEHICULE ET JETON */}
-          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-white/10 overflow-hidden">
+            <div className="px-6 py-5 border-b border-white/10 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center">
                 <Car size={16} className="text-teal-600" />
               </div>
-              <h2 className="text-lg font-bold text-[var(--ink)]">Véhicule et Jeton</h2>
+              <h2 className="text-lg font-bold text-white">Véhicule et Jeton</h2>
             </div>
             
             <div className="p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de jeton utilisé</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Type de jeton utilisé</label>
                     <select
                       value={formData.type}
                       onChange={(e) => setFormData({...formData, type: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm font-medium text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     >
                       <option value="simple">Simple</option>
                       <option value="prestige">Prestige</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Immatriculation</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Immatriculation</label>
                     <input
                       type="text"
                       value={formData.immatriculation}
                       onChange={(e) => setFormData({...formData, immatriculation: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Modèle du véhicule</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Modèle du véhicule</label>
                     <input
                       type="text"
                       value={formData.modele_vehicule}
                       onChange={(e) => setFormData({...formData, modele_vehicule: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Kilométrage</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Kilométrage</label>
                     <input
                       type="number"
                       value={formData.kilometrage}
                       onChange={(e) => setFormData({...formData, kilometrage: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Type de vitrage</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Type de vitrage</label>
                     <input
                       type="text"
                       value={formData.type_vitrage}
                       onChange={(e) => setFormData({...formData, type_vitrage: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
               </div>
             </div>
           </div>
           {/* CARTE NOTE */}
-          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center gap-3">
+          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-white/10 overflow-hidden">
+            <div className="px-6 py-5 border-b border-white/10 bg-transparent/50 flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
                 <FileText size={16} className="text-amber-600" />
               </div>
@@ -1203,13 +1203,13 @@ Gestionnaire administratif du garage ${garageNom}
                 placeholder="Ajouter une note ou une remarque sur ce dossier..."
                 value={formData.commentaire}
                 onChange={(e) => setFormData({...formData, commentaire: e.target.value})}
-                className="w-full px-4 py-3 bg-[var(--white)] border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
               />
             </div>
           </div>
           {/* Documents / Photos */}
-          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center justify-between">
+          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-white/10 overflow-hidden">
+            <div className="px-6 py-5 border-b border-white/10 bg-transparent/50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                   <ImageIcon size={16} className="text-[var(--blue)]" />
@@ -1245,7 +1245,7 @@ Gestionnaire administratif du garage ${garageNom}
 
             <div className="p-6 space-y-6">
               <div>
-                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Documents requis</h3>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Documents requis</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {DOCUMENT_SLOTS.map((slot) => {
                     const doc = matchedDocs[slot.key];
@@ -1257,8 +1257,8 @@ Gestionnaire administratif du garage ${garageNom}
                         className={clsx(
                           "group relative rounded-xl border overflow-hidden transition-all flex flex-col justify-between aspect-[4/3]",
                           doc 
-                            ? "bg-[var(--white)]   border-slate-200 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
-                            : "bg-[var(--white)]/40 border-dashed border-2 border-slate-200 hover:border-[#1454FF] hover:bg-blue-50/20"
+                            ? "bg-[var(--white)]   border-white/10 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
+                            : "bg-[var(--white)]/40 border-dashed border-2 border-white/10 hover:border-[#1454FF] hover:bg-blue-50/20"
                         )}
                         onClick={() => {
                           if (doc && doc.isImage) {
@@ -1278,7 +1278,7 @@ Gestionnaire administratif du garage ${garageNom}
                               ) : (
                                 <div className="flex flex-col items-center justify-center w-full h-full">
                                   <FileText size={32} className="text-[var(--muted)]" />
-                                  <span className="text-[10px] text-slate-500 mt-1 font-semibold">PDF</span>
+                                  <span className="text-[10px] text-slate-400 mt-1 font-semibold">PDF</span>
                                 </div>
                               )}
                               
@@ -1309,9 +1309,9 @@ Gestionnaire administratif du garage ${garageNom}
                                 </button>
                               </div>
                             </div>
-                            <div className="p-3 bg-[var(--white)] border-t border-slate-200">
+                            <div className="p-3 bg-[var(--white)] border-t border-white/10">
                               <p className="text-xs font-bold text-slate-800 truncate">{slot.label}</p>
-                              <p className="text-[10px] text-slate-500 mt-0.5 truncate">{doc.name}</p>
+                              <p className="text-[10px] text-slate-400 mt-0.5 truncate">{doc.name}</p>
                             </div>
                           </>
                         ) : (
@@ -1324,7 +1324,7 @@ Gestionnaire administratif du garage ${garageNom}
                             <span className="text-xs font-bold text-slate-800 group-hover:text-[var(--blue)] transition-colors">
                               {slot.label}
                             </span>
-                            <span className="text-[10px] text-slate-500 mt-1">
+                            <span className="text-[10px] text-slate-400 mt-1">
                               {isSlotUploading ? 'Importation...' : 'Ajouter le document'}
                             </span>
                             <input 
@@ -1343,13 +1343,13 @@ Gestionnaire administratif du garage ${garageNom}
               </div>
 
               {otherDocs.length > 0 && (
-                <div className="pt-4 border-t border-slate-200">
-                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Autres documents</h3>
+                <div className="pt-4 border-t border-white/10">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Autres documents</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {otherDocs.map((doc, idx) => (
                       <div 
                         key={idx} 
-                        className="group relative rounded-xl bg-transparent border border-slate-200 overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
+                        className="group relative rounded-xl bg-white/5 border border-white/10 text-white overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
                         onClick={() => doc.isImage && setSelectedImage(doc.url)}
                       >
                         <div className="aspect-square flex items-center justify-center bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
@@ -1406,7 +1406,7 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="space-y-6">
           
           {/* Widget 1: RELANCE & INFORMATION */}
-          <div className="bg-[#224e63] rounded-2xl shadow-md border border-[#224e63] p-6 text-[var(--ink)] overflow-hidden relative space-y-5">
+          <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-[var(--ink)] overflow-hidden relative space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
               RELANCE & INFORMATION
             </h3>
@@ -1417,7 +1417,7 @@ Gestionnaire administratif du garage ${garageNom}
                 placeholder="Contenu..."
                 value={newNoteContent}
                 onChange={(e) => setNewNoteContent(e.target.value)}
-                className="w-full px-4 py-3 bg-[var(--white)] text-slate-800 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 shadow-inner outline-none transition-all resize-none"
+                className="w-full px-4 py-3 bg-[var(--white)] text-slate-800 border border-white/10 rounded-xl text-sm placeholder-slate-400 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 shadow-inner outline-none transition-all resize-none"
               />
               <button
                 onClick={handleAddNote}
@@ -1467,7 +1467,7 @@ Gestionnaire administratif du garage ${garageNom}
                           </button>
                           
                           {showMenuId === note.id && (
-                            <div className="absolute right-0 top-7 z-20 bg-[var(--white)] border border-slate-100 rounded-xl shadow-lg py-1 text-xs min-w-[100px] animate-in fade-in zoom-in-95 duration-100">
+                            <div className="absolute right-0 top-7 z-20 bg-[var(--white)] border border-white/10 rounded-xl shadow-lg py-1 text-xs min-w-[100px] animate-in fade-in zoom-in-95 duration-100">
                               <button
                                 onClick={() => {
                                   handleDeleteNote(note.id);
@@ -1498,7 +1498,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* Widget 2: Actions rapides */}
-          <div className="bg-[#224e63] rounded-2xl shadow-md border border-[#224e63] p-6 text-[var(--ink)] overflow-hidden space-y-5">
+          <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-[var(--ink)] overflow-hidden space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
               Actions rapides
             </h3>
@@ -1536,7 +1536,7 @@ Gestionnaire administratif du garage ${garageNom}
                   <select
                     value={selectedQuickStatus}
                     onChange={(e) => setSelectedQuickStatus(e.target.value)}
-                    className="w-full pl-4 pr-10 py-3 bg-[var(--white)] text-slate-800 border border-slate-200 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
+                    className="w-full pl-4 pr-10 py-3 bg-[var(--white)] text-slate-800 border border-white/10 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
                   >
                     <option value="relance">Relance</option>
                     <option value="reglement_en_cours">Règlement en cours</option>
@@ -1553,7 +1553,7 @@ Gestionnaire administratif du garage ${garageNom}
                 <button
                   onClick={() => handleUpdateStatus(selectedQuickStatus)}
                   title="Confirmer le changement de statut"
-                  className="w-12 h-12 bg-[#224e63] hover:bg-[#2c617a] border border-white/20 text-[var(--ink)] rounded-xl flex items-center justify-center transition-colors shadow-md shrink-0 active:scale-95"
+                  className="w-12 h-12 bg-[#120052] hover:bg-[#2c617a] border border-white/20 text-[var(--ink)] rounded-xl flex items-center justify-center transition-colors shadow-md shrink-0 active:scale-95"
                 >
                   <CheckCircle size={20} className="text-teal-400" />
                 </button>
@@ -1600,7 +1600,7 @@ Gestionnaire administratif du garage ${garageNom}
 
       {/* Chat Window */}
       {chatOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] bg-[var(--white)] rounded-2xl shadow-2xl shadow-blue-900/10 border border-slate-200 overflow-hidden flex flex-col animate-in slide-in-from-bottom-8 duration-300">
+        <div className="fixed bottom-6 right-6 z-50 w-[380px] bg-[#120052] text-white rounded-2xl shadow-2xl shadow-blue-900/10 border-white/10 border-white/10 overflow-hidden flex flex-col animate-in slide-in-from-bottom-8 duration-300">
           {/* Chat Header */}
           <div 
             className="bg-gradient-to-r from-[#1454FF] to-blue-600 px-5 py-4 flex items-center justify-between shadow-md cursor-pointer group"
@@ -1631,7 +1631,7 @@ Gestionnaire administratif du garage ${garageNom}
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center">
                 <MessageSquare size={32} className="text-[var(--muted)] mb-3" />
-                <p className="text-sm font-medium text-slate-500">Aucun message</p>
+                <p className="text-sm font-medium text-slate-400">Aucun message</p>
                 <p className="text-xs text-[var(--muted)] mt-1">Échangez directement avec le garagiste ici.</p>
               </div>
             ) : (
@@ -1649,7 +1649,7 @@ Gestionnaire administratif du garage ${garageNom}
                       "px-4 py-2.5 rounded-2xl shadow-md text-sm",
                       isMe
                         ? "bg-[var(--blue)] text-[var(--ink)] rounded-br-sm animate-in fade-in slide-in-from-right-4 duration-200"
-                        : "bg-[var(--white)]   border border-slate-200 text-slate-800 rounded-bl-sm animate-in fade-in slide-in-from-left-4 duration-200"
+                        : "bg-[var(--white)]   border border-white/10 text-slate-800 rounded-bl-sm animate-in fade-in slide-in-from-left-4 duration-200"
                     )}>
                       {msg.message.startsWith('📎 Fichier :') ? (
                         (() => {
@@ -1667,7 +1667,7 @@ Gestionnaire administratif du garage ${garageNom}
                                 <img
                                   src={fileUrl}
                                   alt={fileName}
-                                  className="max-w-full max-h-48 object-cover rounded-lg border border-slate-200 mt-1 cursor-pointer hover:opacity-90 transition-opacity"
+                                  className="max-w-full max-h-48 object-cover rounded-lg border border-white/10 mt-1 cursor-pointer hover:opacity-90 transition-opacity"
                                   onClick={() => setSelectedImage(fileUrl)}
                                 />
                               )}
@@ -1708,7 +1708,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* Messages suggérés */}
-          <div className="flex gap-2 px-4 py-2.5 border-t border-slate-100 bg-transparent/50 overflow-x-auto scrollbar-none shrink-0">
+          <div className="flex gap-2 px-4 py-2.5 border-t border-white/10 bg-transparent/50 overflow-x-auto scrollbar-none shrink-0">
             {[
               { label: "D.T", text: "Démarrer travaux" },
               { label: "D.E", text: "Dossier envoyé" },
@@ -1728,7 +1728,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* Input Area */}
-          <div className="p-4 bg-[var(--white)] border-t border-slate-100 shrink-0">
+          <div className="p-4 bg-[var(--white)] border-t border-white/10 shrink-0">
             <div className="flex items-center gap-2">
               <input
                 type="file"
@@ -1740,7 +1740,7 @@ Gestionnaire administratif du garage ${garageNom}
               <label
                 htmlFor="chat-file-upload"
                 className={clsx(
-                  "w-11 h-11 bg-transparent hover:bg-slate-100 text-slate-500 rounded-xl flex items-center justify-center cursor-pointer transition-all shrink-0 border border-slate-200 hover:border-slate-300 active:scale-95",
+                  "w-11 h-11 bg-transparent hover:bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center cursor-pointer transition-all shrink-0 border border-white/10 hover:border-slate-300 active:scale-95",
                   chatUploading && "opacity-50 pointer-events-none"
                 )}
               >
@@ -1754,7 +1754,7 @@ Gestionnaire administratif du garage ${garageNom}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder="Écrivez un message..."
                 disabled={chatUploading}
-                className="flex-1 bg-transparent border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] transition-all disabled:opacity-50"
+                className="flex-1 bg-white/5 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] transition-all disabled:opacity-50"
               />
               <button
                 onClick={sendMessage}

@@ -347,7 +347,7 @@ function AbonnementContent() {
         {forfaits.simple.map((forfait) => (
           <div 
             key={forfait.id} 
-            className="bg-[var(--white)] rounded-3xl p-8 border border-[var(--stone)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.8)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
+            className="bg-[#120052] text-white rounded-3xl p-8 border-white/10 border-[var(--stone)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.8)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
           >
             <div>
               {/* Header */}
@@ -357,7 +357,7 @@ function AbonnementContent() {
                     <Star size={12} fill="currentColor" />
                     Standard
                   </div>
-                  <h2 className="text-2xl font-bold text-[var(--ink)] tracking-tight">Jeton Simple</h2>
+                  <h2 className="text-2xl font-bold text-white tracking-tight">Jeton Simple</h2>
                   <p className="text-xs text-[var(--muted)] mt-1 font-normal">Idéal pour créer et suivre vos dossiers standards</p>
                 </div>
                 <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center border border-amber-500/20 shadow-md group-hover:rotate-12 transition-transform duration-300">
@@ -486,7 +486,7 @@ function AbonnementContent() {
         {forfaits.prestige.map((forfait) => (
           <div 
             key={forfait.id} 
-            className="bg-[var(--white)] rounded-3xl p-8 border border-[var(--blue)]/40 shadow-[0_20px_60px_rgba(56,189,248,0.15)] hover:shadow-[0_20px_60px_rgba(56,189,248,0.3)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
+            className="bg-[#120052] text-white rounded-3xl p-8 border-white/10 border-[var(--blue)]/40 shadow-[0_20px_60px_rgba(56,189,248,0.15)] hover:shadow-[0_20px_60px_rgba(56,189,248,0.3)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group"
           >
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[var(--blue)] to-[#0284c7] text-[var(--ink)] text-[10px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">
               Recommandé
@@ -500,7 +500,7 @@ function AbonnementContent() {
                     <Crown size={12} fill="currentColor" />
                     Premium
                   </div>
-                  <h2 className="text-2xl font-bold text-[var(--ink)] tracking-tight">Jeton Prestige</h2>
+                  <h2 className="text-2xl font-bold text-white tracking-tight">Jeton Prestige</h2>
                   <p className="text-xs text-[var(--muted)] mt-1 font-normal">Prise en charge complète de vos dossiers par nos experts</p>
                 </div>
                 <div className="w-12 h-12 bg-[var(--blue)]/10 rounded-2xl flex items-center justify-center border border-[var(--blue)]/20 shadow-md group-hover:rotate-12 transition-transform duration-300">
@@ -628,7 +628,7 @@ function AbonnementContent() {
       </div>
 
       {/* Trust & Securité Banner */}
-      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] p-6 shadow-md">
+      <div className="bg-[#120052] text-white rounded-3xl border-white/10 border-[var(--stone)] p-6 shadow-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <div className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--ink-2)] transition-colors">
@@ -664,7 +664,7 @@ function AbonnementContent() {
             onClick={() => setShowConfirmModal(false)} 
           />
           
-          <div className="relative bg-[var(--white)] rounded-3xl max-w-md w-full p-8 shadow-2xl border border-[var(--stone)] animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+          <div className="relative bg-[#120052] text-white rounded-3xl max-w-md w-full p-8 shadow-2xl border-white/10 border-[var(--stone)] animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
             {/* Header Modal */}
             <button
               onClick={() => setShowConfirmModal(false)}

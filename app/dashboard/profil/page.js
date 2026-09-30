@@ -230,12 +230,12 @@ export default function ProfilPage() {
       
       {/* En-tête */}
       <div>
-        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-slate-200">
+        <div className="inline-flex items-center gap-2 bg-[var(--white)] shadow-md rounded-full px-4 py-2 mb-6 border border-white/10">
           <Sparkles size={14} className="text-[#1454FF]" />
           <span className="text-xs font-medium text-[#1454FF] uppercase tracking-wider">Configuration</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-[var(--ink)] mb-2">Mon Profil</h1>
-        <p className="text-slate-500 font-light">Gérez vos informations et préférences</p>
+        <p className="text-slate-400 font-light">Gérez vos informations et préférences</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">
@@ -259,12 +259,12 @@ export default function ProfilPage() {
             </button>
           </nav>
 
-          <div className="mt-8 bg-[var(--white)] rounded-2xl border border-[var(--stone)] p-6">
+          <div className="mt-8 bg-[#120052] text-white rounded-2xl border-white/10 border-[var(--stone)] p-6">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-8 rounded-xl bg-[var(--blue)]/10 flex items-center justify-center">
                 <Award size={16} className="text-[var(--blue)]" />
               </div>
-              <h2 className="text-sm font-bold text-[var(--ink)] tracking-wide">JETONS GLASSPILOT</h2>
+              <h2 className="text-sm font-bold text-white tracking-wide">JETONS GLASSPILOT</h2>
             </div>
             <p className="text-xs text-[var(--muted)] mb-5 leading-relaxed font-medium">Gérez vos crédits pour soumettre vos dossiers d'assurance.</p>
             <Link href="/dashboard/abonnement" className="inline-flex text-xs font-semibold text-[#1454FF] items-center gap-2 bg-[#1454FF]/5 hover:bg-[#1454FF]/10 px-4 py-2 rounded-xl transition-all group">
@@ -289,7 +289,7 @@ export default function ProfilPage() {
             </div>
           )}
 
-          <div className="bg-[var(--white)] rounded-2xl shadow-md border border-[var(--stone)] overflow-hidden">
+          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden">
             <form onSubmit={handleSubmit}>
               
               {activeTab === 'profil' && (
@@ -309,8 +309,8 @@ export default function ProfilPage() {
                         </div>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-700">Importer un logo</p>
-                        <p className="text-xs text-slate-500 mt-1 max-w-sm">Ce logo s'affichera sur votre espace et sur les documents générés (Ordre de réparation, etc.). Format carré recommandé.</p>
+                        <p className="text-sm font-medium text-slate-300">Importer un logo</p>
+                        <p className="text-xs text-slate-400 mt-1 max-w-sm">Ce logo s'affichera sur votre espace et sur les documents générés (Ordre de réparation, etc.). Format carré recommandé.</p>
                         <input type="file" ref={fileInputRef} className="hidden" accept="image/png, image/jpeg" onChange={handleLogoChange} />
                         <button type="button" onClick={() => fileInputRef.current?.click()} className="mt-3 text-xs font-medium text-[#1454FF] border border-[#1454FF]/20 px-3 py-1.5 rounded-lg hover:bg-[#1454FF]/5">
                           Choisir un fichier
@@ -319,11 +319,11 @@ export default function ProfilPage() {
                     </div>
                   </div>
 
-                  <hr className="border-slate-100" />
+                  <hr className="border-white/10" />
 
                   {/* Infos persos */}
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--ink)] mb-4">Informations personnelles</h2>
+                    <h2 className="text-lg font-bold text-white mb-4">Informations personnelles</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Prénom</label>
@@ -344,7 +344,7 @@ export default function ProfilPage() {
                     </div>
                   </div>
 
-                  <hr className="border-slate-100" />
+                  <hr className="border-white/10" />
 
                   {/* Infos garage */}
                   <div>
