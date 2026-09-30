@@ -277,7 +277,7 @@ export default function GestionnaireLayout({ children }) {
     <div className="min-h-screen bg-transparent font-sans text-[var(--ink)] selection:bg-indigo-100 selection:text-indigo-900">
       
       {/* Sidebar Desktop (Dark Premium) */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950 border-r border-[var(--stone)] flex-col z-30">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] border-r border-[var(--stone)] flex-col z-30">
         {/* Logo */}
         <div className="h-16 flex items-center px-6 border-b border-[var(--stone)]/60">
           <Link href="/gestionnaire/dashboard" className="flex items-center gap-3 group">
@@ -286,7 +286,7 @@ export default function GestionnaireLayout({ children }) {
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-[var(--ink)]">
-                Glass<span className="text-indigo-400">Pilot</span>
+                Glass<span className="text-[var(--blue)]">Pilot</span>
               </span>
             </div>
           </Link>
@@ -320,7 +320,7 @@ export default function GestionnaireLayout({ children }) {
                       "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group text-left",
                       active 
                         ? "bg-[var(--paper)]/80 text-[var(--ink)]" 
-                        : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
+                        : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
                     )}
                   >
                     <div className="flex items-center gap-3">
@@ -373,8 +373,8 @@ export default function GestionnaireLayout({ children }) {
                 className={clsx(
                   "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
                   active 
-                    ? "bg-indigo-600 text-[var(--ink)] shadow-md shadow-indigo-600/20" 
-                    : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
+                    ? "bg-[var(--blue)] text-white shadow-md shadow-indigo-600/20" 
+                    : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -398,7 +398,7 @@ export default function GestionnaireLayout({ children }) {
         <div className="p-4 border-t border-[var(--stone)]/60 space-y-1">
           <Link 
             href="/gestionnaire/aide" 
-            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper)]/50 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--white)] rounded-lg text-sm font-medium transition-colors"
           >
             <HelpCircle size={18} className="text-slate-500" />
             Support technique
@@ -584,13 +584,13 @@ export default function GestionnaireLayout({ children }) {
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 bg-[var(--white)]/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-slate-950 z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
+          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
             <div className="h-16 flex items-center justify-between px-6 border-b border-[var(--stone)]/60">
               <Link href="/gestionnaire/dashboard" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                 <div className="flex items-center justify-center w-8 h-8 bg-indigo-600 rounded-lg">
                   <Sparkles size={16} className="text-[var(--ink)]" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-indigo-400">Pilot</span></span>
+                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-[var(--blue)]">Pilot</span></span>
               </Link>
               <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[var(--muted)] hover:text-[var(--ink)] rounded-lg">
                 <X size={20} />
@@ -621,7 +621,7 @@ export default function GestionnaireLayout({ children }) {
                         onClick={() => setStatusFiltersOpen(!statusFiltersOpen)}
                         className={clsx(
                           "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left",
-                          active ? "bg-[var(--paper)]/80 text-[var(--ink)]" : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
+                          active ? "bg-[var(--paper)]/80 text-[var(--ink)]" : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
                         )}
                       >
                         <div className="flex items-center gap-3">
@@ -675,7 +675,7 @@ export default function GestionnaireLayout({ children }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={clsx(
                       "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-indigo-600 text-[var(--ink)] shadow-md" : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
+                      active ? "bg-[var(--blue)] text-white shadow-md" : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
                     )}
                   >
                     <div className="flex items-center gap-3">

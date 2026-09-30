@@ -424,7 +424,7 @@ export default function DashboardLayout({ children }) {
       {/* Background gradients removed for cleaner SaaS look */}
 
       {/* ===== SIDEBAR DESKTOP (Dark Premium) ===== */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950 border-r border-[var(--stone)] flex-col z-30">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] border-r border-[var(--stone)] flex-col z-30">
         {/* Logo */}
         <div className="h-16 flex items-center px-6 border-b border-[var(--stone)]/60">
           <Link href="/dashboard" className="flex items-center gap-3 group">
@@ -433,7 +433,7 @@ export default function DashboardLayout({ children }) {
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-[var(--ink)]">
-                Glass<span className="text-indigo-400">Pilot</span>
+                Glass<span className="text-[var(--blue)]">Pilot</span>
               </span>
             </div>
           </Link>
@@ -444,9 +444,9 @@ export default function DashboardLayout({ children }) {
           <div className="bg-[var(--white)] border border-[var(--stone)] rounded-xl p-3 shadow-inner">
             <div className="flex items-center gap-2 mb-1.5">
               <div className="w-6 h-6 bg-indigo-500/10 rounded-md flex items-center justify-center">
-                <ShieldCheck size={12} className="text-indigo-400" />
+                <ShieldCheck size={12} className="text-[var(--blue)]" />
               </div>
-              <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Mon garage</span>
+              <span className="text-[10px] font-bold text-[var(--blue)] uppercase tracking-wider">Mon garage</span>
             </div>
             <p className="font-bold text-[var(--ink)] text-sm truncate">{garageName || 'Mon Garage'}</p>
             <p className="text-xs text-slate-500 mt-0.5 truncate">Espace professionnel</p>
@@ -465,8 +465,8 @@ export default function DashboardLayout({ children }) {
                 className={clsx(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
                   active 
-                    ? "bg-indigo-600 text-[var(--ink)] shadow-md shadow-indigo-600/20" 
-                    : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
+                    ? "bg-[var(--blue)] text-white shadow-md shadow-indigo-600/20" 
+                    : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
                 )}
               >
                 <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink)]" : "text-slate-500 group-hover:text-[var(--muted)]")} />
@@ -480,7 +480,7 @@ export default function DashboardLayout({ children }) {
         <div className="p-4 border-t border-[var(--stone)]/60 space-y-1">
           <Link 
             href="/dashboard/aide" 
-            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper)]/50 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--white)] rounded-lg text-sm font-medium transition-colors"
           >
             <HelpCircle size={18} className="text-slate-500" />
             Centre d'aide
@@ -716,13 +716,13 @@ export default function DashboardLayout({ children }) {
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 bg-[var(--white)]/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-slate-950 z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
+          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
             <div className="h-16 flex items-center justify-between px-6 border-b border-[var(--stone)]/60">
               <Link href="/dashboard" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                 <div className="relative w-8 h-8 rounded-lg overflow-hidden">
                   <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-indigo-400">Pilot</span></span>
+                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-[var(--blue)]">Pilot</span></span>
               </Link>
               <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[var(--muted)] hover:text-[var(--ink)] rounded-lg">
                 <X size={20} />
@@ -734,9 +734,9 @@ export default function DashboardLayout({ children }) {
               <div className="bg-[var(--white)] border border-[var(--stone)] rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-6 h-6 bg-indigo-500/10 rounded-md flex items-center justify-center">
-                    <ShieldCheck size={12} className="text-indigo-400" />
+                    <ShieldCheck size={12} className="text-[var(--blue)]" />
                   </div>
-                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Mon garage</span>
+                  <span className="text-[10px] font-bold text-[var(--blue)] uppercase tracking-wider">Mon garage</span>
                 </div>
                 <p className="font-bold text-[var(--ink)] text-sm truncate">{garageName || 'Mon Garage'}</p>
                 <p className="text-xs text-slate-500 mt-0.5 truncate">Espace professionnel</p>
@@ -754,7 +754,7 @@ export default function DashboardLayout({ children }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={clsx(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-indigo-600 text-[var(--ink)] shadow-md" : "text-[var(--muted)] hover:bg-[var(--paper)]/50 hover:text-[var(--ink)]"
+                      active ? "bg-[var(--blue)] text-white shadow-md" : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
                     )}
                   >
                     <Icon size={18} className={clsx(active ? "text-[var(--ink)]" : "text-slate-500")} />
@@ -768,7 +768,7 @@ export default function DashboardLayout({ children }) {
               <Link 
                 href="/dashboard/aide" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper)]/50 rounded-lg text-sm font-medium transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--white)] rounded-lg text-sm font-medium transition-colors"
               >
                 <HelpCircle size={18} className="text-slate-500" />
                 Centre d'aide

@@ -89,7 +89,7 @@ export default function AdminLayout({ children }) {
  }`}} />
       
       {/* ===== SIDEBAR DESKTOP (Dark Premium Glassmorphic) ===== */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[#090D16]/98 border-r border-[#1B253B]/60 flex-col z-30 shadow-2xl">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] border-r border-[#1B253B]/60 flex-col z-30 shadow-2xl">
         {/* Glowing Background Blob */}
         <div className="absolute top-[-100px] left-[-100px] w-64 h-64 bg-[var(--blue)]/10 rounded-full filter blur-[80px] pointer-events-none" />
 
@@ -166,11 +166,11 @@ export default function AdminLayout({ children }) {
         mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}>
         {/* Backdrop blur */}
-        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+        <div className="absolute inset-0 bg-[var(--paper)]/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
         
         {/* Drawer content */}
         <aside className={clsx(
-          "absolute top-0 bottom-0 left-0 w-80 bg-[#090D16] border-r border-[#1B253B]/60 flex flex-col z-50 p-6 transition-transform duration-300 shadow-2xl",
+          "absolute top-0 bottom-0 left-0 w-80 bg-[var(--paper)] border-r border-[#1B253B]/60 flex flex-col z-50 p-6 transition-transform duration-300 shadow-2xl",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}>
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#1B253B]/40">
