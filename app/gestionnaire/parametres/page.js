@@ -225,17 +225,7 @@ export default function ParametresPage() {
                       />
                       <p className="text-xs text-[var(--muted)] mt-1.5">L'adresse email ne peut pas être modifiée ici.</p>
                     </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1.5">Téléphone direct</label>
-                      <input 
-                        type="tel" 
-                        name="telephone"
-                        value={formData.telephone}
-                        onChange={handleChange}
-                        className={inputClass}
-                        placeholder="Ex: 06 12 34 56 78"
-                      />
-                    </div>
+
                   </div>
                 </div>
               )}
