@@ -86,16 +86,16 @@ export default function ConnexionPage() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --white: rgba(15, 23, 42, 0.4);
-          --page-bg: #04090f;
-          --paper: rgba(11, 19, 41, 0.65);
-          --stone: rgba(255, 255, 255, 0.05);
-          --ink: #F8FAFC;
-          --ink-2: #CBD5E1;
+          --white: #FFFFFF;
+          --page-bg: #ECFEFF;
+          --paper: #F8FAFC;
+          --stone: rgba(10, 0, 48, 0.08);
+          --ink: #0A0030;
+          --ink-2: #120052;
           --muted: #64748B;
-          --blue: #38bdf8;
-          --blue-light: rgba(56, 189, 248, 0.08);
-          --blue-mid: rgba(56, 189, 248, 0.25);
+          --blue: #3B0FAA;
+          --blue-light: rgba(59, 15, 170, 0.08);
+          --blue-mid: rgba(59, 15, 170, 0.25);
           --green: #10b981;
           --green-light: rgba(16, 185, 129, 0.15);
           --orange: #f97316;
@@ -117,7 +117,7 @@ export default function ConnexionPage() {
         .nav {
           position: fixed; top: 0; width: 100%; z-index: 100;
           height: 66px; display: flex; align-items: center; padding: 0 2rem;
-          background: rgba(11, 19, 41, 0.85);
+          background: rgba(255, 255, 255, 0.85);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid var(--stone);
           transition: background .35s, box-shadow .35s;
@@ -248,7 +248,7 @@ export default function ConnexionPage() {
 
         .btn-main {
           font-family: var(--ff-sans); font-weight: 700; font-size: 1rem;
-          background: linear-gradient(135deg,#38bdf8,#0284c7); color: #fff; border: none; cursor: pointer;
+          background: #3B0FAA; color: #fff; border: none; cursor: pointer;
           width: 100%;
           padding: 1.1rem;
           border-radius: 100px;

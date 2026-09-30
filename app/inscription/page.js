@@ -97,14 +97,14 @@ export default function InscriptionGaragiste() {
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600;700;800&display=swap');
         
         :root {
-          --white: rgba(15, 23, 42, 0.4);
-          --page-bg: #04090f;
-          --ink: #F8FAFC;
-          --ink-2: #CBD5E1;
+          --white: #FFFFFF;
+          --page-bg: #ECFEFF;
+          --paper: #F8FAFC;
+          --stone: rgba(10, 0, 48, 0.08);
+          --ink: #0A0030;
+          --ink-2: #120052;
           --muted: #64748B;
-          --blue: #38bdf8;
-          --stone: rgba(255, 255, 255, 0.05);
-          --paper: rgba(11, 19, 41, 0.65);
+          --blue: #3B0FAA;
         }
         
         body { background: var(--page-bg); color: var(--ink); }
@@ -154,7 +154,7 @@ export default function InscriptionGaragiste() {
                 </div>
               )}
 
-              <div className="bg-[var(--white)] rounded-[32px] border border-[var(--stone)] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+              <div className="bg-[var(--white)] rounded-[32px] border border-[var(--stone)] p-10 shadow-[0_15px_60px_rgba(10,0,48,0.05)] backdrop-blur-xl">
                 <form onSubmit={handleInscription} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
@@ -317,7 +317,7 @@ export default function InscriptionGaragiste() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-br from-[var(--blue)] to-[#0284c7] hover:from-[#0ea5e9] hover:to-[#0369a1] text-white font-bold py-4 px-6 rounded-full transition-all shadow-[0_6px_28px_rgba(56,189,248,0.35)] hover:shadow-[0_12px_40px_rgba(56,189,248,0.5)] hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full bg-[var(--blue)] hover:bg-[#330c9a] text-white font-bold py-4 px-6 rounded-full transition-all shadow-[0_6px_20px_rgba(59,15,170,0.3)] hover:shadow-[0_12px_30px_rgba(59,15,170,0.4)] hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {loading ? <Loader2 size={18} className="animate-spin" /> : "Créer mon compte →"}
                   </button>
@@ -352,7 +352,7 @@ export default function InscriptionGaragiste() {
 
             {/* COLONNE DROITE - VISUEL */}
             <div className="hidden lg:block h-full">
-              <div className="bg-gradient-to-b from-[rgba(15,23,42,0.6)] to-[rgba(4,9,15,0.9)] rounded-[32px] border border-[var(--stone)] p-12 relative overflow-hidden h-full flex flex-col justify-center shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
+              <div className="bg-gradient-to-b from-[#FFFFFF] to-[#F8FAFC] rounded-[32px] border border-[var(--stone)] p-12 relative overflow-hidden h-full flex flex-col justify-center shadow-[0_15px_60px_rgba(10,0,48,0.05)]">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--blue)]/20 rounded-full blur-[80px]"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--blue)]/10 rounded-full blur-[80px]"></div>
                 

@@ -48,16 +48,16 @@ export default function MotDePasseOubliePage() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --white: rgba(11, 19, 41, 0.6);
-          --page-bg: #020617;
-          --paper: rgba(11, 19, 41, 0.65);
-          --stone: rgba(56, 189, 248, 0.15);
-          --ink: #F8FAFC;
-          --ink-2: #CBD5E1;
+          --white: #FFFFFF;
+          --page-bg: #ECFEFF;
+          --paper: #F8FAFC;
+          --stone: rgba(10, 0, 48, 0.08);
+          --ink: #0A0030;
+          --ink-2: #120052;
           --muted: #64748B;
-          --blue: #38bdf8;
-          --blue-light: rgba(56, 189, 248, 0.08);
-          --blue-mid: rgba(56, 189, 248, 0.25);
+          --blue: #3B0FAA;
+          --blue-light: rgba(59, 15, 170, 0.08);
+          --blue-mid: rgba(59, 15, 170, 0.25);
           --green: #10b981;
           --green-light: rgba(16, 185, 129, 0.15);
           --ff-serif: 'Instrument Serif', Georgia, serif;
@@ -68,13 +68,13 @@ export default function MotDePasseOubliePage() {
           --sh-md: 0 4px 16px rgba(0,0,0,.45),0 1px 4px rgba(0,0,0,.3);
         }
 
-        body { background: radial-gradient(circle at 50% 50%, #0f2b48 0%, #0a1e33 60%, #05101d 100%) fixed; color: var(--ink); font-family: var(--ff-sans); }
+        body { background: var(--page-bg); color: var(--ink); font-family: var(--ff-sans); }
 
         /* NAV */
         .nav {
           position: fixed; top: 0; width: 100%; z-index: 100;
           height: 66px; display: flex; align-items: center; padding: 0 2rem;
-          background: rgba(11, 19, 41, 0.85);
+          background: rgba(255, 255, 255, 0.85);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid var(--stone);
         }
@@ -149,7 +149,7 @@ export default function MotDePasseOubliePage() {
           border: 1.5px solid var(--stone);
           border-radius: 18px;
           padding: 2.5rem 2rem;
-          box-shadow: var(--sh-md);
+          box-shadow: 0 15px 60px rgba(10,0,48,0.05);
         }
 
         .input-group {
