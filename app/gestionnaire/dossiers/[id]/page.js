@@ -1208,16 +1208,16 @@ Gestionnaire administratif du garage ${garageNom}
             </div>
           </div>
           {/* Documents / Photos */}
-          <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-white/10 overflow-hidden">
-            <div className="px-6 py-5 border-b border-white/10 bg-transparent/50 flex items-center justify-between">
+            <div className="bg-[#120052] rounded-2xl shadow-md border border-slate-200 overflow-hidden text-white">
+            <div className="px-6 py-5 border-b border-slate-100 bg-transparent/50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                   <ImageIcon size={16} className="text-[var(--blue)]" />
                 </div>
-                <h2 className="text-lg font-bold text-[var(--ink)]">Pièces jointes</h2>
+                <h2 className="text-lg font-bold text-white">Pièces jointes</h2>
               </div>
               <div className="flex items-center gap-3">
-                <span className="bg-slate-200/50 text-slate-600 px-3 py-1 rounded-full text-xs font-semibold hidden sm:inline-block">
+                <span className="bg-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold hidden sm:inline-block">
                   {documents.length} fichier{documents.length !== 1 ? 's' : ''}
                 </span>
 
@@ -1245,7 +1245,7 @@ Gestionnaire administratif du garage ${garageNom}
 
             <div className="p-6 space-y-6">
               <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Documents requis</h3>
+                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Documents requis</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {DOCUMENT_SLOTS.map((slot) => {
                     const doc = matchedDocs[slot.key];
@@ -1257,8 +1257,8 @@ Gestionnaire administratif du garage ${garageNom}
                         className={clsx(
                           "group relative rounded-xl border overflow-hidden transition-all flex flex-col justify-between aspect-[4/3]",
                           doc 
-                            ? "bg-[var(--white)]   border-white/10 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
-                            : "bg-[var(--white)]/40 border-dashed border-2 border-white/10 hover:border-[#1454FF] hover:bg-blue-50/20"
+                            ? "bg-[var(--white)]   border-slate-200 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
+                            : "bg-[var(--white)]/40 border-dashed border-2 border-slate-200 hover:border-[#1454FF] hover:bg-blue-50/20"
                         )}
                         onClick={() => {
                           if (doc && doc.isImage) {
@@ -1278,7 +1278,7 @@ Gestionnaire administratif du garage ${garageNom}
                               ) : (
                                 <div className="flex flex-col items-center justify-center w-full h-full">
                                   <FileText size={32} className="text-[var(--muted)]" />
-                                  <span className="text-[10px] text-slate-400 mt-1 font-semibold">PDF</span>
+                                  <span className="text-[10px] text-slate-500 mt-1 font-semibold">PDF</span>
                                 </div>
                               )}
                               
@@ -1309,9 +1309,9 @@ Gestionnaire administratif du garage ${garageNom}
                                 </button>
                               </div>
                             </div>
-                            <div className="p-3 bg-[var(--white)] border-t border-white/10">
-                              <p className="text-xs font-bold text-slate-800 truncate">{slot.label}</p>
-                              <p className="text-[10px] text-slate-400 mt-0.5 truncate">{doc.name}</p>
+                            <div className="p-3 bg-[var(--white)] border-t border-slate-200">
+                              <p className="text-xs font-bold text-white truncate">{slot.label}</p>
+                              <p className="text-[10px] text-slate-500 mt-0.5 truncate">{doc.name}</p>
                             </div>
                           </>
                         ) : (
@@ -1319,12 +1319,12 @@ Gestionnaire administratif du garage ${garageNom}
                             {isSlotUploading ? (
                               <Loader2 size={24} className="animate-spin text-[var(--blue)]" />
                             ) : (
-                              <Upload size={24} className="text-[var(--muted)] group-hover:text-[var(--blue)] transition-colors mb-2" />
+                              <Upload size={24} className="text-white/50 group-hover:text-white transition-colors mb-2" />
                             )}
-                            <span className="text-xs font-bold text-slate-800 group-hover:text-[var(--blue)] transition-colors">
+                            <span className="text-xs font-bold text-white group-hover:text-[var(--blue)] transition-colors">
                               {slot.label}
                             </span>
-                            <span className="text-[10px] text-slate-400 mt-1">
+                            <span className="text-[10px] text-slate-500 mt-1">
                               {isSlotUploading ? 'Importation...' : 'Ajouter le document'}
                             </span>
                             <input 
@@ -1343,16 +1343,16 @@ Gestionnaire administratif du garage ${garageNom}
               </div>
 
               {otherDocs.length > 0 && (
-                <div className="pt-4 border-t border-white/10">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Autres documents</h3>
+                <div className="pt-4 border-t border-slate-200">
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Autres documents</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {otherDocs.map((doc, idx) => (
                       <div 
                         key={idx} 
-                        className="group relative rounded-xl bg-white/5 border border-white/10 text-white overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
+                        className="group relative rounded-xl bg-transparent border border-slate-200 overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
                         onClick={() => doc.isImage && setSelectedImage(doc.url)}
                       >
-                        <div className="aspect-square flex items-center justify-center bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
+                        <div className="aspect-square flex items-center justify-center bg-white/10 relative overflow-hidden">
                           {doc.isImage ? (
                             <img 
                               src={doc.url} 
@@ -1362,7 +1362,7 @@ Gestionnaire administratif du garage ${garageNom}
                           ) : (
                             <div className="flex flex-col items-center justify-center w-full h-full">
                               <FileText size={32} className="text-[var(--muted)]" />
-                              <span className="text-[10px] text-[var(--muted)] mt-1">PDF</span>
+                              <span className="text-[10px] text-slate-300 mt-1">PDF</span>
                             </div>
                           )}
                           
@@ -1487,7 +1487,7 @@ Gestionnaire administratif du garage ${garageNom}
                         {note.text}
                       </div>
                       
-                      <div className="text-right text-[10px] text-[var(--muted)] font-semibold mt-3">
+                      <div className="text-right text-[10px] text-slate-300 font-semibold mt-3">
                         {formattedDate}
                       </div>
                     </div>
@@ -1691,7 +1691,7 @@ Gestionnaire administratif du garage ${garageNom}
                         <p className="break-words leading-relaxed">{msg.message}</p>
                       )}
                     </div>
-                    <span className="text-[10px] text-[var(--muted)] font-medium mt-1.5 px-1">
+                    <span className="text-[10px] text-slate-300 font-medium mt-1.5 px-1">
                       {new Date(msg.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>

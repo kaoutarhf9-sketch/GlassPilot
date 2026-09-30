@@ -977,11 +977,11 @@ export default function DetailDossierPremium() {
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                       <a href={`tel:${client?.telephone}`} className="flex items-center gap-3 text-[var(--muted)] hover:text-[var(--blue)] transition-colors group p-2 rounded-lg hover:bg-[var(--blue)]/10">
-                        <Phone size={16} className="text-[var(--muted)] group-hover:text-[var(--blue)]" />
+                        <Phone size={16} className="text-white/50 group-hover:text-white" />
                         <span className="font-medium text-sm">{client?.telephone || 'Non renseigné'}</span>
                       </a>
                       <a href={`mailto:${client?.email}`} className="flex items-center gap-3 text-[var(--muted)] hover:text-[var(--blue)] transition-colors group p-2 rounded-lg hover:bg-[var(--blue)]/10">
-                        <Mail size={16} className="text-[var(--muted)] group-hover:text-[var(--blue)]" />
+                        <Mail size={16} className="text-white/50 group-hover:text-white" />
                         <span className="font-medium text-sm truncate">{client?.email || 'Non renseigné'}</span>
                       </a>
                       <div className="flex items-start gap-3 text-[var(--muted)] p-2 rounded-lg sm:col-span-2">
@@ -1198,15 +1198,15 @@ export default function DetailDossierPremium() {
               "bg-[#120052] text-white   rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden transition-all hover:shadow-md",
               activeTab !== 'documents' && "hidden lg:block"
             )}>
-              <div className="px-6 py-4 border-b border-[var(--stone)] flex items-center justify-between">
+              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
                     <ImageIcon size={16} className="text-[var(--blue)]" />
                   </div>
-                  <h2 className="text-lg font-semibold text-[var(--ink)]">Pièces jointes</h2>
+                  <h2 className="text-lg font-semibold text-white">Pièces jointes</h2>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="bg-[var(--white)] text-[var(--muted)] px-2.5 py-1 rounded-full text-xs font-medium hidden sm:inline-block">
+                  <span className="bg-white/20 text-white px-2.5 py-1 rounded-full text-xs font-medium hidden sm:inline-block">
                     {documents.length} fichier(s)
                   </span>
                   
@@ -1234,7 +1234,7 @@ export default function DetailDossierPremium() {
               
               <div className="p-6 space-y-6">
                 <div>
-                  <h3 className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-4">Documents requis</h3>
+                  <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4">Documents requis</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {DOCUMENT_SLOTS.map((slot) => {
                       const doc = matchedDocs[slot.key];
@@ -1246,8 +1246,8 @@ export default function DetailDossierPremium() {
                           className={clsx(
                             "group relative rounded-xl border overflow-hidden transition-all flex flex-col justify-between aspect-[4/3]",
                             doc 
-                              ? "bg-[var(--white)]   border-[var(--stone)] hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
-                              : "bg-[var(--white)]/40 border-dashed border-2 border-[var(--stone)] hover:border-[#1454FF] hover:bg-blue-50/20"
+                              ? "bg-white/10 border-white/20 hover:border-white/40 hover:shadow-md cursor-pointer" 
+                              : "bg-white/5 border-dashed border-2 border-white/20 hover:border-white/40 hover:bg-white/10"
                           )}
                           onClick={() => {
                             if (doc && doc.isImage) {
@@ -1267,7 +1267,7 @@ export default function DetailDossierPremium() {
                                 ) : (
                                   <div className="flex flex-col items-center justify-center w-full h-full">
                                     <FileText size={32} className="text-[var(--muted)]" />
-                                    <span className="text-[10px] text-[var(--muted)] mt-1 font-semibold">PDF</span>
+                                    <span className="text-[10px] text-slate-300 mt-1 font-semibold">PDF</span>
                                   </div>
                                 )}
                                 
@@ -1298,9 +1298,9 @@ export default function DetailDossierPremium() {
                                   </button>
                                 </div>
                               </div>
-                              <div className="p-3 bg-[var(--white)] border-t border-[var(--stone)]">
-                                <p className="text-xs font-bold text-[var(--ink)] truncate">{slot.label}</p>
-                                <p className="text-[10px] text-[var(--muted)] mt-0.5 truncate">{doc.name}</p>
+                              <div className="p-3 bg-white/10 border-t border-white/10">
+                                <p className="text-xs font-bold text-white truncate">{slot.label}</p>
+                                <p className="text-[10px] text-slate-300 mt-0.5 truncate">{doc.name}</p>
                               </div>
                             </>
                           ) : (
@@ -1308,12 +1308,12 @@ export default function DetailDossierPremium() {
                               {isSlotUploading ? (
                                 <Loader2 size={24} className="animate-spin text-[var(--blue)]" />
                               ) : (
-                                <Upload size={24} className="text-[var(--muted)] group-hover:text-[var(--blue)] transition-colors mb-2" />
+                                <Upload size={24} className="text-white/50 group-hover:text-white transition-colors mb-2" />
                               )}
-                              <span className="text-xs font-bold text-[var(--ink)] group-hover:text-[var(--blue)] transition-colors">
+                              <span className="text-xs font-bold text-white group-hover:text-[var(--blue)] transition-colors">
                                 {slot.label}
                               </span>
-                              <span className="text-[10px] text-[var(--muted)] mt-1">
+                              <span className="text-[10px] text-slate-300 mt-1">
                                 {isSlotUploading ? 'Importation...' : 'Ajouter le document'}
                               </span>
                               <input 
@@ -1333,15 +1333,15 @@ export default function DetailDossierPremium() {
 
                 {otherDocs.length > 0 && (
                   <div className="pt-4 border-t border-[var(--stone)]">
-                    <h3 className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-4">Autres documents</h3>
+                    <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4">Autres documents</h3>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                       {otherDocs.map((doc, idx) => (
                         <div 
                           key={idx} 
-                          className="group relative rounded-xl bg-[var(--white)]/40 border border-[var(--stone)] overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
+                          className="group relative rounded-xl bg-white/5 border border-white/20 overflow-hidden text-white hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
                           onClick={() => doc.isImage && setSelectedImage(doc.url)}
                         >
-                          <div className="aspect-square flex items-center justify-center bg-gradient-to-br from-[#FAFAF8] to-white relative overflow-hidden">
+                          <div className="aspect-square flex items-center justify-center bg-white/10 relative overflow-hidden">
                             {doc.isImage ? (
                               <img 
                                 src={doc.url} 
@@ -1351,7 +1351,7 @@ export default function DetailDossierPremium() {
                             ) : (
                               <div className="flex flex-col items-center justify-center w-full h-full">
                                 <FileText size={32} className="text-[var(--muted)]" />
-                                <span className="text-[10px] text-[var(--muted)] mt-1">PDF</span>
+                                <span className="text-[10px] text-slate-300 mt-1">PDF</span>
                               </div>
                             )}
                             
@@ -1664,10 +1664,10 @@ export default function DetailDossierPremium() {
                       )}
                     </div>
                     <div className="flex items-center gap-2 mt-1 px-1">
-                      <span className="text-[10px] text-[var(--muted)]">
+                      <span className="text-[10px] text-slate-300">
                         {isMe ? 'Vous' : msg.sender_name || 'Gestionnaire'}
                       </span>
-                      <span className="text-[10px] text-[var(--muted)]">
+                      <span className="text-[10px] text-slate-300">
                         {new Date(msg.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
@@ -1730,7 +1730,7 @@ export default function DetailDossierPremium() {
                 )}
               </button>
             </div>
-            <p className="text-[10px] text-[var(--muted)] mt-2 text-center">
+            <p className="text-[10px] text-slate-300 mt-2 text-center">
               Appuyez sur Entrée pour envoyer • Maj+Entrée pour retour à la ligne
             </p>
           </div>
