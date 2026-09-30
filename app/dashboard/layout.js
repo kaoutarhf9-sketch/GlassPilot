@@ -157,30 +157,8 @@ export default function DashboardLayout({ children }) {
         .order('created_at', { ascending: false })
         .limit(20);
 
-      const { data: messages, error: messagesError } = await supabase
-        .from('messages')
-        .select('*')
-        .eq('garage_id', garageId)
-        .eq('sender_role', 'gestionnaire')
-        .eq('is_read', false)
-        .order('created_at', { ascending: false });
-
-      const formattedMessages = (messages || []).map(m => ({
-        id: `msg-${m.id}`,
-        dossier_id: m.dossier_id,
-        type: 'message',
-        title: `Nouveau message de ${m.sender_name || 'Gestionnaire'}`,
-        message: m.message,
-        is_read: false,
-        created_at: m.created_at,
-        link: `/dashboard/dossiers/${m.dossier_id}`
-      }));
-
-      const allNotifs = [...(notifs || []), ...formattedMessages]
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      
-      setNotifications(allNotifs);
-      setUnreadCount(allNotifs.filter(n => !n.is_read).length);
+      setNotifications(notifs || []);
+      setUnreadCount((notifs || []).filter(n => !n.is_read).length);
     } catch (err) {
       console.error('Erreur chargement notifications:', err);
     }
@@ -284,19 +262,10 @@ export default function DashboardLayout({ children }) {
     if (!garageId) return;
 
     try {
-      // Pour les notifications standard
       await supabase
         .from('notifications')
         .update({ is_read: true })
         .eq('garage_id', garageId)
-        .eq('is_read', false);
-
-      // Pour les messages
-      await supabase
-        .from('messages')
-        .update({ is_read: true })
-        .eq('garage_id', garageId)
-        .eq('sender_role', 'gestionnaire')
         .eq('is_read', false);
 
       setNotifications(prev =>
@@ -310,16 +279,11 @@ export default function DashboardLayout({ children }) {
 
   const deleteNotification = async (notificationId) => {
     try {
-      if (typeof notificationId === 'string' && notificationId.startsWith('msg-')) {
-        const msgId = notificationId.replace('msg-', '');
-        await supabase.from('messages').update({ is_read: true }).eq('id', msgId);
-      } else {
-        const { error } = await supabase
-          .from('notifications')
-          .delete()
-          .eq('id', notificationId);
-        if (error) throw error;
-      }
+      const { error } = await supabase
+        .from('notifications')
+        .delete()
+        .eq('id', notificationId);
+      if (error) throw error;
 
       const deleted = notifications.find(n => n.id === notificationId);
       setNotifications(prev => prev.filter(n => n.id !== notificationId));
@@ -371,6 +335,11 @@ export default function DashboardLayout({ children }) {
       signature_validee: <ShieldCheck size={14} className="text-blue-500" />,
       paiement_recu: <Sparkles size={14} className="text-amber-500" />,
       message: <MessageSquare size={14} className="text-[var(--blue)]" />,
+      actualite: <Megaphone size={14} className="text-emerald-500" />,
+      assignation: <CheckCheck size={14} className="text-amber-500" />,
+      document: <FileText size={14} className="text-indigo-500" />,
+      archivage: <Trash2 size={14} className="text-slate-500" />,
+      statut: <ShieldCheck size={14} className="text-indigo-500" />,
       default: <Bell size={14} className="text-[var(--muted)]" />
     };
     return icons[type] || icons.default;

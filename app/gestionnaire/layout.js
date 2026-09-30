@@ -144,16 +144,15 @@ export default function GestionnaireLayout({ children }) {
         return;
       }
 
-      const { data: msgs, count } = await supabase
-        .from('messages')
-        .select(`*, dossiers(numero)`, { count: 'exact' })
-        .eq('sender_role', 'garagiste')
+      const { data: notifs, count } = await supabase
+        .from('notifications')
+        .select('*', { count: 'exact' })
+        .eq('gestionnaire_id', targetGId)
         .eq('is_read', false)
-        .in('dossier_id', dossierIds)
         .order('created_at', { ascending: false });
       
       setGlobalUnreadCount(count || 0);
-      setNotifications(msgs || []);
+      setNotifications(notifs || []);
     } catch (err) {
       console.error("Erreur unread count:", err);
     }
@@ -161,7 +160,7 @@ export default function GestionnaireLayout({ children }) {
 
   const markAsRead = async (msgId) => {
     try {
-      await supabase.from('messages').update({ is_read: true }).eq('id', msgId);
+      await supabase.from('notifications').update({ is_read: true }).eq('id', msgId);
       setNotifications(prev => prev.filter(n => n.id !== msgId));
       setGlobalUnreadCount(prev => Math.max(0, prev - 1));
     } catch (err) {
@@ -173,7 +172,7 @@ export default function GestionnaireLayout({ children }) {
     try {
       const msgIds = notifications.map(n => n.id);
       if (msgIds.length === 0) return;
-      await supabase.from('messages').update({ is_read: true }).in('id', msgIds);
+      await supabase.from('notifications').update({ is_read: true }).in('id', msgIds);
       setNotifications([]);
       setGlobalUnreadCount(0);
       setNotificationsOpen(false);

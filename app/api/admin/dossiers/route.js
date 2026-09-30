@@ -155,6 +155,20 @@ export async function PATCH(req) {
 
     if (updateError) throw updateError;
 
+    if (gestionnaireId) {
+      const { data: dossier } = await supabaseAdmin.from('dossiers').select('numero').eq('id', dossierId).single();
+      if (dossier) {
+        await supabaseAdmin.from('notifications').insert([{
+          gestionnaire_id: gestionnaireId,
+          dossier_id: dossierId,
+          type: 'assignation',
+          title: 'Nouveau dossier assigné',
+          message: `Le dossier ${dossier.numero} vous a été assigné.`,
+          link: `/gestionnaire/dossiers/${dossierId}`
+        }]);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       message: "Dossier attribué avec succès !"
