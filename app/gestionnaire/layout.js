@@ -61,22 +61,27 @@ export default function GestionnaireLayout({ children }) {
     
     // S'abonner à TOUS les nouveaux messages destinés au gestionnaire et mises à jour
     const subscription = supabase
-      .channel('global-messages')
+      .channel('global-notifications')
       .on(
         'postgres_changes',
         {
           event: '*',
           schema: 'public',
-          table: 'messages',
-          filter: `sender_role=eq.garagiste`,
+          table: 'notifications',
         },
         (payload) => {
-          const newMsg = payload.new;
-          if (!newMsg) return;
+          const newNotif = payload.new;
+          if (!newNotif) return;
+
+          // On vérifie que la notification est bien pour ce gestionnaire
+          if (gestionnaireId && newNotif.gestionnaire_id !== gestionnaireId) return;
 
           if (payload.eventType === 'INSERT') {
-            if (!newMsg.is_read) {
-              setLatestMessage(newMsg);
+            if (!newNotif.is_read) {
+              setLatestMessage({
+                sender_name: newNotif.title,
+                message: newNotif.message
+              });
               setShowToast(true);
               
               // Jouer le son de notification
@@ -89,16 +94,14 @@ export default function GestionnaireLayout({ children }) {
               
               // Notification navigateur (si autorisé)
               if (Notification.permission === 'granted') {
-                new Notification(newMsg.sender_name || 'Garagiste', {
-                  body: newMsg.message,
+                new Notification(newNotif.title || 'Nouvelle notification', {
+                  body: newNotif.message,
                   icon: '/favicon.ico'
                 });
               }
-              fetchGlobalUnreadCount();
-            }
-          } else if (payload.eventType === 'UPDATE') {
-            if (newMsg.is_read) {
-              fetchGlobalUnreadCount();
+              
+              setNotifications(prev => [newNotif, ...prev]);
+              setGlobalUnreadCount(prev => prev + 1);
             }
           }
         }
@@ -133,16 +136,7 @@ export default function GestionnaireLayout({ children }) {
       
       if (!targetGId) return;
 
-      const { data: dossiersData } = await supabase
-        .from('dossiers')
-        .select('id')
-        .eq('gestionnaire_id', targetGId);
-
-      const dossierIds = dossiersData?.map(d => d.id) || [];
-      if (dossierIds.length === 0) {
-        setGlobalUnreadCount(0);
-        return;
-      }
+      
 
       const { data: notifs, count } = await supabase
         .from('notifications')
