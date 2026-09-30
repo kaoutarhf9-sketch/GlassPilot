@@ -114,50 +114,7 @@ export default function AdminActualitesPage() {
 
       if (insertError) throw insertError;
 
-      // ENVOI DES NOTIFICATIONS
-      try {
-        let notifsToInsert = [];
-        const shortMessage = contenu.length > 80 ? contenu.substring(0, 80) + '...' : contenu;
-
-        // 1. Garagistes
-        if (cible === 'tous' || cible === 'garagistes') {
-          const { data: garages } = await supabase.from('garages').select('id');
-          if (garages) {
-            garages.forEach(g => {
-              notifsToInsert.push({
-                garage_id: g.id,
-                type: 'actualite',
-                title: `Nouvelle actualité: ${titre}`,
-                message: shortMessage,
-                link: '/dashboard/actualites'
-              });
-            });
-          }
-        }
-
-        // 2. Gestionnaires
-        if (cible === 'tous' || cible === 'gestionnaires') {
-          const { data: gestionnaires } = await supabase.from('gestionnaires').select('id');
-          if (gestionnaires) {
-            gestionnaires.forEach(g => {
-              notifsToInsert.push({
-                gestionnaire_id: g.id,
-                type: 'actualite',
-                title: `Nouvelle actualité: ${titre}`,
-                message: shortMessage,
-                link: '/gestionnaire/actualites'
-              });
-            });
-          }
-        }
-
-        if (notifsToInsert.length > 0) {
-          // On insère par lots si trop grand, mais pour l'instant un seul appel suffit
-          await supabase.from('notifications').insert(notifsToInsert);
-        }
-      } catch (notifErr) {
-        console.error("Erreur d'envoi des notifications:", notifErr);
-      }
+      // NOTIFICATIONS GÉRÉES PAR TRIGGER SQL
 
       showToastMsg('Actualité publiée avec succès !');
       setShowModal(false);
