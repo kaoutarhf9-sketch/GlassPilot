@@ -1259,8 +1259,8 @@ Gestionnaire administratif du garage ${garageNom}
                         className={clsx(
                           "group relative rounded-xl border overflow-hidden transition-all flex flex-col justify-between aspect-[4/3]",
                           doc 
-                            ? "bg-[var(--white)]   border-slate-200 hover:border-[#1454FF] hover:shadow-md cursor-pointer" 
-                            : "bg-[var(--white)]/40 border-dashed border-2 border-slate-200 hover:border-[#1454FF] hover:bg-blue-50/20"
+                            ? "bg-white/10 border-white/20 hover:border-white/40 hover:shadow-md cursor-pointer" 
+                            : "bg-white/5 border-dashed border-2 border-white/20 hover:border-white/40 hover:bg-white/10"
                         )}
                         onClick={() => {
                           if (doc && doc.isImage) {
@@ -1345,13 +1345,13 @@ Gestionnaire administratif du garage ${garageNom}
               </div>
 
               {otherDocs.length > 0 && (
-                <div className="pt-4 border-t border-slate-200">
-                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Autres documents</h3>
+                <div className="pt-4 border-t border-white/20">
+                  <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4">Autres documents</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {otherDocs.map((doc, idx) => (
                       <div 
                         key={idx} 
-                        className="group relative rounded-xl bg-transparent border border-slate-200 overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
+                        className="group relative rounded-xl bg-white/5 border border-white/20 overflow-hidden hover:border-[#1454FF] hover:shadow-lg transition-all cursor-pointer"
                         onClick={() => doc.isImage && setSelectedImage(doc.url)}
                       >
                         <div className="aspect-square flex items-center justify-center bg-white/10 relative overflow-hidden">
@@ -1363,7 +1363,7 @@ Gestionnaire administratif du garage ${garageNom}
                             />
                           ) : (
                             <div className="flex flex-col items-center justify-center w-full h-full">
-                              <FileText size={32} className="text-[var(--muted)]" />
+                              <FileText size={32} className="text-slate-300" />
                               <span className="text-[10px] text-slate-300 mt-1">PDF</span>
                             </div>
                           )}
@@ -1392,8 +1392,8 @@ Gestionnaire administratif du garage ${garageNom}
                             </button>
                           </div>
                         </div>
-                        <div className="p-2 text-center">
-                          <p className="text-xs font-medium text-slate-800 truncate">{doc.label}</p>
+                        <div className="p-3 bg-white/10 border-t border-white/20 text-center">
+                          <p className="text-xs font-medium text-white truncate">{doc.label}</p>
                         </div>
                       </div>
                     ))}

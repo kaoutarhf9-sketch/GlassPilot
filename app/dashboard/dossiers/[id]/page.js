@@ -1350,7 +1350,7 @@ export default function DetailDossierPremium() {
                               />
                             ) : (
                               <div className="flex flex-col items-center justify-center w-full h-full">
-                                <FileText size={32} className="text-[var(--muted)]" />
+                                <FileText size={32} className="text-slate-300" />
                                 <span className="text-[10px] text-slate-300 mt-1">PDF</span>
                               </div>
                             )}
@@ -1379,8 +1379,8 @@ export default function DetailDossierPremium() {
                               </button>
                             </div>
                           </div>
-                          <div className="p-2 text-center">
-                            <p className="text-xs font-medium text-[var(--ink)] truncate">{doc.label}</p>
+                          <div className="p-3 bg-white/10 border-t border-white/20 text-center">
+                            <p className="text-xs font-medium text-white truncate">{doc.label}</p>
                           </div>
                         </div>
                       ))}
@@ -1395,13 +1395,13 @@ export default function DetailDossierPremium() {
               <div className="bg-[#120052] text-white rounded-2xl shadow-md border-white/10 border-[var(--stone)] overflow-hidden">
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-6 h-6 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
-                      <FileText size={12} className="text-[var(--blue)]" />
+                    <div className="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center">
+                      <FileText size={12} className="text-white" />
                     </div>
-                    <h3 className="text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Notes internes</h3>
+                    <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Notes internes</h3>
                   </div>
-                  <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
-                    <p className="text-[var(--ink)] text-sm leading-relaxed">{dossier.commentaire}</p>
+                  <div className="bg-white/10 rounded-xl p-4 border border-white/20">
+                    <p className="text-white text-sm leading-relaxed">{dossier.commentaire}</p>
                   </div>
                 </div>
               </div>
