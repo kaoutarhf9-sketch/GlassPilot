@@ -936,7 +936,7 @@ Gestionnaire administratif du garage ${garageNom}
               <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                 <FileText size={16} className="text-[var(--blue)]" />
               </div>
-              <h2 className="text-lg font-bold text-[var(--ink)]">Informations clés</h2>
+              <h2 className="text-lg font-bold text-white">Informations clés</h2>
             </div>
             
             <div className="p-6 space-y-6">
@@ -1406,7 +1406,7 @@ Gestionnaire administratif du garage ${garageNom}
         <div className="space-y-6">
           
           {/* Widget 1: RELANCE & INFORMATION */}
-          <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-[var(--ink)] overflow-hidden relative space-y-5">
+          <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-white overflow-hidden relative space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
               RELANCE & INFORMATION
             </h3>
@@ -1417,7 +1417,7 @@ Gestionnaire administratif du garage ${garageNom}
                 placeholder="Contenu..."
                 value={newNoteContent}
                 onChange={(e) => setNewNoteContent(e.target.value)}
-                className="w-full px-4 py-3 bg-[var(--white)] text-slate-800 border border-white/10 rounded-xl text-sm placeholder-slate-400 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 shadow-inner outline-none transition-all resize-none"
+                className="w-full px-4 py-3 bg-white/10 text-white border-white/20 rounded-xl text-sm placeholder-slate-400 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 shadow-inner outline-none transition-all resize-none"
               />
               <button
                 onClick={handleAddNote}
@@ -1498,7 +1498,7 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
 
           {/* Widget 2: Actions rapides */}
-          <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-[var(--ink)] overflow-hidden space-y-5">
+          <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-white overflow-hidden space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
               Actions rapides
             </h3>
@@ -1536,7 +1536,7 @@ Gestionnaire administratif du garage ${garageNom}
                   <select
                     value={selectedQuickStatus}
                     onChange={(e) => setSelectedQuickStatus(e.target.value)}
-                    className="w-full pl-4 pr-10 py-3 bg-[var(--white)] text-slate-800 border border-white/10 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
+                    className="w-full pl-4 pr-10 py-3 bg-white/10 text-white border-white/20 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
                   >
                     <option value="relance">Relance</option>
                     <option value="reglement_en_cours">Règlement en cours</option>
