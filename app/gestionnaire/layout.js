@@ -9,7 +9,7 @@ import {
   Menu, X, Sparkles, ChevronRight, HelpCircle, ShieldCheck,
   Bell, TrendingUp, Calendar, MessageSquare, Archive, Filter,
   Building2, FolderKanban, CheckCheck, Trash2
-} from 'lucide-react';
+, Megaphone } from 'lucide-react';
 import clsx from 'clsx';
 
 const statusFilters = [
@@ -265,6 +265,7 @@ export default function GestionnaireLayout({ children }) {
     { href: '/gestionnaire/dossiers', label: 'Dossiers', icon: FolderKanban, badge: dossiersCount },
     { href: '/gestionnaire/filtres', label: 'Filtres par statut', icon: Filter },
     { href: '/gestionnaire/archives', label: 'Archives', icon: Archive },
+    { href: '/gestionnaire/actualites', label: 'Actualités', icon: Megaphone },
     { href: '/gestionnaire/parametres', label: 'Paramètres', icon: Settings },
   ];
 

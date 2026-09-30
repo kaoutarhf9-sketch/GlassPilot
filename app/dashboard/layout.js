@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag , Megaphone } from 'lucide-react';
 import { 
   LayoutDashboard, 
   Users, 
