@@ -1197,7 +1197,7 @@ Gestionnaire administratif du garage ${garageNom}
               <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
                 <FileText size={16} className="text-amber-600" />
               </div>
-              <h2 className="text-lg font-bold text-[var(--ink)]">Note & Commentaire interne</h2>
+              <h2 className="text-lg font-bold text-white">Note & Commentaire interne</h2>
             </div>
             <div className="p-6">
               <textarea
@@ -1311,9 +1311,9 @@ Gestionnaire administratif du garage ${garageNom}
                                 </button>
                               </div>
                             </div>
-                            <div className="p-3 bg-[var(--white)] border-t border-slate-200">
+                            <div className="p-3 bg-white/10 border-t border-white/20">
                               <p className="text-xs font-bold text-white truncate">{slot.label}</p>
-                              <p className="text-[10px] text-slate-500 mt-0.5 truncate">{doc.name}</p>
+                              <p className="text-[10px] text-slate-300 mt-0.5 truncate">{doc.name}</p>
                             </div>
                           </>
                         ) : (
@@ -1326,7 +1326,7 @@ Gestionnaire administratif du garage ${garageNom}
                             <span className="text-xs font-bold text-white group-hover:text-[var(--blue)] transition-colors">
                               {slot.label}
                             </span>
-                            <span className="text-[10px] text-slate-500 mt-1">
+                            <span className="text-[10px] text-slate-300 mt-1">
                               {isSlotUploading ? 'Importation...' : 'Ajouter le document'}
                             </span>
                             <input 
