@@ -500,48 +500,56 @@ export default function GestionnaireLayout({ children }) {
                             <p className="text-xs text-[var(--muted)] mt-1">Vous êtes à jour !</p>
                           </div>
                         ) : (
-                          notifications.map((notif) => (
-                            <div 
-                              key={notif.id}
-                              className={clsx(
-                                "p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer relative group",
-                                !notif.is_read && "bg-indigo-50/30"
-                              )}
-                              onClick={() => {
-                                markAsRead(notif.id);
-                                router.push(`/gestionnaire/dossiers/${notif.dossier_id}`);
-                                setNotificationsOpen(false);
-                              }}
-                            >
-                              {!notif.is_read && (
-                                <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-indigo-500"></div>
-                              )}
-                              <div className="flex items-start gap-3">
-                                <div className="flex-shrink-0 mt-1 bg-white p-2 rounded-lg border border-slate-200 shadow-sm group-hover:border-indigo-200 transition-colors">
-                                  <MessageSquare size={16} className="text-indigo-500" />
+                          notifications.map((notif) => {
+                            let NotifIcon = MessageSquare;
+                            let iconColor = 'text-indigo-500';
+                            let barColor = 'bg-indigo-500';
+                            let bgColor = 'bg-indigo-50/30';
+                            if (notif.type === 'actualite') { NotifIcon = Megaphone; iconColor = 'text-emerald-500'; barColor = 'bg-emerald-500'; bgColor = 'bg-emerald-50/30'; }
+                            else if (notif.type === 'assignation') { NotifIcon = CheckCheck; iconColor = 'text-amber-500'; barColor = 'bg-amber-500'; bgColor = 'bg-amber-50/30'; }
+                            else if (notif.type === 'document') { NotifIcon = FileText; iconColor = 'text-blue-500'; barColor = 'bg-blue-500'; bgColor = 'bg-blue-50/30'; }
+                            else if (notif.type === 'statut') { NotifIcon = ShieldCheck; iconColor = 'text-purple-500'; barColor = 'bg-purple-500'; bgColor = 'bg-purple-50/30'; }
+                            const destination = notif.link || (notif.dossier_id ? `/gestionnaire/dossiers/${notif.dossier_id}` : '/gestionnaire/dashboard');
+                            return (
+                              <div
+                                key={notif.id}
+                                className={`p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer relative group ${!notif.is_read ? bgColor : ''}`}
+                                onClick={() => {
+                                  markAsRead(notif.id);
+                                  router.push(destination);
+                                  setNotificationsOpen(false);
+                                }}
+                              >
+                                {!notif.is_read && (
+                                  <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${barColor}`}></div>
+                                )}
+                                <div className="flex items-start gap-3">
+                                  <div className="flex-shrink-0 mt-1 bg-white p-2 rounded-lg border border-slate-200 shadow-sm group-hover:border-indigo-200 transition-colors">
+                                    <NotifIcon size={16} className={iconColor} />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-sm font-semibold text-[var(--ink)]">
+                                      {notif.title || 'Nouvelle notification'}
+                                    </p>
+                                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
+                                    <p className="text-[10px] font-medium text-[var(--muted)] mt-2 uppercase tracking-wider">
+                                      {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+                                    </p>
+                                  </div>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      markAsRead(notif.id);
+                                    }}
+                                    className="text-[var(--muted)] hover:text-emerald-500 hover:bg-emerald-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                    title="Marquer comme lu"
+                                  >
+                                    <CheckCheck size={14} />
+                                  </button>
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-semibold text-[var(--ink)]">
-                                    Nouveau message {notif.dossiers?.numero ? `(${notif.dossiers.numero})` : ''}
-                                  </p>
-                                  <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
-                                  <p className="text-[10px] font-medium text-[var(--muted)] mt-2 uppercase tracking-wider">
-                                    {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
-                                  </p>
-                                </div>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    markAsRead(notif.id);
-                                  }}
-                                  className="text-[var(--muted)] hover:text-rose-500 hover:bg-rose-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
-                                  title="Supprimer la notification"
-                                >
-                                  <Trash2 size={14} />
-                                </button>
                               </div>
-                            </div>
-                          ))
+                            );
+                          })
                         )}
                       </div>
                     </div>
@@ -575,20 +583,23 @@ export default function GestionnaireLayout({ children }) {
         <div className="fixed top-20 right-4 sm:right-6 z-50 animate-in slide-in-from-top-4 fade-in duration-300">
           <div className="bg-[var(--white)] rounded-xl shadow-2xl shadow-indigo-900/10 border border-slate-200/60 p-4 w-[320px] flex items-start gap-3 cursor-pointer hover:border-indigo-300 hover:shadow-indigo-900/20 transition-all"
                onClick={() => {
-                 router.push(`/gestionnaire/dossiers/${latestMessage.dossier_id}`);
+                 if (latestMessage.link) router.push(latestMessage.link);
                  setShowToast(false);
                }}>
             <div className="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center shrink-0 border border-indigo-100">
-              <MessageSquare size={18} className="text-indigo-600" />
+              {latestMessage.type === 'actualite' ? <Megaphone size={18} className="text-emerald-600" /> :
+               latestMessage.type === 'assignation' ? <CheckCheck size={18} className="text-amber-600" /> :
+               latestMessage.type === 'document' ? <FileText size={18} className="text-blue-600" /> :
+               <MessageSquare size={18} className="text-indigo-600" />}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-0.5">
-                <h4 className="text-sm font-semibold text-[var(--ink)] truncate">{latestMessage.sender_name || 'Garagiste'}</h4>
+                <h4 className="text-sm font-semibold text-[var(--ink)] truncate">{latestMessage.sender_name || 'Notification'}</h4>
                 <button onClick={(e) => { e.stopPropagation(); setShowToast(false); }} className="text-[var(--muted)] hover:text-slate-600 focus:outline-none p-1 -mr-1 rounded-md">
                   <X size={14} />
                 </button>
               </div>
-              <p className="text-[10px] font-medium text-indigo-600 uppercase tracking-wider mb-1">Nouveau message</p>
+              <p className="text-[10px] font-medium text-indigo-600 uppercase tracking-wider mb-1">{latestMessage.sender_name || 'Nouvelle notification'}</p>
               <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed">{latestMessage.message}</p>
             </div>
           </div>
