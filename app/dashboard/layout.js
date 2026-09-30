@@ -22,7 +22,8 @@ import {
   CheckCheck,
   Trash2,
   MessageSquare,
-  Loader2
+  Loader2,
+  Newspaper
 } from 'lucide-react';
 import clsx from 'clsx';
 

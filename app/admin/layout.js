@@ -134,29 +134,40 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-8 space-y-1.5 overflow-y-auto custom-scrollbar relative z-10">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.href, item.exact);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={clsx(
-                  "flex items-center gap-3.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-200 group relative",
-                  active 
-                    ? "bg-[#18CDEC] text-[#0A0030] shadow-lg shadow-[#1454FF]/20" 
-                    : "text-[#64748B] hover:bg-[#111827]/50 hover:text-[#0A0030]"
-                )}
-              >
-                {active && (
-                  <span className="absolute left-[-4px] top-1/3 bottom-1/3 w-1 bg-white rounded-r-full" />
-                )}
-                <Icon size={18} className={clsx("transition-transform duration-200", active ? "text-[#0A0030]" : "text-[#64748B] group-hover:text-[#0A0030] group-hover:scale-105")} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+        <nav className="flex-1 px-4 py-8 overflow-y-auto custom-scrollbar relative z-10">
+          {navSections.map((section, idx) => (
+            <div key={idx} className="mb-6 last:mb-0">
+              <div className="px-4 mb-3 flex flex-col">
+                <span className="text-[10px] font-extrabold text-[#3B0FAA] uppercase tracking-widest">{section.title}</span>
+                <div className="h-0.5 w-8 bg-[#18CDEC]/40 rounded-full mt-1.5"></div>
+              </div>
+              <div className="space-y-1.5">
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.href, item.exact);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={clsx(
+                        "flex items-center gap-3.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-200 group relative",
+                        active 
+                          ? "bg-[#18CDEC] text-[#0A0030] shadow-lg shadow-[#1454FF]/20" 
+                          : "text-[#64748B] hover:bg-[#111827]/50 hover:text-[#0A0030]"
+                      )}
+                    >
+                      {active && (
+                        <span className="absolute left-[-4px] top-1/3 bottom-1/3 w-1 bg-white rounded-r-full" />
+                      )}
+                      <Icon size={18} className={clsx("transition-transform duration-200", active ? "text-[#0A0030]" : "text-[#64748B] group-hover:text-[#0A0030] group-hover:scale-105")} />
+                      <span>{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}
