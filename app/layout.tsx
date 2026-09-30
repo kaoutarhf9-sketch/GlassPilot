@@ -53,16 +53,16 @@ export default function RootLayout({
 
             {/* Aligned Dark Blue GlassPilot Gestion Watermark */}
             {/* Circle Monogram */}
-            <circle cx="30%" cy="50%" r="8vw" stroke="rgba(18, 0, 82, 0.12)" strokeWidth="0.3vw" fill="rgba(18, 0, 82, 0.03)" />
+            <circle cx="30%" cy="50%" r="8vw" stroke="#120052" strokeWidth="0.3vw" strokeOpacity="0.1" fill="#120052" fillOpacity="0.04" />
 
             {/* GP Monogram Text */}
-            <text x="30%" y="53.8%" fontSize="10vw" fontWeight="900" fill="rgba(18, 0, 82, 0.04)" stroke="rgba(18, 0, 82, 0.15)" strokeWidth="1.5" textAnchor="middle" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GP</text>
+            <text x="30%" y="53.8%" fontSize="10vw" fontWeight="900" fill="#120052" fillOpacity="0.08" stroke="#120052" strokeOpacity="0.1" strokeWidth="1.5" textAnchor="middle" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GP</text>
 
             {/* GLASSPILOT */}
-            <text x="40%" y="45%" fontSize="6vw" fontWeight="900" fill="rgba(18, 0, 82, 0.04)" stroke="rgba(18, 0, 82, 0.15)" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GLASSPILOT</text>
+            <text x="40%" y="45%" fontSize="6vw" fontWeight="900" fill="#120052" fillOpacity="0.08" stroke="#120052" strokeOpacity="0.1" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GLASSPILOT</text>
 
             {/* GESTION */}
-            <text x="40%" y="59%" fontSize="6vw" fontWeight="900" fill="rgba(18, 0, 82, 0.04)" stroke="rgba(18, 0, 82, 0.15)" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GESTION</text>
+            <text x="40%" y="59%" fontSize="6vw" fontWeight="900" fill="#120052" fillOpacity="0.08" stroke="#120052" strokeOpacity="0.1" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GESTION</text>
           </svg>
         </div>
         {children}
