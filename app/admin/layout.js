@@ -50,13 +50,23 @@ export default function AdminLayout({ children }) {
     router.push('/');
   };
 
-  const navItems = [
-    { href: '/admin', label: 'Vue globale', icon: LayoutDashboard, exact: true },
-    { href: '/admin/gestionnaires', label: 'Gestionnaires', icon: Users },
-    { href: '/admin/garages', label: 'Garages', icon: Building2 },
-    { href: '/admin/dossiers', label: 'Assigner Dossiers', icon: FolderKanban },
-    { href: '/admin/actualites', label: 'Actualités', icon: Megaphone },
-    { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
+  const navSections = [
+    {
+      title: 'COMMUNICATION',
+      items: [
+        { href: '/admin/actualites', label: 'Actualités', icon: Megaphone }
+      ]
+    },
+    {
+      title: 'ADMINISTRATION',
+      items: [
+        { href: '/admin', label: 'Vue globale', icon: LayoutDashboard, exact: true },
+        { href: '/admin/gestionnaires', label: 'Gestionnaires', icon: Users },
+        { href: '/admin/garages', label: 'Garages', icon: Building2 },
+        { href: '/admin/dossiers', label: 'Assigner Dossiers', icon: FolderKanban },
+        { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
+      ]
+    }
   ];
 
   const isActive = (href, exact = false) => {
@@ -196,26 +206,37 @@ export default function AdminLayout({ children }) {
             <p className="font-bold text-[#0A0030] text-xs truncate">{userName}</p>
           </div>
 
-          <nav className="flex-1 space-y-1.5">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.href, item.exact);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={clsx(
-                    "flex items-center gap-3.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all",
-                    active 
-                      ? "bg-[#18CDEC] text-[#0A0030] shadow-lg" 
-                      : "text-[#64748B] hover:bg-[#111827]/50 hover:text-[#0A0030]"
-                  )}
-                >
-                  <Icon size={18} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+          <nav className="flex-1">
+            {navSections.map((section, idx) => (
+              <div key={idx} className="mb-6 last:mb-0">
+                <div className="px-4 mb-3 flex flex-col">
+                  <span className="text-[10px] font-extrabold text-[#3B0FAA] uppercase tracking-widest">{section.title}</span>
+                  <div className="h-0.5 w-8 bg-[#18CDEC]/40 rounded-full mt-1.5"></div>
+                </div>
+                <div className="space-y-1.5">
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.href, item.exact);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={clsx(
+                          "flex items-center gap-3.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all",
+                          active 
+                            ? "bg-[#18CDEC] text-[#0A0030] shadow-lg" 
+                            : "text-[#64748B] hover:bg-[#111827]/50 hover:text-[#0A0030]"
+                        )}
+                      >
+                        <Icon size={18} />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
 
           <button 

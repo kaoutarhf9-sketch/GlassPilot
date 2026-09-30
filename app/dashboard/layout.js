@@ -335,11 +335,22 @@ export default function DashboardLayout({ children }) {
     router.push('/');
   };
 
-  const navItems = [
-    { href: '/dashboard', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
-    { href: '/dashboard/dossiers', label: 'Dossiers', icon: FileText },
-    { href: '/dashboard/clients', label: 'Clients', icon: Users },
-    { href: '/dashboard/abonnement', label: 'Jetons', icon: ShoppingBag },
+  const navSections = [
+    {
+      title: 'COMMUNICATION',
+      items: [
+        { href: '/dashboard/actualites', label: 'Actualités', icon: Newspaper }
+      ]
+    },
+    {
+      title: 'GARAGE',
+      items: [
+        { href: '/dashboard', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
+        { href: '/dashboard/dossiers', label: 'Dossiers', icon: FileText },
+        { href: '/dashboard/clients', label: 'Clients', icon: Users },
+        { href: '/dashboard/abonnement', label: 'Jetons', icon: ShoppingBag },
+      ]
+    }
   ];
 
   const isActive = (href, exact = false) => {
@@ -454,26 +465,36 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto custom-scrollbar">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.href, item.exact);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={clsx(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
-                  active 
-                    ? "bg-[#18CDEC] text-[#0A0030] shadow-sm shadow-indigo-600/20" 
-                    : "text-[#64748B] hover:bg-[#18CDEC]/10 hover:text-[#0A0030]"
-                )}
-              >
-                <Icon size={18} className={clsx("transition-colors", active ? "text-[#0A0030]" : "text-[#64748B] group-hover:text-[#64748B]")} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+        <nav className="flex-1 px-3 py-6 overflow-y-auto custom-scrollbar">
+          {navSections.map((section, idx) => (
+            <div key={idx} className="mb-6 last:mb-0">
+              <div className="px-3 mb-2 flex flex-col">
+                <span className="text-[10px] font-bold text-[#3B0FAA] uppercase tracking-wider">{section.title}</span>
+                <div className="h-0.5 w-6 bg-[#18CDEC]/40 rounded-full mt-1"></div>
+              </div>
+              <div className="space-y-1">
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.href, item.exact);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={clsx(
+                        "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
+                        active 
+                          ? "bg-[#18CDEC] text-[#0A0030] shadow-sm shadow-indigo-600/20" 
+                          : "text-[#64748B] hover:bg-[#18CDEC]/10 hover:text-[#0A0030]"
+                      )}
+                    >
+                      <Icon size={18} className={clsx("transition-colors", active ? "text-[#0A0030]" : "text-[#64748B] group-hover:text-[#64748B]")} />
+                      <span>{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}
@@ -743,25 +764,35 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
 
-            <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto custom-scrollbar">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const active = isActive(item.href, item.exact);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={clsx(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-[#18CDEC] text-[#0A0030] shadow-sm" : "text-[#64748B] hover:bg-[#18CDEC]/10 hover:text-[#0A0030]"
-                    )}
-                  >
-                    <Icon size={18} className={clsx(active ? "text-[#0A0030]" : "text-[#64748B]")} />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
+            <nav className="flex-1 px-3 py-6 overflow-y-auto custom-scrollbar">
+              {navSections.map((section, idx) => (
+                <div key={idx} className="mb-6 last:mb-0">
+                  <div className="px-3 mb-2 flex flex-col">
+                    <span className="text-[10px] font-bold text-[#3B0FAA] uppercase tracking-wider">{section.title}</span>
+                    <div className="h-0.5 w-6 bg-[#18CDEC]/40 rounded-full mt-1"></div>
+                  </div>
+                  <div className="space-y-1">
+                    {section.items.map((item) => {
+                      const Icon = item.icon;
+                      const active = isActive(item.href, item.exact);
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={clsx(
+                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                            active ? "bg-[#18CDEC] text-[#0A0030] shadow-sm" : "text-[#64748B] hover:bg-[#18CDEC]/10 hover:text-[#0A0030]"
+                          )}
+                        >
+                          <Icon size={18} className={clsx(active ? "text-[#0A0030]" : "text-[#64748B]")} />
+                          <span>{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </nav>
 
             <div className="p-4 border-t border-[#18CDEC]/20/60 space-y-1">
