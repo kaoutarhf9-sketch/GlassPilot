@@ -277,30 +277,30 @@ export default function GestionnaireLayout({ children }) {
     <div className="min-h-screen bg-transparent font-sans text-[var(--ink)] selection:bg-indigo-100 selection:text-indigo-900">
       
       {/* Sidebar Desktop (Dark Premium) */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] border-r border-[var(--stone)] flex-col z-30">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[#120052] border-r border-white/10 flex-col z-30">
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-[var(--stone)]/60">
+        <div className="h-16 flex items-center px-6 border-b border-white/10/60">
           <Link href="/gestionnaire/dashboard" className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-8 h-8 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-600/20 group-hover:bg-indigo-500 transition-colors">
-              <Sparkles size={16} className="text-[var(--ink)]" />
+              <Sparkles size={16} className="text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-[var(--ink)]">
-                Glass<span className="text-[var(--blue)]">Pilot</span>
+              <span className="text-xl font-bold tracking-tight text-white">
+                Glass<span className="text-[#18CDEC]">Pilot</span>
               </span>
             </div>
           </Link>
         </div>
 
         {/* User context info */}
-        <div className="px-6 py-5 border-b border-[var(--stone)]/60">
+        <div className="px-6 py-5 border-b border-white/10/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-inner text-[var(--ink)] font-bold border border-[var(--stone)]">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-inner text-white font-bold border border-white/10">
               {gestionnaireName.charAt(0).toUpperCase() || 'G'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-[var(--ink)] truncate">{gestionnaireName || 'Gestionnaire'}</p>
-              <p className="text-xs text-[var(--muted)] truncate">Espace d'administration</p>
+              <p className="text-sm font-semibold text-white truncate">{gestionnaireName || 'Gestionnaire'}</p>
+              <p className="text-xs text-[#8EA4CE] truncate">Espace d'administration</p>
             </div>
           </div>
         </div>
@@ -319,18 +319,18 @@ export default function GestionnaireLayout({ children }) {
                     className={clsx(
                       "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group text-left",
                       active 
-                        ? "bg-[var(--paper)]/80 text-[var(--ink)]" 
-                        : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
+                        ? "bg-[var(--paper)]/80 text-white" 
+                        : "text-[#8EA4CE] hover:bg-white/10 hover:text-white"
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink-2)]" : "text-slate-500 group-hover:text-[var(--muted)]")} />
+                      <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink-2)]" : "text-[#8EA4CE] group-hover:text-[#8EA4CE]")} />
                       <span>{item.label}</span>
                     </div>
                     <ChevronRight 
                       size={14} 
                       className={clsx(
-                        "text-slate-500 transition-transform duration-200 shrink-0", 
+                        "text-[#8EA4CE] transition-transform duration-200 shrink-0", 
                         statusFiltersOpen && "rotate-90"
                       )} 
                     />
@@ -347,8 +347,8 @@ export default function GestionnaireLayout({ children }) {
                             className={clsx(
                               "flex items-center gap-2.5 py-1.5 px-3 rounded-md text-xs font-medium transition-all duration-150",
                               isSubActive
-                                ? "text-[var(--ink)] bg-indigo-600/30 font-semibold"
-                                : "text-[var(--muted)] hover:text-[var(--ink-2)] hover:bg-[var(--white)]/30"
+                                ? "text-white bg-indigo-600/30 font-semibold"
+                                : "text-[#8EA4CE] hover:text-[var(--ink-2)] hover:bg-white/10/30"
                             )}
                           >
                             <span className={clsx(
@@ -374,17 +374,17 @@ export default function GestionnaireLayout({ children }) {
                   "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
                   active 
                     ? "bg-[var(--blue)] text-white shadow-md shadow-indigo-600/20" 
-                    : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
+                    : "text-[#8EA4CE] hover:bg-white/10 hover:text-white"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <Icon size={18} className={clsx("transition-colors", active ? "text-[var(--ink)]" : "text-slate-500 group-hover:text-[var(--muted)]")} />
+                  <Icon size={18} className={clsx("transition-colors", active ? "text-white" : "text-[#8EA4CE] group-hover:text-[#8EA4CE]")} />
                   <span>{item.label}</span>
                 </div>
                 {item.badge !== undefined && item.badge > 0 && (
                   <span className={clsx(
                     "text-xs font-semibold px-2 py-0.5 rounded-full min-w-[20px] text-center",
-                    active ? "bg-[var(--white)]   text-[var(--ink)]" : "bg-[var(--paper)] text-[var(--muted)] group-hover:bg-slate-700"
+                    active ? "bg-white/5   text-white" : "bg-[var(--paper)] text-[#8EA4CE] group-hover:bg-slate-700"
                   )}>
                     {item.badge}
                   </span>
@@ -395,19 +395,19 @@ export default function GestionnaireLayout({ children }) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[var(--stone)]/60 space-y-1">
+        <div className="p-4 border-t border-white/10/60 space-y-1">
           <Link 
             href="/gestionnaire/aide" 
-            className="flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--white)] rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors"
           >
-            <HelpCircle size={18} className="text-slate-500" />
+            <HelpCircle size={18} className="text-[#8EA4CE]" />
             Support technique
           </Link>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
           >
-            <LogOut size={18} className="text-slate-500 group-hover:text-rose-400" />
+            <LogOut size={18} className="text-[#8EA4CE] group-hover:text-rose-400" />
             Se déconnecter
           </button>
         </div>
@@ -584,27 +584,27 @@ export default function GestionnaireLayout({ children }) {
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 bg-[var(--white)]/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-[var(--paper)] z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[var(--stone)]">
-            <div className="h-16 flex items-center justify-between px-6 border-b border-[var(--stone)]/60">
+          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-[#120052] z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-white/10">
+            <div className="h-16 flex items-center justify-between px-6 border-b border-white/10/60">
               <Link href="/gestionnaire/dashboard" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                 <div className="flex items-center justify-center w-8 h-8 bg-indigo-600 rounded-lg">
-                  <Sparkles size={16} className="text-[var(--ink)]" />
+                  <Sparkles size={16} className="text-white" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-[var(--ink)]">Glass<span className="text-[var(--blue)]">Pilot</span></span>
+                <span className="text-xl font-bold tracking-tight text-white">Glass<span className="text-[#18CDEC]">Pilot</span></span>
               </Link>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[var(--muted)] hover:text-[var(--ink)] rounded-lg">
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[#8EA4CE] hover:text-white rounded-lg">
                 <X size={20} />
               </button>
             </div>
             
-            <div className="px-6 py-5 border-b border-[var(--stone)]/60">
+            <div className="px-6 py-5 border-b border-white/10/60">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-[var(--ink)] font-bold border border-[var(--stone)]">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold border border-white/10">
                   {gestionnaireName.charAt(0).toUpperCase() || 'G'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-[var(--ink)] truncate">{gestionnaireName || 'Gestionnaire'}</p>
-                  <p className="text-xs text-[var(--muted)] truncate">Espace d'administration</p>
+                  <p className="text-sm font-semibold text-white truncate">{gestionnaireName || 'Gestionnaire'}</p>
+                  <p className="text-xs text-[#8EA4CE] truncate">Espace d'administration</p>
                 </div>
               </div>
             </div>
@@ -621,17 +621,17 @@ export default function GestionnaireLayout({ children }) {
                         onClick={() => setStatusFiltersOpen(!statusFiltersOpen)}
                         className={clsx(
                           "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left",
-                          active ? "bg-[var(--paper)]/80 text-[var(--ink)]" : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
+                          active ? "bg-[var(--paper)]/80 text-white" : "text-[#8EA4CE] hover:bg-white/10 hover:text-white"
                         )}
                       >
                         <div className="flex items-center gap-3">
-                          <Icon size={18} className={clsx(active ? "text-[var(--ink)]" : "text-slate-500")} />
+                          <Icon size={18} className={clsx(active ? "text-white" : "text-[#8EA4CE]")} />
                           <span>{item.label}</span>
                         </div>
                         <ChevronRight 
                           size={14} 
                           className={clsx(
-                            "text-slate-500 transition-transform duration-200 shrink-0", 
+                            "text-[#8EA4CE] transition-transform duration-200 shrink-0", 
                             statusFiltersOpen && "rotate-90"
                           )} 
                         />
@@ -649,8 +649,8 @@ export default function GestionnaireLayout({ children }) {
                                 className={clsx(
                                   "flex items-center gap-2.5 py-1.5 px-3 rounded-md text-xs font-medium transition-all",
                                   isSubActive
-                                    ? "text-[var(--ink)] bg-indigo-600/30 font-semibold"
-                                    : "text-[var(--muted)] hover:text-[var(--ink-2)] hover:bg-[var(--white)]/30"
+                                    ? "text-white bg-indigo-600/30 font-semibold"
+                                    : "text-[#8EA4CE] hover:text-[var(--ink-2)] hover:bg-white/10/30"
                                 )}
                               >
                                 <span className={clsx(
@@ -675,15 +675,15 @@ export default function GestionnaireLayout({ children }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={clsx(
                       "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-[var(--blue)] text-white shadow-md" : "text-[var(--muted)] hover:bg-[var(--white)] hover:text-[var(--ink)]"
+                      active ? "bg-[var(--blue)] text-white shadow-md" : "text-[#8EA4CE] hover:bg-white/10 hover:text-white"
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon size={18} className={clsx(active ? "text-[var(--ink)]" : "text-slate-500")} />
+                      <Icon size={18} className={clsx(active ? "text-white" : "text-[#8EA4CE]")} />
                       <span>{item.label}</span>
                     </div>
                     {item.badge !== undefined && item.badge > 0 && (
-                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[var(--paper)] text-[var(--muted)]">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[var(--paper)] text-[#8EA4CE]">
                         {item.badge}
                       </span>
                     )}
@@ -692,13 +692,13 @@ export default function GestionnaireLayout({ children }) {
               })}
             </nav>
 
-            <div className="p-4 border-t border-[var(--stone)]/60">
+            <div className="p-4 border-t border-white/10/60">
               <button 
                 onClick={() => {
                   setMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 text-[var(--muted)] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
               >
                 <LogOut size={18} />
                 Déconnexion
