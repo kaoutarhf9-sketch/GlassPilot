@@ -427,11 +427,11 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
 }
 .price-card:hover{transform:translateY(-4px);box-shadow:0 10px 40px rgba(24,205,236,.1)}
 .price-card.featured{
-  border-color:var(--accent);
-  background:linear-gradient(180deg, #FFFFFF, #F8FAFC);
-  box-shadow:0 15px 50px rgba(24,205,236,0.15);
+  border-color:#3B0FAA;
+  background:linear-gradient(180deg, #FDFBFF, #F4F0FE);
+  box-shadow:0 15px 50px rgba(59,15,170,0.15);
 }
-.price-card.featured::before{background:linear-gradient(90deg,transparent,rgba(24,205,236,.4),transparent)}
+.price-card.featured::before{background:linear-gradient(90deg,transparent,rgba(59,15,170,.4),transparent)}
 .price-badge{
   position:absolute;top:0;left:50%;transform:translateX(-50%);
   background:#18CDEC;color:#0A0030;
@@ -443,7 +443,7 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
 .price-desc{font-size:.9rem;color:var(--muted);line-height:1.6;margin-bottom:2.5rem;font-weight:400}
 .price-amount{font-family:var(--ff-body);font-size:4.5rem;font-weight:700;color:var(--ink2);line-height:1;margin-bottom:2.5rem;letter-spacing:-.03em;display:flex;align-items:baseline;gap:.2rem}
 .price-card.featured .price-amount{
-  color:var(--accent);
+  color:#3B0FAA;
 }
 .price-card.featured .price-amount sup, .price-card.featured .price-amount sub{
   color:var(--ink2);
