@@ -280,14 +280,6 @@ export default function GestionnaireLayout({ children }) {
   ];
 
 
-    { href: '/gestionnaire/garages', label: 'Garages', icon: Building2, badge: garagesCount },
-    { href: '/gestionnaire/dossiers', label: 'Dossiers', icon: FolderKanban, badge: dossiersCount },
-    { href: '/gestionnaire/filtres', label: 'Filtres par statut', icon: Filter },
-    { href: '/gestionnaire/archives', label: 'Archives', icon: Archive },
-    { href: '/gestionnaire/actualites', label: 'Actualités', icon: Megaphone },
-    { href: '/gestionnaire/parametres', label: 'Paramètres', icon: Settings },
-  ];
-
   const isActive = (href, exact = false) => {
     if (exact) return pathname === href;
     return pathname.startsWith(href);
