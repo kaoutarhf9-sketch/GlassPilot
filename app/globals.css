@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F4F4FE;
+  --background: #ECFEFF;
   --foreground: #0A0030;
   
   /* Brand Colors from Reseauglass */
@@ -9,7 +9,7 @@
   --indigo-dark: #120052;
   --brand-purple: #3B0FAA;
   --whatsapp: #5432E1;
-  --bg-color: #F4F4FE;
+  --bg-color: #ECFEFF;
   --badge-bg: #E8F7F0;
   --badge-text: #0E4327;
   

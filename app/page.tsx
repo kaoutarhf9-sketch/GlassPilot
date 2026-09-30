@@ -93,7 +93,7 @@ if (statsTarget) statsObs.observe(statsTarget);
         
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F4F4FE;
+  --bg:#ECFEFF;
   --surface:#FFFFFF;
   --surface2:#F8FAFC;
   --border:rgba(10, 0, 48, 0.1);
