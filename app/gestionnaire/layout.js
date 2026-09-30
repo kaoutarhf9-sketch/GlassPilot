@@ -259,8 +259,27 @@ export default function GestionnaireLayout({ children }) {
     router.push('/');
   };
 
-  const navItems = [
-    { href: '/gestionnaire/dashboard', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
+  const navSections = [
+    {
+      title: 'COMMUNICATION',
+      items: [
+        { href: '/gestionnaire/actualites', label: 'Actualités', icon: Megaphone }
+      ]
+    },
+    {
+      title: 'GESTION',
+      items: [
+        { href: '/gestionnaire/dashboard', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
+        { href: '/gestionnaire/garages', label: 'Garages', icon: Building2, badge: garagesCount },
+        { href: '/gestionnaire/dossiers', label: 'Dossiers', icon: FolderKanban, badge: dossiersCount },
+        { href: '/gestionnaire/filtres', label: 'Filtres par statut', icon: Filter },
+        { href: '/gestionnaire/archives', label: 'Archives', icon: Archive },
+        { href: '/gestionnaire/parametres', label: 'Paramètres', icon: Settings },
+      ]
+    }
+  ];
+
+
     { href: '/gestionnaire/garages', label: 'Garages', icon: Building2, badge: garagesCount },
     { href: '/gestionnaire/dossiers', label: 'Dossiers', icon: FolderKanban, badge: dossiersCount },
     { href: '/gestionnaire/filtres', label: 'Filtres par statut', icon: Filter },
@@ -308,7 +327,14 @@ export default function GestionnaireLayout({ children }) {
 
         {/* Navigation */}
         <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto custom-scrollbar">
-          {navItems.map((item) => {
+          {navSections.map((section, idx) => (
+            <div key={idx} className="mb-6 last:mb-0">
+              <div className="px-3 mb-2 flex flex-col">
+                <span className="text-[10px] font-bold text-[#3B0FAA] uppercase tracking-wider">{section.title}</span>
+                <div className="h-0.5 w-6 bg-[#18CDEC]/40 rounded-full mt-1"></div>
+              </div>
+              <div className="space-y-1">
+                {section.items.map((item) => {
             const Icon = item.icon;
 
             if (item.label === 'Filtres par statut') {
@@ -393,6 +419,9 @@ export default function GestionnaireLayout({ children }) {
               </Link>
             );
           })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}
@@ -611,7 +640,14 @@ export default function GestionnaireLayout({ children }) {
             </div>
 
             <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
-              {navItems.map((item) => {
+              {navSections.map((section, idx) => (
+            <div key={idx} className="mb-6 last:mb-0">
+              <div className="px-3 mb-2 flex flex-col">
+                <span className="text-[10px] font-bold text-[#3B0FAA] uppercase tracking-wider">{section.title}</span>
+                <div className="h-0.5 w-6 bg-[#18CDEC]/40 rounded-full mt-1"></div>
+              </div>
+              <div className="space-y-1">
+                {section.items.map((item) => {
                 const Icon = item.icon;
 
                 if (item.label === 'Filtres par statut') {
