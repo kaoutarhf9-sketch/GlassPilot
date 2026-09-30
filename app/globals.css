@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617; /* Deep midnight space background */
-  --foreground: #F8FAFC; /* Light slate text */
+  --background: #F4F4FE;
+  --foreground: #0A0030;
   
-  /* Premium Dark Theme Variables */
-  --white: rgba(56, 189, 248, 0.15);
-  --page-bg: #04090f;
-  --ink: #FFFFFF;       /* Pure white for maximum contrast */
-  --ink-2: #F1F5F9;     /* Off-white */
-  --muted: #CBD5E1;     /* Light slate grey for high contrast secondary text */
-  --blue: #38bdf8;      /* The Neon Cyan "Bleu ciel" */
-  --stone: rgba(56, 189, 248, 0.2); /* Glass border with cyan tint */
-  --paper: rgba(11, 19, 41, 0.65);
+  /* Brand Colors from Reseauglass */
+  --cyan: #18CDEC;
+  --indigo-dark: #120052;
+  --brand-purple: #3B0FAA;
+  --whatsapp: #5432E1;
+  --bg-color: #F4F4FE;
+  --badge-bg: #E8F7F0;
+  --badge-text: #0E4327;
+  
+  --ink: #0A0030;
+  --ink-2: #120052;
+  --muted: #64748B;
+  --blue: #18CDEC;
+  --paper: #FFFFFF;
 }
 
 @theme inline {
@@ -20,35 +25,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-
-  /* Overrides to make all standard blue/indigo accents map to sky blue and cyan details */
-  --color-indigo-50: rgba(14, 165, 233, 0.08);
-  --color-indigo-100: rgba(14, 165, 233, 0.15);
-  --color-indigo-200: #bae6fd;
-  --color-indigo-300: #7dd3fc;
-  --color-indigo-400: #38bdf8;
-  --color-indigo-500: #0ea5e9;
-  --color-indigo-600: #38bdf8;
-  --color-indigo-700: #0ea5e9;
-  --color-indigo-800: #0284c7;
-  --color-indigo-900: #0369a1;
-  --color-indigo-950: #075985;
-  
-  --color-blue-50: rgba(6, 182, 212, 0.08);
-  --color-blue-100: rgba(6, 182, 212, 0.15);
-  --color-blue-200: #a5f3fc;
-  --color-blue-300: #67e8f9;
-  --color-blue-400: #22d3ee;
-  --color-blue-500: #06b6d4;
-  --color-blue-600: #06b6d4;
-  --color-blue-700: #0891b2;
-  --color-blue-800: #0e7490;
-  --color-blue-900: #155e75;
-  --color-blue-950: #164e63;
 }
 
 body {
-  background: radial-gradient(circle at 50% 50%, #0f2b48 0%, #0a1e33 60%, #05101d 100%) fixed !important;
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
@@ -71,94 +51,34 @@ body {
   background-image: none !important;
 }
 
-/* Global text color overrides for dark mode readability */
-.text-slate-900, .text-gray-900, .text-zinc-900, .text-neutral-900 {
-  color: #F8FAFC !important;
-}
-.text-slate-800, .text-gray-800, .text-zinc-800, .text-neutral-800 {
-  color: #F1F5F9 !important;
-}
-.text-slate-700, .text-gray-700, .text-zinc-700, .text-neutral-700 {
-  color: #E2E8F0 !important;
-}
-.text-slate-600, .text-gray-600, .text-zinc-600, .text-neutral-600 {
-  color: #CBD5E1 !important;
-}
-.text-slate-500, .text-gray-500, .text-zinc-500, .text-neutral-500 {
-  color: #94A3B8 !important;
-}
-.text-slate-400, .text-gray-400, .text-zinc-400, .text-neutral-400 {
-  color: #64748B !important;
-}
-
-/* Global border overrides */
-.border-slate-100, .border-gray-100, .border-zinc-100, .border-neutral-100,
-.border-slate-200, .border-gray-200, .border-zinc-200, .border-neutral-200 {
-  border-color: rgba(56, 189, 248, 0.1) !important;
-}
-.border-slate-300, .border-gray-300, .border-zinc-300, .border-neutral-300 {
-  border-color: rgba(56, 189, 248, 0.2) !important;
-}
-
-/* Division border lines in tables */
-.divide-slate-100 > * + *, .divide-slate-200 > * + * {
-  border-color: rgba(56, 189, 248, 0.1) !important;
-}
-
-/* Card and Container Glassmorphism Overrides */
-.bg-white {
-  background-color: rgba(56, 189, 248, 0.15) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.25) !important;
-}
-.bg-white\/70, .bg-white\/80 {
-  background-color: rgba(56, 189, 248, 0.1) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-color: rgba(56, 189, 248, 0.08) !important;
-}
-.bg-slate-50 {
-  background-color: rgba(15, 23, 42, 0.4) !important;
-}
-.bg-slate-100, .bg-slate-200 {
-  background-color: rgba(30, 41, 59, 0.5) !important;
-}
-
-/* Interactive elements hover behavior */
-.hover\:bg-slate-50:hover, .hover\:bg-slate-100:hover {
-  background-color: rgba(56, 189, 248, 0.08) !important;
-}
-
-/* Inputs and Forms dark styling */
+/* Fix for inputs to match the light theme */
 input, select, textarea {
-  background-color: rgba(15, 23, 42, 0.6) !important;
-  border-color: rgba(56, 189, 248, 0.15) !important;
-  color: #F8FAFC !important;
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0A0030 !important;
 }
 input:focus, select:focus, textarea:focus {
-  border-color: #38bdf8 !important;
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25) !important;
+  border-color: #18CDEC !important;
+  box-shadow: 0 0 0 2px rgba(24, 205, 236, 0.2) !important;
 }
 
-/* Shadows adjustment for dark theme */
+/* Card Shadows */
 .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
-  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+.bg-white {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+}
+.bg-slate-50, .bg-slate-100 {
+  background-color: #F8FAFC !important;
 }
 
 /* SplashScreen Animations */
 @keyframes cinematic-zoom {
-  0% {
-    transform: scale(1.15);
-    filter: brightness(0.2) blur(10px);
-  }
-  30% {
-    filter: brightness(1.2) blur(0px);
-  }
-  100% {
-    transform: scale(1);
-    filter: brightness(1) blur(0px);
-  }
+  0% { transform: scale(1.15); filter: brightness(0.2) blur(10px); }
+  30% { filter: brightness(1.2) blur(0px); }
+  100% { transform: scale(1); filter: brightness(1) blur(0px); }
 }
 
 @keyframes splash-fade-out {
@@ -175,24 +95,10 @@ input:focus, select:focus, textarea:focus {
 }
 
 @keyframes shooting-star-flash {
-  0% {
-    transform: scaleX(0) scaleY(0.1);
-    opacity: 0;
-  }
-  20% {
-    transform: scaleX(1.2) scaleY(1);
-    opacity: 1;
-    filter: brightness(2) blur(20px);
-  }
-  50% {
-    transform: scaleX(2) scaleY(1.5);
-    opacity: 0;
-    filter: brightness(1) blur(40px);
-  }
-  100% {
-    transform: scaleX(3) scaleY(2);
-    opacity: 0;
-  }
+  0% { transform: scaleX(0) scaleY(0.1); opacity: 0; }
+  20% { transform: scaleX(1.2) scaleY(1); opacity: 1; filter: brightness(2) blur(20px); }
+  50% { transform: scaleX(2) scaleY(1.5); opacity: 0; filter: brightness(1) blur(40px); }
+  100% { transform: scaleX(3) scaleY(2); opacity: 0; }
 }
 
 .animate-shooting-star {
