@@ -217,11 +217,13 @@ export default function GestionnaireDetailDossier() {
         client_ville: data.clients?.ville || ''
       });
 
-      // Documents
-      const { data: files } = await supabase
-        .storage
-        .from('documents')
-        .list(`dossiers/${dossierId}`);
+      // Documents (via API to bypass RLS)
+      const resDocs = await fetch(`/api/gestionnaire/documents?dossierId=${dossierId}`);
+      let files = [];
+      if (resDocs.ok) {
+        const dataDocs = await resDocs.json();
+        files = dataDocs.files || [];
+      }
 
       if (files && files.length > 0) {
         const docsWithUrls = files
