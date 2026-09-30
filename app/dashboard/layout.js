@@ -424,32 +424,32 @@ export default function DashboardLayout({ children }) {
       {/* Background gradients removed for cleaner SaaS look */}
 
       {/* ===== SIDEBAR DESKTOP (Dark Premium) ===== */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[#120052] border-r border-white/10 flex-col z-30">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[#E6FAFC] border-r border-[#18CDEC]/20 flex-col z-30">
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-white/10/60">
+        <div className="h-16 flex items-center px-6 border-b border-[#18CDEC]/20/60">
           <Link href="/dashboard" className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-10 h-10 rounded-lg shadow-lg shadow-indigo-600/20 overflow-hidden group-hover:scale-105 transition-transform">
               <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-white">
-                Glass<span className="text-[#18CDEC]">Pilot</span>
+              <span className="text-xl font-bold tracking-tight text-[#0A0030]">
+                Glass<span className="text-[#3B0FAA]">Pilot</span>
               </span>
             </div>
           </Link>
         </div>
 
         {/* Garage Info */}
-        <div className="px-5 py-5 border-b border-white/10/60">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3 shadow-inner">
+        <div className="px-5 py-5 border-b border-[#18CDEC]/20/60">
+          <div className="bg-white border border-[#18CDEC]/20 rounded-xl p-3 shadow-inner">
             <div className="flex items-center gap-2 mb-1.5">
               <div className="w-6 h-6 bg-indigo-500/10 rounded-md flex items-center justify-center">
-                <ShieldCheck size={12} className="text-[#18CDEC]" />
+                <ShieldCheck size={12} className="text-[#3B0FAA]" />
               </div>
-              <span className="text-[10px] font-bold text-[#18CDEC] uppercase tracking-wider">Mon garage</span>
+              <span className="text-[10px] font-bold text-[#3B0FAA] uppercase tracking-wider">Mon garage</span>
             </div>
-            <p className="font-bold text-white text-sm truncate">{garageName || 'Mon Garage'}</p>
-            <p className="text-xs text-[#8EA4CE] mt-0.5 truncate">Espace professionnel</p>
+            <p className="font-bold text-[#0A0030] text-sm truncate">{garageName || 'Mon Garage'}</p>
+            <p className="text-xs text-[#64748B] mt-0.5 truncate">Espace professionnel</p>
           </div>
         </div>
 
@@ -465,11 +465,11 @@ export default function DashboardLayout({ children }) {
                 className={clsx(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group",
                   active 
-                    ? "bg-[var(--blue)] text-white shadow-md shadow-indigo-600/20" 
-                    : "text-[#8EA4CE] hover:bg-white/10 hover:text-white"
+                    ? "bg-[#18CDEC] text-[#0A0030] shadow-sm shadow-indigo-600/20" 
+                    : "text-[#64748B] hover:bg-[#18CDEC]/10 hover:text-[#0A0030]"
                 )}
               >
-                <Icon size={18} className={clsx("transition-colors", active ? "text-white" : "text-[#8EA4CE] group-hover:text-[#8EA4CE]")} />
+                <Icon size={18} className={clsx("transition-colors", active ? "text-[#0A0030]" : "text-[#64748B] group-hover:text-[#64748B]")} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -477,19 +477,19 @@ export default function DashboardLayout({ children }) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/10/60 space-y-1">
+        <div className="p-4 border-t border-[#18CDEC]/20/60 space-y-1">
           <Link 
             href="/dashboard/aide" 
-            className="flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 text-[#64748B] hover:text-[#0A0030] hover:bg-[#18CDEC]/10 rounded-lg text-sm font-medium transition-colors"
           >
-            <HelpCircle size={18} className="text-[#8EA4CE]" />
+            <HelpCircle size={18} className="text-[#64748B]" />
             Centre d'aide
           </Link>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 text-[#64748B] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
           >
-            <LogOut size={18} className="text-[#8EA4CE] group-hover:text-rose-400" />
+            <LogOut size={18} className="text-[#64748B] group-hover:text-rose-400" />
             Se déconnecter
           </button>
         </div>
@@ -716,30 +716,30 @@ export default function DashboardLayout({ children }) {
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 bg-[var(--white)]/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-[#120052] z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-white/10">
-            <div className="h-16 flex items-center justify-between px-6 border-b border-white/10/60">
+          <aside className="fixed left-0 top-0 bottom-0 w-72 bg-[#E6FAFC] z-50 shadow-2xl flex flex-col animate-in slide-in-from-left duration-300 border-r border-[#18CDEC]/20">
+            <div className="h-16 flex items-center justify-between px-6 border-b border-[#18CDEC]/20/60">
               <Link href="/dashboard" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                 <div className="relative w-8 h-8 rounded-lg overflow-hidden">
                   <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-white">Glass<span className="text-[#18CDEC]">Pilot</span></span>
+                <span className="text-xl font-bold tracking-tight text-[#0A0030]">Glass<span className="text-[#3B0FAA]">Pilot</span></span>
               </Link>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[#8EA4CE] hover:text-white rounded-lg">
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2 -mr-2 text-[#64748B] hover:text-[#0A0030] rounded-lg">
                 <X size={20} />
               </button>
             </div>
 
             {/* Garage Info */}
-            <div className="px-5 py-5 border-b border-white/10/60">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+            <div className="px-5 py-5 border-b border-[#18CDEC]/20/60">
+              <div className="bg-white border border-[#18CDEC]/20 rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-6 h-6 bg-indigo-500/10 rounded-md flex items-center justify-center">
-                    <ShieldCheck size={12} className="text-[#18CDEC]" />
+                    <ShieldCheck size={12} className="text-[#3B0FAA]" />
                   </div>
-                  <span className="text-[10px] font-bold text-[#18CDEC] uppercase tracking-wider">Mon garage</span>
+                  <span className="text-[10px] font-bold text-[#3B0FAA] uppercase tracking-wider">Mon garage</span>
                 </div>
-                <p className="font-bold text-white text-sm truncate">{garageName || 'Mon Garage'}</p>
-                <p className="text-xs text-[#8EA4CE] mt-0.5 truncate">Espace professionnel</p>
+                <p className="font-bold text-[#0A0030] text-sm truncate">{garageName || 'Mon Garage'}</p>
+                <p className="text-xs text-[#64748B] mt-0.5 truncate">Espace professionnel</p>
               </div>
             </div>
 
@@ -754,23 +754,23 @@ export default function DashboardLayout({ children }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={clsx(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                      active ? "bg-[var(--blue)] text-white shadow-md" : "text-[#8EA4CE] hover:bg-white/10 hover:text-white"
+                      active ? "bg-[#18CDEC] text-[#0A0030] shadow-sm" : "text-[#64748B] hover:bg-[#18CDEC]/10 hover:text-[#0A0030]"
                     )}
                   >
-                    <Icon size={18} className={clsx(active ? "text-white" : "text-[#8EA4CE]")} />
+                    <Icon size={18} className={clsx(active ? "text-[#0A0030]" : "text-[#64748B]")} />
                     <span>{item.label}</span>
                   </Link>
                 );
               })}
             </nav>
 
-            <div className="p-4 border-t border-white/10/60 space-y-1">
+            <div className="p-4 border-t border-[#18CDEC]/20/60 space-y-1">
               <Link 
                 href="/dashboard/aide" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 text-[#64748B] hover:text-[#0A0030] hover:bg-[#18CDEC]/10 rounded-lg text-sm font-medium transition-colors"
               >
-                <HelpCircle size={18} className="text-[#8EA4CE]" />
+                <HelpCircle size={18} className="text-[#64748B]" />
                 Centre d'aide
               </Link>
               <button 
@@ -778,9 +778,9 @@ export default function DashboardLayout({ children }) {
                   setMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 text-[#8EA4CE] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-[#64748B] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg text-sm font-medium transition-colors"
               >
-                <LogOut size={18} className="text-[#8EA4CE] group-hover:text-rose-400" />
+                <LogOut size={18} className="text-[#64748B] group-hover:text-rose-400" />
                 Déconnexion
               </button>
             </div>

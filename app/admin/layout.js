@@ -89,9 +89,9 @@ export default function AdminLayout({ children }) {
  }`}} />
       
       {/* ===== SIDEBAR DESKTOP (Dark Premium Glassmorphic) ===== */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[#120052] border-r border-[#1B253B]/60 flex-col z-30 shadow-2xl">
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-72 bg-[#E6FAFC] border-r border-[#1B253B]/60 flex-col z-30 shadow-2xl">
         {/* Glowing Background Blob */}
-        <div className="absolute top-[-100px] left-[-100px] w-64 h-64 bg-[var(--blue)]/10 rounded-full filter blur-[80px] pointer-events-none" />
+        <div className="absolute top-[-100px] left-[-100px] w-64 h-64 bg-[#18CDEC]/10 rounded-full filter blur-[80px] pointer-events-none" />
 
         {/* Logo */}
         <div className="h-20 flex items-center px-8 border-b border-[#1B253B]/40 relative z-10">
@@ -101,10 +101,10 @@ export default function AdminLayout({ children }) {
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#090D16] animate-pulse" />
             </div>
             <div>
-              <span className="text-lg font-extrabold tracking-tight text-white">
-                Glass<span className="text-[#18CDEC]">Pilot</span>
+              <span className="text-lg font-extrabold tracking-tight text-[#0A0030]">
+                Glass<span className="text-[#3B0FAA]">Pilot</span>
               </span>
-              <span className="block text-[9px] font-bold text-[#8EA4CE] tracking-wider uppercase -mt-0.5">Console Admin</span>
+              <span className="block text-[9px] font-bold text-[#64748B] tracking-wider uppercase -mt-0.5">Console Admin</span>
             </div>
           </Link>
         </div>
@@ -113,12 +113,12 @@ export default function AdminLayout({ children }) {
         <div className="px-6 py-6 border-b border-[#1B253B]/40 relative z-10">
           <div className="bg-[#111827]/60 border border-[#1B253B]/50 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 bg-[var(--blue)]/10 rounded-md flex items-center justify-center border border-[#1454FF]/20">
-                <Shield size={10} className="text-[#18CDEC]" />
+              <div className="w-5 h-5 bg-[#18CDEC]/10 rounded-md flex items-center justify-center border border-[#1454FF]/20">
+                <Shield size={10} className="text-[#3B0FAA]" />
               </div>
-              <span className="text-[9px] font-bold text-[#18CDEC] uppercase tracking-widest">Super Admin</span>
+              <span className="text-[9px] font-bold text-[#3B0FAA] uppercase tracking-widest">Super Admin</span>
             </div>
-            <p className="font-bold text-white text-xs truncate" title={userName}>{userName || 'Administrateur'}</p>
+            <p className="font-bold text-[#0A0030] text-xs truncate" title={userName}>{userName || 'Administrateur'}</p>
           </div>
         </div>
 
@@ -134,14 +134,14 @@ export default function AdminLayout({ children }) {
                 className={clsx(
                   "flex items-center gap-3.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-200 group relative",
                   active 
-                    ? "bg-[var(--blue)] text-white shadow-lg shadow-[#1454FF]/20" 
-                    : "text-[#8EA4CE] hover:bg-[#111827]/50 hover:text-white"
+                    ? "bg-[#18CDEC] text-[#0A0030] shadow-lg shadow-[#1454FF]/20" 
+                    : "text-[#64748B] hover:bg-[#111827]/50 hover:text-[#0A0030]"
                 )}
               >
                 {active && (
-                  <span className="absolute left-[-4px] top-1/3 bottom-1/3 w-1 bg-white/5 rounded-r-full" />
+                  <span className="absolute left-[-4px] top-1/3 bottom-1/3 w-1 bg-white rounded-r-full" />
                 )}
-                <Icon size={18} className={clsx("transition-transform duration-200", active ? "text-white" : "text-[#8EA4CE] group-hover:text-white group-hover:scale-105")} />
+                <Icon size={18} className={clsx("transition-transform duration-200", active ? "text-[#0A0030]" : "text-[#64748B] group-hover:text-[#0A0030] group-hover:scale-105")} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -152,9 +152,9 @@ export default function AdminLayout({ children }) {
         <div className="p-4 border-t border-[#1B253B]/40 relative z-10">
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-[#8EA4CE] hover:text-rose-400 hover:bg-rose-500/10 rounded-xl text-[13px] font-semibold transition-all duration-200 cursor-pointer"
+            className="w-full flex items-center gap-3 px-4 py-3 text-[#64748B] hover:text-rose-400 hover:bg-rose-500/10 rounded-xl text-[13px] font-semibold transition-all duration-200 cursor-pointer"
           >
-            <LogOut size={18} className="text-[#8EA4CE] transition-colors" />
+            <LogOut size={18} className="text-[#64748B] transition-colors" />
             Se déconnecter
           </button>
         </div>
@@ -178,11 +178,11 @@ export default function AdminLayout({ children }) {
               <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                 <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover object-center" />
               </div>
-              <span className="text-md font-extrabold text-white">Glass<span className="text-[#18CDEC]">Pilot</span></span>
+              <span className="text-md font-extrabold text-[#0A0030]">Glass<span className="text-[#3B0FAA]">Pilot</span></span>
             </Link>
             <button 
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-[#8EA4CE] hover:text-white rounded-lg hover:bg-[#111827]"
+              className="p-2 text-[#64748B] hover:text-[#0A0030] rounded-lg hover:bg-[#111827]"
             >
               <X size={18} />
             </button>
@@ -190,9 +190,9 @@ export default function AdminLayout({ children }) {
 
           <div className="bg-[#111827]/60 border border-[#1B253B]/50 rounded-2xl p-4 shadow-xl mb-6">
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-[8px] font-bold text-[#18CDEC] uppercase tracking-widest">Super Admin</span>
+              <span className="text-[8px] font-bold text-[#3B0FAA] uppercase tracking-widest">Super Admin</span>
             </div>
-            <p className="font-bold text-white text-xs truncate">{userName}</p>
+            <p className="font-bold text-[#0A0030] text-xs truncate">{userName}</p>
           </div>
 
           <nav className="flex-1 space-y-1.5">
@@ -206,8 +206,8 @@ export default function AdminLayout({ children }) {
                   className={clsx(
                     "flex items-center gap-3.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all",
                     active 
-                      ? "bg-[var(--blue)] text-white shadow-lg" 
-                      : "text-[#8EA4CE] hover:bg-[#111827]/50 hover:text-white"
+                      ? "bg-[#18CDEC] text-[#0A0030] shadow-lg" 
+                      : "text-[#64748B] hover:bg-[#111827]/50 hover:text-[#0A0030]"
                   )}
                 >
                   <Icon size={18} />
@@ -219,7 +219,7 @@ export default function AdminLayout({ children }) {
 
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-[#8EA4CE] hover:text-rose-400 hover:bg-rose-500/10 rounded-xl text-[13px] font-semibold transition-all mt-auto"
+            className="w-full flex items-center gap-3 px-4 py-3 text-[#64748B] hover:text-rose-400 hover:bg-rose-500/10 rounded-xl text-[13px] font-semibold transition-all mt-auto"
           >
             <LogOut size={18} />
             Se déconnecter
