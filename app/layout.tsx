@@ -37,34 +37,32 @@ export default function RootLayout({
         <div className="bg-circles">
           <svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Blueprint Grid Circles */}
-            <circle cx="50%" cy="20%" r="150" stroke="rgba(56, 189, 248, 0.08)" strokeWidth="1.5" />
-            <circle cx="50%" cy="20%" r="300" stroke="rgba(56, 189, 248, 0.06)" strokeWidth="1.5" strokeDasharray="5 5" />
-            <circle cx="50%" cy="20%" r="450" stroke="rgba(56, 189, 248, 0.05)" strokeWidth="1.5" />
-            <circle cx="50%" cy="20%" r="600" stroke="rgba(56, 189, 248, 0.04)" strokeWidth="1.5" strokeDasharray="7 7" />
-            <circle cx="50%" cy="20%" r="750" stroke="rgba(56, 189, 248, 0.03)" strokeWidth="1.5" />
-            <circle cx="50%" cy="20%" r="900" stroke="rgba(56, 189, 248, 0.02)" strokeWidth="1.5" strokeDasharray="9 9" />
-            <circle cx="50%" cy="20%" r="1050" stroke="rgba(56, 189, 248, 0.015)" strokeWidth="1.5" />
-            <circle cx="50%" cy="20%" r="1200" stroke="rgba(56, 189, 248, 0.01)" strokeWidth="1.5" />
+            <circle cx="50%" cy="20%" r="150" stroke="rgba(18, 0, 82, 0.05)" strokeWidth="1.5" />
+            <circle cx="50%" cy="20%" r="300" stroke="rgba(18, 0, 82, 0.04)" strokeWidth="1.5" strokeDasharray="5 5" />
+            <circle cx="50%" cy="20%" r="450" stroke="rgba(18, 0, 82, 0.03)" strokeWidth="1.5" />
+            <circle cx="50%" cy="20%" r="600" stroke="rgba(18, 0, 82, 0.02)" strokeWidth="1.5" strokeDasharray="7 7" />
+            <circle cx="50%" cy="20%" r="750" stroke="rgba(18, 0, 82, 0.015)" strokeWidth="1.5" />
+            <circle cx="50%" cy="20%" r="900" stroke="rgba(18, 0, 82, 0.01)" strokeWidth="1.5" strokeDasharray="9 9" />
+            <circle cx="50%" cy="20%" r="1050" stroke="rgba(18, 0, 82, 0.005)" strokeWidth="1.5" />
             
-            <circle cx="15%" cy="60%" r="200" stroke="rgba(56, 189, 248, 0.05)" strokeWidth="1.5" strokeDasharray="5 5" />
-            <circle cx="15%" cy="60%" r="400" stroke="rgba(56, 189, 248, 0.03)" strokeWidth="1.5" />
-            <circle cx="15%" cy="60%" r="600" stroke="rgba(56, 189, 248, 0.015)" strokeWidth="1.5" strokeDasharray="7 7" />
+            <circle cx="15%" cy="60%" r="200" stroke="rgba(18, 0, 82, 0.03)" strokeWidth="1.5" strokeDasharray="5 5" />
+            <circle cx="15%" cy="60%" r="400" stroke="rgba(18, 0, 82, 0.02)" strokeWidth="1.5" />
             
-            <circle cx="85%" cy="45%" r="300" stroke="rgba(56, 189, 248, 0.05)" strokeWidth="1.5" strokeDasharray="7 7" />
-            <circle cx="85%" cy="45%" r="500" stroke="rgba(56, 189, 248, 0.03)" strokeWidth="1.5" />
+            <circle cx="85%" cy="45%" r="300" stroke="rgba(18, 0, 82, 0.03)" strokeWidth="1.5" strokeDasharray="7 7" />
+            <circle cx="85%" cy="45%" r="500" stroke="rgba(18, 0, 82, 0.02)" strokeWidth="1.5" />
 
-            {/* Aligned Light Blue GlassPilot Gestion Watermark */}
+            {/* Aligned Dark Blue GlassPilot Gestion Watermark */}
             {/* Circle Monogram */}
-            <circle cx="30%" cy="50%" r="8vw" stroke="rgba(56, 189, 248, 0.16)" strokeWidth="0.3vw" fill="rgba(56, 189, 248, 0.03)" />
+            <circle cx="30%" cy="50%" r="8vw" stroke="rgba(18, 0, 82, 0.12)" strokeWidth="0.3vw" fill="rgba(18, 0, 82, 0.03)" />
 
             {/* GP Monogram Text */}
-            <text x="30%" y="53.8%" fontSize="10vw" fontWeight="900" fill="rgba(56, 189, 248, 0.05)" stroke="rgba(56, 189, 248, 0.22)" strokeWidth="1.5" textAnchor="middle" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GP</text>
+            <text x="30%" y="53.8%" fontSize="10vw" fontWeight="900" fill="rgba(18, 0, 82, 0.04)" stroke="rgba(18, 0, 82, 0.15)" strokeWidth="1.5" textAnchor="middle" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GP</text>
 
             {/* GLASSPILOT */}
-            <text x="40%" y="45%" fontSize="6vw" fontWeight="900" fill="rgba(56, 189, 248, 0.05)" stroke="rgba(56, 189, 248, 0.22)" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GLASSPILOT</text>
+            <text x="40%" y="45%" fontSize="6vw" fontWeight="900" fill="rgba(18, 0, 82, 0.04)" stroke="rgba(18, 0, 82, 0.15)" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GLASSPILOT</text>
 
             {/* GESTION */}
-            <text x="40%" y="59%" fontSize="6vw" fontWeight="900" fill="rgba(56, 189, 248, 0.05)" stroke="rgba(56, 189, 248, 0.22)" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GESTION</text>
+            <text x="40%" y="59%" fontSize="6vw" fontWeight="900" fill="rgba(18, 0, 82, 0.04)" stroke="rgba(18, 0, 82, 0.15)" strokeWidth="1.5" textAnchor="start" letterSpacing="0.05em" style={{ fontFamily: "var(--font-sans), sans-serif" }}>GESTION</text>
           </svg>
         </div>
         {children}

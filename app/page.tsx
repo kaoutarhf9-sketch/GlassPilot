@@ -638,8 +638,8 @@ footer{
   margin-top: 3rem;
 }
 .bento-item {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid rgba(10, 0, 48, 0.08);
   border-radius: 24px;
   padding: 2.5rem;
   display: flex;
@@ -647,26 +647,26 @@ footer{
   justify-content: flex-end;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(10, 0, 48, 0.04);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .bento-item:hover {
-  background: rgba(255, 255, 255, 0.05);
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  border-color: var(--accent);
+  box-shadow: 0 10px 40px rgba(24, 205, 236, 0.15);
 }
 .bento-item::before {
   content: '';
   position: absolute;
   top: -50%; left: -50%;
   width: 200%; height: 200%;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.04) 0%, transparent 60%);
+  background: radial-gradient(circle at center, rgba(24, 205, 236, 0.05) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.5s;
 }
 .bento-item:hover::before { opacity: 1; }
 
-.bento-item:nth-child(1) { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%); border-color: rgba(255,255,255,0.12); }
+.bento-item:nth-child(1) { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%); border-color: rgba(10, 0, 48, 0.12); }
 .bento-item:nth-child(2) { grid-column: span 2; }
 .bento-item:nth-child(3) { grid-column: span 2; }
 .bento-item:nth-child(4) { grid-column: span 2; }
@@ -699,20 +699,20 @@ footer{
   color: var(--accent);
 }
 .bento-item:nth-child(1) .bento-icon { font-size: 3.5rem; margin-bottom: auto; padding-top: 1rem; color: var(--accent2); }
-.bento-item:nth-child(5) .bento-icon { font-size: 6rem; margin-bottom: 0; color: #fff; opacity: 0.05; position: absolute; right: 2rem; bottom: -2rem; }
+.bento-item:nth-child(5) .bento-icon { font-size: 6rem; margin-bottom: 0; color: var(--accent); opacity: 0.1; position: absolute; right: 2rem; bottom: -2rem; }
 
 .bento-title {
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 0.75rem;
-  color: #fff;
+  color: var(--ink2);
   letter-spacing: -0.02em;
 }
 .bento-item:nth-child(1) .bento-title { font-size: 2.2rem; }
 
 .bento-desc {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--muted);
   line-height: 1.5;
 }
 .bento-item:nth-child(1) .bento-desc { font-size: 1.15rem; max-width: 90%; }
