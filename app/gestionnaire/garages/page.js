@@ -5,9 +5,8 @@ import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Search, Building2, Phone, Mail, MapPin, 
-  FileText, Users, Calendar, Loader2, ChevronRight,
-  Sparkles, Eye, AlertCircle, CheckCircle2, XCircle,
-  TrendingUp, FolderKanban
+  FileText, Users, Loader2, ChevronRight, ChevronDown, ChevronUp,
+  Eye, CheckCircle2, XCircle, TrendingUp, FolderKanban
 } from 'lucide-react';
 
 export default function GaragesPage() {
@@ -17,6 +16,7 @@ export default function GaragesPage() {
   const [dossiersCount, setDossiersCount] = useState({});
   const [totalDossiers, setTotalDossiers] = useState(0);
   const [error, setError] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     fetchGarages();
@@ -216,109 +216,94 @@ export default function GaragesPage() {
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {garagesFiltres.map((garage) => {
-            const kbisUrl = garage.onboarding_kbis_url ? supabase.storage.from('documents').getPublicUrl(garage.onboarding_kbis_url).data.publicUrl : null;
-            const ribUrl = garage.onboarding_rib_url ? supabase.storage.from('documents').getPublicUrl(garage.onboarding_rib_url).data.publicUrl : null;
-            
+            const isExpanded = expandedId === garage.id;
+            const logoUrl = garage.logo_url
+              ? supabase.storage.from('documents').getPublicUrl(garage.logo_url).data.publicUrl
+              : null;
             return (
-            <div key={garage.id} className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md hover:shadow-md transition-all overflow-hidden group">
-              {/* En-tête avec initiales */}
-              <div className="p-5 border-b border-[var(--stone)] bg-[var(--white)]/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#18170F] rounded-xl flex items-center justify-center shadow-md">
-                    <span className="text-[var(--ink)] font-serif italic text-lg">
-                      {garage.nom_garage?.charAt(0).toUpperCase() || 'G'}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-semibold text-[var(--ink)]">{garage.nom_garage || 'Sans nom'}</h3>
-                      {garage.is_active !== false ? (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-medium">
-                          <CheckCircle2 size={8} /> Actif
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded-full text-[10px] font-medium">
-                          <XCircle size={8} /> Inactif
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-[var(--muted)] mt-0.5">{garage.responsable || 'Responsable non renseigné'}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Corps avec infos */}
-              <div className="p-5 space-y-3">
-                <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
-                  <Phone size={14} />
-                  <span>{garage.telephone || 'Non renseigné'}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
-                  <Mail size={14} />
-                  <span className="truncate">{garage.email_contact || garage.email || 'Non renseigné'}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
-                  <MapPin size={14} />
-                  <span className="truncate">{garage.adresse || 'Non renseignée'}</span>
-                </div>
-                {garage.siret && (
-                  <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
-                    <FileText size={14} />
-                    <span className="font-mono text-xs">{garage.siret}</span>
-                  </div>
-                )}
-                
-                {/* Documents du Garage */}
-                {(kbisUrl || ribUrl) && (
-                  <div className="flex items-center gap-3 pt-2">
-                    {kbisUrl && (
-                      <a href={kbisUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-blue-50/10 hover:bg-[var(--blue)]/20 text-[var(--blue)] border border-[var(--stone)] rounded-lg text-xs font-semibold transition-colors">
-                        <FileText size={12} /> KBIS
-                      </a>
-                    )}
-                    {ribUrl && (
-                      <a href={ribUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-blue-50/10 hover:bg-[var(--blue)]/20 text-[var(--blue)] border border-[var(--stone)] rounded-lg text-xs font-semibold transition-colors">
-                        <FileText size={12} /> RIB
-                      </a>
-                    )}
-                  </div>
-                )}
-                
-                {/* Compteur de dossiers avec design mis en avant */}
-                <div className="mt-3 pt-3 border-t border-[var(--stone)]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-[var(--blue)]/10 rounded-lg flex items-center justify-center">
-                        <FolderKanban size={14} className="text-[var(--blue)]" />
+              <div key={garage.id} className="bg-[#0D1B2A] rounded-2xl border border-[#1E3A5F] shadow-lg overflow-hidden transition-all duration-300 flex flex-col">
+                {/* Logo + Nom */}
+                <div className="flex flex-col items-center pt-8 pb-5 px-5 gap-3">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-white flex items-center justify-center border border-[#1E3A5F] shadow-md">
+                    {logoUrl ? (
+                      <img src={logoUrl} alt={garage.nom_garage} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-full h-full bg-[#112233] flex items-center justify-center">
+                        <Building2 size={32} className="text-[#18CDEC]" />
                       </div>
+                    )}
+                  </div>
+                  <h3 className="text-[#18CDEC] font-bold text-center text-sm uppercase tracking-wide leading-tight">
+                    {garage.nom_garage || 'Sans nom'}
+                  </h3>
+                </div>
+
+                {/* Bouton accordéon */}
+                <div className="px-4 pb-4">
+                  <button
+                    onClick={() => setExpandedId(isExpanded ? null : garage.id)}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-[#1E3A5F] text-[#A0B4C8] text-xs font-semibold hover:bg-[#1E3A5F]/40 transition-all"
+                  >
+                    {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                    {isExpanded ? 'Masquer les détails' : 'Voir les détails'}
+                  </button>
+                </div>
+
+                {/* Détails dépliables */}
+                {isExpanded && (
+                  <div className="border-t border-[#1E3A5F] px-5 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
+                    <div className="flex items-start gap-3">
+                      <Eye size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-xs text-[var(--muted)]">Nombre de dossiers</p>
-                        <p className="text-2xl font-bold text-[var(--ink)]">{dossiersCount[garage.id] || 0}</p>
+                        <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Responsable</p>
+                        <p className="text-sm text-white font-medium">{garage.responsable || '—'}</p>
                       </div>
                     </div>
-                    <Link 
-                      href={`/gestionnaire/dossiers?garage_id=${garage.id}`}
-                      className="text-[var(--blue)] hover:text-[#0ea5e9] text-sm font-medium flex items-center gap-1 transition-all"
-                    >
-                      Voir les dossiers <ChevronRight size={14} />
-                    </Link>
+                    <div className="flex items-start gap-3">
+                      <Mail size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Email</p>
+                        <p className="text-sm text-white font-medium break-all">{garage.email_contact || garage.email || '—'}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Phone size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Téléphone</p>
+                        <p className="text-sm text-white font-medium">{garage.telephone || '—'}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <MapPin size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Adresse</p>
+                        <p className="text-sm text-white font-medium">{garage.adresse || '—'}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <FileText size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">SIRET</p>
+                        <p className="text-sm text-[#18CDEC] font-mono font-bold">{garage.siret || '—'}</p>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-[#1E3A5F] flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <FolderKanban size={14} className="text-[#18CDEC]" />
+                        <span className="text-sm text-white font-bold">{dossiersCount[garage.id] || 0} dossier(s)</span>
+                      </div>
+                      <Link
+                        href={`/gestionnaire/dossiers?garage_id=${garage.id}`}
+                        className="text-[#18CDEC] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity"
+                      >
+                        Voir <ChevronRight size={12} />
+                      </Link>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
-
-              {/* Footer avec lien détails */}
-              <div className="px-5 py-3 bg-[var(--white)]/40 border-t border-[var(--stone)]">
-                <Link 
-                  href={`/gestionnaire/garages/${garage.id}`}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-[var(--blue)] hover:bg-[var(--white)] rounded-xl transition-all border border-transparent hover:border-[var(--stone)]"
-                >
-                  Voir les détails du garage
-                  <Eye size={14} />
-                </Link>
-              </div>
-            </div>
             );
           })}
         </div>
