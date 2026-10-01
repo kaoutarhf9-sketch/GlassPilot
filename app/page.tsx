@@ -788,14 +788,7 @@ footer{
           <div style={{background: '#E8F7F0', color: '#18CDEC', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
           <span>Experts métier et juridique</span>
         </div>
-        <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-          <div style={{background: '#E8F7F0', color: '#18CDEC', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
-          <span>Chiffrage vitrage connecté Sidexa</span>
-        </div>
-        <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-          <div style={{background: '#E8F7F0', color: '#18CDEC', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
-          <span>Certifié société de recouvrement</span>
-        </div>
+
       </div>
 
       <div style={{background: '#E8F7F0', color: '#0E4327', border: '1px solid #1E824C', padding: '1rem 1.5rem', borderRadius: '100px', display: 'flex', alignItems: 'center', gap: '0.8rem', fontWeight: '600', marginBottom: '2rem', maxWidth: '450px'}}>
