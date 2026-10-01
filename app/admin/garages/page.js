@@ -434,9 +434,17 @@ export default function GaragesPage() {
                 {/* Logo + Nom */}
                 <div className="flex flex-col items-center pt-8 pb-5 px-5 gap-3">
                   <div className="w-20 h-20 rounded-xl overflow-hidden bg-white flex items-center justify-center border border-[#1E3A5F] shadow-md">
-                    <div className="w-full h-full bg-[#112233] flex items-center justify-center">
-                      <Building2 size={32} className="text-[#18CDEC]" />
-                    </div>
+                    {garage.logo_url ? (
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/documents/${garage.logo_url}`}
+                        alt={garage.nom_garage}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#112233] flex items-center justify-center">
+                        <Building2 size={32} className="text-[#18CDEC]" />
+                      </div>
+                    )}
                   </div>
                   <h3 className="text-[#18CDEC] font-bold text-center text-sm uppercase tracking-wide leading-tight">
                     {garage.nom_garage}

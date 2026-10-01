@@ -220,7 +220,7 @@ export default function GaragesPage() {
           {garagesFiltres.map((garage) => {
             const isExpanded = expandedId === garage.id;
             const logoUrl = garage.logo_url
-              ? supabase.storage.from('documents').getPublicUrl(garage.logo_url).data.publicUrl
+              ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/documents/${garage.logo_url}`
               : null;
             return (
               <div key={garage.id} className="bg-[#0D1B2A] rounded-2xl border border-[#1E3A5F] shadow-lg overflow-hidden transition-all duration-300 flex flex-col">
