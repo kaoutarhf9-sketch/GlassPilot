@@ -1078,53 +1078,6 @@ footer{
   </div>
 </section>
 
-{/*  TESTIMONIALS  */}
-<section className="section" id="avis">
-  <div className="section-inner">
-    <p className="section-label">Avis clients</p>
-    <h2>Ils ont fait <em>le saut.</em></h2>
-    <p className="section-sub">Rejoignez les centaines de pros qui ont transformé leur gestion.</p>
-    <div className="testi-grid">
-      <div className="testi-card">
-        <div className="testi-stars">★★★★★</div>
-        <div className="testi-quote">"</div>
-        <p className="testi-text">On a divisé par quatre le temps passé sur l'administratif. Les dossiers partent le soir même, on est remboursés deux jours plus tôt.</p>
-        <div className="testi-footer">
-          <div className="testi-avatar">T</div>
-          <div>
-            <div className="testi-name">Thomas Bernard</div>
-            <div className="testi-role">Directeur · AutoGlass Pro, Lyon</div>
-          </div>
-        </div>
-      </div>
-      <div className="testi-card">
-        <div className="testi-stars">★★★★★</div>
-        <div className="testi-quote">"</div>
-        <p className="testi-text">L'onboarding a duré une heure. Le lendemain, toute l'équipe était autonome. Aucun outil n'a jamais été aussi simple à adopter.</p>
-        <div className="testi-footer">
-          <div className="testi-avatar">S</div>
-          <div>
-            <div className="testi-name">Sophie Martin</div>
-            <div className="testi-role">Gérante · RapidPareBrise, Bordeaux</div>
-          </div>
-        </div>
-      </div>
-      <div className="testi-card">
-        <div className="testi-stars">★★★★★</div>
-        <div className="testi-quote">"</div>
-        <p className="testi-text">Quatre centres pilotés depuis un seul tableau de bord. GlassPilot a rendu possible ce qu'on pensait impossible sans recruter.</p>
-        <div className="testi-footer">
-          <div className="testi-avatar">D</div>
-          <div>
-            <div className="testi-name">David Leroy</div>
-            <div className="testi-role">PDG · Mondial Pare-Brise, Paris</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 {/*  CTA  */}
 <section className="cta-section">
   <div className="cta-inner">
@@ -1146,9 +1099,8 @@ footer{
       <div>
         <p className="section-label">Contact</p>
         <h2>Discutons de<br />votre garage.</h2>
-        <p className="contact-address">58 Rue de Monceau<br />75008 Paris</p>
         <div className="contact-links">
-          <a href="tel:+33745109606" className="contact-link">→ +33 7 45 10 96 06</a>
+          <a href="tel:+33756993583" className="contact-link">→ +33 7 56 99 35 83</a>
           <a href="mailto:glasspilotcontact@gmail.com" className="contact-link">→ glasspilotcontact@gmail.com</a>
         </div>
         <div className="contact-features">
