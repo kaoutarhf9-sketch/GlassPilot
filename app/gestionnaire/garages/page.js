@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Search, Building2, Phone, Mail, MapPin, 
@@ -20,6 +20,18 @@ export default function GaragesPage() {
 
   useEffect(() => {
     fetchGarages();
+
+    const handleFocus = () => {
+      fetchGarages();
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const fetchGarages = async () => {
@@ -27,11 +39,10 @@ export default function GaragesPage() {
     setError(null);
     try {
       // Récupérer l'utilisateur connecté
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const user = await getValidUser();
       
-      if (userError) {
-        console.error('Erreur utilisateur:', userError);
-        setError(`Erreur utilisateur: ${userError.message}`);
+      if (!user) {
+        setError("Session expirée. Veuillez recharger la page.");
         return;
       }
       

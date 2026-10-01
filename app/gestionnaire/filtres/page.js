@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Filter, Clock, CheckCircle2, AlertCircle, FileSignature,
@@ -28,12 +28,25 @@ export default function FiltresPage() {
   useEffect(() => {
     fetchDossiers();
     fetchStats();
+
+    const handleFocus = () => {
+      fetchDossiers();
+      fetchStats();
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const fetchDossiers = async () => {
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       const { data: gestionnaireData, error: gError } = await supabase
@@ -74,7 +87,7 @@ export default function FiltresPage() {
 
   const fetchStats = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       const { data: gestionnaireData, error: gError } = await supabase

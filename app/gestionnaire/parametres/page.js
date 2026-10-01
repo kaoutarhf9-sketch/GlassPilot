@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { Settings, Shield, User, Key, Save, AlertCircle, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
@@ -32,7 +32,7 @@ export default function ParametresPage() {
 
   const fetchProfile = async () => {
     try {
-      const { data: { user: authUser }, error: userError } = await supabase.auth.getUser();
+      const authUser = await getValidUser();
       if (userError) throw userError;
       if (!authUser) return router.push('/connexion');
 

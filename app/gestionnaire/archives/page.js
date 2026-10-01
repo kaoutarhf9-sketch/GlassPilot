@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Archive, Calendar, FileText, Loader2, ChevronRight,
@@ -15,12 +15,24 @@ export default function ArchivesPage() {
 
   useEffect(() => {
     fetchArchives();
+
+    const handleFocus = () => {
+      fetchArchives();
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const fetchArchives = async () => {
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       const { data: gestionnaireData, error: gError } = await supabase

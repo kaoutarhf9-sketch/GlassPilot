@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
@@ -33,11 +33,23 @@ export default function GestionnaireDashboard() {
   useEffect(() => {
     checkAuth();
     fetchDashboardData();
+
+    const handleFocus = () => {
+      fetchDashboardData();
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const checkAuth = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) {
         router.push('/connexion');
         return;
@@ -71,7 +83,7 @@ export default function GestionnaireDashboard() {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       // Récupérer le gestionnaire

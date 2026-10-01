@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -139,13 +139,13 @@ export default function GestionnaireDetailDossier() {
   }, [dossierId, chatOpen]);
 
   const fetchUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const user = await getValidUser();
     setUser(user);
   };
 
   const fetchDossierAndDocs = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       const isAdmin = user.user_metadata?.role === 'admin';

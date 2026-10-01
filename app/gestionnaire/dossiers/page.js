@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import Link from 'next/link';
 import {
   Search, FileText, Loader2, ChevronRight,
@@ -71,7 +71,21 @@ function DossiersList() {
     }
   }, [statusParam]);
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    fetchData();
+
+    const handleFocus = () => {
+      fetchData(true);
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
 
   const isDossierArchive = (d) => {
     if (d.statut === 'reglement_en_cours') return true;
@@ -82,7 +96,7 @@ function DossiersList() {
   const fetchData = async (isRefresh = false) => {
     isRefresh ? setRefreshing(true) : setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       const { data: gestionnaireData, error: gError } = await supabase

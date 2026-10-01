@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { 
   Clock, CheckCircle2, AlertCircle, Plus, 
@@ -37,13 +37,23 @@ export default function DashboardHome() {
   useEffect(() => {
     setIsMounted(true);
     fetchDashboardData();
+
+    const handleFocus = () => { fetchDashboardData(); };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const fetchDashboardData = async () => {
     setLoading(true);
     
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (userError || !user) {
         router.push('/connexion');
         return;

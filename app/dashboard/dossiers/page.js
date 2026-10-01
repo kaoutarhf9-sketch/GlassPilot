@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Search, Plus, Filter, FileText, Loader2, 
@@ -20,6 +20,11 @@ export default function ListeDossiers() {
 
   useEffect(() => {
     setIsMounted(true);
+    const handleFocus = () => { fetchDossiers(); };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
     if (typeof window !== 'undefined' && window.location.search.includes('success=true')) {
       setShowSuccess(true);
       window.history.replaceState(null, '', '/dashboard/dossiers');
@@ -31,7 +36,7 @@ export default function ListeDossiers() {
   const fetchDossiers = async () => {
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return;
 
       const { data: garage } = await supabase

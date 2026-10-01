@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidUser } from '@/lib/supabase';
 import { 
   LayoutDashboard, FileText, Users, Settings, LogOut,
   Menu, X, Sparkles, ChevronRight, HelpCircle, ShieldCheck,
@@ -58,6 +58,21 @@ export default function GestionnaireLayout({ children }) {
       }
     };
     initialize();
+
+    // S'assurer de rafraîchir la session quand l'onglet redevient actif
+    const handleFocus = () => {
+      initialize();
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') handleFocus();
+    });
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'TOKEN_REFRESHED' || event === 'SIGNED_IN') {
+        initialize();
+      }
+    });
     
     // S'abonner à TOUS les nouveaux messages destinés au gestionnaire et mises à jour
     const subscription = supabase
@@ -117,6 +132,8 @@ export default function GestionnaireLayout({ children }) {
 
     return () => {
       subscription.unsubscribe();
+      window.removeEventListener('focus', handleFocus);
+      authListener?.subscription?.unsubscribe();
     };
   }, []);
 
@@ -124,7 +141,7 @@ export default function GestionnaireLayout({ children }) {
     try {
       let targetGId = gId || gestionnaireId;
       if (!targetGId) {
-        const { data: { user } } = await supabase.auth.getUser();
+        const user = await getValidUser();
         if (!user) return;
         const { data: managerData } = await supabase
           .from('gestionnaires')
@@ -135,8 +152,6 @@ export default function GestionnaireLayout({ children }) {
       }
       
       if (!targetGId) return;
-
-      
 
       const { data: notifs, count } = await supabase
         .from('notifications')
@@ -177,7 +192,7 @@ export default function GestionnaireLayout({ children }) {
 
   const fetchGestionnaireInfo = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getValidUser();
       if (!user) return null;
       
       if (user.user_metadata) {
@@ -205,7 +220,7 @@ export default function GestionnaireLayout({ children }) {
     try {
       let targetGId = gId || gestionnaireId;
       if (!targetGId) {
-        const { data: { user } } = await supabase.auth.getUser();
+        const user = await getValidUser();
         if (!user) return;
         const { data: managerData } = await supabase
           .from('gestionnaires')
