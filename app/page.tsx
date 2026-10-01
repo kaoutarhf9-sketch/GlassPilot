@@ -931,18 +931,7 @@ footer{
         <div className="feature-title">Automatisation</div>
         <div className="feature-desc">Réalisez vos tâches répétitives en quelques clics et gagnez jusqu’à 2h par jour.</div>
       </div>
-      <div className="feature-card">
-        <div className="feature-num">03</div>
-        <div className="feature-icon">◎</div>
-        <div className="feature-title">Chiffrage sur mesure</div>
-        <div className="feature-desc">Évaluez vos dossiers bris de glace et générez vos devis & factures directement depuis la plateforme.</div>
-      </div>
-      <div className="feature-card">
-        <div className="feature-num">04</div>
-        <div className="feature-icon">◉</div>
-        <div className="feature-title">Recouvrement</div>
-        <div className="feature-desc">Suivi automatisé des paiements et des relances pour réduire les impayés et protéger vos revenus.</div>
-      </div>
+
       <div className="feature-card">
         <div className="feature-num">05</div>
         <div className="feature-icon">◇</div>
