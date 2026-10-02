@@ -17,6 +17,12 @@ export default function GaragesPage() {
   const [totalDossiers, setTotalDossiers] = useState(0);
   const [error, setError] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
+  const [visibleIbanIds, setVisibleIbanIds] = useState({});
+
+  const toggleIban = (e, id) => {
+    e.stopPropagation();
+    setVisibleIbanIds(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   useEffect(() => {
     fetchGarages();
@@ -315,13 +321,21 @@ export default function GaragesPage() {
                           {garage.iban && (
                             <div className="flex items-center justify-between text-xs">
                               <span className="text-[#6B8299] font-medium">IBAN :</span>
-                              <span className="font-mono font-bold text-[#18CDEC]">{garage.iban}</span>
+                              {visibleIbanIds[garage.id] ? (
+                                <span className="font-mono font-bold text-[#18CDEC]">{garage.iban}</span>
+                              ) : (
+                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[#18CDEC]/10 text-[#18CDEC] hover:bg-[#18CDEC]/20 border border-[#18CDEC]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
+                              )}
                             </div>
                           )}
                           {garage.bic && (
                             <div className="flex items-center justify-between text-xs">
                               <span className="text-[#6B8299] font-medium">BIC / SWIFT :</span>
-                              <span className="font-mono text-white">{garage.bic}</span>
+                              {visibleIbanIds[garage.id] ? (
+                                <span className="font-mono text-white">{garage.bic}</span>
+                              ) : (
+                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[#18CDEC]/10 text-[#18CDEC] hover:bg-[#18CDEC]/20 border border-[#18CDEC]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
+                              )}
                             </div>
                           )}
                         </div>
