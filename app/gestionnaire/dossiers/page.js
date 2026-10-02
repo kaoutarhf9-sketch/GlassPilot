@@ -8,7 +8,7 @@ import {
   Search, FileText, Loader2, ChevronRight,
   RefreshCw, SlidersHorizontal, TrendingUp,
   AlertTriangle, CheckCircle, Clock, Hourglass,
-  Car, Building2, User, CalendarDays, Hash
+  Car, Building2, User, CalendarDays, Hash, ShieldCheck
 } from 'lucide-react';
 
 const STATUTS = [
@@ -121,7 +121,7 @@ function DossiersList() {
 
       const { data: dossiersData, error } = await supabase
         .from('dossiers')
-        .select('*')
+        .select('*, assurances(*)')
         .eq('gestionnaire_id', gestionnaireId)
         .order('created_at', { ascending: false });
         
@@ -388,6 +388,21 @@ function DossiersList() {
                         <Building2 size={16} className="text-[var(--muted)] shrink-0" />
                         <span className="text-[var(--ink)] truncate">{dossier.garage ? dossier.garage.nom_garage : <span className="italic text-[var(--muted)]">Garage inconnu</span>}</span>
                       </div>
+
+                      {/* Assurance */}
+                      {(() => {
+                        let nomAssurance = null;
+                        try {
+                          const notes = JSON.parse(dossier.notes || '{}');
+                          nomAssurance = dossier.assurances?.nom || notes.assurance_nom_ocr || null;
+                        } catch(e) {}
+                        return nomAssurance ? (
+                          <div className="flex items-center gap-3 text-sm">
+                            <ShieldCheck size={16} className="text-[#18CDEC] shrink-0" />
+                            <span className="text-[var(--ink)] font-medium truncate" title={nomAssurance}>{nomAssurance}</span>
+                          </div>
+                        ) : null;
+                      })()}
 
                       {/* Date */}
                       <div className="flex items-center gap-3 text-sm">
