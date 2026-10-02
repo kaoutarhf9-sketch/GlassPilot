@@ -264,7 +264,16 @@ export default function GaragesPage() {
                 {/* Bouton accordéon */}
                 <div className="px-4 pb-4">
                   <button
-                    onClick={() => setExpandedId(isExpanded ? null : garage.id)}
+                    onClick={() => {
+                      setExpandedId(isExpanded ? null : garage.id);
+                      if (isExpanded) {
+                        setVisibleIbanIds(prev => {
+                          const next = { ...prev };
+                          delete next[garage.id];
+                          return next;
+                        });
+                      }
+                    }}
                     className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-[#1E3A5F] text-[#A0B4C8] text-xs font-semibold hover:bg-[#1E3A5F]/40 transition-all"
                   >
                     {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
