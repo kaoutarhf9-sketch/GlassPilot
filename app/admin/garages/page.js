@@ -6,7 +6,7 @@ import {
   Plus, Search, Mail, User, Phone, MapPin, 
   FileText, Building2, Loader2, CheckCircle2, 
   AlertCircle, Trash2, Copy, Check, ChevronLeft, ChevronRight, CalendarDays,
-  ChevronDown, ChevronUp, Eye
+  ChevronDown, ChevronUp, Eye, Landmark, ShieldCheck, Download
 } from 'lucide-react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -60,13 +60,22 @@ export default function GaragesPage() {
     setFetchError(null);
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('garages')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch('/api/gestionnaire/garages', {
+        headers: { 'Authorization': `Bearer ${session?.access_token}` }
+      });
+      if (res.ok) {
+        const { garages: enriched } = await res.json();
+        setGarages(enriched || []);
+      } else {
+        const { data, error } = await supabase
+          .from('garages')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setGarages(data || []);
+        if (error) throw error;
+        setGarages(data || []);
+      }
     } catch (err) {
       console.error('Erreur chargement garages:', err);
       setFetchError(err.message || 'Impossible de récupérer la liste des garages');
@@ -498,6 +507,86 @@ export default function GaragesPage() {
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">SIRET</p>
                         <p className="text-sm text-[#18CDEC] font-mono font-bold">{garage.siret || '—'}</p>
+                      </div>
+                    </div>
+
+                    {/* Section Documents Légaux & Banque (Onboarding) */}
+                    <div className="pt-3 border-t border-[#1E3A5F] space-y-3">
+                      <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-bold">Documents d'activation & Banques</p>
+                      
+                      {/* IBAN & BIC */}
+                      {(garage.iban || garage.bic) && (
+                        <div className="bg-[#0B172A] p-3 rounded-xl border border-[#1E3A5F] space-y-1.5">
+                          {garage.iban && (
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-[#6B8299] font-medium">IBAN :</span>
+                              <span className="font-mono font-bold text-[#18CDEC]">{garage.iban}</span>
+                            </div>
+                          )}
+                          {garage.bic && (
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-[#6B8299] font-medium">BIC / SWIFT :</span>
+                              <span className="font-mono text-white">{garage.bic}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Liens vers les documents (KBIS, RIB, CNI) */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        {garage.kbis_url || garage.onboarding_kbis_url ? (
+                          <a
+                            href={garage.kbis_url || garage.onboarding_kbis_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-3 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 rounded-xl text-xs font-semibold transition-all group"
+                          >
+                            <FileText size={14} className="text-indigo-400 shrink-0" />
+                            <span className="truncate">Extrait KBIS</span>
+                            <Download size={12} className="ml-auto opacity-70 group-hover:opacity-100" />
+                          </a>
+                        ) : (
+                          <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 text-slate-400 rounded-xl text-xs">
+                            <FileText size={14} className="shrink-0 opacity-50" />
+                            <span className="truncate">KBIS : Non fourni</span>
+                          </div>
+                        )}
+
+                        {garage.rib_url || garage.onboarding_rib_url ? (
+                          <a
+                            href={garage.rib_url || garage.onboarding_rib_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs font-semibold transition-all group"
+                          >
+                            <Landmark size={14} className="text-emerald-400 shrink-0" />
+                            <span className="truncate">Justificatif RIB</span>
+                            <Download size={12} className="ml-auto opacity-70 group-hover:opacity-100" />
+                          </a>
+                        ) : (
+                          <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 text-slate-400 rounded-xl text-xs">
+                            <Landmark size={14} className="shrink-0 opacity-50" />
+                            <span className="truncate">RIB : Non fourni</span>
+                          </div>
+                        )}
+
+                        {garage.cni_url || garage.onboarding_cni_url ? (
+                          <a
+                            href={garage.cni_url || garage.onboarding_cni_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-3 py-2 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 text-sky-300 rounded-xl text-xs font-semibold transition-all group"
+                          >
+                            <ShieldCheck size={14} className="text-sky-400 shrink-0" />
+                            <span className="truncate">Pièce d'Identité</span>
+                            <Download size={12} className="ml-auto opacity-70 group-hover:opacity-100" />
+                          </a>
+                        ) : (
+                          <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 text-slate-400 rounded-xl text-xs">
+                            <ShieldCheck size={14} className="shrink-0 opacity-50" />
+                            <span className="truncate">CNI : Non fournie</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="pt-2 border-t border-[#1E3A5F] flex justify-between items-center">

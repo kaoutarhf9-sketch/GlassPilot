@@ -72,13 +72,33 @@ export async function GET(req) {
 
     const users = usersData.users || [];
 
-    // Map garages with onboarding URLs
+    // Map garages with onboarding URLs & banking info
     const enrichedGarages = garages.map(garage => {
       const owner = users.find(u => u.id === garage.owner_id);
+      const meta = owner?.user_metadata || {};
+
+      const getDocUrl = (path) => {
+        if (!path) return null;
+        if (path.startsWith('http://') || path.startsWith('https://')) return path;
+        const { data: { publicUrl } } = supabaseAdmin.storage.from('documents').getPublicUrl(path);
+        return publicUrl;
+      };
+
+      const kbisPath = meta.onboarding_kbis_url || garage.kbis_url || null;
+      const ribPath = meta.onboarding_rib_url || garage.rib_url || null;
+      const cniPath = meta.onboarding_cni_url || garage.cni_url || null;
+
       return {
         ...garage,
-        onboarding_kbis_url: owner?.user_metadata?.onboarding_kbis_url || null,
-        onboarding_rib_url: owner?.user_metadata?.onboarding_rib_url || null,
+        siret: garage.siret || meta.onboarding_siret || null,
+        iban: meta.onboarding_rib_iban || garage.iban || null,
+        bic: meta.onboarding_rib_bic || garage.bic || null,
+        kbis_url: getDocUrl(kbisPath),
+        rib_url: getDocUrl(ribPath),
+        cni_url: getDocUrl(cniPath),
+        onboarding_kbis_url: getDocUrl(kbisPath),
+        onboarding_rib_url: getDocUrl(ribPath),
+        onboarding_cni_url: getDocUrl(cniPath),
       };
     });
 
