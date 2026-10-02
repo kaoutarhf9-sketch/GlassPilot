@@ -10,6 +10,7 @@ import {
   Image as ImageIcon, Maximize2, Download, X, MessageSquare, Send, Minimize2, MoreVertical, Trash2, Check, ChevronRight, Paperclip, Upload, Plus
 } from 'lucide-react';
 import clsx from 'clsx';
+import { REFERENTIEL_ASSURANCES } from '@/lib/referentielAssurances';
 
 const DOCUMENT_SLOTS = [
   { key: 'facture', label: 'Facture / Devis', patterns: ['facture', 'devis'] },
@@ -64,6 +65,7 @@ export default function GestionnaireDetailDossier() {
     date_sinistre: '',
     franchise_montant: 0,
     num_sinistre: '',
+    assurance_nom: '',
     assurance_telephone: '',
     assurance_email: '',
     commentaire: '',
@@ -199,6 +201,7 @@ export default function GestionnaireDetailDossier() {
         date_sinistre: data.date_sinistre || '',
         franchise_montant: data.franchise_montant || 0,
         num_sinistre: data.num_sinistre || '',
+        assurance_nom: data.assurances?.nom || parsedNotes.assurance_nom || parsedNotes.assurance_nom_ocr || data.assurance_nom || '',
         assurance_telephone: data.assurance_telephone || parsedNotes.assurance_telephone || '',
         assurance_email: data.assurance_email || parsedNotes.assurance_email || '',
         commentaire: data.commentaire || '',
@@ -742,9 +745,10 @@ Gestionnaire administratif du garage ${garageNom}
         currentNotesObj = JSON.parse(latestData?.notes || '{}');
       } catch (e) {}
 
-      // 2. Fusionner le téléphone et l'email de l'assurance tout en gardant relance_notes
+      // 2. Fusionner le nom, téléphone et l'email de l'assurance tout en gardant relance_notes
       const updatedNotesObj = {
         ...currentNotesObj,
+        assurance_nom: formData.assurance_nom,
         assurance_telephone: formData.assurance_telephone,
         assurance_email: formData.assurance_email
       };
@@ -950,8 +954,35 @@ Gestionnaire administratif du garage ${garageNom}
                     onChange={(e) => setFormData({...formData, statut: e.target.value})}
                     className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm font-medium text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                   >
-                    {STATUTS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+                    {STATUTS.map(s => <option key={s.value} value={s.value} className="bg-[#120052] text-white">{s.label}</option>)}
                   </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-1.5">Nom de l'assurance</label>
+                  <div className="relative">
+                    <ShieldCheck className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={16} />
+                    <input
+                      type="text"
+                      list="assurances-list-gestionnaire"
+                      placeholder="Ex: AXA, ALLIANZ, MACIF..."
+                      value={formData.assurance_nom || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        const found = REFERENTIEL_ASSURANCES.find(a => a.nom.toLowerCase() === val.toLowerCase());
+                        setFormData(prev => ({
+                          ...prev,
+                          assurance_nom: val,
+                          assurance_telephone: prev.assurance_telephone || found?.telephone || prev.assurance_telephone,
+                          assurance_email: prev.assurance_email || found?.email || prev.assurance_email,
+                        }));
+                      }}
+                      className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                    />
+                    <datalist id="assurances-list-gestionnaire">
+                      {REFERENTIEL_ASSURANCES.map(a => <option key={a.id || a.nom} value={a.nom} />)}
+                    </datalist>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-300 mb-1.5">Date du sinistre</label>

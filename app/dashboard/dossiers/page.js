@@ -7,7 +7,7 @@ import {
   Search, Plus, Filter, FileText, Loader2, 
   Car, Calendar, ChevronRight, CheckCircle2, AlertCircle,
   Sparkles, User, Phone, Clock, Eye, FileSignature,
-  Star, Award, TrendingUp
+  Star, Award, TrendingUp, ShieldCheck
 } from 'lucide-react';
 
 export default function ListeDossiers() {
@@ -222,6 +222,7 @@ export default function ListeDossiers() {
                 <tr className="bg-[var(--white)]/40 border-b border-[var(--stone)]">
                   <th className="p-4 pl-6 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">N° dossier</th>
                   <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Client</th>
+                  <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Assurance</th>
                   <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Véhicule</th>
                   <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Date</th>
                   <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Statut</th>
@@ -242,6 +243,21 @@ export default function ListeDossiers() {
                       <div className="text-xs text-[var(--muted)] flex items-center gap-1 mt-0.5">
                         <Phone size={10} /> {dossier.clients?.telephone || 'Non renseigné'}
                       </div>
+                     </td>
+                    <td className="p-4">
+                      {(() => {
+                        let nomAssurance = null;
+                        try {
+                          const notes = JSON.parse(dossier.notes || '{}');
+                          nomAssurance = dossier.assurances?.nom || notes.assurance_nom || notes.assurance_nom_ocr || dossier.assurance_nom || null;
+                        } catch(e) {}
+                        return (
+                          <div className="flex items-center gap-1.5 text-sm font-medium text-[var(--ink)]">
+                            <ShieldCheck size={14} className="text-[#18CDEC] shrink-0" />
+                            <span>{nomAssurance || <span className="italic text-[var(--muted)] text-xs">Non renseignée</span>}</span>
+                          </div>
+                        );
+                      })()}
                      </td>
                     <td className="p-4">
                       <div className="flex items-center gap-2 font-mono font-bold text-[var(--ink)] uppercase text-sm">
@@ -288,6 +304,19 @@ export default function ListeDossiers() {
                   <div className="flex items-center gap-2 text-sm">
                     <User size={14} className="text-[var(--muted)]" />
                     <span className="text-[var(--ink)]">{dossier.clients?.prenom} {dossier.clients?.nom}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <ShieldCheck size={14} className="text-[#18CDEC]" />
+                    <span className="text-[var(--ink)] font-medium">
+                      {(() => {
+                        let nomAssurance = null;
+                        try {
+                          const notes = JSON.parse(dossier.notes || '{}');
+                          nomAssurance = dossier.assurances?.nom || notes.assurance_nom || notes.assurance_nom_ocr || dossier.assurance_nom || null;
+                        } catch(e) {}
+                        return nomAssurance || <span className="italic text-[var(--muted)] text-xs">Assurance non renseignée</span>;
+                      })()}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Car size={14} className="text-[var(--muted)]" />

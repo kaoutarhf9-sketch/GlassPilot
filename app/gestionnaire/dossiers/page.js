@@ -394,14 +394,20 @@ function DossiersList() {
                         let nomAssurance = null;
                         try {
                           const notes = JSON.parse(dossier.notes || '{}');
-                          nomAssurance = dossier.assurances?.nom || notes.assurance_nom_ocr || null;
+                          nomAssurance = dossier.assurances?.nom || notes.assurance_nom || notes.assurance_nom_ocr || dossier.assurance_nom || null;
                         } catch(e) {}
-                        return nomAssurance ? (
+                        return (
                           <div className="flex items-center gap-3 text-sm">
                             <ShieldCheck size={16} className="text-[#18CDEC] shrink-0" />
-                            <span className="text-[var(--ink)] font-medium truncate" title={nomAssurance}>{nomAssurance}</span>
+                            <span className="text-[var(--ink)] font-medium truncate" title={nomAssurance || 'Assurance non renseignée'}>
+                              {nomAssurance ? (
+                                <span className="font-semibold text-[var(--ink)]">{nomAssurance}</span>
+                              ) : (
+                                <span className="italic text-[var(--muted)] text-xs">Assurance non renseignée</span>
+                              )}
+                            </span>
                           </div>
-                        ) : null;
+                        );
                       })()}
 
                       {/* Date */}

@@ -370,9 +370,26 @@ export default function GestionnaireDashboard() {
 
                         {/* Garage */}
                         <div className="flex items-center gap-3 text-sm">
-                          <div className="w-5 flex justify-center"><ShieldCheck size={14} className="text-[var(--muted)]" /></div>
+                          <div className="w-5 flex justify-center"><Building2 size={14} className="text-[var(--muted)]" /></div>
                           <span className="text-[var(--ink)] truncate text-xs">{dossier.garages ? dossier.garages.nom_garage : <span className="italic text-[var(--muted)]">Garage inconnu</span>}</span>
                         </div>
+
+                        {/* Assurance */}
+                        {(() => {
+                          let nomAssurance = null;
+                          try {
+                            const notes = JSON.parse(dossier.notes || '{}');
+                            nomAssurance = dossier.assurances?.nom || notes.assurance_nom || notes.assurance_nom_ocr || dossier.assurance_nom || null;
+                          } catch(e) {}
+                          return (
+                            <div className="flex items-center gap-3 text-sm">
+                              <div className="w-5 flex justify-center"><ShieldCheck size={14} className="text-[#18CDEC]" /></div>
+                              <span className="text-[var(--ink)] truncate text-xs font-medium" title={nomAssurance || 'Assurance non renseignée'}>
+                                {nomAssurance ? nomAssurance : <span className="italic text-[var(--muted)]">Assurance non renseignée</span>}
+                              </span>
+                            </div>
+                          );
+                        })()}
                       </div>
                       
                       {/* Footer */}

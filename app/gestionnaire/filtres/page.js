@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { 
   Filter, Clock, CheckCircle2, AlertCircle, FileSignature,
   Car, Loader2, ChevronRight, Calendar, Phone, User,
-  Sparkles, BarChart3, TrendingUp, FileText
+  Sparkles, BarChart3, TrendingUp, FileText, ShieldCheck
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -237,7 +237,18 @@ export default function FiltresPage() {
                         <span className="font-medium">{dossier.garages?.nom_garage}</span> • 
                         {dossier.clients?.prenom} {dossier.clients?.nom}
                       </p>
-                      <div className="flex items-center gap-3 mt-2 text-xs text-[var(--muted)]">
+                      <div className="flex items-center gap-3 mt-2 text-xs text-[var(--muted)] flex-wrap">
+                        <span className="flex items-center gap-1 font-medium text-[var(--ink)]">
+                          <ShieldCheck size={12} className="text-[#18CDEC]" />
+                          {(() => {
+                            let nomAssurance = null;
+                            try {
+                              const notes = JSON.parse(dossier.notes || '{}');
+                              nomAssurance = dossier.assurances?.nom || notes.assurance_nom || notes.assurance_nom_ocr || dossier.assurance_nom || null;
+                            } catch(e) {}
+                            return nomAssurance || <span className="italic text-[var(--muted)] font-normal">Assurance non renseignée</span>;
+                          })()}
+                        </span>
                         <span className="flex items-center gap-1">
                           <Calendar size={10} /> {new Date(dossier.created_at).toLocaleDateString('fr-FR')}
                         </span>

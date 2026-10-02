@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Clock, CheckCircle2, AlertCircle, Plus, 
   Loader2, Calendar, Car, FileText, Sparkles,
-  ArrowRight, Target, TrendingUp, Users, Euro
+  ArrowRight, Target, TrendingUp, Users, Euro, ShieldCheck
 } from 'lucide-react';
 import Link from 'next/link';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -459,9 +459,20 @@ export default function DashboardHome() {
                       <p className="text-sm text-[var(--muted)] mt-1">
                         {dossier.modele_vehicule || 'Modèle non renseigné'} • {dossier.immatriculation || 'Sans immatriculation'}
                       </p>
-                      <div className="flex items-center gap-3 mt-1 text-xs text-[var(--muted)]">
+                      <div className="flex items-center gap-3 mt-1 text-xs text-[var(--muted)] flex-wrap">
                         <span className="flex items-center gap-1">
                           <Calendar size={10} /> {formatDateRelative(dossier.created_at)}
+                        </span>
+                        <span className="flex items-center gap-1 font-medium text-[var(--ink)]">
+                          <ShieldCheck size={11} className="text-[#18CDEC]" />
+                          {(() => {
+                            let nomAssurance = null;
+                            try {
+                              const notes = JSON.parse(dossier.notes || '{}');
+                              nomAssurance = dossier.assurances?.nom || notes.assurance_nom || notes.assurance_nom_ocr || dossier.assurance_nom || null;
+                            } catch(e) {}
+                            return nomAssurance || <span className="italic text-[var(--muted)] font-normal">Assurance non renseignée</span>;
+                          })()}
                         </span>
                       </div>
                     </div>
