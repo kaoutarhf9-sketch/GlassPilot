@@ -13,7 +13,14 @@ export async function GET(req) {
     const token = authHeader.replace("Bearer ", "");
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      {
+        global: {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      }
     );
 
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
@@ -50,7 +57,9 @@ export async function GET(req) {
       }
     }
 
-    if (!gestionnaireData) {
+    const isAdmin = user.user_metadata?.role === 'admin';
+
+    if (!gestionnaireData && !isAdmin) {
       return NextResponse.json({ error: "Non autorisé (gestionnaire)" }, { status: 403 });
     }
 

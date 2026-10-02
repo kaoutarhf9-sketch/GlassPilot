@@ -59,7 +59,9 @@ export default function GaragesPage() {
       const gestionnaireId = gestionnaireData.id;
 
       // Récupérer TOUS les garages via l'API pour avoir les KBIS et RIB
-      const { data: { session } } = await supabase.auth.getSession();
+      let { data: { session } } = await supabase.auth.getSession();
+      if (!session) { const { data: refreshed } = await supabase.auth.refreshSession(); session = refreshed?.session; }
+      if (!session?.access_token) throw new Error('Session invalide ou token manquant');
       
       const res = await fetch('/api/gestionnaire/garages', {
         headers: {
@@ -68,7 +70,9 @@ export default function GaragesPage() {
       });
       
       if (!res.ok) {
-        throw new Error("Erreur lors de la récupération des garages");
+        const text = await res.text();
+        console.error("Erreur API garages:", res.status, text);
+        throw new Error(`Erreur lors de la récupération des garages (Statut ${res.status}): ${text}`);
       }
       
       const { garages: garagesData, error: garagesError } = await res.json();
