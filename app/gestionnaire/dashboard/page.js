@@ -8,7 +8,7 @@ import {
   LayoutDashboard, FileText, Users, Clock, CheckCircle2, 
   AlertCircle, TrendingUp, Calendar, MessageSquare, 
   Sparkles, ChevronRight, Loader2, Bell, Search,
-  Filter, Download, Eye, Star, Award, ShieldCheck,
+  Filter, Download, Eye, Star, Award, ShieldCheck, Building2,
   ArrowUpRight, ArrowDownRight, Plus, Settings
 } from 'lucide-react';
 import clsx from 'clsx';
