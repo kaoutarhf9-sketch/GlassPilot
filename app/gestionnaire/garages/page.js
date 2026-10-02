@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase, getValidUser } from '@/lib/supabase';
+import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Search, Building2, Phone, Mail, MapPin, 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase, getValidUser } from '@/lib/supabase';
+import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
@@ -56,11 +56,7 @@ export default function GestionnaireDashboard() {
       }
 
       // Vérifier si l'utilisateur est un gestionnaire
-      const { data: gestionnaireData } = await supabase
-        .from('gestionnaires')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
+      const gestionnaireData = await getGestionnaire(user);
 
       if (!gestionnaireData) {
         router.push('/dashboard');
@@ -87,11 +83,7 @@ export default function GestionnaireDashboard() {
       if (!user) return;
 
       // Récupérer le gestionnaire
-      const { data: gestionnaireData } = await supabase
-        .from('gestionnaires')
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
+      const gestionnaireData = await getGestionnaire(user);
 
       if (!gestionnaireData) return;
 

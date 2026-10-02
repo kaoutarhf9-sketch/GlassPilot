@@ -22,11 +22,33 @@ export async function GET(req) {
     }
 
     // Verify gestionnaire
-    const { data: gestionnaireData } = await supabase
+    let { data: gestionnaireData } = await supabase
       .from('gestionnaires')
-      .select('id')
+      .select('id, user_id')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
+
+    if (!gestionnaireData && user.email) {
+      const { data: byEmail } = await supabase
+        .from('gestionnaires')
+        .select('id, user_id')
+        .ilike('email', user.email)
+        .maybeSingle();
+
+      if (byEmail) {
+        gestionnaireData = byEmail;
+        if (!byEmail.user_id || byEmail.user_id !== user.id) {
+          const supabaseAdmin = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL,
+            process.env.SUPABASE_SERVICE_ROLE_KEY
+          );
+          await supabaseAdmin
+            .from('gestionnaires')
+            .update({ user_id: user.id })
+            .eq('id', byEmail.id);
+        }
+      }
+    }
 
     if (!gestionnaireData) {
       return NextResponse.json({ error: "Non autorisé (gestionnaire)" }, { status: 403 });

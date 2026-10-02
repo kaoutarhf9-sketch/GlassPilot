@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase, getValidUser } from '@/lib/supabase';
+import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Archive, Calendar, FileText, Loader2, ChevronRight,
@@ -35,13 +35,9 @@ export default function ArchivesPage() {
       const user = await getValidUser();
       if (!user) return;
 
-      const { data: gestionnaireData, error: gError } = await supabase
-        .from('gestionnaires')
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
+      const gestionnaireData = await getGestionnaire(user);
       
-      if (gError || !gestionnaireData) {
+      if (!gestionnaireData) {
         throw new Error("Impossible de récupérer les informations du gestionnaire");
       }
 

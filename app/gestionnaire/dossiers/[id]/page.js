@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { supabase, getValidUser } from '@/lib/supabase';
+import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -154,11 +154,7 @@ export default function GestionnaireDetailDossier() {
       let gestionnaireId = null;
 
       if (!isAdmin) {
-        const { data: gestionnaireData, error: gError } = await supabase
-          .from('gestionnaires')
-          .select('id')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        const gestionnaireData = await getGestionnaire(user);
         
         if (gestionnaireData) {
           gestionnaireId = gestionnaireData.id;

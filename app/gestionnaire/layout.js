@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { supabase, getValidUser } from '@/lib/supabase';
+import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
 import { 
   LayoutDashboard, FileText, Users, Settings, LogOut,
   Menu, X, Sparkles, ChevronRight, HelpCircle, ShieldCheck,
@@ -143,11 +143,7 @@ export default function GestionnaireLayout({ children }) {
       if (!targetGId) {
         const user = await getValidUser();
         if (!user) return;
-        const { data: managerData } = await supabase
-          .from('gestionnaires')
-          .select('id')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        const managerData = await getGestionnaire(user);
         targetGId = managerData?.id;
       }
       
@@ -199,11 +195,7 @@ export default function GestionnaireLayout({ children }) {
         setGestionnaireName(user.user_metadata.prenom || 'Gestionnaire');
       }
 
-      const { data: managerData } = await supabase
-        .from('gestionnaires')
-        .select('id')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      const managerData = await getGestionnaire(user);
       
       if (managerData?.id) {
         setGestionnaireId(managerData.id);
@@ -222,11 +214,7 @@ export default function GestionnaireLayout({ children }) {
       if (!targetGId) {
         const user = await getValidUser();
         if (!user) return;
-        const { data: managerData } = await supabase
-          .from('gestionnaires')
-          .select('id')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        const managerData = await getGestionnaire(user);
         targetGId = managerData?.id;
       }
       
