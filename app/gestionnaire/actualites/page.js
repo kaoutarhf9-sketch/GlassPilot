@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 
+import Link from 'next/link';
+
 export default function GestionnaireActualitesPage() {
   const [actualites, setActualites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,9 +54,18 @@ export default function GestionnaireActualitesPage() {
             </p>
           </div>
         </div>
-        <div className="bg-[#E6FAFC] text-[#3B0FAA] px-4 py-2 rounded-xl text-xs font-bold border border-[#18CDEC]/20 flex items-center gap-2">
-          <Clock size={14} />
-          Mis à jour en temps réel
+
+        {/* Tab switch */}
+        <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <span className="px-4 py-2 text-xs font-bold text-[#0A0030] bg-white rounded-xl shadow-sm border border-slate-200/60">
+            Actualités
+          </span>
+          <Link
+            href="/gestionnaire/referentiel-assurance"
+            className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-900 rounded-xl transition-colors"
+          >
+            Référentiel Assurance
+          </Link>
         </div>
       </div>
 

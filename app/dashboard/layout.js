@@ -23,7 +23,8 @@ import {
   Trash2,
   MessageSquare,
   Loader2,
-  Newspaper
+  Newspaper,
+  BookOpen
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -304,8 +305,8 @@ export default function DashboardLayout({ children }) {
     {
       title: 'COMMUNICATION',
       items: [
-        { href: '/dashboard/actualites', label: 'Actualités', icon: Newspaper }
-      ]
+        { href: '/dashboard/actualites', label: 'Actualités', icon: Newspaper },
+              ]
     },
     {
       title: 'GARAGE',

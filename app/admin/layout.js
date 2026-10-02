@@ -13,8 +13,10 @@ import {
   Shield,
   FolderKanban,
   Building2,
-  Settings
-, Megaphone } from 'lucide-react';
+  Settings,
+  Megaphone,
+  BookOpen
+} from 'lucide-react';
 import clsx from 'clsx';
 
 export default function AdminLayout({ children }) {
@@ -54,7 +56,8 @@ export default function AdminLayout({ children }) {
     {
       title: 'COMMUNICATION',
       items: [
-        { href: '/admin/actualites', label: 'Actualités', icon: Megaphone }
+        { href: '/admin/actualites', label: 'Actualités', icon: Megaphone },
+        { href: '/admin/referentiel-assurance', label: 'Référentiel Assurance', icon: BookOpen },
       ]
     },
     {

@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 
+import Link from 'next/link';
+
 export default function GaragisteActualitesPage() {
   const [actualites, setActualites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,19 +44,28 @@ export default function GaragisteActualitesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#18CDEC]/10 flex items-center justify-center border border-[#18CDEC]/20 shrink-0">
-            <Megaphone className="text-[#3B0FAA]" size={24} />
+          <div className="w-12 h-12 rounded-2xl bg-[var(--blue)]/10 flex items-center justify-center border border-[var(--blue)]/20 shrink-0">
+            <Megaphone className="text-[var(--blue)]" size={24} />
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-serif-premium text-[#0A0030]">Actualités</h2>
-            <p className="text-xs font-semibold text-[#64748B] mt-1.5">
+            <h2 className="text-2xl sm:text-3xl font-serif text-[var(--ink)]">Actualités</h2>
+            <p className="text-xs font-medium text-slate-500 mt-1">
               Toutes les dernières informations et annonces de GlassPilot.
             </p>
           </div>
         </div>
-        <div className="bg-[#E6FAFC] text-[#3B0FAA] px-4 py-2 rounded-xl text-xs font-bold border border-[#18CDEC]/20 flex items-center gap-2">
-          <Clock size={14} />
-          Mis à jour en temps réel
+
+        {/* Tab switch */}
+        <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <span className="px-4 py-2 text-xs font-bold text-[var(--ink)] bg-white rounded-xl shadow-sm border border-slate-200/60">
+            Actualités
+          </span>
+          <Link
+            href="/dashboard/referentiel-assurance"
+            className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-900 rounded-xl transition-colors"
+          >
+            Référentiel Assurance
+          </Link>
         </div>
       </div>
 

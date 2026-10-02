@@ -1,0 +1,53 @@
+"use client";
+
+import ReferentielAssuranceTable from '@/components/ReferentielAssuranceTable';
+import { BookOpen } from 'lucide-react';
+import Link from 'next/link';
+
+export default function AdminReferentielAssurancePage() {
+  return (
+    <div className="space-y-8 max-w-7xl mx-auto w-full relative animate-in fade-in duration-500">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--white)] p-6 sm:p-8 rounded-3xl border border-[var(--stone)] shadow-md">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center border border-purple-200 shrink-0">
+            <BookOpen className="text-purple-600" size={24} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                Administration Annuaire
+              </span>
+              <Link href="/admin/actualites" className="text-xs text-slate-400 hover:text-purple-600 transition-colors">
+                ← Retour aux actualités
+              </Link>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-serif text-[var(--ink)]">
+              Référentiel Assurance
+            </h1>
+            <p className="text-xs font-medium text-slate-500 mt-1">
+              Coordonnées téléphoniques, e-mails de gestion sinistres, horaires et consignes de relance pour chaque compagnie d'assurance.
+            </p>
+          </div>
+        </div>
+
+        {/* Tab switch */}
+        <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <Link
+            href="/admin/actualites"
+            className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-900 rounded-xl transition-colors"
+          >
+            Actualités
+          </Link>
+          <span className="px-4 py-2 text-xs font-bold text-[var(--ink)] bg-white rounded-xl shadow-sm border border-slate-200/60">
+            Référentiel Assurance
+          </span>
+        </div>
+      </div>
+
+      {/* Table Component */}
+      <ReferentielAssuranceTable />
+    </div>
+  );
+}

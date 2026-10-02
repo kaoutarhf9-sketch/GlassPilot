@@ -8,8 +8,8 @@ import {
   LayoutDashboard, FileText, Users, Settings, LogOut,
   Menu, X, Sparkles, ChevronRight, HelpCircle, ShieldCheck,
   Bell, TrendingUp, Calendar, MessageSquare, Archive, Filter,
-  Building2, FolderKanban, CheckCheck, Trash2
-, Megaphone } from 'lucide-react';
+  Building2, FolderKanban, CheckCheck, Trash2, Megaphone, BookOpen
+} from 'lucide-react';
 import clsx from 'clsx';
 
 const statusFilters = [
@@ -271,7 +271,8 @@ export default function GestionnaireLayout({ children }) {
     {
       title: 'COMMUNICATION',
       items: [
-        { href: '/gestionnaire/actualites', label: 'Actualités', icon: Megaphone }
+        { href: '/gestionnaire/actualites', label: 'Actualités', icon: Megaphone },
+        { href: '/gestionnaire/referentiel-assurance', label: 'Référentiel Assurance', icon: BookOpen },
       ]
     },
     {

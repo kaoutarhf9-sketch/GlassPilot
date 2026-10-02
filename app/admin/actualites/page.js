@@ -18,6 +18,8 @@ import {
   UserCheck
 } from 'lucide-react';
 import clsx from 'clsx';
+import Link from 'next/link';
+
 
 export default function AdminActualitesPage() {
   const [actualites, setActualites] = useState([]);
@@ -202,13 +204,27 @@ export default function AdminActualitesPage() {
             </p>
           </div>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-[#18CDEC] hover:bg-[#0fd0f0] text-[#0A0030] px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md hover:-translate-y-0.5 cursor-pointer"
-        >
-          <Plus size={16} />
-          Créer une annonce
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
+            <span className="px-4 py-2 text-xs font-bold text-[#0A0030] bg-white rounded-xl shadow-sm border border-slate-200/60">
+              Actualités
+            </span>
+            <Link
+              href="/admin/referentiel-assurance"
+              className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-900 rounded-xl transition-colors"
+            >
+              Référentiel Assurance
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setShowModal(true)}
+            className="flex items-center gap-2 bg-[#18CDEC] hover:bg-[#0fd0f0] text-[#0A0030] px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md hover:-translate-y-0.5 cursor-pointer"
+          >
+            <Plus size={16} />
+            Créer une annonce
+          </button>
+        </div>
       </div>
 
       {/* List */}
