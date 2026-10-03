@@ -7,7 +7,7 @@ import Link from 'next/link';
 import {
   ArrowLeft, Save, Loader2, Calendar, ShieldCheck, FileText, FileSignature,
   Clock, CheckCircle, AlertTriangle, User, Car, Building2, Phone, Mail, FileDigit, ReceiptEuro,
-  Image as ImageIcon, Maximize2, Download, X, MessageSquare, Send, Minimize2, MoreVertical, Trash2, Check, ChevronRight, Paperclip, Upload, Plus
+  Image as ImageIcon, Maximize2, Download, X, MessageSquare, Send, Minimize2, MoreVertical, Trash2, Check, ChevronRight, Paperclip, Upload, Plus, Pencil, Eye
 } from 'lucide-react';
 import clsx from 'clsx';
 import { REFERENTIEL_ASSURANCES } from '@/lib/referentielAssurances';
@@ -1311,36 +1311,28 @@ Gestionnaire administratif du garage ${garageNom}
                                 </div>
                               )}
                               
-                              <div className="absolute inset-0 bg-[var(--white)]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                {doc.isImage && (
-                                  <button 
-                                    onClick={(e) => { e.stopPropagation(); setSelectedImage(doc.url); }}
-                                    className="p-2 bg-[var(--white)] hover:bg-[var(--white)] text-[var(--ink)] rounded-lg transition-colors"
-                                  >
-                                    <Maximize2 size={16} />
-                                  </button>
-                                )}
-                                <a 
-                                  href={doc.url} 
-                                  download 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="p-2 bg-[var(--white)] hover:bg-[var(--white)] text-[var(--ink)] rounded-lg transition-colors"
-                                >
-                                  <Download size={16} />
-                                </a>
-                                <button 
-                                  onClick={(e) => { e.stopPropagation(); handleDeleteFile(doc.name); }}
-                                  className="p-2 bg-rose-500/20 hover:bg-rose-500/40 text-rose-300 rounded-lg transition-colors"
-                                >
-                                  <Trash2 size={16} />
-                                </button>
-                              </div>
+                              
                             </div>
                             <div className="p-3 bg-white/10 border-t border-white/20">
                               <p className="text-xs font-bold text-white truncate">{slot.label}</p>
-                              <p className="text-[10px] text-slate-300 mt-0.5 truncate">{doc.name}</p>
+                              <p className="text-[10px] text-slate-300 mt-0.5 mb-2 truncate">{doc.name}</p>
+                              <div className="flex items-center justify-between gap-1 pt-2 border-t border-white/10">
+                                {doc.isImage && (
+                                  <button onClick={(e) => { e.stopPropagation(); setSelectedImage(doc.url); }} className="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-colors" title="Visualiser">
+                                    <Eye size={14} />
+                                  </button>
+                                )}
+                                <a href={doc.url} download target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-colors" title="Télécharger">
+                                  <Download size={14} />
+                                </a>
+                                <label className="p-1.5 text-blue-300 hover:text-blue-100 hover:bg-blue-500/20 rounded transition-colors cursor-pointer" title="Modifier" onClick={(e) => e.stopPropagation()}>
+                                  <Pencil size={14} />
+                                  <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleUploadSlotFile(e, slot.key)} disabled={uploading} />
+                                </label>
+                                <button onClick={(e) => { e.stopPropagation(); handleDeleteFile(doc.name); }} className="p-1.5 text-rose-400 hover:text-rose-200 hover:bg-rose-500/20 rounded transition-colors" title="Supprimer">
+                                  <Trash2 size={14} />
+                                </button>
+                              </div>
                             </div>
                           </>
                         ) : (
@@ -1395,32 +1387,23 @@ Gestionnaire administratif du garage ${garageNom}
                             </div>
                           )}
                           
-                          <div className="absolute inset-0 bg-[var(--white)]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                          
+                        </div>
+                        <div className="p-3 bg-white/10 border-t border-white/20">
+                          <p className="text-[10px] font-medium text-white truncate mb-2">{doc.label}</p>
+                          <div className="flex items-center justify-center gap-2 pt-2 border-t border-white/10">
                             {doc.isImage && (
-                              <button className="p-1.5 bg-[var(--white)] rounded-lg hover:bg-[var(--white)] transition-colors">
-                                <Maximize2 className="text-[var(--ink)]" size={16} />
+                              <button onClick={(e) => { e.stopPropagation(); setSelectedImage(doc.url); }} className="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-colors" title="Visualiser">
+                                <Eye size={14} />
                               </button>
                             )}
-                            <a 
-                              href={doc.url} 
-                              download 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className="p-1.5 bg-[var(--white)] rounded-lg hover:bg-[var(--white)] transition-colors"
-                            >
-                              <Download className="text-[var(--ink)]" size={16} />
+                            <a href={doc.url} download target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-colors" title="Télécharger">
+                              <Download size={14} />
                             </a>
-                            <button 
-                              onClick={(e) => { e.stopPropagation(); handleDeleteFile(doc.name); }}
-                              className="p-1.5 bg-rose-500/20 hover:bg-rose-500/40 text-rose-300 rounded-lg transition-colors"
-                            >
-                              <Trash2 size={16} />
+                            <button onClick={(e) => { e.stopPropagation(); handleDeleteFile(doc.name); }} className="p-1.5 text-rose-400 hover:text-rose-200 hover:bg-rose-500/20 rounded transition-colors" title="Supprimer">
+                              <Trash2 size={14} />
                             </button>
                           </div>
-                        </div>
-                        <div className="p-3 bg-white/10 border-t border-white/20 text-center">
-                          <p className="text-xs font-medium text-white truncate">{doc.label}</p>
                         </div>
                       </div>
                     ))}
