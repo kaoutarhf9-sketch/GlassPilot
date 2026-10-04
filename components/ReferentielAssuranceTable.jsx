@@ -93,26 +93,6 @@ export default function ReferentielAssuranceTable() {
       {/* Search and Quick Filters Header */}
       <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] p-4 sm:p-6 shadow-md flex flex-col md:flex-row gap-4 justify-between items-center">
         
-        {/* Search Input */}
-        <div className="relative w-full md:max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
-          <input
-            type="text"
-            placeholder="Rechercher une assurance, téléphone, e-mail..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-11 pr-10 py-3 bg-[#E6FAFC]/50 border border-[#18CDEC]/30 rounded-2xl text-sm font-medium text-[#0A0030] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#18CDEC]/40 focus:bg-white transition-all"
-          />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm('')}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors"
-            >
-              ×
-            </button>
-          )}
-        </div>
-
         {/* Quick Filter Buttons */}
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
           <button
@@ -149,6 +129,27 @@ export default function ReferentielAssuranceTable() {
             <Phone size={14} /> Conférence ({REFERENTIEL_ASSURANCES.filter(i => i.notes.toLowerCase().includes('conférence') || i.notes.toLowerCase().includes('conference')).length})
           </button>
         </div>
+        {/* Search Input */}
+        <div className="relative w-full md:max-w-md">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
+          <input
+            type="text"
+            placeholder="Rechercher une assurance, téléphone, e-mail..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-11 pr-10 py-3 bg-[#E6FAFC]/50 border border-[#18CDEC]/30 rounded-2xl text-sm font-medium text-[#0A0030] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#18CDEC]/40 focus:bg-white transition-all"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors"
+            >
+              ×
+            </button>
+          )}
+        </div>
+
+        
       </div>
 
       {/* Main Table */}
