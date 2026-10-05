@@ -13,15 +13,10 @@ export default function AddressAutocomplete({
   required = false,
   name = "adresse"
 }) {
-  const [query, setQuery] = useState(value || '');
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const wrapperRef = useRef(null);
-
-  useEffect(() => {
-    setQuery(value || '');
-  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34,18 +29,18 @@ export default function AddressAutocomplete({
   }, []);
 
   useEffect(() => {
-    if (query.length < 3) {
+    const currentValue = value || '';
+    if (currentValue.length < 3) {
       setSuggestions([]);
       return;
     }
     
-    // Si la requête est exactement ce qu'on vient de sélectionner, on ne recherche pas
-    if (value === query && !showSuggestions) return;
+    if (!showSuggestions) return;
 
     const fetchTimeout = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`);
+        const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(currentValue)}&limit=5`);
         const data = await res.json();
         setSuggestions(data.features || []);
       } catch (err) {
@@ -56,7 +51,7 @@ export default function AddressAutocomplete({
     }, 400);
 
     return () => clearTimeout(fetchTimeout);
-  }, [query, value, showSuggestions]);
+  }, [value, showSuggestions]);
 
   const handleSelect = (feature) => {
     const props = feature.properties;
@@ -64,7 +59,6 @@ export default function AddressAutocomplete({
     // Construire l'adresse complète : "12 rue des fleurs, 75001 Paris"
     const fullAddress = `${props.name}, ${props.postcode} ${props.city}`;
     
-    setQuery(fullAddress);
     setShowSuggestions(false);
     
     // Notifier le parent
@@ -75,7 +69,7 @@ export default function AddressAutocomplete({
     if (onSelect) {
       onSelect({
         adresse_complete: fullAddress,
-        nom_rue: props.name,
+        nom_rue: props.type === 'municipality' ? '' : props.name,
         code_postal: props.postcode,
         ville: props.city
       });
@@ -89,14 +83,13 @@ export default function AddressAutocomplete({
         type="text"
         name={name}
         required={required}
-        value={query}
+        value={value || ''}
         onChange={(e) => {
-          setQuery(e.target.value);
           setShowSuggestions(true);
           if (onChange) onChange(e);
         }}
         onFocus={() => {
-          if (query.length >= 3) setShowSuggestions(true);
+          if ((value || '').length >= 3) setShowSuggestions(true);
         }}
         className={className}
         placeholder={placeholder}
