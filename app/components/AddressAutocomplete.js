@@ -11,7 +11,8 @@ export default function AddressAutocomplete({
   className = "",
   icon = <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" />,
   required = false,
-  name = "adresse"
+  name = "adresse",
+  searchType = "default"
 }) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,8 @@ export default function AddressAutocomplete({
     const fetchTimeout = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(currentValue)}&limit=5`);
+        const typeParam = searchType === 'municipality' ? '&type=municipality' : '';
+        const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(currentValue)}${typeParam}&limit=5`);
         const data = await res.json();
         setSuggestions(data.features || []);
       } catch (err) {
@@ -61,9 +63,13 @@ export default function AddressAutocomplete({
     
     setShowSuggestions(false);
     
-    // Notifier le parent
+    // Notifier le parent avec la valeur qui correspond au champ
+    let displayValue = fullAddress;
+    if (name === 'code_postal') displayValue = props.postcode;
+    else if (name === 'ville') displayValue = props.city;
+
     if (onChange) {
-      onChange({ target: { name, value: fullAddress } });
+      onChange({ target: { name, value: displayValue } });
     }
     
     if (onSelect) {

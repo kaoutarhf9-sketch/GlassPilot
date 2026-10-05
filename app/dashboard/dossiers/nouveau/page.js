@@ -593,12 +593,36 @@ export default function NouveauDossier() {
                 <div className="grid grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Code postal *</label>
-                    <input className={clsx(inputClass, errors.code_postal && 'border-rose-400')} value={client.code_postal} onChange={e => setC('code_postal', e.target.value)} placeholder="75001" />
+                    <AddressAutocomplete
+                      name="code_postal"
+                      searchType="municipality"
+                      value={client.code_postal}
+                      onChange={e => setC('code_postal', e.target.value)}
+                      onSelect={(sugg) => {
+                        if (sugg.nom_rue) setC('adresse', sugg.nom_rue);
+                        if (sugg.code_postal) setC('code_postal', sugg.code_postal);
+                        if (sugg.ville) setC('ville', sugg.ville);
+                      }}
+                      className={clsx(inputClass, "pl-11", errors.code_postal && 'border-rose-400')}
+                      placeholder="75001"
+                    />
                     {errors.code_postal && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Ville *</label>
-                    <input className={clsx(inputClass, errors.ville && 'border-rose-400')} value={client.ville} onChange={e => setC('ville', e.target.value)} placeholder="Paris" />
+                    <AddressAutocomplete
+                      name="ville"
+                      searchType="municipality"
+                      value={client.ville}
+                      onChange={e => setC('ville', e.target.value)}
+                      onSelect={(sugg) => {
+                        if (sugg.nom_rue) setC('adresse', sugg.nom_rue);
+                        if (sugg.code_postal) setC('code_postal', sugg.code_postal);
+                        if (sugg.ville) setC('ville', sugg.ville);
+                      }}
+                      className={clsx(inputClass, "pl-11", errors.ville && 'border-rose-400')}
+                      placeholder="Paris"
+                    />
                     {errors.ville && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                   </div>
                 </div>

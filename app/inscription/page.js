@@ -274,13 +274,21 @@ export default function InscriptionGaragiste() {
                       <label className="block text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-1.5">
                         Code postal
                       </label>
-                      <input
-                        type="text"
+                      <AddressAutocomplete
                         name="code_postal"
+                        searchType="municipality"
                         required
                         value={formData.code_postal}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/10 transition-all"
+                        onSelect={(sugg) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            ...(sugg.nom_rue && { adresse: sugg.nom_rue }),
+                            ...(sugg.code_postal && { code_postal: sugg.code_postal }),
+                            ...(sugg.ville && { ville: sugg.ville })
+                          }));
+                        }}
+                        className="w-full pl-11 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/10 transition-all"
                         placeholder="75001"
                       />
                     </div>
@@ -288,13 +296,21 @@ export default function InscriptionGaragiste() {
                       <label className="block text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-1.5">
                         Ville
                       </label>
-                      <input
-                        type="text"
+                      <AddressAutocomplete
                         name="ville"
+                        searchType="municipality"
                         required
                         value={formData.ville}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/10 transition-all"
+                        onSelect={(sugg) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            ...(sugg.nom_rue && { adresse: sugg.nom_rue }),
+                            ...(sugg.code_postal && { code_postal: sugg.code_postal }),
+                            ...(sugg.ville && { ville: sugg.ville })
+                          }));
+                        }}
+                        className="w-full pl-11 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/10 transition-all"
                         placeholder="Paris"
                       />
                     </div>
