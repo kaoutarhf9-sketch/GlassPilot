@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import AddressAutocomplete from '@/app/components/AddressAutocomplete';
 import {
   ArrowLeft, Save, Loader2, Calendar, ShieldCheck, FileText, FileSignature,
   Clock, CheckCircle, AlertTriangle, User, Car, Building2, Phone, Mail, FileDigit, ReceiptEuro,
@@ -1145,11 +1146,11 @@ Gestionnaire administratif du garage ${garageNom}
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-sm font-semibold text-slate-300 mb-1.5">Adresse complète (avec Code postal et Ville)</label>
-                    <input
-                      type="text"
+                    <AddressAutocomplete
+                      name="client_adresse"
                       value={formData.client_adresse}
                       onChange={(e) => setFormData({...formData, client_adresse: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
+                      className="w-full pl-11 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
               </div>

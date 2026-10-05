@@ -8,6 +8,7 @@ import {
   Eye, EyeOff, Shield
 } from 'lucide-react';
 import Link from 'next/link';
+import AddressAutocomplete from '@/app/components/AddressAutocomplete';
 
 export default function InscriptionGaragiste() {
   const [loading, setLoading] = useState(false);
@@ -253,18 +254,13 @@ export default function InscriptionGaragiste() {
                       <label className="block text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-1.5">
                         Adresse
                       </label>
-                      <div className="relative">
-                        <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
-                        <input
-                          type="text"
-                          name="adresse"
-                          required
-                          value={formData.adresse}
-                          onChange={handleChange}
-                          className="w-full pl-11 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/10 transition-all"
-                          placeholder="123 rue du Commerce, 75001 Paris"
-                        />
-                      </div>
+                      <AddressAutocomplete
+                        name="adresse"
+                        required
+                        value={formData.adresse}
+                        onChange={handleChange}
+                        className="w-full pl-11 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/10 transition-all"
+                      />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-1.5">
