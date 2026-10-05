@@ -63,7 +63,14 @@ export default function ProfilPage() {
       setGarage(garageData);
       
       if (garageData?.logo_url) {
-        setLogoPreview(garageData.logo_url);
+        if (garageData.logo_url.startsWith('http')) {
+          setLogoPreview(garageData.logo_url);
+        } else {
+          const { data } = supabase.storage.from('documents').getPublicUrl(garageData.logo_url);
+          if (data && data.publicUrl) {
+            setLogoPreview(data.publicUrl);
+          }
+        }
       }
       
       let street = '', cp = '', city = '';
@@ -223,7 +230,7 @@ export default function ProfilPage() {
     );
   }
 
-  const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]";
+  const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-slate-200 focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]";
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -234,7 +241,7 @@ export default function ProfilPage() {
           <Sparkles size={14} className="text-[#1454FF]" />
           <span className="text-xs font-medium text-[#1454FF] uppercase tracking-wider">Configuration</span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-serif text-[var(--ink)] mb-2">Mon Profil</h1>
+        <h1 className="text-3xl md:text-4xl font-serif text-slate-200 mb-2">Mon Profil</h1>
         <p className="text-slate-400 font-light">Gérez vos informations et préférences</p>
       </div>
 
@@ -245,14 +252,14 @@ export default function ProfilPage() {
           <nav className="flex flex-col space-y-2">
             <button 
               onClick={() => { setActiveTab('profil'); setError(''); setSuccess(''); }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'profil' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-[var(--ink)]'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'profil' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-slate-200'}`}
             >
               <User size={18} className={activeTab === 'profil' ? 'text-[#1454FF]' : 'text-[var(--muted)]'} />
               Personnel & Garage
             </button>
             <button 
               onClick={() => { setActiveTab('securite'); setError(''); setSuccess(''); }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'securite' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-[var(--ink)]'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'securite' ? 'bg-[#1454FF]/10 text-[#1454FF]' : 'text-slate-600 hover:bg-[var(--stone)] hover:text-slate-200'}`}
             >
               <Shield size={18} className={activeTab === 'securite' ? 'text-[#1454FF]' : 'text-[var(--muted)]'} />
               Sécurité du compte
@@ -296,16 +303,16 @@ export default function ProfilPage() {
                 <div className="p-6 md:p-8 space-y-8">
                   {/* Logo Upload */}
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--ink)] mb-4">Logo du Garage</h2>
+                    <h2 className="text-lg font-bold text-white mb-4">Logo du Garage</h2>
                     <div className="flex items-center gap-6">
-                      <div className="w-24 h-24 rounded-2xl border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50 overflow-hidden relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                      <div className="w-24 h-24 rounded-2xl border-2 border-dashed border-slate-300 flex items-center justify-center bg-white/5 overflow-hidden border-white/10 relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
                         {logoPreview ? (
                           <img src={logoPreview} alt="Logo preview" className="w-full h-full object-contain p-2" />
                         ) : (
                           <ImageIcon size={32} className="text-[var(--muted)]" />
                         )}
                         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Camera size={20} className="text-[var(--ink)]" />
+                          <Camera size={20} className="text-slate-200" />
                         </div>
                       </div>
                       <div>
@@ -326,15 +333,15 @@ export default function ProfilPage() {
                     <h2 className="text-lg font-bold text-white mb-4">Informations personnelles</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Prénom</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Prénom</label>
                         <input type="text" name="prenom" value={formData.prenom} onChange={handleChange} className={inputClass} />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Nom</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Nom</label>
                         <input type="text" name="nom" value={formData.nom} onChange={handleChange} className={inputClass} />
                       </div>
                       <div className="md:col-span-2">
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Adresse email de connexion</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Adresse email de connexion</label>
                         <div className="relative">
                           <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input type="email" name="email" value={formData.email} disabled className={clsx(inputClass, "pl-10 opacity-70 cursor-not-allowed")} />
@@ -348,36 +355,36 @@ export default function ProfilPage() {
 
                   {/* Infos garage */}
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--ink)] mb-4">Informations du Garage</h2>
+                    <h2 className="text-lg font-bold text-white mb-4">Informations du Garage</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="md:col-span-2">
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Nom du garage</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Nom du garage</label>
                         <input type="text" name="nom_garage" value={formData.nom_garage} onChange={handleChange} className={inputClass} />
                       </div>
                       <div className="md:col-span-2">
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Adresse postale</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Adresse postale</label>
                         <div className="relative">
                           <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input type="text" name="adresse" value={formData.adresse} onChange={handleChange} className={clsx(inputClass, "pl-10")} />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Code postal</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Code postal</label>
                         <input type="text" name="code_postal" value={formData.code_postal} onChange={handleChange} className={inputClass} />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Ville</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Ville</label>
                         <input type="text" name="ville" value={formData.ville} onChange={handleChange} className={inputClass} />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Téléphone professionnel</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Téléphone professionnel</label>
                         <div className="relative">
                           <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} className={clsx(inputClass, "pl-10")} />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Numéro SIRET</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Numéro SIRET</label>
                         <div className="relative">
                           <FileText size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input type="text" name="siret" value={formData.siret} onChange={handleChange} className={clsx(inputClass, "pl-10")} />
@@ -390,10 +397,10 @@ export default function ProfilPage() {
 
               {activeTab === 'securite' && (
                 <div className="p-6 md:p-8">
-                  <h2 className="text-lg font-bold text-[var(--ink)] mb-6">Sécurité du compte</h2>
+                  <h2 className="text-lg font-bold text-white mb-6">Sécurité du compte</h2>
                   <div className="space-y-5 max-w-md">
                     <div>
-                      <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Nouveau mot de passe</label>
+                      <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Nouveau mot de passe</label>
                       <input 
                         type="password" 
                         name="newPassword"
@@ -404,7 +411,7 @@ export default function ProfilPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Confirmer le mot de passe</label>
+                      <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Confirmer le mot de passe</label>
                       <input 
                         type="password" 
                         name="confirmPassword"
@@ -422,7 +429,7 @@ export default function ProfilPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2.5 bg-[#1454FF] hover:bg-[#0ea5e9] text-[var(--ink)] font-medium rounded-xl transition-all shadow-md flex items-center gap-2 disabled:opacity-70"
+                  className="px-6 py-2.5 bg-[#1454FF] hover:bg-[#0ea5e9] text-slate-200 font-medium rounded-xl transition-all shadow-md flex items-center gap-2 disabled:opacity-70"
                 >
                   {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                   {saving ? 'Enregistrement...' : 'Enregistrer'}
