@@ -780,9 +780,7 @@ Gestionnaire administratif du garage ${garageNom}
           prenom: formData.client_prenom,
           telephone: formData.client_telephone,
           email: formData.client_email,
-          adresse: formData.client_adresse,
-          code_postal: formData.client_cp,
-          ville: formData.client_ville
+          adresse: formData.client_adresse
         };
         const { error: clientErr } = await supabase
           .from('clients')
@@ -1127,29 +1125,11 @@ Gestionnaire administratif du garage ${garageNom}
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Adresse postale</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Adresse complète (avec Code postal et Ville)</label>
                     <input
                       type="text"
                       value={formData.client_adresse}
                       onChange={(e) => setFormData({...formData, client_adresse: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Code postal</label>
-                    <input
-                      type="text"
-                      value={formData.client_cp}
-                      onChange={(e) => setFormData({...formData, client_cp: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-300 mb-1.5">Ville</label>
-                    <input
-                      type="text"
-                      value={formData.client_ville}
-                      onChange={(e) => setFormData({...formData, client_ville: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
                   </div>
