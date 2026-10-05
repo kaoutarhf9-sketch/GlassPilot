@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Webcam from 'react-webcam';
-import { supabase } from '@/lib/supabase';
+import { supabase, getValidSession } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -186,7 +186,7 @@ export default function NouveauDossier() {
       setGarageId(garage.id);
         
         // Récupérer le token de session Supabase pour l'authentification
-        const { data: { session } } = await supabase.auth.getSession();
+        const session = await getValidSession();
         const res = await fetch('/api/get-stock', {
           headers: {
             'Authorization': `Bearer ${session?.access_token}`
@@ -272,7 +272,7 @@ export default function NouveauDossier() {
     setLoading(true);
     try {
       // 0. Sécuriser et déduire 1 jeton du stock via API sécurisée (pour contourner les limitations RLS)
-      const { data: { session } } = await supabase.auth.getSession();
+      const session = await getValidSession();
       const deductRes = await fetch('/api/deduct-token', {
         method: 'POST',
         headers: {

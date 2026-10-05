@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
+import { supabase, getValidUser, getGestionnaire, getValidSession } from '@/lib/supabase';
 import Link from 'next/link';
 import { 
   Search, Building2, Phone, Mail, MapPin, 
@@ -65,8 +65,7 @@ export default function GaragesPage() {
       const gestionnaireId = gestionnaireData.id;
 
       // Récupérer TOUS les garages via l'API pour avoir les KBIS et RIB
-      let { data: { session } } = await supabase.auth.getSession();
-      if (!session) { const { data: refreshed } = await supabase.auth.refreshSession(); session = refreshed?.session; }
+      let session = await getValidSession();
       if (!session?.access_token) throw new Error('Session invalide ou token manquant');
       
       const res = await fetch('/api/gestionnaire/garages', {
