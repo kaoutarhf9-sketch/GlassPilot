@@ -33,7 +33,6 @@ export default function ParametresPage() {
   const fetchProfile = async () => {
     try {
       const authUser = await getValidUser();
-      if (userError) throw userError;
       if (!authUser) return router.push('/connexion');
 
       setUser(authUser);
