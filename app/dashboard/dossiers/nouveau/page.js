@@ -477,7 +477,7 @@ export default function NouveauDossier() {
         </button>
         <div className="flex items-center gap-2">
           <Sparkles size={16} className="text-[var(--blue)]" />
-          <span className="font-semibold text-[var(--ink)] text-sm md:text-base">GlassPilot - Nouveau dossier</span>
+          <span className="font-semibold text-slate-200 text-sm md:text-base">GlassPilot - Nouveau dossier</span>
         </div>
         <div className="w-16"></div>
       </div>
@@ -499,7 +499,7 @@ export default function NouveauDossier() {
                     <div key={s.id} className="flex items-center gap-3">
                       <div className={clsx(
                         "w-8 h-8 rounded-xl flex items-center justify-center transition-all",
-                        isActive ? "bg-[var(--blue)] text-[var(--ink)] shadow-md" : 
+                        isActive ? "bg-[var(--blue)] text-slate-200 shadow-md" : 
                         isCompleted ? "bg-emerald-100 text-emerald-600" : "bg-[var(--white)] text-[var(--muted)]"
                       )}>
                         {isCompleted ? <Check size={14} /> : <Icon size={14} />}
@@ -508,7 +508,7 @@ export default function NouveauDossier() {
                         <p className={clsx("text-xs font-medium", isActive ? "text-[var(--blue)]" : "text-[var(--muted)]")}>
                           Étape {s.id}
                         </p>
-                        <p className={clsx("text-sm font-semibold", isActive ? "text-[var(--ink)]" : "text-[var(--muted)]")}>
+                        <p className={clsx("text-sm font-semibold", isActive ? "text-slate-200" : "text-[var(--muted)]")}>
                           {s.label}
                         </p>
                       </div>
@@ -521,7 +521,7 @@ export default function NouveauDossier() {
             {/* Récapitulatif */}
             <div className="mt-4 bg-[#120052] text-white/20 rounded-2xl border-white/10 border-[var(--stone)] p-4">
               <p className="text-[10px] font-bold text-[var(--blue)] uppercase tracking-wider mb-2">En cours de saisie</p>
-              <p className="text-sm font-semibold text-[var(--ink)] truncate">{client.nom_societe || 'Nouveau Client'}</p>
+              <p className="text-sm font-semibold text-slate-200 truncate">{client.nom_societe || 'Nouveau Client'}</p>
               <p className="text-xs text-[var(--muted)] truncate">{vehicule.immatriculation || 'Véhicule non renseigné'}</p>
             </div>
           </div>
@@ -531,7 +531,7 @@ export default function NouveauDossier() {
         <div className="flex-1">
           
           <div className="mb-6">
-            <h1 className="text-2xl md:text-3xl font-serif text-[var(--ink)]">{STEPS[step-1].label}</h1>
+            <h1 className="text-2xl md:text-3xl font-serif text-slate-200">{STEPS[step-1].label}</h1>
             <p className="text-[var(--muted)] text-sm mt-1">{STEPS[step-1].desc}</p>
           </div>
 
@@ -542,7 +542,7 @@ export default function NouveauDossier() {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Nom / Société *</label>
+                    <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Nom / Société *</label>
                     <div className="relative">
                       <Building2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                       <input className={clsx(inputClass, "pl-10", errors.nom_societe && 'border-rose-400')} value={client.nom_societe} onChange={e => setC('nom_societe', e.target.value)} placeholder="AutoGlass Pro" />
@@ -550,7 +550,7 @@ export default function NouveauDossier() {
                     {errors.nom_societe && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Prénom</label>
+                    <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Prénom</label>
                     <div className="relative">
                       <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                       <input className={clsx(inputClass, "pl-10")} value={client.prenom} onChange={e => setC('prenom', e.target.value)} placeholder="Jean" />
@@ -559,14 +559,14 @@ export default function NouveauDossier() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Email</label>
+                    <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Email</label>
                     <div className="relative">
                       <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                       <input type="email" className={clsx(inputClass, "pl-10")} value={client.email} onChange={e => setC('email', e.target.value)} placeholder="client@email.fr" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Téléphone *</label>
+                    <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Téléphone *</label>
                     <div className="relative">
                       <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                       <input type="tel" className={clsx(inputClass, "pl-10", errors.telephone && 'border-rose-400')} value={client.telephone} onChange={e => setC('telephone', e.target.value)} placeholder="06 12 34 56 78" />
@@ -575,7 +575,7 @@ export default function NouveauDossier() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Adresse *</label>
+                  <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Adresse *</label>
                   <AddressAutocomplete
                     name="adresse"
                     value={client.adresse}
@@ -592,12 +592,12 @@ export default function NouveauDossier() {
                 </div>
                 <div className="grid grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Code postal *</label>
+                    <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Code postal *</label>
                     <input className={clsx(inputClass, errors.code_postal && 'border-rose-400')} value={client.code_postal} onChange={e => setC('code_postal', e.target.value)} placeholder="75001" />
                     {errors.code_postal && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Ville *</label>
+                    <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Ville *</label>
                     <input className={clsx(inputClass, errors.ville && 'border-rose-400')} value={client.ville} onChange={e => setC('ville', e.target.value)} placeholder="Paris" />
                     {errors.ville && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                   </div>
@@ -610,7 +610,7 @@ export default function NouveauDossier() {
               <div className="space-y-5">
                 {/* 1. Choix du Jeton */}
                 <div className="pb-5 border-b border-[var(--stone)]">
-                  <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-3">Type de dossier & jeton requis *</label>
+                  <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-3">Type de dossier & jeton requis *</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Dossier Simple */}
                     <button
@@ -619,7 +619,7 @@ export default function NouveauDossier() {
                       className={clsx(
                         'p-4 rounded-xl border text-left transition-all relative flex flex-col justify-between min-h-[140px]',
                         selectedType === 'simple'
-                          ? 'border-[#1454FF] bg-[var(--blue)]/10/30 text-[var(--ink)] shadow-md'
+                          ? 'border-[#1454FF] bg-[var(--blue)]/10/30 text-slate-200 shadow-md'
                           : 'border-[var(--stone)] text-[var(--muted)] hover:border-[#1454FF] hover:bg-[var(--blue)]/10/10'
                       )}
                     >
@@ -642,7 +642,7 @@ export default function NouveauDossier() {
                         </span>
                       </div>
                       {selectedType === 'simple' && (
-                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-[var(--ink)] rounded-full flex items-center justify-center">
+                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-slate-200 rounded-full flex items-center justify-center">
                           <Check size={10} />
                         </div>
                       )}
@@ -655,7 +655,7 @@ export default function NouveauDossier() {
                       className={clsx(
                         'p-4 rounded-xl border text-left transition-all relative flex flex-col justify-between min-h-[140px]',
                         selectedType === 'prestige'
-                          ? 'border-[#1454FF] bg-[var(--blue)]/10/30 text-[var(--ink)] shadow-md'
+                          ? 'border-[#1454FF] bg-[var(--blue)]/10/30 text-slate-200 shadow-md'
                           : 'border-[var(--stone)] text-[var(--muted)] hover:border-[#1454FF] hover:bg-[var(--blue)]/10/10'
                       )}
                     >
@@ -678,7 +678,7 @@ export default function NouveauDossier() {
                         </span>
                       </div>
                       {selectedType === 'prestige' && (
-                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-[var(--ink)] rounded-full flex items-center justify-center">
+                        <div className="absolute bottom-3 right-3 w-4 h-4 bg-[var(--blue)] text-slate-200 rounded-full flex items-center justify-center">
                           <Check size={10} />
                         </div>
                       )}
@@ -693,7 +693,7 @@ export default function NouveauDossier() {
                       </div>
                       <Link
                         href={`/dashboard/abonnement?type=${selectedType}`}
-                        className="text-xs font-semibold text-[var(--ink)] bg-rose-600 hover:bg-rose-700 px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 self-start sm:self-auto"
+                        className="text-xs font-semibold text-slate-200 bg-rose-600 hover:bg-rose-700 px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 self-start sm:self-auto"
                       >
                         <Euro size={12} />
                         Acheter 1 jeton ({selectedType === 'simple' ? '9.60€ TTC' : '30€ TTC'})
@@ -704,7 +704,7 @@ export default function NouveauDossier() {
 
                 {/* 2. Type de vitrage (Toujours visible) */}
                 <div>
-                  <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Type de vitrage *</label>
+                  <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Type de vitrage *</label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mt-1">
                     {TYPES_VITRAGE.map(t => (
                       <button key={t} type="button" onClick={() => setV('type_vitrage', t)}
@@ -723,7 +723,7 @@ export default function NouveauDossier() {
                   <div className="space-y-5 animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Immatriculation {selectedType === 'simple' && '*'}</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Immatriculation {selectedType === 'simple' && '*'}</label>
                         <div className="relative">
                           <Key size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input 
@@ -737,7 +737,7 @@ export default function NouveauDossier() {
                         {errors.immatriculation && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Modèle {selectedType === 'simple' && '*'}</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Modèle {selectedType === 'simple' && '*'}</label>
                         <input 
                           className={clsx(inputClass, isScanning && 'bg-indigo-50 animate-pulse', errors.modele && 'border-rose-400')} 
                           value={vehicule.modele} 
@@ -748,7 +748,7 @@ export default function NouveauDossier() {
                         {errors.modele && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Kilométrage</label>
+                        <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Kilométrage</label>
                         <div className="relative">
                           <Gauge size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
                           <input type="number" className={clsx(inputClass, "pl-10")} value={vehicule.kilometrage} onChange={e => setV('kilometrage', e.target.value)} placeholder="45000" />
@@ -758,7 +758,7 @@ export default function NouveauDossier() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Notes complémentaires</label>
+                      <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Notes complémentaires</label>
                       <textarea rows="3" className={inputClass} placeholder="Infos pour l'atelier, précisions sur l'impact..." value={vehicule.commentaire} onChange={e => setV('commentaire', e.target.value)} />
                     </div>
                     
@@ -768,7 +768,7 @@ export default function NouveauDossier() {
                         <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
                         <div className="flex items-center gap-2 mb-1.5">
                           <ShieldCheck size={16} className="text-[var(--blue)]" />
-                          <p className="text-sm font-semibold text-[var(--ink)]">Informations Sinistre & Assurance requises</p>
+                          <p className="text-sm font-semibold text-slate-200">Informations Sinistre & Assurance requises</p>
                         </div>
                         <p className="text-xs text-[var(--muted)]">
                           Puisqu'il s'agit d'un dossier Simple, vous devez obligatoirement remplir ces informations clés pour valider sa création.
@@ -777,7 +777,7 @@ export default function NouveauDossier() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Date du sinistre *</label>
+                          <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Date du sinistre *</label>
                           <input
                             type="date"
                             className={clsx(inputClass, errors.date_sinistre && 'border-rose-400')}
@@ -788,7 +788,7 @@ export default function NouveauDossier() {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">N° de sinistre *</label>
+                          <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">N° de sinistre *</label>
                           <input
                             type="text"
                             className={clsx(inputClass, errors.num_sinistre && 'border-rose-400')}
@@ -800,7 +800,7 @@ export default function NouveauDossier() {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Franchise (€)</label>
+                          <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Franchise (€)</label>
                           <input
                             type="number"
                             className={inputClass}
@@ -811,7 +811,7 @@ export default function NouveauDossier() {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Téléphone assurance *</label>
+                          <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Téléphone assurance *</label>
                           <input
                             type="tel"
                             className={clsx(inputClass, errors.assurance_telephone && 'border-rose-400')}
@@ -823,7 +823,7 @@ export default function NouveauDossier() {
                         </div>
 
                         <div className="md:col-span-2">
-                          <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Email assurance *</label>
+                          <label className="block text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1.5">Email assurance *</label>
                           <input
                             type="email"
                             className={clsx(inputClass, errors.assurance_email && 'border-rose-400')}
@@ -861,7 +861,7 @@ export default function NouveauDossier() {
                   <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Upload size={16} className="text-[var(--blue)]" />
-                      <p className="text-sm font-semibold text-[var(--ink)]">Documents du véhicule</p>
+                      <p className="text-sm font-semibold text-slate-200">Documents du véhicule</p>
                     </div>
                     <p className="text-xs text-[var(--muted)]">
                       {selectedType === 'prestige' 
@@ -889,14 +889,14 @@ export default function NouveauDossier() {
                           <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-2">
                             <CheckCircle2 size={18} className="text-emerald-600" />
                           </div>
-                          <span className="text-xs font-semibold text-[var(--ink)]">{docs.attestation_assurance.name}</span>
+                          <span className="text-xs font-semibold text-slate-200">{docs.attestation_assurance.name}</span>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center">
                           <div className="w-10 h-10 bg-[var(--stone)] rounded-full flex items-center justify-center mb-2">
                             <Upload size={16} className="text-[var(--muted)]" />
                           </div>
-                          <span className="text-xs font-semibold text-[var(--ink)]">Attestation Assurance *</span>
+                          <span className="text-xs font-semibold text-slate-200">Attestation Assurance *</span>
                           <span className="text-[10px] text-[var(--muted)] mt-1">Carte verte (PDF, JPG)</span>
                         </div>
                       )}
@@ -913,14 +913,14 @@ export default function NouveauDossier() {
                           <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-2">
                             <CheckCircle2 size={18} className="text-emerald-600" />
                           </div>
-                          <span className="text-xs font-semibold text-[var(--ink)]">{docs.carte_grise.name}</span>
+                          <span className="text-xs font-semibold text-slate-200">{docs.carte_grise.name}</span>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center">
                           <div className="w-10 h-10 bg-[var(--stone)] rounded-full flex items-center justify-center mb-2">
                             <Upload size={16} className="text-[var(--muted)]" />
                           </div>
-                          <span className="text-xs font-semibold text-[var(--ink)]">Carte Grise *</span>
+                          <span className="text-xs font-semibold text-slate-200">Carte Grise *</span>
                           <span className="text-[10px] text-[var(--muted)] mt-1">Certificat (PDF, JPG)</span>
                         </div>
                       )}
@@ -934,14 +934,14 @@ export default function NouveauDossier() {
                           <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-2">
                             <CheckCircle2 size={18} className="text-emerald-600" />
                           </div>
-                          <span className="text-xs font-semibold text-[var(--ink)]">{docs.controle_technique.name}</span>
+                          <span className="text-xs font-semibold text-slate-200">{docs.controle_technique.name}</span>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center">
                           <div className="w-10 h-10 bg-[var(--stone)] rounded-full flex items-center justify-center mb-2">
                             <Upload size={16} className="text-[var(--muted)]" />
                           </div>
-                          <span className="text-xs font-semibold text-[var(--ink)]">Contrôle Technique</span>
+                          <span className="text-xs font-semibold text-slate-200">Contrôle Technique</span>
                           <span className="text-[10px] text-[var(--muted)] mt-1">Optionnel (PDF, JPG)</span>
                         </div>
                       )}
@@ -954,7 +954,7 @@ export default function NouveauDossier() {
                   <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Camera size={16} className="text-[var(--blue)]" />
-                      <p className="text-sm font-semibold text-[var(--ink)]">Photos & Constatations (Optionnel)</p>
+                      <p className="text-sm font-semibold text-slate-200">Photos & Constatations (Optionnel)</p>
                     </div>
                     <p className="text-xs text-[var(--muted)]">Ces photos aident à justifier l'intervention auprès de l'assurance.</p>
                   </div>
@@ -1013,19 +1013,19 @@ export default function NouveauDossier() {
           <div className="flex gap-3 mt-6">
             {step > 1 && (
               <button type="button" onClick={prev}
-                className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-[var(--ink)] font-medium hover:bg-[var(--white)]/40 transition-all">
+                className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-slate-200 font-medium hover:bg-[var(--white)]/40 transition-all">
                 Retour
               </button>
             )}
             
             {step < STEPS.length ? (
               <button type="button" onClick={next}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-[var(--ink)] font-medium bg-[var(--blue)] hover:bg-[#0ea5e9] transition-all shadow-md shadow-[#1454FF]/25">
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-slate-200 font-medium bg-[var(--blue)] hover:bg-[#0ea5e9] transition-all shadow-md shadow-[#1454FF]/25">
                 Continuer <ArrowRight size={16} />
               </button>
             ) : (
               <button type="button" onClick={handleSubmit} disabled={loading}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[var(--blue)] text-[var(--ink)] rounded-xl font-medium hover:bg-[#0ea5e9] transition-all disabled:opacity-70 shadow-md shadow-[#1454FF]/25">
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[var(--blue)] text-slate-200 rounded-xl font-medium hover:bg-[#0ea5e9] transition-all disabled:opacity-70 shadow-md shadow-[#1454FF]/25">
                 {loading ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Save size={16} />}
                 {loading ? 'Création...' : 'Créer le dossier'}
               </button>
@@ -1042,12 +1042,12 @@ export default function NouveauDossier() {
       {showScanner && (
         <div className="fixed inset-0 z-50 bg-black flex flex-col justify-between">
           <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
-            <h2 className="text-[var(--ink)] font-semibold shadow-black drop-shadow-md">
+            <h2 className="text-slate-200 font-semibold shadow-black drop-shadow-md">
               Scanner {scannerType === 'carte_grise' ? 'la Carte Grise' : 'l\'Attestation'}
             </h2>
             <button 
               onClick={() => { setShowScanner(false); setScannerType(null); setCameraError(false); }}
-              className="p-2 bg-white/20 rounded-full text-[var(--ink)]"
+              className="p-2 bg-white/20 rounded-full text-slate-200"
             >
               <X size={24} />
             </button>
@@ -1076,10 +1076,10 @@ export default function NouveauDossier() {
                 </div>
               </>
             ) : (
-              <div className="text-[var(--ink)] p-6 text-center space-y-4">
+              <div className="text-slate-200 p-6 text-center space-y-4">
                 <AlertCircle size={48} className="text-rose-500 mx-auto" />
                 <p>Accès à la caméra refusé ou impossible.</p>
-                <p className="text-xs text-[var(--ink)]/70">Vérifiez les permissions de votre navigateur ou importez un fichier classiquement ci-dessous.</p>
+                <p className="text-xs text-slate-200/70">Vérifiez les permissions de votre navigateur ou importez un fichier classiquement ci-dessous.</p>
               </div>
             )}
           </div>
@@ -1093,7 +1093,7 @@ export default function NouveauDossier() {
               <div className="w-16 h-16 bg-white rounded-full border-2 border-white/10 shadow-inner"></div>
             </button>
             
-            <label className="text-[var(--ink)]/80 hover:text-[var(--ink)] text-sm font-medium flex items-center gap-2 cursor-pointer mt-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 transition-colors rounded-full">
+            <label className="text-slate-200/80 hover:text-slate-200 text-sm font-medium flex items-center gap-2 cursor-pointer mt-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 transition-colors rounded-full">
               <Upload size={16} /> Ou importer un fichier
               <input 
                 type="file" 
