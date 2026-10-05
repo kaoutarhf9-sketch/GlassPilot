@@ -1,6 +1,6 @@
 "use client";
 
-import { HelpCircle, Mail, Phone, ExternalLink } from 'lucide-react';
+import { HelpCircle, Mail, Phone, ExternalLink, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AideGestionnaire() {
@@ -11,7 +11,7 @@ export default function AideGestionnaire() {
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl sm:text-3xl font-serif text-[var(--ink)] flex items-center gap-3">
           <HelpCircle className="text-[#3B0FAA]" size={32} />
-          Support technique
+          Support technique & Aide
         </h1>
         <p className="text-[#64748B] text-sm max-w-2xl">
           Retrouvez ici toutes les informations pour contacter le support technique ou utiliser la plateforme.
@@ -31,7 +31,7 @@ export default function AideGestionnaire() {
           
           <div className="space-y-4">
             <a 
-              href="mailto:support@glasspilot.fr" 
+              href="mailto:glasspilotcontact@gmail.com" 
               className="flex items-center gap-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:border-[#18CDEC] hover:bg-[#E6FAFC] transition-colors group"
             >
               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
@@ -39,12 +39,12 @@ export default function AideGestionnaire() {
               </div>
               <div>
                 <p className="text-xs font-semibold text-[#64748B] uppercase tracking-wide">Par email</p>
-                <p className="font-bold text-[#0A0030] group-hover:text-[#3B0FAA] transition-colors">support@glasspilot.fr</p>
+                <p className="font-bold text-[#0A0030] group-hover:text-[#3B0FAA] transition-colors break-all">glasspilotcontact@gmail.com</p>
               </div>
             </a>
             
             <a 
-              href="tel:+33123456789" 
+              href="tel:+33756993583" 
               className="flex items-center gap-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:border-[#18CDEC] hover:bg-[#E6FAFC] transition-colors group"
             >
               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
@@ -52,7 +52,7 @@ export default function AideGestionnaire() {
               </div>
               <div>
                 <p className="text-xs font-semibold text-[#64748B] uppercase tracking-wide">Par téléphone (Urgence)</p>
-                <p className="font-bold text-[#0A0030] group-hover:text-[#3B0FAA] transition-colors">01 23 45 67 89</p>
+                <p className="font-bold text-[#0A0030] group-hover:text-[#3B0FAA] transition-colors">+33 7 56 99 35 83</p>
               </div>
             </a>
           </div>
@@ -93,6 +93,45 @@ export default function AideGestionnaire() {
           </div>
         </div>
       </div>
+
+      {/* FAQ / Petites questions */}
+      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] p-6 shadow-md mt-6">
+        <h2 className="text-lg font-bold text-[#0A0030] mb-6 flex items-center gap-2">
+          <HelpCircle className="text-[#18CDEC]" size={20} />
+          Foire aux questions (FAQ)
+        </h2>
+        
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
+            <h3 className="font-bold text-[#0A0030] mb-2">Comment ajouter un nouveau garagiste ?</h3>
+            <p className="text-sm text-[#64748B] leading-relaxed">
+              Pour ajouter un nouveau garagiste à votre réseau, vous devez contacter notre équipe technique. Les garagistes peuvent également s'inscrire directement depuis la page d'accueil de GlassPilot et leur compte sera validé manuellement.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
+            <h3 className="font-bold text-[#0A0030] mb-2">Puis-je modifier un document généré ?</h3>
+            <p className="text-sm text-[#64748B] leading-relaxed">
+              Une fois généré et signé, un document est définitif pour des raisons légales. Si vous constatez une erreur, vous devez corriger les informations dans le dossier et générer un nouveau document.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
+            <h3 className="font-bold text-[#0A0030] mb-2">Où trouver le référentiel des prix ?</h3>
+            <p className="text-sm text-[#64748B] leading-relaxed">
+              Le référentiel d'assurance est accessible depuis le menu principal à gauche. Vous y trouverez les grilles tarifaires de toutes les assurances partenaires pour estimer au mieux vos interventions.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
+            <h3 className="font-bold text-[#0A0030] mb-2">Comment sont notifiés les garagistes ?</h3>
+            <p className="text-sm text-[#64748B] leading-relaxed">
+              Dès que vous envoyez un message via le chat d'un dossier, ou lorsque le statut d'un dossier change, le garagiste reçoit une notification en temps réel sur son tableau de bord GlassPilot.
+            </p>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
