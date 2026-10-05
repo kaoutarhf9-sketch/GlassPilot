@@ -13,6 +13,7 @@ import {
   Star, Crown, Camera, Image, Loader2, CheckCircle2
 } from 'lucide-react';
 import clsx from 'clsx';
+import AddressAutocomplete from '@/app/components/AddressAutocomplete';
 
 const STEPS = [
   { id: 1, label: 'Client',    icon: User, desc: 'Coordonnées du client' },
@@ -575,10 +576,18 @@ export default function NouveauDossier() {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[var(--ink)] uppercase tracking-wide mb-1.5">Adresse *</label>
-                  <div className="relative">
-                    <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
-                    <input className={clsx(inputClass, "pl-10", errors.adresse && 'border-rose-400')} value={client.adresse} onChange={e => setC('adresse', e.target.value)} placeholder="123 rue du Commerce" />
-                  </div>
+                  <AddressAutocomplete
+                    name="adresse"
+                    value={client.adresse}
+                    onChange={e => setC('adresse', e.target.value)}
+                    onSelect={(sugg) => {
+                      setC('adresse', sugg.nom_rue);
+                      setC('code_postal', sugg.code_postal);
+                      setC('ville', sugg.ville);
+                    }}
+                    className={clsx(inputClass, "pl-11", errors.adresse && 'border-rose-400')}
+                    placeholder="123 rue du Commerce"
+                  />
                   {errors.adresse && <p className="text-rose-500 text-xs mt-1">Champ obligatoire</p>}
                 </div>
                 <div className="grid grid-cols-2 gap-5">
