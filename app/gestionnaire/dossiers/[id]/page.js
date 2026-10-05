@@ -124,7 +124,26 @@ export default function GestionnaireDetailDossier() {
         },
         (payload) => {
           const newMsg = payload.new;
-          setMessages(prev => [...prev, newMsg]);
+          setMessages(prev => {
+            // Éviter les doublons (si le message existe déjà avec le même ID)
+            if (prev.some(m => m.id === newMsg.id)) return prev;
+            
+            // Chercher le message optimiste (temporaire, qui a un id = Date.now() en millisecondes)
+            // On vérifie le même texte et rôle dans les 5 dernières secondes
+            const tempIndex = prev.findIndex(m => 
+              typeof m.id === 'number' && 
+              m.message === newMsg.message && 
+              m.sender_role === newMsg.sender_role
+            );
+            
+            if (tempIndex !== -1) {
+              const next = [...prev];
+              next[tempIndex] = newMsg; // Remplace le temporaire par le vrai
+              return next;
+            }
+            
+            return [...prev, newMsg];
+          });
           scrollToBottom();
           
           // Si le message vient du garagiste et que le chat est fermé, incrémenter le compteur

@@ -207,7 +207,23 @@ export default function DetailDossierPremium() {
         },
         (payload) => {
           const newMsg = payload.new;
-          setMessages(prev => [...prev, newMsg]);
+          setMessages(prev => {
+            if (prev.some(m => m.id === newMsg.id)) return prev;
+            
+            const tempIndex = prev.findIndex(m => 
+              typeof m.id === 'number' && 
+              m.message === newMsg.message && 
+              m.sender_role === newMsg.sender_role
+            );
+            
+            if (tempIndex !== -1) {
+              const next = [...prev];
+              next[tempIndex] = newMsg;
+              return next;
+            }
+            
+            return [...prev, newMsg];
+          });
           scrollToBottom();
           
           // Si le message vient du gestionnaire et que le chat est fermé, incrémenter le compteur
