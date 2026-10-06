@@ -291,10 +291,12 @@ export default function NouveauDossier() {
           const img = new Image();
           const url = URL.createObjectURL(file);
           img.onload = () => {
-            const SCALE = 2.5;
+            // Agrandir au minimum à 1800px de large (ou ×2.5) pour garantir au moins 300 DPI équivalents
+            const targetWidth = Math.max(img.naturalWidth * 2.5, 1800);
+            const scale = targetWidth / img.naturalWidth;
             const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth * SCALE;
-            canvas.height = img.naturalHeight * SCALE;
+            canvas.width = Math.round(img.naturalWidth * scale);
+            canvas.height = Math.round(img.naturalHeight * scale);
             const ctx = canvas.getContext('2d');
             // Fond blanc
             ctx.fillStyle = '#ffffff';
