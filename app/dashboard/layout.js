@@ -313,7 +313,7 @@ export default function DashboardLayout({ children }) {
       items: [
         { href: '/dashboard', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
         { href: '/dashboard/dossiers', label: 'Dossiers', icon: FileText },
-        { href: '/dashboard/clients', label: 'Clients', icon: Users },
+        { href: '/dashboard/clients', label: 'Répertoire clients', icon: Users },
         { href: '/dashboard/abonnement', label: 'Jetons', icon: ShoppingBag },
       ]
     }

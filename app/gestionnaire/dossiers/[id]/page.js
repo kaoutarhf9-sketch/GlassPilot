@@ -814,8 +814,27 @@ Gestionnaire administratif du garage ${garageNom}
       const doc = generatePDF(updatedDossier, signatureDataUrl);
       const pdfBlob = doc.output('blob');
 
-      // 4. Téléverser le nouveau PDF dans Supabase Storage
-      const fileName = `documents_complets_${dossier.numero || dossierId}_${Date.now()}.pdf`;
+      // 4. Supprimer les anciennes cessions générées pour ne pas accumuler de doublons
+      try {
+        const { data: existingFiles } = await supabase.storage
+          .from('documents')
+          .list(`dossiers/${dossierId}`);
+
+        if (existingFiles && existingFiles.length > 0) {
+          const cessionOldFiles = existingFiles
+            .filter(f => f.name.includes('documents_complets') || f.name.includes('cession'))
+            .map(f => `dossiers/${dossierId}/${f.name}`);
+
+          if (cessionOldFiles.length > 0) {
+            await supabase.storage.from('documents').remove(cessionOldFiles);
+          }
+        }
+      } catch (cleanErr) {
+        console.warn("Notice nettoyage anciens documents_complets:", cleanErr);
+      }
+
+      // Téléverser le nouveau PDF unique dans Supabase Storage (nom fixe pour écraser/remplacer)
+      const fileName = `documents_complets_${dossier.numero || dossierId}.pdf`;
       const filePath = `dossiers/${dossierId}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
@@ -899,6 +918,7 @@ Gestionnaire administratif du garage ${garageNom}
       }
 
       setSuccess('Cession de créance régénérée avec succès !');
+      await fetchDossierAndDocs();
       window.open(publicUrl, '_blank');
       setTimeout(() => setSuccess(''), 4000);
 
