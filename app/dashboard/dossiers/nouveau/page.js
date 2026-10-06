@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 import AddressAutocomplete from '@/app/components/AddressAutocomplete';
+import { extractDocumentData } from '@/lib/extractDocumentData';
 
 const TYPES_VITRAGE = [
   'Pare-brise', 'Lunette arrière', 'Latérale AV Gauche',
@@ -202,45 +203,103 @@ export default function NouveauDossier() {
     setIsScanning(true);
     setScanSuccess(false);
     setScanMessage(docType === 'carte_grise' ? 'Analyse de la Carte Grise...' : "Analyse de l'Attestation d'assurance...");
+
+    const applyData = (data) => {
+      let fieldsFound = 0;
+      if (!data) return 0;
+
+      // Informations Client
+      setClient(prev => {
+        const u = { ...prev };
+        if (data.nom_societe) { u.nom_societe = data.nom_societe; fieldsFound++; }
+        if (data.prenom) { u.prenom = data.prenom; fieldsFound++; }
+        if (data.adresse) { u.adresse = data.adresse; fieldsFound++; }
+        if (data.code_postal) { u.code_postal = data.code_postal; fieldsFound++; }
+        if (data.ville) { u.ville = data.ville; fieldsFound++; }
+        return u;
+      });
+
+      // Informations Véhicule & Sinistre
+      setVehicule(prev => {
+        const u = { ...prev };
+        if (data.immatriculation) { u.immatriculation = data.immatriculation; fieldsFound++; }
+        if (data.modele) { u.modele = data.modele; fieldsFound++; }
+        if (data.num_contrat) { u.num_contrat = data.num_contrat; fieldsFound++; }
+        if (data.num_contrat && !prev.num_sinistre) { u.num_sinistre = data.num_contrat; }
+        if (data.nom_assurance) { u.nom_assurance = data.nom_assurance; fieldsFound++; }
+        return u;
+      });
+
+      // Effacer les erreurs pour les champs renseignés
+      setErrors(prev => {
+        const errs = { ...prev };
+        if (data.nom_societe) delete errs.nom_societe;
+        if (data.adresse) delete errs.adresse;
+        if (data.code_postal) delete errs.code_postal;
+        if (data.ville) delete errs.ville;
+        if (data.immatriculation) delete errs.immatriculation;
+        if (data.modele) delete errs.modele;
+        return errs;
+      });
+
+      return fieldsFound;
+    };
+
+    let populated = false;
+
+    // 1. Tentative d'analyse via l'API serveur
     try {
       const fileToUpload = await compressImage(file);
       const formData = new FormData();
       formData.append('file', fileToUpload);
-      formData.append('type', docType);
+      formData.append('type', docType || 'attestation_assurance');
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const timeoutId = setTimeout(() => controller.abort(), 20000);
       const response = await fetch('/api/ocr', { method: 'POST', body: formData, signal: controller.signal });
       clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
-        if (data.immatriculation || data.modele || data.num_contrat || data.nom_assurance) {
-          setVehicule(prev => ({
-            ...prev,
-            immatriculation: data.immatriculation || prev.immatriculation,
-            modele: data.modele || prev.modele,
-            num_contrat: data.num_contrat || prev.num_contrat,
-            num_sinistre: data.num_contrat || prev.num_sinistre,
-            nom_assurance: data.nom_assurance || prev.nom_assurance,
-          }));
+        const count = applyData(data);
+        if (count > 0) {
+          populated = true;
           setScanSuccess(true);
-          setScanMessage('✓ Données extraites avec succès !');
-          setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3000);
-        } else {
-          setScanMessage("Aucune donnée lisible détectée. Vérifiez la netteté du document.");
-          setTimeout(() => setScanMessage(''), 4000);
+          setScanMessage(`✓ ${count} information(s) préremplie(s) avec succès !`);
+          setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3500);
+          return;
         }
-      } else {
-        setScanMessage("Erreur lors de l'analyse. Veuillez saisir manuellement.");
-        setTimeout(() => setScanMessage(''), 4000);
       }
     } catch (err) {
-      console.error("Erreur OCR:", err);
-      setScanMessage("Impossible de contacter le serveur d'analyse.");
-      setTimeout(() => setScanMessage(''), 4000);
-    } finally {
-      setIsScanning(false);
+      console.warn("Échec appel OCR serveur, passage au moteur local...", err);
+    }
+
+    // 2. Moteur de secours : OCR local côté client si fichier image
+    if (!populated && file && (file.type?.startsWith('image/') || /\.(jpe?g|png|webp)$/i.test(file.name))) {
+      try {
+        setScanMessage("Analyse OCR directe en cours...");
+        const { createWorker } = await import('tesseract.js');
+        const worker = await createWorker('fra');
+        const ret = await worker.recognize(file);
+        await worker.terminate();
+
+        const extracted = extractDocumentData(ret?.data?.text || '');
+        const count = applyData(extracted);
+        if (count > 0) {
+          populated = true;
+          setScanSuccess(true);
+          setScanMessage(`✓ ${count} information(s) préremplie(s) avec succès !`);
+          setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3500);
+          return;
+        }
+      } catch (clientErr) {
+        console.error("Échec OCR de secours:", clientErr);
+      }
+    }
+
+    if (!populated) {
+      setScanMessage("Aucune donnée lisible détectée. Vous pouvez renseigner les champs manuellement.");
+      setTimeout(() => setScanMessage(''), 4500);
     }
   };
 
@@ -248,9 +307,10 @@ export default function NouveauDossier() {
   const handleScanDrop = async (file) => {
     if (!file) return;
     setScanDoc(file);
-    // Auto-detect type: si c'est une carte grise ou une attestation
+    // Auto-detect type
     const nameLC = file.name.toLowerCase();
-    const docType = nameLC.includes('grise') ? 'carte_grise' : 'attestation_assurance';
+    const isCG = nameLC.includes('grise') || nameLC.includes('carte') || nameLC.includes('cg');
+    const docType = isCG ? 'carte_grise' : 'attestation_assurance';
     setDocs(prev => ({ ...prev, [docType]: file }));
     await runOCR(file, docType);
   };
