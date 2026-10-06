@@ -86,13 +86,13 @@ export default function ConnexionPage() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --white: #FFFFFF;
-          --page-bg: #ECFEFF;
-          --paper: #F8FAFC;
-          --stone: rgba(10, 0, 48, 0.08);
-          --ink: #0A0030;
-          --ink-2: #120052;
-          --muted: #64748B;
+          --white: rgba(11, 19, 41, 0.45);
+          --page-bg: #020617;
+          --paper: #04090f;
+          --stone: rgba(56, 189, 248, 0.15);
+          --ink: #FFFFFF;
+          --ink-2: #F1F5F9;
+          --muted: #94a3b8;
           --blue: #3B0FAA;
           --blue-light: rgba(59, 15, 170, 0.08);
           --blue-mid: rgba(59, 15, 170, 0.25);
@@ -117,7 +117,7 @@ export default function ConnexionPage() {
         .nav {
           position: fixed; top: 0; width: 100%; z-index: 100;
           height: 66px; display: flex; align-items: center; padding: 0 2rem;
-          background: rgba(255, 255, 255, 0.85);
+          background: rgba(2, 6, 23, 0.85);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid var(--stone);
           transition: background .35s, box-shadow .35s;
@@ -248,7 +248,7 @@ export default function ConnexionPage() {
 
         .btn-main {
           font-family: var(--ff-sans); font-weight: 700; font-size: 1rem;
-          background: #3B0FAA; color: #fff; border: none; cursor: pointer;
+          background: #38bdf8; color: #fff; border: none; cursor: pointer;
           width: 100%;
           padding: 1.1rem;
           border-radius: 100px;
@@ -256,7 +256,7 @@ export default function ConnexionPage() {
           align-items: center;
           justify-content: center;
           gap: .5rem;
-          box-shadow: 0 6px 28px rgba(56,189,248,.35);
+          box-shadow: 0 6px 28px rgba(56,189,248,.15);
           transition: transform .2s, box-shadow .2s;
         }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(56,189,248,.5); }

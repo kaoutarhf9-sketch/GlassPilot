@@ -48,13 +48,13 @@ export default function MotDePasseOubliePage() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --white: #FFFFFF;
-          --page-bg: #ECFEFF;
-          --paper: #F8FAFC;
-          --stone: rgba(10, 0, 48, 0.08);
-          --ink: #0A0030;
-          --ink-2: #120052;
-          --muted: #64748B;
+          --white: rgba(11, 19, 41, 0.45);
+          --page-bg: #020617;
+          --paper: #04090f;
+          --stone: rgba(56, 189, 248, 0.15);
+          --ink: #FFFFFF;
+          --ink-2: #F1F5F9;
+          --muted: #94a3b8;
           --blue: #3B0FAA;
           --blue-light: rgba(59, 15, 170, 0.08);
           --blue-mid: rgba(59, 15, 170, 0.25);
@@ -74,7 +74,7 @@ export default function MotDePasseOubliePage() {
         .nav {
           position: fixed; top: 0; width: 100%; z-index: 100;
           height: 66px; display: flex; align-items: center; padding: 0 2rem;
-          background: rgba(255, 255, 255, 0.85);
+          background: rgba(2, 6, 23, 0.85);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid var(--stone);
         }

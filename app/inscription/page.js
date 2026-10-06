@@ -98,13 +98,13 @@ export default function InscriptionGaragiste() {
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600;700;800&display=swap');
         
         :root {
-          --white: #FFFFFF;
-          --page-bg: #ECFEFF;
-          --paper: #F8FAFC;
-          --stone: rgba(10, 0, 48, 0.08);
-          --ink: #0A0030;
-          --ink-2: #120052;
-          --muted: #64748B;
+          --white: rgba(11, 19, 41, 0.45);
+          --page-bg: #020617;
+          --paper: #04090f;
+          --stone: rgba(56, 189, 248, 0.15);
+          --ink: #FFFFFF;
+          --ink-2: #F1F5F9;
+          --muted: #94a3b8;
           --blue: #3B0FAA;
         }
         
