@@ -25,6 +25,7 @@ import {
   Loader2,
   Newspaper,
   BookOpen,
+  FileSignature,
   Clock
 } from 'lucide-react';
 import clsx from 'clsx';
@@ -338,7 +339,14 @@ export default function DashboardLayout({ children }) {
       items: [
         { href: '/dashboard/actualites', label: 'Actualités', icon: Newspaper },
         { href: '/dashboard/referentiel-assurance', label: 'Référentiel Assurance', icon: BookOpen },
-              ]
+      ]
+    },
+    {
+      title: 'FACTURATION',
+      items: [
+        { href: '/dashboard/facturation', label: 'Facturation', icon: FileText },
+        { href: '/dashboard/devis', label: 'Devis', icon: FileSignature },
+      ]
     },
     {
       title: 'GARAGE',
@@ -545,6 +553,8 @@ export default function DashboardLayout({ children }) {
                   {pathname === '/dashboard' && 'Tableau de bord'}
                   {pathname === '/dashboard/dossiers' && 'Dossiers'}
                   {pathname === '/dashboard/clients' && 'Clients'}
+                  {pathname === '/dashboard/facturation' && 'Facturation'}
+                  {pathname === '/dashboard/devis' && 'Devis'}
                   {pathname === '/dashboard/parametres' && 'Paramètres'}
                 </h1>
               </div>
