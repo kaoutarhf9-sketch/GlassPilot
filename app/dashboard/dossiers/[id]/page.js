@@ -514,7 +514,7 @@ export default function DetailDossierPremium() {
       
     } catch (err) {
       console.error('Erreur envoi message:', err);
-      alert('Erreur lors de l''envoi du message');
+      alert("Erreur lors de l'envoi du message");
     } finally {
       setSendingMessage(false);
     }
@@ -573,7 +573,7 @@ export default function DetailDossierPremium() {
       scrollToBottom();
     } catch (err) {
       console.error('Erreur téléversement fichier chat:', err);
-      alert('Impossible d''envoyer le fichier : ' + err.message);
+      alert("Impossible d'envoyer le fichier : " + err.message);
     } finally {
       setChatUploading(false);
       e.target.value = '';

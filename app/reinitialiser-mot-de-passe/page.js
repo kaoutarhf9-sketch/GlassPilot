@@ -95,7 +95,7 @@ export default function ReinitialiserMotDePassePage() {
           --ink: #FFFFFF;
           --ink-2: #F1F5F9;
           --muted: #94a3b8;
-          --blue: #3B0FAA;
+          --blue: #38bdf8;
           --blue-light: rgba(59, 15, 170, 0.08);
           --blue-mid: rgba(59, 15, 170, 0.25);
           --green: #10b981;
