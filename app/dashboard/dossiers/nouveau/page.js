@@ -280,15 +280,48 @@ export default function NouveauDossier() {
       }
     }
 
-    // 2. Pour les images (et PDFs sans résultat) : OCR directement dans le navigateur
+    // 2. Pour les images : OCR directement dans le navigateur avec prétraitement canvas
     // (Le serveur Vercel dépasse toujours les 10s sur une image — on n'essaie pas)
     if (!populated && (isImage || isPDF)) {
       try {
         setScanMessage("Analyse IA en cours… (peut prendre 15-20 secondes)");
+
+        // Prétraitement : agrandir ×2.5 + niveaux de gris pour améliorer la résolution effective
+        const prepareImageForOCR = (file) => new Promise((resolve) => {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+          img.onload = () => {
+            const SCALE = 2.5;
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth * SCALE;
+            canvas.height = img.naturalHeight * SCALE;
+            const ctx = canvas.getContext('2d');
+            // Fond blanc
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Dessin aggrandi
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            // Conversion niveaux de gris pour meilleure lisibilité
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imgData.data;
+            for (let i = 0; i < d.length; i += 4) {
+              const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+              d[i] = d[i + 1] = d[i + 2] = gray;
+            }
+            ctx.putImageData(imgData, 0, 0);
+            URL.revokeObjectURL(url);
+            canvas.toBlob(resolve, 'image/png');
+          };
+          img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+          img.src = url;
+        });
+
+        const imageToRecognize = isImage ? (await prepareImageForOCR(file)) ?? file : file;
+
         const { createWorker } = await import('tesseract.js');
         const worker = await createWorker('fra');
         await worker.setParameters({ tessedit_pageseg_mode: '11' });
-        const ret = await worker.recognize(file);
+        const ret = await worker.recognize(imageToRecognize);
         await worker.terminate();
 
         const extracted = extractDocumentData(ret?.data?.text || '');
