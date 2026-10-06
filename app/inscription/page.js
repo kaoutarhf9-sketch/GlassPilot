@@ -105,7 +105,7 @@ export default function InscriptionGaragiste() {
           --ink: #FFFFFF;
           --ink-2: #F1F5F9;
           --muted: #94a3b8;
-          --blue: #3B0FAA;
+          --blue: #38bdf8;
         }
         
         body { background: var(--page-bg); color: var(--ink); }
@@ -365,7 +365,7 @@ export default function InscriptionGaragiste() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[var(--blue)] hover:bg-[#330c9a] text-white font-bold py-4 px-6 rounded-full transition-all shadow-[0_6px_20px_rgba(59,15,170,0.3)] hover:shadow-[0_12px_30px_rgba(59,15,170,0.4)] hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full bg-[var(--blue)] hover:bg-[#7dd3fc] text-white font-bold py-4 px-6 rounded-full transition-all shadow-[0_6px_20px_rgba(59,15,170,0.3)] hover:shadow-[0_12px_30px_rgba(59,15,170,0.4)] hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {loading ? <Loader2 size={18} className="animate-spin" /> : "Créer mon compte →"}
                   </button>
@@ -388,10 +388,10 @@ export default function InscriptionGaragiste() {
 
                   <div className="flex justify-center gap-4 text-xs text-[var(--muted)]">
                     <span className="flex items-center gap-1">
-                      <CheckCircle2 size={12} className="text-[#00875A]" /> Sécurisé
+                      <CheckCircle2 size={12} className="text-[#10b981]" /> Sécurisé
                     </span>
                     <span className="flex items-center gap-1">
-                      <CheckCircle2 size={12} className="text-[#00875A]" /> RGPD
+                      <CheckCircle2 size={12} className="text-[#10b981]" /> RGPD
                     </span>
                   </div>
                 </form>
@@ -400,7 +400,7 @@ export default function InscriptionGaragiste() {
 
             {/* COLONNE DROITE - VISUEL */}
             <div className="hidden lg:block h-full">
-              <div className="bg-gradient-to-b from-[#FFFFFF] to-[#F8FAFC] rounded-[32px] border border-[var(--stone)] p-12 relative overflow-hidden h-full flex flex-col justify-center shadow-[0_15px_60px_rgba(10,0,48,0.05)]">
+              <div className="bg-gradient-to-b from-[var(--surface)] to-[var(--surface2)] rounded-[32px] border border-[var(--stone)] p-12 relative overflow-hidden h-full flex flex-col justify-center shadow-[0_15px_60px_rgba(56,189,248,0.05)]">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--blue)]/20 rounded-full blur-[80px]"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--blue)]/10 rounded-full blur-[80px]"></div>
                 

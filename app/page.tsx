@@ -229,7 +229,7 @@ h1 em{
 .btn-secondary{
   font-family:var(--ff-body);font-weight:600;font-size:1.1rem;
   background:var(--surface);color:var(--ink2);
-  border:2px solid #120052;
+  border:2px solid var(--stone);
   cursor:pointer;padding:1.1rem 3rem;border-radius:100px;text-decoration:none;
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   transition:all .22s;
@@ -461,8 +461,8 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
   padding:1.1rem;border-radius:100px;text-decoration:none;
   transition:all .28s;width:100%;
 }
-.price-card:not(.featured) .btn-plan{background:var(--surface);color:var(--ink2);border:2px solid #120052;}
-.price-card:not(.featured) .btn-plan:hover{background:#F8FAFC;transform:translateY(-2px)}
+.price-card:not(.featured) .btn-plan{background:var(--surface);color:var(--ink2);border:2px solid var(--stone);}
+.price-card:not(.featured) .btn-plan:hover{background:rgba(56, 189, 248, 0.05);transform:translateY(-2px)}
 .price-card.featured .btn-plan{background:#38bdf8;color:#020617;border:none;box-shadow:0 6px 20px rgba(56, 189, 248, 0.3)}
 .price-card.featured .btn-plan:hover{background:#7dd3fc;box-shadow:0 12px 30px rgba(56, 189, 248, 0.4);transform:translateY(-2px)}
 
@@ -503,17 +503,17 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
 .cta-buttons{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap}
 .btn-cta{
   font-family:var(--ff-body);font-weight:600;font-size:1.1rem;
-  background:#3B0FAA;
-  color:#fff;border:none;cursor:pointer;
+  background:#38bdf8;
+  color:#020617;border:none;cursor:pointer;
   padding:1.2rem 3rem;border-radius:100px;text-decoration:none;
   display:inline-flex;align-items:center;gap:.5rem;
-  box-shadow:0 6px 20px rgba(59,15,170,.3);
+  box-shadow:0 6px 20px rgba(56, 189, 248, 0.3);
   transition:all .28s ease;
 }
-.btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(59,15,170,.4);background:#330c9a}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(56, 189, 248, 0.4);background:#7dd3fc}
 .btn-ghost{
   font-family:var(--ff-body);font-weight:600;font-size:1.1rem;
-  background:var(--surface);color:var(--ink2);border:2px solid #120052;
+  background:var(--surface);color:var(--ink2);border:2px solid var(--stone);
   cursor:pointer;padding:1.1rem 3rem;border-radius:100px;text-decoration:none;
   display:inline-flex;align-items:center;gap:.4rem;transition:all .22s;
 }
@@ -779,19 +779,19 @@ footer{
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
       <h1>Gérez vos dossiers vitrage et <br /><em>accélérez vos remboursements assurance</em></h1>
       
-      <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2.5rem', color: '#0A0030', fontWeight: '500'}}>
+      <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2.5rem', color: 'var(--ink)', fontWeight: '500'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-          <div style={{background: '#E8F7F0', color: '#18CDEC', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
+          <div style={{background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent)', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
           <span>Facturation électronique conforme à la réforme 2026</span>
         </div>
         <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-          <div style={{background: '#E8F7F0', color: '#18CDEC', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
+          <div style={{background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent)', borderRadius: '50%', padding: '0.2rem'}}><Check size={18} /></div>
           <span>Experts métier et juridique</span>
         </div>
 
       </div>
 
-      <div style={{background: '#E8F7F0', color: '#0E4327', border: '1px solid #1E824C', padding: '1rem 1.5rem', borderRadius: '100px', display: 'flex', alignItems: 'center', gap: '0.8rem', fontWeight: '600', marginBottom: '2rem', maxWidth: '450px'}}>
+      <div style={{background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '1rem 1.5rem', borderRadius: '100px', display: 'flex', alignItems: 'center', gap: '0.8rem', fontWeight: '600', marginBottom: '2rem', maxWidth: '450px'}}>
         <ShieldCheck size={20} />
         Tiers de confiance entre garages et assurances
       </div>
