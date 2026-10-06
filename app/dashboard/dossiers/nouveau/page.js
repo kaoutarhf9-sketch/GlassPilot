@@ -789,7 +789,7 @@ export default function NouveauDossier() {
                     {/* Les informations assurance (Date, N° Sinistre, Contacts) ne sont requises que pour "Simple" */}
                     {selectedType === 'simple' && (
                       <div className="border-t border-[var(--stone)] pt-5 space-y-5">
-                        <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
+                        <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)]">
                         <div className="flex items-center gap-2 mb-1.5">
                           <ShieldCheck size={16} className="text-[var(--blue)]" />
                           <p className="text-sm font-semibold text-slate-200">Informations Sinistre & Assurance requises</p>
@@ -882,7 +882,7 @@ export default function NouveauDossier() {
                 
                 {/* Bloc Documents (Carte Grise / Assurance) pour Simple ET Prestige */}
                 <div className="border-t border-[var(--stone)] pt-5 space-y-5">
-                  <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
+                  <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)]">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Upload size={16} className="text-[var(--blue)]" />
                       <p className="text-sm font-semibold text-slate-200">Documents du véhicule</p>
@@ -904,7 +904,7 @@ export default function NouveauDossier() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Upload Assurance */}
                     <div 
-                      className="border-2 border-dashed border-[var(--stone)] hover:border-[#1454FF] rounded-2xl p-4 text-center cursor-pointer transition-all bg-[var(--white)]/40 relative"
+                      className="border-2 border-dashed border-[var(--stone)] hover:border-[#1454FF] rounded-2xl p-4 text-center cursor-pointer transition-all bg-[var(--white)] relative"
                       onClick={() => handleOpenScanner('attestation_assurance')}
                     >
                       <input id="native_camera_fallback_attestation_assurance" type="file" className="hidden" accept="image/*,.pdf" capture="environment" onChange={e => handleFile(e, 'attestation_assurance')} />
@@ -928,7 +928,7 @@ export default function NouveauDossier() {
 
                     {/* Upload Carte Grise */}
                     <div 
-                      className="border-2 border-dashed border-[var(--stone)] hover:border-[#1454FF] rounded-2xl p-4 text-center cursor-pointer transition-all bg-[var(--white)]/40 relative"
+                      className="border-2 border-dashed border-[var(--stone)] hover:border-[#1454FF] rounded-2xl p-4 text-center cursor-pointer transition-all bg-[var(--white)] relative"
                       onClick={() => handleOpenScanner('carte_grise')}
                     >
                       <input id="native_camera_fallback_carte_grise" type="file" className="hidden" accept="image/*,.pdf" capture="environment" onChange={e => handleFile(e, 'carte_grise')} />
@@ -951,7 +951,7 @@ export default function NouveauDossier() {
                     </div>
 
                     {/* Upload Controle Technique */}
-                    <div className="border-2 border-dashed border-[var(--stone)] hover:border-[#1454FF] rounded-2xl p-4 text-center cursor-pointer transition-all bg-[var(--white)]/40 relative">
+                    <div className="border-2 border-dashed border-[var(--stone)] hover:border-[#1454FF] rounded-2xl p-4 text-center cursor-pointer transition-all bg-[var(--white)] relative">
                       <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*,.pdf" onChange={e => handleFile(e, 'controle_technique')} />
                       {docs.controle_technique ? (
                         <div className="flex flex-col items-center">
@@ -975,7 +975,7 @@ export default function NouveauDossier() {
 
                 {/* Bloc Documents (Photos) */}
                 <div className="border-t border-[var(--stone)] pt-5 space-y-5">
-                  <div className="bg-[var(--white)]/40 rounded-xl p-4 border border-[var(--stone)]">
+                  <div className="bg-[var(--white)] rounded-xl p-4 border border-[var(--stone)]">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Camera size={16} className="text-[var(--blue)]" />
                       <p className="text-sm font-semibold text-slate-200">Photos & Constatations (Optionnel)</p>
@@ -1037,7 +1037,7 @@ export default function NouveauDossier() {
           <div className="flex gap-3 mt-6">
             {step > 1 && (
               <button type="button" onClick={prev}
-                className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-slate-200 font-medium hover:bg-[var(--white)]/40 transition-all">
+                className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-slate-200 font-medium hover:bg-[var(--white)] transition-all">
                 Retour
               </button>
             )}

@@ -156,7 +156,7 @@ export default function ListeClients() {
             placeholder="Rechercher par nom, téléphone, email ou plaque d'immatriculation..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]"
+            className="w-full pl-12 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]"
           />
         </div>
       </div>
@@ -247,7 +247,7 @@ export default function ListeClients() {
               </div>
 
               {/* Bouton d'action */}
-              <div className="px-5 py-3 bg-[var(--white)]/40 border-t border-[var(--stone)]">
+              <div className="px-5 py-3 bg-[var(--white)] border-t border-[var(--stone)]">
                 <button 
                   onClick={() => handleFilterDossiers(client)}
                   className="w-full py-2 bg-[var(--white)] hover:bg-[var(--blue)]/10 text-[var(--blue)] text-sm font-medium rounded-xl border border-[var(--stone)] hover:border-[#1454FF] transition-all flex items-center justify-center gap-2"

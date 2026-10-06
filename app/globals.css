@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ECFEFF;
-  --foreground: #0A0030;
+  --background: #020617; /* Deep midnight space background */
+  --foreground: #F8FAFC; /* Light slate text */
   
   /* Brand Colors from Reseauglass */
-  --cyan: #18CDEC;
+  --cyan: #38bdf8;
   --indigo-dark: #120052;
   --brand-purple: #3B0FAA;
   --whatsapp: #5432E1;
-  --bg-color: #ECFEFF;
-  --badge-bg: #E8F7F0;
-  --badge-text: #0E4327;
+  --bg-color: #04090f;
+  --badge-bg: #0e4327;
+  --badge-text: #e8f7f0;
   
-  --white: #FFFFFF;
-  --page-bg: #ECFEFF;
-  --paper: #F8FAFC;
-  --stone: rgba(10, 0, 48, 0.08);
-  --ink: #0A0030;
-  --ink-2: #120052;
-  --muted: #64748B;
-  --blue: #3B0FAA;
-  --paper: #FFFFFF;
+  /* Premium Dark Theme Variables */
+  --white: rgba(56, 189, 248, 0.05); /* very subtle glass */
+  --page-bg: #04090f;
+  --ink: #FFFFFF;       /* Pure white for maximum contrast */
+  --ink-2: #F1F5F9;     /* Off-white */
+  --muted: #94a3b8;     /* Light slate grey for secondary text */
+  --blue: #38bdf8;      /* The Neon Cyan "Bleu ciel" */
+  --stone: rgba(56, 189, 248, 0.15); /* Glass border with cyan tint */
+  --paper: rgba(11, 19, 41, 0.45);
 }
 
 @theme inline {
@@ -55,27 +55,35 @@ body {
   background-image: none !important;
 }
 
-/* Fix for inputs to match the light theme */
+/* Inputs matches the dark theme */
 input, select, textarea {
-  background-color: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  color: #0A0030 !important;
+  background-color: var(--white) !important;
+  border-color: var(--stone) !important;
+  color: var(--ink) !important;
 }
 input:focus, select:focus, textarea:focus {
-  border-color: #18CDEC !important;
-  box-shadow: 0 0 0 2px rgba(24, 205, 236, 0.2) !important;
+  border-color: var(--blue) !important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2) !important;
 }
 
-/* Card Shadows */
+/* Card Shadows and Backgrounds for Dark Theme */
 .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5) !important;
 }
-.bg-white {
-  background-color: #FFFFFF !important;
-  border: 1px solid #E2E8F0 !important;
+
+/* Ensure any hardcoded bg-white or bg-slate-50 is turned into dark glass */
+.bg-white, .bg-slate-50, .bg-slate-100 {
+  background-color: var(--paper) !important;
+  border: 1px solid var(--stone) !important;
 }
-.bg-slate-50, .bg-slate-100 {
-  background-color: #F8FAFC !important;
+.text-slate-700, .text-slate-800, .text-gray-700, .text-gray-800, .text-slate-900 {
+  color: var(--ink) !important;
+}
+.text-slate-500, .text-slate-600, .text-gray-500, .text-gray-600 {
+  color: var(--muted) !important;
+}
+.border-slate-100, .border-slate-200, .border-gray-100, .border-gray-200 {
+  border-color: var(--stone) !important;
 }
 
 /* SplashScreen Animations */

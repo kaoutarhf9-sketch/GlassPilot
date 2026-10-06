@@ -208,7 +208,7 @@ function DossiersList() {
         <div>
           <div className="flex items-center gap-3 mb-1">
             <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-              <FileText size={18} className="text-[#18CDEC]" />
+              <FileText size={18} className="text-[var(--blue)]" />
             </div>
             <h1 className="text-2xl font-bold text-[var(--ink)] tracking-tight">Dossiers</h1>
           </div>
@@ -313,7 +313,7 @@ function DossiersList() {
         <div className="p-4 sm:p-5">
           {dossiersFiltres.length === 0 ? (
             <div className="py-16 text-center flex flex-col items-center justify-center bg-[var(--white)]/20 rounded-2xl border border-[var(--stone)]">
-              <div className="w-16 h-16 rounded-2xl bg-[var(--white)]/40 border border-[var(--stone)] flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-[var(--white)] border border-[var(--stone)] flex items-center justify-center mb-4">
                 <Search size={28} className="text-[var(--blue)] opacity-50" />
               </div>
               <h3 className="text-lg font-semibold text-[var(--ink)] mb-1">Aucun dossier trouvé</h3>
@@ -338,11 +338,11 @@ function DossiersList() {
                     {/* En-tête : Client & Statut */}
                     <div className="p-5 border-b border-[#1E3A5F] bg-[#112233] flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-[#1E3A5F] border border-[#1E3A5F] flex items-center justify-center text-xs font-bold text-[#18CDEC] shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#1E3A5F] border border-[#1E3A5F] flex items-center justify-center text-xs font-bold text-[var(--blue)] shrink-0">
                           {initials}
                         </div>
                         <div className="flex flex-col">
-                          <span className="font-bold text-[#18CDEC] truncate max-w-[120px] uppercase tracking-wide text-sm" title={dossier.client ? `${dossier.client.prenom} ${dossier.client.nom}` : 'Sans client'}>
+                          <span className="font-bold text-[var(--blue)] truncate max-w-[120px] uppercase tracking-wide text-sm" title={dossier.client ? `${dossier.client.prenom} ${dossier.client.nom}` : 'Sans client'}>
                             {dossier.client ? `${dossier.client.prenom} ${dossier.client.nom}` : 'Sans client'}
                           </span>
                           <span className="text-xs text-[#A0B4C8] mt-0.5">{dossier.client?.telephone || 'Aucun numéro'}</span>
@@ -358,11 +358,11 @@ function DossiersList() {
                       {/* N° et Vitrage */}
                       <div className="flex flex-col gap-1.5">
                         <div className="flex items-center gap-2">
-                          <FileText size={14} className="text-[#18CDEC]" />
+                          <FileText size={14} className="text-[var(--blue)]" />
                           <span className="font-mono font-bold text-white text-sm tracking-wide">{dossier.numero}</span>
                         </div>
                         {dossier.type_vitrage && (
-                          <div className="ml-5 text-[10px] text-[#18CDEC] font-bold bg-[#18CDEC]/10 w-fit px-2 py-0.5 rounded border border-[#18CDEC]/20 uppercase tracking-wider">
+                          <div className="ml-5 text-[10px] text-[var(--blue)] font-bold bg-[var(--blue)]/10 w-fit px-2 py-0.5 rounded border border-[var(--stone)]/20 uppercase tracking-wider">
                             {dossier.type_vitrage}
                           </div>
                         )}
@@ -370,7 +370,7 @@ function DossiersList() {
 
                       {/* Véhicule */}
                       <div className="flex items-center gap-3 text-sm">
-                        <Car size={16} className="text-[#18CDEC] shrink-0" />
+                        <Car size={16} className="text-[var(--blue)] shrink-0" />
                         <div className="flex flex-col">
                           <span className="font-mono font-bold text-white text-xs">{dossier.immatriculation || 'IMMATRICULATION INCONNUE'}</span>
                           {dossier.modele_vehicule && (
@@ -381,7 +381,7 @@ function DossiersList() {
 
                       {/* Garage */}
                       <div className="flex items-center gap-3 text-sm">
-                        <Building2 size={16} className="text-[#18CDEC] shrink-0" />
+                        <Building2 size={16} className="text-[var(--blue)] shrink-0" />
                         <span className="text-white text-sm truncate font-medium">{dossier.garage ? dossier.garage.nom_garage : <span className="italic text-[#6B8299]">Garage inconnu</span>}</span>
                       </div>
 
@@ -394,7 +394,7 @@ function DossiersList() {
                         } catch(e) {}
                         return (
                           <div className="flex items-center gap-3 text-sm">
-                            <ShieldCheck size={16} className="text-[#18CDEC] shrink-0" />
+                            <ShieldCheck size={16} className="text-[var(--blue)] shrink-0" />
                             <span className="text-white font-medium text-sm truncate" title={nomAssurance || 'Assurance non renseignée'}>
                               {nomAssurance ? (
                                 <span className="font-semibold text-white">{nomAssurance}</span>
@@ -408,7 +408,7 @@ function DossiersList() {
 
                       {/* Date */}
                       <div className="flex items-center gap-3 text-sm">
-                        <CalendarDays size={16} className="text-[#18CDEC] shrink-0" />
+                        <CalendarDays size={16} className="text-[var(--blue)] shrink-0" />
                         <span className="text-white text-sm font-medium">
                           {new Date(dossier.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })}
                         </span>
@@ -419,7 +419,7 @@ function DossiersList() {
                     <div className="px-5 py-3 border-t border-[#1E3A5F] mt-auto">
                       <Link
                         href={`/gestionnaire/dossiers/${dossier.id}`}
-                        className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-[#18CDEC] hover:bg-[#1E3A5F]/40 rounded-xl transition-all border border-transparent"
+                        className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-[var(--blue)] hover:bg-[#1E3A5F]/40 rounded-xl transition-all border border-transparent"
                       >
                         Voir le dossier
                         <ChevronRight size={14} />

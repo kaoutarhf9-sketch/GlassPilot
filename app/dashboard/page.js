@@ -443,7 +443,7 @@ export default function DashboardHome() {
         ) : (
           <div className="divide-y divide-[#E6E4DD]">
             {dossiersRecents.map((dossier) => (
-              <div key={dossier.id} className="p-5 hover:bg-[var(--white)]/40 transition-colors group">
+              <div key={dossier.id} className="p-5 hover:bg-[var(--white)] transition-colors group">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-[var(--white)] rounded-xl flex items-center justify-center">
@@ -464,7 +464,7 @@ export default function DashboardHome() {
                           <Calendar size={10} /> {formatDateRelative(dossier.created_at)}
                         </span>
                         <span className="flex items-center gap-1 font-medium text-[var(--ink)]">
-                          <ShieldCheck size={11} className="text-[#18CDEC]" />
+                          <ShieldCheck size={11} className="text-[var(--blue)]" />
                           {(() => {
                             let nomAssurance = null;
                             try {

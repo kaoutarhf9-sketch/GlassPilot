@@ -270,7 +270,7 @@ export default function AdminDossiersPage() {
             </div>
           </div>
           
-          <div className="bg-[var(--white)]/40 rounded-2xl p-3 border border-[var(--stone)]/60 text-xs font-mono text-[var(--ink)] overflow-x-auto max-h-40 whitespace-pre-wrap">
+          <div className="bg-[var(--white)] rounded-2xl p-3 border border-[var(--stone)]/60 text-xs font-mono text-[var(--ink)] overflow-x-auto max-h-40 whitespace-pre-wrap">
             {fetchError}
           </div>
 
@@ -325,7 +325,7 @@ export default function AdminDossiersPage() {
           <button
             onClick={() => fetchData(true)}
             disabled={refreshing}
-            className="flex items-center gap-2 bg-[var(--white)]/40 hover:bg-[var(--white)] border border-[var(--stone)] text-[var(--ink)] px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all hover:-translate-y-0.5 cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-2 bg-[var(--white)] hover:bg-[var(--white)] border border-[var(--stone)] text-[var(--ink)] px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all hover:-translate-y-0.5 cursor-pointer disabled:opacity-50"
           >
             <Loader2 size={14} className={clsx('text-[var(--blue)]', refreshing && 'animate-spin')} />
             {refreshing ? 'Mise à jour...' : 'Actualiser'}
@@ -394,7 +394,7 @@ export default function AdminDossiersPage() {
       <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden flex flex-col">
         
         {/* Barre d'outils */}
-        <div className="p-5 border-b border-[var(--stone)]/60 bg-[var(--white)]/40 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <div className="p-5 border-b border-[var(--stone)]/60 bg-[var(--white)] flex flex-col sm:flex-row gap-4 justify-between items-center">
           <div className="relative w-full sm:max-w-md">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
               <Search size={16} className="text-[var(--muted)]" />
@@ -409,7 +409,7 @@ export default function AdminDossiersPage() {
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--ink)] p-1 rounded-full hover:bg-[var(--white)]/40 transition-colors"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--ink)] p-1 rounded-full hover:bg-[var(--white)] transition-colors"
               >
                 <X size={14} />
               </button>
@@ -450,7 +450,7 @@ export default function AdminDossiersPage() {
         <div className="overflow-x-auto">
           {dossiersFiltres.length === 0 ? (
             <div className="p-16 text-center flex flex-col items-center justify-center">
-              <div className="w-16 h-16 rounded-3xl bg-[var(--white)]/40 border border-[var(--stone)]/60 flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-3xl bg-[var(--white)] border border-[var(--stone)]/60 flex items-center justify-center mb-4">
                 <Search size={28} className="text-[var(--muted)]/60" />
               </div>
               <h3 className="text-base font-bold text-[var(--ink)] mb-1">Aucun dossier trouvé</h3>
@@ -491,13 +491,13 @@ export default function AdminDossiersPage() {
                       key={dossier.id}
                       className={clsx(
                         "group transition-colors border-b border-[var(--stone)]/40",
-                        isUnassigned ? "bg-amber-50/10 hover:bg-amber-50/25" : "hover:bg-[var(--white)]/40/80"
+                        isUnassigned ? "bg-amber-50/10 hover:bg-amber-50/25" : "hover:bg-[var(--white)]/80"
                       )}
                     >
                       {/* N° dossier */}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex flex-col">
-                          <span className="font-mono font-bold text-[var(--ink)] text-xs bg-[var(--white)]/40 border border-[var(--stone)] px-2.5 py-1 rounded-lg w-fit">
+                          <span className="font-mono font-bold text-[var(--ink)] text-xs bg-[var(--white)] border border-[var(--stone)] px-2.5 py-1 rounded-lg w-fit">
                             {dossier.numero}
                           </span>
                           {dossier.type_vitrage && (
@@ -565,7 +565,7 @@ export default function AdminDossiersPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="relative w-full max-w-[210px]">
                           {updatingId === dossier.id ? (
-                            <div className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-[var(--muted)] bg-[var(--white)]/40 border border-[var(--stone)] rounded-2xl">
+                            <div className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-[var(--muted)] bg-[var(--white)] border border-[var(--stone)] rounded-2xl">
                               <Loader2 size={12} className="animate-spin text-[var(--blue)]" />
                               Mise à jour...
                             </div>
@@ -605,7 +605,7 @@ export default function AdminDossiersPage() {
 
         {/* Footer */}
         {dossiersFiltres.length > 0 && (
-          <div className="px-6 py-4 border-t border-[var(--stone)]/60 bg-[var(--white)]/40 flex flex-col sm:flex-row gap-3 items-center justify-between text-xs font-bold text-[var(--muted)]">
+          <div className="px-6 py-4 border-t border-[var(--stone)]/60 bg-[var(--white)] flex flex-col sm:flex-row gap-3 items-center justify-between text-xs font-bold text-[var(--muted)]">
             <span>
               Affichage de <span className="text-[var(--ink)]">{dossiersFiltres.length}</span> dossier{dossiersFiltres.length !== 1 ? 's' : ''} sur {dossiers.length}
             </span>

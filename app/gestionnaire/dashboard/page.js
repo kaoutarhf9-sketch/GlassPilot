@@ -375,7 +375,7 @@ export default function GestionnaireDashboard() {
                           } catch(e) {}
                           return (
                             <div className="flex items-center gap-3 text-sm">
-                              <div className="w-5 flex justify-center"><ShieldCheck size={14} className="text-[#18CDEC]" /></div>
+                              <div className="w-5 flex justify-center"><ShieldCheck size={14} className="text-[var(--blue)]" /></div>
                               <span className="text-[var(--ink)] truncate text-xs font-medium" title={nomAssurance || 'Assurance non renseignée'}>
                                 {nomAssurance ? nomAssurance : <span className="italic text-[var(--muted)]">Assurance non renseignée</span>}
                               </span>
@@ -385,7 +385,7 @@ export default function GestionnaireDashboard() {
                       </div>
                       
                       {/* Footer */}
-                      <div className="px-4 py-2 bg-[var(--white)]/40 border-t border-[var(--stone)] mt-auto flex items-center justify-center text-[var(--blue)] text-xs font-medium hover:bg-[var(--white)]/60 transition-colors">
+                      <div className="px-4 py-2 bg-[var(--white)] border-t border-[var(--stone)] mt-auto flex items-center justify-center text-[var(--blue)] text-xs font-medium hover:bg-[var(--white)]/60 transition-colors">
                         Ouvrir le dossier <ChevronRight size={14} className="ml-1" />
                       </div>
                     </div>

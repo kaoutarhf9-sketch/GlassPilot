@@ -572,7 +572,7 @@ export default function CessionDeCreance() {
           <h1 className="text-2xl md:text-3xl font-serif text-[var(--ink)] mb-4">Documents générés !</h1>
           <p className="text-[var(--muted)] mb-8 font-light">Le PDF a été téléchargé automatiquement et le statut du dossier est mis à jour.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href={backUrl} className="px-6 py-3 bg-[var(--white)] text-slate-700 rounded-xl font-medium border border-[var(--stone)] hover:bg-[var(--white)]/40 transition-colors">
+            <Link href={backUrl} className="px-6 py-3 bg-[var(--white)] text-slate-700 rounded-xl font-medium border border-[var(--stone)] hover:bg-[var(--white)] transition-colors">
               Retour au dossier
             </Link>
             <button onClick={handleDownload} className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--blue)] hover:bg-[#0ea5e9] text-[var(--ink)] rounded-xl font-medium transition-all shadow-md">

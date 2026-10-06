@@ -504,7 +504,7 @@ export default function OnboardingPage() {
                       required
                       value={iban}
                       onChange={handleIbanChange}
-                      className="w-full pl-11 pr-4 py-3 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 transition-all font-mono"
+                      className="w-full pl-11 pr-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 transition-all font-mono"
                       placeholder="FR76 3000 6000 0112 3456 7890 123"
                     />
                   </div>
@@ -518,7 +518,7 @@ export default function OnboardingPage() {
                     required
                     value={bic}
                     onChange={(e) => setBic(e.target.value.toUpperCase())}
-                    className="w-full px-4 py-3 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 transition-all font-mono"
+                    className="w-full px-4 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 transition-all font-mono"
                     placeholder="CREDFRPPXXX"
                   />
                 </div>
@@ -534,7 +534,7 @@ export default function OnboardingPage() {
  ? 'border-indigo-600 bg-indigo-50/20' 
  : ribFile 
  ? 'border-emerald-300 bg-emerald-50/10' 
- : 'border-[var(--stone)] hover:border-indigo-400 bg-[var(--white)]/40'
+ : 'border-[var(--stone)] hover:border-indigo-400 bg-[var(--white)]'
  }`}
                   onDragEnter={(e) => handleDrag(e, setRibDragActive)}
                   onDragOver={(e) => handleDrag(e, setRibDragActive)}

@@ -202,7 +202,7 @@ export default function GaragesPage() {
             placeholder="Rechercher un garage par nom, responsable, email ou SIRET..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] transition-all"
           />
         </div>
       </div>
@@ -251,11 +251,11 @@ export default function GaragesPage() {
                       <img src={logoUrl} alt={garage.nom_garage} className="w-full h-full object-contain" />
                     ) : (
                       <div className="w-full h-full bg-[#112233] flex items-center justify-center">
-                        <Building2 size={32} className="text-[#18CDEC]" />
+                        <Building2 size={32} className="text-[var(--blue)]" />
                       </div>
                     )}
                   </div>
-                  <h3 className="text-[#18CDEC] font-bold text-center text-sm uppercase tracking-wide leading-tight">
+                  <h3 className="text-[var(--blue)] font-bold text-center text-sm uppercase tracking-wide leading-tight">
                     {garage.nom_garage || 'Sans nom'}
                   </h3>
                 </div>
@@ -284,38 +284,38 @@ export default function GaragesPage() {
                 {isExpanded && (
                   <div className="border-t border-[#1E3A5F] px-5 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
                     <div className="flex items-start gap-3">
-                      <Eye size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <Eye size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Responsable</p>
                         <p className="text-sm text-white font-medium">{garage.responsable || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Mail size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <Mail size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Email</p>
                         <p className="text-sm text-white font-medium break-all">{garage.email_contact || garage.email || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Phone size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <Phone size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Téléphone</p>
                         <p className="text-sm text-white font-medium">{garage.telephone || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <MapPin size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <MapPin size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Adresse</p>
                         <p className="text-sm text-white font-medium">{garage.adresse || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <FileText size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <FileText size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">SIRET</p>
-                        <p className="text-sm text-[#18CDEC] font-mono font-bold">{garage.siret || '—'}</p>
+                        <p className="text-sm text-[var(--blue)] font-mono font-bold">{garage.siret || '—'}</p>
                       </div>
                     </div>
 
@@ -330,9 +330,9 @@ export default function GaragesPage() {
                             <div className="flex items-center justify-between text-xs">
                               <span className="text-[#6B8299] font-medium">IBAN :</span>
                               {visibleIbanIds[garage.id] ? (
-                                <span className="font-mono font-bold text-[#18CDEC]">{garage.iban}</span>
+                                <span className="font-mono font-bold text-[var(--blue)]">{garage.iban}</span>
                               ) : (
-                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[#18CDEC]/10 text-[#18CDEC] hover:bg-[#18CDEC]/20 border border-[#18CDEC]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
+                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[var(--blue)]/10 text-[var(--blue)] hover:bg-[var(--blue)]/20 border border-[var(--stone)]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
                               )}
                             </div>
                           )}
@@ -342,7 +342,7 @@ export default function GaragesPage() {
                               {visibleIbanIds[garage.id] ? (
                                 <span className="font-mono text-white">{garage.bic}</span>
                               ) : (
-                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[#18CDEC]/10 text-[#18CDEC] hover:bg-[#18CDEC]/20 border border-[#18CDEC]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
+                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[var(--blue)]/10 text-[var(--blue)] hover:bg-[var(--blue)]/20 border border-[var(--stone)]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
                               )}
                             </div>
                           )}
@@ -408,12 +408,12 @@ export default function GaragesPage() {
                     </div>
                     <div className="pt-2 border-t border-[#1E3A5F] flex justify-between items-center">
                       <div className="flex items-center gap-2">
-                        <FolderKanban size={14} className="text-[#18CDEC]" />
+                        <FolderKanban size={14} className="text-[var(--blue)]" />
                         <span className="text-sm text-white font-bold">{dossiersCount[garage.id] || 0} dossier(s)</span>
                       </div>
                       <Link
                         href={`/gestionnaire/dossiers?garage_id=${garage.id}`}
-                        className="text-[#18CDEC] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity"
+                        className="text-[var(--blue)] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity"
                       >
                         Voir <ChevronRight size={12} />
                       </Link>
@@ -438,7 +438,7 @@ export default function GaragesPage() {
               .sort((a, b) => (dossiersCount[b.id] || 0) - (dossiersCount[a.id] || 0))
               .slice(0, 5)
               .map((garage, index) => (
-                <div key={garage.id} className="flex items-center justify-between p-3 bg-[var(--white)]/40 rounded-xl">
+                <div key={garage.id} className="flex items-center justify-between p-3 bg-[var(--white)] rounded-xl">
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-[var(--blue)]/10 flex items-center justify-center text-xs font-bold text-[var(--blue)]">
                       {index + 1}

@@ -465,7 +465,7 @@ export default function ModifierDossier() {
                   <button 
                     type="button" 
                     onClick={prev}
-                    className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-[var(--muted)] font-medium hover:bg-[var(--white)]/40 hover:border-[#1454FF] transition-all"
+                    className="flex-1 md:flex-none md:w-32 py-3 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-[var(--muted)] font-medium hover:bg-[var(--white)] hover:border-[#1454FF] transition-all"
                   >
                     Retour
                   </button>

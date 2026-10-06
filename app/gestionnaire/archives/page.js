@@ -152,7 +152,7 @@ export default function ArchivesPage() {
         <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md overflow-hidden">
           <div className="divide-y divide-[#F4F3EF]">
             {archives.map((archive) => (
-              <div key={archive.id} className="p-5 hover:bg-[var(--white)]/40 transition-colors">
+              <div key={archive.id} className="p-5 hover:bg-[var(--white)] transition-colors">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-[var(--white)] rounded-xl flex items-center justify-center">

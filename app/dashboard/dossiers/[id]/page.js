@@ -963,7 +963,7 @@ export default function DetailDossierPremium() {
                     </div>
                     <h2 className="text-lg font-semibold text-white">Véhicule & intervention</h2>
                   </div>
-                  <div className="px-3 py-1.5 bg-[var(--white)]/40 rounded-lg text-[var(--blue)] font-mono font-semibold text-sm border border-[var(--stone)]">
+                  <div className="px-3 py-1.5 bg-[var(--white)] rounded-lg text-[var(--blue)] font-mono font-semibold text-sm border border-[var(--stone)]">
                     {dossier.immatriculation}
                   </div>
                 </div>
@@ -1085,7 +1085,7 @@ export default function DetailDossierPremium() {
                   </div>
                   <div>
                     <p className="text-xs font-medium text-[var(--muted)] uppercase tracking-wider mb-1">N° Contrat</p>
-                    <p className="font-mono text-sm text-[var(--ink)] bg-[var(--white)]/40 px-2 py-1 rounded inline-block">{dossier.num_contrat || 'Non renseigné'}</p>
+                    <p className="font-mono text-sm text-[var(--ink)] bg-[var(--white)] px-2 py-1 rounded inline-block">{dossier.num_contrat || 'Non renseigné'}</p>
                   </div>
                   <div>
                     <p className="text-xs font-medium text-[var(--muted)] uppercase tracking-wider mb-1">N° Sinistre</p>
@@ -1134,7 +1134,7 @@ export default function DetailDossierPremium() {
                     <button 
                       onClick={saveInvoiceToDossier}
                       disabled={savingInvoice}
-                      className="px-3 py-1.5 bg-[var(--white)]/40 border border-[var(--stone)] hover:bg-[var(--stone)] text-[var(--ink)] rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                      className="px-3 py-1.5 bg-[var(--white)] border border-[var(--stone)] hover:bg-[var(--stone)] text-[var(--ink)] rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
                     >
                       {savingInvoice ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
                       <span className="hidden sm:inline">Sauvegarder</span>
@@ -1629,7 +1629,7 @@ export default function DetailDossierPremium() {
           </div>
 
           {/* Corps du chat */}
-          <div className="h-96 overflow-y-auto p-4 space-y-3 bg-[var(--white)]/40">
+          <div className="h-96 overflow-y-auto p-4 space-y-3 bg-[var(--white)]">
             {messages.length === 0 ? (
               <div className="text-center py-8">
                 <MessageSquare size={32} className="text-[var(--muted)] mx-auto mb-2 opacity-50" />
@@ -1756,7 +1756,7 @@ export default function DetailDossierPremium() {
                 }}
                 disabled={chatUploading}
                 placeholder="Écrivez votre message..."
-                className="flex-1 px-3 py-2 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/20 transition-all resize-none disabled:opacity-50"
+                className="flex-1 px-3 py-2 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/20 transition-all resize-none disabled:opacity-50"
                 rows={1}
               />
               <button

@@ -145,7 +145,7 @@ export default function GestionnairesPage() {
               placeholder="Rechercher par nom, prénom ou email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] transition-all"
+              className="block w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-xs font-semibold placeholder-[#89867A] focus:outline-none focus:ring-2 focus:ring-[#1454FF]/10 focus:border-[#1454FF] transition-all"
             />
           </div>
         </div>
@@ -175,7 +175,7 @@ export default function GestionnairesPage() {
               {fetchError ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center">
-                    <div className="max-w-md mx-auto p-6 bg-[var(--white)]/40 border border-[var(--stone)] rounded-3xl text-center space-y-4 shadow-md">
+                    <div className="max-w-md mx-auto p-6 bg-[var(--white)] border border-[var(--stone)] rounded-3xl text-center space-y-4 shadow-md">
                       <div className="flex items-center justify-center gap-2 text-rose-600 font-bold text-sm">
                         <AlertCircle size={18} />
                         <span>Erreur de chargement</span>
@@ -208,7 +208,7 @@ export default function GestionnairesPage() {
                 </tr>
               ) : (
                 filteredGestionnaires.map((gestionnaire) => (
-                  <tr key={gestionnaire.id} className="hover:bg-[var(--white)]/40/80 transition-colors">
+                  <tr key={gestionnaire.id} className="hover:bg-[var(--white)]/80 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 bg-[var(--blue)]/10 text-[var(--blue)] rounded-full border border-[#C2CFFF] flex items-center justify-center font-extrabold text-xs">
@@ -257,7 +257,7 @@ export default function GestionnairesPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-[#090D16]/60 backdrop-blur-sm" onClick={() => !isSubmitting && setIsModalOpen(false)}></div>
           <div className="bg-[var(--white)] rounded-3xl shadow-2xl max-w-md w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[var(--stone)] overflow-hidden">
-            <div className="p-6 sm:p-8 border-b border-[var(--stone)]/60 bg-[var(--white)]/40">
+            <div className="p-6 sm:p-8 border-b border-[var(--stone)]/60 bg-[var(--white)]">
               <h3 className="text-xl font-bold font-serif-premium text-[var(--ink)]">Ajouter un Gestionnaire</h3>
               <p className="text-xs font-semibold text-[var(--muted)] mt-1.5">
                 Un email contenant le mot de passe généré automatiquement lui sera envoyé instantanément.

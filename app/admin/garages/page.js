@@ -290,11 +290,11 @@ export default function GaragesPage() {
             </div>
             
             <div className="flex gap-4">
-              <div className="px-4 py-2 bg-[var(--white)]/40 border border-[var(--stone)] rounded-2xl text-center">
+              <div className="px-4 py-2 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-center">
                 <p className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider">Téléphone</p>
                 <p className="text-sm font-bold text-[var(--ink)] mt-0.5">{selectedGarage.telephone}</p>
               </div>
-              <div className="px-4 py-2 bg-[var(--white)]/40 border border-[var(--stone)] rounded-2xl text-center">
+              <div className="px-4 py-2 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-center">
                 <p className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider">SIRET</p>
                 <p className="text-sm font-mono font-bold text-[var(--ink)] mt-0.5">{selectedGarage.siret}</p>
               </div>
@@ -304,7 +304,7 @@ export default function GaragesPage() {
 
         {/* Dossiers List for this Garage */}
         <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-md overflow-hidden">
-          <div className="p-6 border-b border-[var(--stone)]/60 bg-[var(--white)]/40">
+          <div className="p-6 border-b border-[var(--stone)]/60 bg-[var(--white)]">
             <h3 className="text-lg font-bold font-serif-premium text-[var(--ink)] flex items-center gap-2">
               <FileText size={20} className="text-[var(--blue)]" /> Dossiers de ce garage
             </h3>
@@ -339,7 +339,7 @@ export default function GaragesPage() {
                   {dossiers.map(dossier => {
                     const isUnassigned = !dossier.gestionnaire_id;
                     return (
-                      <tr key={dossier.id} className={clsx("group transition-colors", isUnassigned ? "bg-amber-50/10" : "hover:bg-[var(--white)]/40/80")}>
+                      <tr key={dossier.id} className={clsx("group transition-colors", isUnassigned ? "bg-amber-50/10" : "hover:bg-[var(--white)]/80")}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="font-mono font-bold text-[var(--ink)] text-xs">{dossier.numero}</div>
                           <div className="text-[10px] text-[var(--muted)] font-semibold mt-0.5 uppercase">{dossier.type}</div>
@@ -457,11 +457,11 @@ export default function GaragesPage() {
                       />
                     ) : (
                       <div className="w-full h-full bg-[#112233] flex items-center justify-center">
-                        <Building2 size={32} className="text-[#18CDEC]" />
+                        <Building2 size={32} className="text-[var(--blue)]" />
                       </div>
                     )}
                   </div>
-                  <h3 className="text-[#18CDEC] font-bold text-center text-sm uppercase tracking-wide leading-tight">
+                  <h3 className="text-[var(--blue)] font-bold text-center text-sm uppercase tracking-wide leading-tight">
                     {garage.nom_garage}
                   </h3>
                 </div>
@@ -490,38 +490,38 @@ export default function GaragesPage() {
                 {isExpanded && (
                   <div className="border-t border-[#1E3A5F] px-5 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
                     <div className="flex items-start gap-3">
-                      <Eye size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <Eye size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Responsable</p>
                         <p className="text-sm text-white font-medium">{garage.responsable || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Mail size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <Mail size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Email</p>
                         <p className="text-sm text-white font-medium break-all">{garage.email_contact || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Phone size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <Phone size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Téléphone</p>
                         <p className="text-sm text-white font-medium">{garage.telephone || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <MapPin size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <MapPin size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Adresse</p>
                         <p className="text-sm text-white font-medium">{garage.adresse || '—'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <FileText size={14} className="text-[#18CDEC] mt-0.5 shrink-0" />
+                      <FileText size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">SIRET</p>
-                        <p className="text-sm text-[#18CDEC] font-mono font-bold">{garage.siret || '—'}</p>
+                        <p className="text-sm text-[var(--blue)] font-mono font-bold">{garage.siret || '—'}</p>
                       </div>
                     </div>
 
@@ -536,9 +536,9 @@ export default function GaragesPage() {
                             <div className="flex items-center justify-between text-xs">
                               <span className="text-[#6B8299] font-medium">IBAN :</span>
                               {visibleIbanIds[garage.id] ? (
-                                <span className="font-mono font-bold text-[#18CDEC]">{garage.iban}</span>
+                                <span className="font-mono font-bold text-[var(--blue)]">{garage.iban}</span>
                               ) : (
-                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[#18CDEC]/10 text-[#18CDEC] hover:bg-[#18CDEC]/20 border border-[#18CDEC]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
+                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[var(--blue)]/10 text-[var(--blue)] hover:bg-[var(--blue)]/20 border border-[var(--stone)]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
                               )}
                             </div>
                           )}
@@ -548,7 +548,7 @@ export default function GaragesPage() {
                               {visibleIbanIds[garage.id] ? (
                                 <span className="font-mono text-white">{garage.bic}</span>
                               ) : (
-                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[#18CDEC]/10 text-[#18CDEC] hover:bg-[#18CDEC]/20 border border-[#18CDEC]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
+                                <button onClick={(e) => toggleIban(e, garage.id)} className="px-2 py-0.5 bg-[var(--blue)]/10 text-[var(--blue)] hover:bg-[var(--blue)]/20 border border-[var(--stone)]/30 rounded text-[10px] font-bold uppercase tracking-wider transition-colors">Afficher</button>
                               )}
                             </div>
                           )}
@@ -615,7 +615,7 @@ export default function GaragesPage() {
                     <div className="pt-2 border-t border-[#1E3A5F] flex justify-between items-center">
                       <button
                         onClick={() => setSelectedGarage(garage)}
-                        className="text-[#18CDEC] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity"
+                        className="text-[var(--blue)] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity"
                       >
                         <FileText size={12} /> Voir les dossiers
                       </button>
@@ -641,7 +641,7 @@ export default function GaragesPage() {
           <div className="fixed inset-0 bg-[#090D16]/60 backdrop-blur-sm" onClick={() => !isSubmitting && setIsModalOpen(false)}></div>
           <div className="bg-[var(--white)] rounded-3xl max-w-lg w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[var(--stone)] overflow-hidden">
             {/* Same form as before */}
-            <div className="p-6 border-b border-[var(--stone)]/60 bg-[var(--white)]/40">
+            <div className="p-6 border-b border-[var(--stone)]/60 bg-[var(--white)]">
               <h3 className="text-xl font-bold font-serif-premium text-[var(--ink)]">Ajouter un Garagiste</h3>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-5 max-h-[75vh] overflow-y-auto custom-scrollbar">

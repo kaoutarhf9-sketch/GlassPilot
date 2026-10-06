@@ -176,7 +176,7 @@ export default function ListeDossiers() {
               placeholder="Rechercher par numéro, plaque, client..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]"
+              className="w-full pl-10 pr-4 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-[var(--ink)] focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -184,7 +184,7 @@ export default function ListeDossiers() {
             <select 
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm font-medium text-[var(--ink)] focus:outline-none focus:border-[#1454FF] transition-all"
+              className="px-4 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm font-medium text-[var(--ink)] focus:outline-none focus:border-[#1454FF] transition-all"
             >
               <option value="tous">Tous les statuts</option>
               <option value="en_attente">En attente</option>
@@ -219,7 +219,7 @@ export default function ListeDossiers() {
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-[var(--white)]/40 border-b border-[var(--stone)]">
+                <tr className="bg-[var(--white)] border-b border-[var(--stone)]">
                   <th className="p-4 pl-6 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">N° dossier</th>
                   <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Client</th>
                   <th className="p-4 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Assurance</th>
@@ -231,7 +231,7 @@ export default function ListeDossiers() {
               </thead>
               <tbody className="divide-y divide-[#F4F3EF]">
                 {dossiersFiltres.map((dossier) => (
-                  <tr key={dossier.id} className="hover:bg-[var(--white)]/40 transition-colors">
+                  <tr key={dossier.id} className="hover:bg-[var(--white)] transition-colors">
                     <td className="p-4 pl-6">
                       <div className="font-mono font-bold text-[var(--ink)]">{dossier.numero}</div>
                       <div className="text-xs text-[var(--muted)] mt-0.5">{dossier.type_vitrage?.substring(0, 20)}</div>
@@ -253,7 +253,7 @@ export default function ListeDossiers() {
                         } catch(e) {}
                         return (
                           <div className="flex items-center gap-1.5 text-sm font-medium text-[var(--ink)]">
-                            <ShieldCheck size={14} className="text-[#18CDEC] shrink-0" />
+                            <ShieldCheck size={14} className="text-[var(--blue)] shrink-0" />
                             <span>{nomAssurance || <span className="italic text-[var(--muted)] text-xs">Non renseignée</span>}</span>
                           </div>
                         );
@@ -291,7 +291,7 @@ export default function ListeDossiers() {
           {/* Version Mobile */}
           <div className="md:hidden divide-y divide-[#F4F3EF]">
             {dossiersFiltres.map((dossier) => (
-              <div key={dossier.id} className="p-4 hover:bg-[var(--white)]/40 transition-colors">
+              <div key={dossier.id} className="p-4 hover:bg-[var(--white)] transition-colors">
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <p className="font-mono font-bold text-[var(--ink)] text-sm">{dossier.numero}</p>
@@ -306,7 +306,7 @@ export default function ListeDossiers() {
                     <span className="text-[var(--ink)]">{dossier.clients?.prenom} {dossier.clients?.nom}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
-                    <ShieldCheck size={14} className="text-[#18CDEC]" />
+                    <ShieldCheck size={14} className="text-[var(--blue)]" />
                     <span className="text-[var(--ink)] font-medium">
                       {(() => {
                         let nomAssurance = null;

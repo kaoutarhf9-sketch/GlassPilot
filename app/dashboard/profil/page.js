@@ -230,7 +230,7 @@ export default function ProfilPage() {
     );
   }
 
-  const inputClass = "w-full px-4 py-2.5 bg-[var(--white)]/40 border border-[var(--stone)] rounded-xl text-sm text-slate-200 focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]";
+  const inputClass = "w-full px-4 py-2.5 bg-[var(--white)] border border-[var(--stone)] rounded-xl text-sm text-slate-200 focus:outline-none focus:border-[#1454FF] focus:ring-2 focus:ring-[#1454FF]/10 transition-all placeholder:text-[var(--muted)]";
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
