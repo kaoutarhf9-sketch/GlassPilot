@@ -666,7 +666,6 @@ Gestionnaire administratif du garage ${garageNom}
       
       // Auto-add system note!
       const friendlyLabel = STATUTS.find(s => s.value === statusValue)?.label || statusValue;
-      addSystemNote(`🔄 Le statut du dossier a été changé en : "${friendlyLabel}"`);
       
       // Enregistrer également dans le journal d'activité (tchat)
       await supabase.from('messages').insert({

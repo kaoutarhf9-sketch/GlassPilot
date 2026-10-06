@@ -624,7 +624,6 @@ export default function DetailDossierPremium() {
         desistement: 'Désistement'
       };
       const friendlyLabel = statusLabels[newStatut] || newStatut;
-      await addSystemNote(`🔄 Le statut du dossier a été changé en : "${friendlyLabel}"`);
       
       // Enregistrer également dans le journal d'activité (tchat)
       await supabase.from('messages').insert({
