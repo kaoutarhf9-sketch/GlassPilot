@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { REFERENTIEL_ASSURANCES } from '@/lib/referentielAssurances';
 import { 
   Search, Phone, Mail, Clock, Copy, Check, 
-  ExternalLink, AlertCircle, Sparkles, ChevronLeft, ChevronRight
+  ExternalLink, AlertCircle, Sparkles, ChevronLeft, ChevronRight,
+  ShieldCheck, HelpCircle
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -27,10 +28,10 @@ export default function ReferentielAssuranceTable() {
     const q = searchTerm.toLowerCase();
     const matchSearch =
       item.nom.toLowerCase().includes(q) ||
-      item.telephone.toLowerCase().includes(q) ||
-      item.email.toLowerCase().includes(q) ||
-      item.notes.toLowerCase().includes(q) ||
-      item.horaires.toLowerCase().includes(q);
+      (item.telephone && item.telephone.toLowerCase().includes(q)) ||
+      (item.email && item.email.toLowerCase().includes(q)) ||
+      (item.notes && item.notes.toLowerCase().includes(q)) ||
+      (item.horaires && item.horaires.toLowerCase().includes(q));
 
     if (!matchSearch) return false;
 
@@ -38,7 +39,7 @@ export default function ReferentielAssuranceTable() {
       return item.notes && item.notes.trim() !== '';
     }
     if (filterType === 'conference') {
-      return item.notes.toLowerCase().includes('conférence') || item.notes.toLowerCase().includes('conference');
+      return item.notes && (item.notes.toLowerCase().includes('conférence') || item.notes.toLowerCase().includes('conference'));
     }
 
     return true;
@@ -88,90 +89,96 @@ export default function ReferentielAssuranceTable() {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
+    <div className="space-y-6 font-sans">
       
       {/* Search and Quick Filters Header */}
-      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] p-4 sm:p-6 shadow-md flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-[#0d1428] rounded-2xl border border-[#1e2d4a] p-4 sm:p-6 shadow-xl flex flex-col md:flex-row gap-4 justify-between items-center">
         
         {/* Quick Filter Buttons */}
-        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-2.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
           <button
             onClick={() => setFilterType('tous')}
             className={clsx(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 border",
+              "px-4 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0 flex items-center gap-2 border cursor-pointer",
               filterType === 'tous'
-                ? "bg-[#3B0FAA] text-white border-[#3B0FAA] shadow-md shadow-[#3B0FAA]/20"
-                : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                ? "bg-[#1454FF] text-white border-[#1454FF] shadow-lg shadow-[#1454FF]/30"
+                : "bg-[#111c35] text-slate-300 border-[#1e2d4a] hover:bg-[#16223d] hover:text-white"
             )}
           >
             Toutes ({REFERENTIEL_ASSURANCES.length})
           </button>
+          
           <button
             onClick={() => setFilterType('consignes')}
             className={clsx(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 border",
+              "px-4 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0 flex items-center gap-2 border cursor-pointer",
               filterType === 'consignes'
-                ? "bg-[#18CDEC] text-[#0A0030] border-[#18CDEC] shadow-md shadow-[#18CDEC]/20"
-                : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                ? "bg-[#00d4ff] text-[#071026] border-[#00d4ff] font-extrabold shadow-lg shadow-[#00d4ff]/30"
+                : "bg-[#111c35] text-slate-300 border-[#1e2d4a] hover:bg-[#16223d] hover:text-white"
             )}
           >
-            <AlertCircle size={14} /> Consignes ({REFERENTIEL_ASSURANCES.filter(i => i.notes && i.notes.trim()).length})
+            <AlertCircle size={16} /> 
+            Consignes ({REFERENTIEL_ASSURANCES.filter(i => i.notes && i.notes.trim()).length})
           </button>
+          
           <button
             onClick={() => setFilterType('conference')}
             className={clsx(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 border",
+              "px-4 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0 flex items-center gap-2 border cursor-pointer",
               filterType === 'conference'
-                ? "bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20"
-                : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                ? "bg-amber-500 text-black border-amber-500 font-extrabold shadow-lg shadow-amber-500/30"
+                : "bg-[#111c35] text-slate-300 border-[#1e2d4a] hover:bg-[#16223d] hover:text-white"
             )}
           >
-            <Phone size={14} /> Conférence ({REFERENTIEL_ASSURANCES.filter(i => i.notes.toLowerCase().includes('conférence') || i.notes.toLowerCase().includes('conference')).length})
+            <Phone size={16} /> 
+            Conférence ({REFERENTIEL_ASSURANCES.filter(i => i.notes && (i.notes.toLowerCase().includes('conférence') || i.notes.toLowerCase().includes('conference'))).length})
           </button>
         </div>
+
         {/* Search Input */}
         <div className="relative w-full md:max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#00d4ff] pointer-events-none" size={20} />
           <input
             type="text"
             placeholder="Rechercher une assurance, téléphone, e-mail..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-11 pr-10 py-3 bg-[#E6FAFC]/50 border border-[#18CDEC]/30 rounded-2xl text-sm font-medium text-[#0A0030] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#18CDEC]/40 focus:bg-white transition-all"
+            className="w-full pl-12 pr-10 py-3 bg-[#111c35] border border-[#1e2d4a] rounded-xl text-sm sm:text-base font-medium text-white placeholder:text-slate-500 focus:outline-none focus:border-[#00d4ff] focus:ring-1 focus:ring-[#00d4ff]/30 transition-all"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-full hover:bg-[#1e2d4a] transition-colors cursor-pointer"
             >
               ×
             </button>
           )}
         </div>
 
-        
       </div>
 
       {/* Main Table */}
-      <div className="bg-[var(--white)] rounded-3xl border border-[var(--stone)] shadow-xl overflow-hidden">
+      <div className="bg-[#0d1428] rounded-2xl border border-[#1e2d4a] shadow-xl overflow-hidden">
+        
+        {/* Vue Desktop Tableau */}
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#E6FAFC] border-b border-[#18CDEC]/20 text-[#0A0030] text-xs font-bold uppercase tracking-wider">
-                <th className="p-4 sm:p-5 pl-6">Assurance</th>
+              <tr className="bg-[#111c35] border-b border-[#1e2d4a] text-slate-300 text-xs sm:text-sm font-bold uppercase tracking-wider">
+                <th className="p-4 sm:p-5 pl-6">Compagnie d'Assurance</th>
                 <th className="p-4 sm:p-5">Téléphone</th>
-                <th className="p-4 sm:p-5">Email</th>
+                <th className="p-4 sm:p-5">Email sinistre</th>
                 <th className="p-4 sm:p-5">Horaires</th>
-                <th className="p-4 sm:p-5 pr-6 text-right">Actions</th>
+                <th className="p-4 sm:p-5 pr-6 text-right">Actions rapides</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-sm">
+            <tbody className="divide-y divide-[#1e2d4a]/70">
               {pageData.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-slate-400">
-                    <Search size={32} className="mx-auto mb-2 opacity-40" />
-                    <p className="font-semibold text-slate-600">Aucune assurance trouvée</p>
-                    <p className="text-xs text-slate-400 mt-1">Essayez un autre mot-clé (ex: AXA, ALLIANZ, etc.)</p>
+                  <td colSpan={5} className="py-16 text-center text-slate-400">
+                    <Search size={36} className="mx-auto mb-3 text-[#00d4ff]/50" />
+                    <p className="font-bold text-white text-lg">Aucune assurance trouvée</p>
+                    <p className="text-sm text-slate-400 mt-1">Essayez un autre mot-clé (ex: AXA, ALLIANZ, PACIFICA, etc.)</p>
                   </td>
                 </tr>
               ) : (
@@ -179,33 +186,33 @@ export default function ReferentielAssuranceTable() {
                   const telHref = getPhoneTelHref(item.telephone);
                   const mailtoHref = getEmailMailtoHref(item.email);
                   const hasNotes = item.notes && item.notes.trim() !== '';
-                  const isConference = item.notes.toLowerCase().includes('conférence') || item.notes.toLowerCase().includes('conference');
+                  const isConference = item.notes && (item.notes.toLowerCase().includes('conférence') || item.notes.toLowerCase().includes('conference'));
 
                   return (
                     <tr
                       key={item.id}
-                      className="hover:bg-[#E6FAFC]/40 transition-colors group"
+                      className="hover:bg-[#16223d]/60 transition-colors group"
                     >
                       {/* 1. Assurance */}
-                      <td className="p-4 sm:p-5 pl-6 align-top">
+                      <td className="p-4 sm:p-5 pl-6 align-top max-w-[340px]">
                         <div className="flex flex-col">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-bold text-[#0A0030] text-base group-hover:text-[#3B0FAA] transition-colors">
+                          <div className="flex items-center gap-2.5 flex-wrap">
+                            <span className="font-extrabold text-white text-base sm:text-lg group-hover:text-[#00d4ff] transition-colors">
                               {item.nom}
                             </span>
                             {isConference && (
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
                                 Conférence oblig.
                               </span>
                             )}
                           </div>
 
                           {hasNotes && (
-                            <div className="mt-2">
-                              <p className="text-xs text-slate-600 leading-relaxed bg-amber-50/60 p-2 rounded-xl border border-amber-200/50">
-                                <span className="font-bold text-amber-900">💡 </span>
+                            <div className="mt-2.5">
+                              <div className="text-xs sm:text-sm text-slate-200 leading-relaxed bg-[#16223d] p-3 rounded-xl border border-[#25375c]">
+                                <span className="font-bold text-amber-300">💡 Consigne : </span>
                                 {item.notes}
-                              </p>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -214,48 +221,48 @@ export default function ReferentielAssuranceTable() {
                       {/* 2. Téléphone */}
                       <td className="p-4 sm:p-5 align-top">
                         {item.telephone && item.telephone !== '—' ? (
-                          <div className="space-y-1">
+                          <div className="space-y-1.5">
                             <div className="flex items-center gap-2">
-                              <Phone size={14} className="text-[#18CDEC] shrink-0" />
-                              <span className="font-mono text-xs font-semibold text-[#0A0030] break-words max-w-[220px]">
+                              <Phone size={15} className="text-[#00d4ff] shrink-0" />
+                              <span className="font-mono text-sm sm:text-base font-bold text-white tracking-wide break-words max-w-[220px]">
                                 {item.telephone}
                               </span>
                             </div>
                             {telHref && (
                               <a
                                 href={telHref}
-                                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#3B0FAA] hover:underline"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00d4ff] hover:text-cyan-200 hover:underline transition-colors"
                               >
-                                <ExternalLink size={10} /> Appeler
+                                <ExternalLink size={12} /> Appeler directement
                               </a>
                             )}
                           </div>
                         ) : (
-                          <span className="text-slate-400 font-mono text-xs">—</span>
+                          <span className="text-slate-500 font-mono text-sm">—</span>
                         )}
                       </td>
 
                       {/* 3. Email */}
-                      <td className="p-4 sm:p-5 align-top max-w-[240px]">
+                      <td className="p-4 sm:p-5 align-top max-w-[280px]">
                         {item.email && item.email !== '—' ? (
-                          <div className="space-y-1">
+                          <div className="space-y-1.5">
                             <div className="flex items-start gap-2">
-                              <Mail size={14} className="text-[#3B0FAA] shrink-0 mt-0.5" />
-                              <span className="font-mono text-xs text-slate-700 break-words leading-tight">
+                              <Mail size={15} className="text-[#00d4ff] shrink-0 mt-0.5" />
+                              <span className="font-mono text-xs sm:text-sm font-medium text-slate-200 break-words leading-relaxed">
                                 {item.email}
                               </span>
                             </div>
                             {mailtoHref && (
                               <a
                                 href={mailtoHref}
-                                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#18CDEC] hover:underline"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00d4ff] hover:text-cyan-200 hover:underline transition-colors"
                               >
-                                <ExternalLink size={10} /> Écrire
+                                <ExternalLink size={12} /> Envoyer un e-mail
                               </a>
                             )}
                           </div>
                         ) : (
-                          <span className="text-slate-400 font-mono text-xs">—</span>
+                          <span className="text-slate-500 font-mono text-sm">—</span>
                         )}
                       </td>
 
@@ -263,13 +270,13 @@ export default function ReferentielAssuranceTable() {
                       <td className="p-4 sm:p-5 align-top">
                         {item.horaires && item.horaires !== '—' ? (
                           <div className="flex items-start gap-2">
-                            <Clock size={14} className="text-slate-400 shrink-0 mt-0.5" />
-                            <span className="text-xs font-medium text-slate-600 max-w-[180px] leading-tight">
+                            <Clock size={15} className="text-slate-400 shrink-0 mt-0.5" />
+                            <span className="text-xs sm:text-sm font-medium text-slate-300 max-w-[200px] leading-relaxed">
                               {item.horaires}
                             </span>
                           </div>
                         ) : (
-                          <span className="text-slate-400 font-mono text-xs">—</span>
+                          <span className="text-slate-500 font-mono text-sm">—</span>
                         )}
                       </td>
 
@@ -279,30 +286,30 @@ export default function ReferentielAssuranceTable() {
                           {telHref && (
                             <a
                               href={telHref}
-                              className="p-2 bg-[#E6FAFC] text-[#3B0FAA] hover:bg-[#3B0FAA] hover:text-white rounded-xl transition-colors border border-[#18CDEC]/30"
+                              className="p-2.5 bg-[#1454FF]/20 text-[#00d4ff] hover:bg-[#1454FF] hover:text-white rounded-xl transition-all border border-[#00d4ff]/30 shadow-sm"
                               title="Appeler par téléphone"
                             >
-                              <Phone size={14} />
+                              <Phone size={15} />
                             </a>
                           )}
                           {mailtoHref && (
                             <a
                               href={mailtoHref}
-                              className="p-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white rounded-xl transition-colors border border-indigo-100"
+                              className="p-2.5 bg-[#1454FF]/20 text-[#00d4ff] hover:bg-[#1454FF] hover:text-white rounded-xl transition-all border border-[#00d4ff]/30 shadow-sm"
                               title="Envoyer un courriel"
                             >
-                              <Mail size={14} />
+                              <Mail size={15} />
                             </a>
                           )}
                           <button
-                            onClick={() => handleCopy(`${item.nom} - Tel: ${item.telephone} | Email: ${item.email} | Consignes: ${item.notes}`, `all-${item.id}`)}
-                            className="p-2 bg-slate-50 text-slate-600 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200"
-                            title="Copier toutes les coordonnées"
+                            onClick={() => handleCopy(`${item.nom} - Tel: ${item.telephone} | Email: ${item.email} | Consignes: ${item.notes || 'N/A'}`, `all-${item.id}`)}
+                            className="p-2.5 bg-[#16223d] text-slate-200 hover:bg-[#25375c] hover:text-white rounded-xl transition-all border border-[#25375c] shadow-sm cursor-pointer"
+                            title="Copier les coordonnées complètes"
                           >
                             {copiedId === `all-${item.id}` ? (
-                              <Check size={14} className="text-emerald-600 animate-in zoom-in" />
+                              <Check size={15} className="text-emerald-400 animate-in zoom-in" />
                             ) : (
-                              <Copy size={14} />
+                              <Copy size={15} />
                             )}
                           </button>
                         </div>
@@ -316,44 +323,45 @@ export default function ReferentielAssuranceTable() {
         </div>
 
         {/* Footer: info + pagination */}
-        <div className="p-4 bg-[#E6FAFC]/60 border-t border-[#18CDEC]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-4 sm:p-5 bg-[#111c35] border-t border-[#1e2d4a] flex flex-col sm:flex-row items-center justify-between gap-4">
           
           {/* Left info */}
-          <span className="text-xs text-slate-500 font-medium">
-            <strong className="text-[#0A0030]">{filteredData.length}</strong> compagnie{filteredData.length > 1 ? 's' : ''} —{' '}
-            page <strong className="text-[#0A0030]">{currentPage}</strong> / <strong className="text-[#0A0030]">{totalPages || 1}</strong>
+          <span className="text-sm text-slate-300 font-medium">
+            <strong className="text-white font-bold">{filteredData.length}</strong> compagnie{filteredData.length > 1 ? 's' : ''} —{' '}
+            page <strong className="text-white font-bold">{currentPage}</strong> / <strong className="text-white font-bold">{totalPages || 1}</strong>
           </span>
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               {/* Prev */}
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
                 className={clsx(
-                  "p-2 rounded-xl border text-xs font-bold transition-all",
+                  "p-2.5 rounded-xl border text-sm font-bold transition-all cursor-pointer",
                   currentPage === 1
-                    ? "text-slate-300 border-slate-200 cursor-not-allowed bg-slate-50"
-                    : "text-[#3B0FAA] border-[#3B0FAA]/30 hover:bg-[#3B0FAA] hover:text-white bg-white"
+                    ? "text-slate-600 border-[#1e2d4a] cursor-not-allowed bg-[#0d1428]"
+                    : "text-white border-[#25375c] bg-[#16223d] hover:bg-[#1454FF]"
                 )}
+                title="Page précédente"
               >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={18} />
               </button>
 
               {/* Page numbers */}
               {getPageNumbers().map((page, i) =>
                 page === '...' ? (
-                  <span key={`ellipsis-${i}`} className="px-2 text-slate-400 text-xs font-bold select-none">…</span>
+                  <span key={`ellipsis-${i}`} className="px-2 text-slate-500 text-sm font-bold select-none">…</span>
                 ) : (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
                     className={clsx(
-                      "min-w-[36px] h-9 px-2 rounded-xl border text-xs font-bold transition-all",
+                      "min-w-[38px] h-9 px-2 rounded-xl border text-sm font-bold transition-all cursor-pointer",
                       page === currentPage
-                        ? "bg-[#3B0FAA] text-white border-[#3B0FAA] shadow-md shadow-[#3B0FAA]/20"
-                        : "text-[#0A0030] border-slate-200 hover:border-[#3B0FAA]/40 hover:bg-[#E6FAFC] bg-white"
+                        ? "bg-[#1454FF] text-white border-[#1454FF] shadow-lg shadow-[#1454FF]/30"
+                        : "text-slate-200 border-[#25375c] bg-[#16223d] hover:border-[#00d4ff]/40 hover:bg-[#1f3054] hover:text-white"
                     )}
                   >
                     {page}
@@ -366,20 +374,21 @@ export default function ReferentielAssuranceTable() {
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className={clsx(
-                  "p-2 rounded-xl border text-xs font-bold transition-all",
+                  "p-2.5 rounded-xl border text-sm font-bold transition-all cursor-pointer",
                   currentPage === totalPages
-                    ? "text-slate-300 border-slate-200 cursor-not-allowed bg-slate-50"
-                    : "text-[#3B0FAA] border-[#3B0FAA]/30 hover:bg-[#3B0FAA] hover:text-white bg-white"
+                    ? "text-slate-600 border-[#1e2d4a] cursor-not-allowed bg-[#0d1428]"
+                    : "text-white border-[#25375c] bg-[#16223d] hover:bg-[#1454FF]"
                 )}
+                title="Page suivante"
               >
-                <ChevronRight size={16} />
+                <ChevronRight size={18} />
               </button>
             </div>
           )}
 
           {/* Right branding */}
-          <span className="hidden sm:flex items-center gap-1.5 text-[#3B0FAA] font-bold text-xs">
-            <Sparkles size={14} /> GlassPilot
+          <span className="hidden sm:flex items-center gap-1.5 text-[#00d4ff] font-bold text-sm">
+            <Sparkles size={16} /> GlassPilot Référentiel
           </span>
         </div>
       </div>

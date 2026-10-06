@@ -4,7 +4,7 @@ import ReferentielAssuranceTable from '@/components/ReferentielAssuranceTable';
 import { BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
-export default function AdminReferentielAssurancePage() {
+export default function GaragisteReferentielAssurancePage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto w-full relative animate-in fade-in duration-500 font-sans pb-10">
       
@@ -17,9 +17,9 @@ export default function AdminReferentielAssurancePage() {
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30">
-                Administration Annuaire
+                Annuaire & Procédures
               </span>
-              <Link href="/admin/actualites" className="text-xs font-semibold text-slate-400 hover:text-[#00d4ff] transition-colors">
+              <Link href="/dashboard/actualites" className="text-xs font-semibold text-slate-400 hover:text-[#00d4ff] transition-colors">
                 ← Retour aux actualités
               </Link>
             </div>
@@ -27,7 +27,7 @@ export default function AdminReferentielAssurancePage() {
               Référentiel Assurance
             </h1>
             <p className="text-sm font-medium text-slate-300 mt-1">
-              Coordonnées téléphoniques, e-mails de gestion sinistres, horaires et consignes de relance pour chaque compagnie.
+              Coordonnées directes, e-mails de gestion sinistres, horaires et consignes spécifiques à chaque compagnie d'assurance.
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function AdminReferentielAssurancePage() {
         {/* Tab switch */}
         <div className="flex items-center bg-[#111c35] p-1.5 rounded-xl border border-[#1e2d4a]">
           <Link
-            href="/admin/actualites"
+            href="/dashboard/actualites"
             className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white rounded-lg transition-colors"
           >
             Actualités

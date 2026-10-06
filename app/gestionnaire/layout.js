@@ -8,7 +8,8 @@ import {
   LayoutDashboard, FileText, Users, Settings, LogOut,
   Menu, X, Sparkles, ChevronRight, HelpCircle, ShieldCheck,
   Bell, TrendingUp, Calendar, MessageSquare, Archive, Filter,
-  Building2, FolderKanban, CheckCheck, Trash2, Megaphone, BookOpen
+  Building2, FolderKanban, CheckCheck, Trash2, Megaphone, BookOpen,
+  Clock
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -467,11 +468,14 @@ export default function GestionnaireLayout({ children }) {
               <div className="relative">
                 <button 
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="relative p-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                  className="relative p-2.5 text-slate-300 hover:text-white hover:bg-[#16223d] rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#00d4ff]/30 border border-transparent hover:border-[#1e2d4a] cursor-pointer"
+                  title="Notifications"
                 >
-                  <Bell size={18} />
+                  <Bell size={20} className="text-slate-300 hover:text-[#00d4ff] transition-colors" />
                   {globalUnreadCount > 0 && (
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse ring-2 ring-white"></span>
+                    <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 bg-rose-600 text-white text-xs font-black rounded-full flex items-center justify-center border-2 border-[#0d1428] shadow-lg shadow-rose-600/50 animate-in zoom-in leading-none">
+                      {globalUnreadCount > 99 ? '99+' : globalUnreadCount}
+                    </span>
                   )}
                 </button>
 
@@ -482,75 +486,93 @@ export default function GestionnaireLayout({ children }) {
                       className="fixed inset-0 z-40"
                       onClick={() => setNotificationsOpen(false)}
                     />
-                    <div className="absolute right-0 mt-3 w-[350px] sm:w-[380px] bg-[var(--white)] rounded-xl border border-slate-200 shadow-2xl shadow-slate-200/50 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
-                      <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-transparent/50">
-                        <h3 className="font-semibold text-[var(--ink)]">Notifications</h3>
+                    <div className="absolute right-0 mt-3 w-[360px] sm:w-[440px] bg-[#0d1428] rounded-2xl border border-[#1e2d4a] shadow-2xl shadow-black/80 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
+                      
+                      {/* En-tête */}
+                      <div className="px-5 py-4 border-b border-[#1e2d4a] flex justify-between items-center bg-[#111c35]">
+                        <div className="flex items-center gap-2.5">
+                          <h3 className="font-extrabold text-white text-base">Notifications</h3>
+                          {globalUnreadCount > 0 && (
+                            <span className="px-2.5 py-0.5 bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold rounded-full">
+                              {globalUnreadCount} non lue{globalUnreadCount > 1 ? 's' : ''}
+                            </span>
+                          )}
+                        </div>
                         {globalUnreadCount > 0 && (
                           <button 
                             onClick={markAllAsRead}
-                            className="text-xs font-medium text-indigo-600 hover:text-indigo-700 flex items-center gap-1 transition-colors"
+                            className="text-xs font-bold text-[#00d4ff] hover:text-cyan-200 flex items-center gap-1.5 transition-colors cursor-pointer"
                           >
-                            <CheckCheck size={14} /> Tout marquer lu
+                            <CheckCheck size={16} /> Tout marquer lu
                           </button>
                         )}
                       </div>
-                      <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+
+                      {/* Liste */}
+                      <div className="max-h-[440px] overflow-y-auto custom-scrollbar divide-y divide-[#1e2d4a]/70">
                         {notifications.length === 0 ? (
-                          <div className="p-8 text-center flex flex-col items-center">
-                            <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                              <Bell size={20} className="text-[var(--muted)]" />
+                          <div className="p-10 text-center flex flex-col items-center">
+                            <div className="w-14 h-14 bg-[#111c35] border border-[#1e2d4a] rounded-2xl flex items-center justify-center mb-3.5 text-[#00d4ff]">
+                              <Bell size={26} />
                             </div>
-                            <p className="text-sm font-medium text-slate-600">Aucune notification</p>
-                            <p className="text-xs text-[var(--muted)] mt-1">Vous êtes à jour !</p>
+                            <p className="text-base font-bold text-white">Aucune notification</p>
+                            <p className="text-sm text-slate-400 mt-1">Vous êtes à jour !</p>
                           </div>
                         ) : (
                           notifications.map((notif) => {
                             let NotifIcon = MessageSquare;
-                            let iconColor = 'text-indigo-500';
-                            let barColor = 'bg-indigo-500';
-                            let bgColor = 'bg-indigo-50/30';
-                            if (notif.type === 'actualite') { NotifIcon = Megaphone; iconColor = 'text-emerald-500'; barColor = 'bg-emerald-500'; bgColor = 'bg-emerald-50/30'; }
-                            else if (notif.type === 'assignation') { NotifIcon = CheckCheck; iconColor = 'text-amber-500'; barColor = 'bg-amber-500'; bgColor = 'bg-amber-50/30'; }
-                            else if (notif.type === 'document') { NotifIcon = FileText; iconColor = 'text-blue-500'; barColor = 'bg-blue-500'; bgColor = 'bg-blue-50/30'; }
-                            else if (notif.type === 'statut') { NotifIcon = ShieldCheck; iconColor = 'text-purple-500'; barColor = 'bg-purple-500'; bgColor = 'bg-purple-50/30'; }
+                            let iconColor = 'text-[#00d4ff]';
+                            if (notif.type === 'actualite') { NotifIcon = Megaphone; iconColor = 'text-emerald-400'; }
+                            else if (notif.type === 'assignation') { NotifIcon = CheckCheck; iconColor = 'text-amber-400'; }
+                            else if (notif.type === 'document') { NotifIcon = FileText; iconColor = 'text-blue-400'; }
+                            else if (notif.type === 'statut') { NotifIcon = ShieldCheck; iconColor = 'text-purple-400'; }
                             const destination = notif.link || (notif.dossier_id ? `/gestionnaire/dossiers/${notif.dossier_id}` : '/gestionnaire/dashboard');
+                            
                             return (
                               <div
                                 key={notif.id}
-                                className={`p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer relative group ${!notif.is_read ? bgColor : ''}`}
+                                className={clsx(
+                                  "p-4 hover:bg-[#16223d]/80 transition-colors cursor-pointer relative group flex items-start gap-3.5",
+                                  !notif.is_read ? "bg-[#1454FF]/15 border-l-4 border-l-[#00d4ff]" : "bg-transparent"
+                                )}
                                 onClick={() => {
                                   markAsRead(notif.id);
                                   router.push(destination);
                                   setNotificationsOpen(false);
                                 }}
                               >
-                                {!notif.is_read && (
-                                  <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${barColor}`}></div>
-                                )}
-                                <div className="flex items-start gap-3">
-                                  <div className="flex-shrink-0 mt-1 bg-white p-2 rounded-lg border border-slate-200 shadow-sm group-hover:border-indigo-200 transition-colors">
-                                    <NotifIcon size={16} className={iconColor} />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-semibold text-[var(--ink)]">
+                                <div className="flex-shrink-0 mt-0.5 bg-[#111c35] p-2.5 rounded-xl border border-[#1e2d4a] shadow-sm group-hover:border-[#00d4ff]/40 transition-colors">
+                                  <NotifIcon size={16} className={iconColor} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <p className={clsx(
+                                      "text-sm sm:text-base leading-snug",
+                                      !notif.is_read ? "font-bold text-white" : "font-semibold text-slate-200"
+                                    )}>
                                       {notif.title || 'Nouvelle notification'}
                                     </p>
-                                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
-                                    <p className="text-[10px] font-medium text-[var(--muted)] mt-2 uppercase tracking-wider">
-                                      {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
-                                    </p>
+                                    {!notif.is_read && (
+                                      <span className="w-2.5 h-2.5 rounded-full bg-[#00d4ff] shrink-0 shadow-sm shadow-[#00d4ff]/50"></span>
+                                    )}
                                   </div>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      markAsRead(notif.id);
-                                    }}
-                                    className="text-[var(--muted)] hover:text-emerald-500 hover:bg-emerald-50 p-1.5 rounded-md transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100"
-                                    title="Marquer comme lu"
-                                  >
-                                    <CheckCheck size={14} />
-                                  </button>
+                                  <p className="text-xs sm:text-sm text-slate-300 mt-1.5 line-clamp-2 leading-relaxed">
+                                    {notif.message}
+                                  </p>
+                                  <p className="text-xs font-semibold text-[#00d4ff]/90 mt-2 flex items-center gap-1.5">
+                                    <Clock size={13} /> {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+                                  </p>
                                 </div>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    markAsRead(notif.id);
+                                  }}
+                                  className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/20 p-2 rounded-lg transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                                  title="Marquer comme lu"
+                                >
+                                  <CheckCheck size={16} />
+                                </button>
                               </div>
                             );
                           })
@@ -561,7 +583,7 @@ export default function GestionnaireLayout({ children }) {
                 )}
               </div>
               
-              <div className="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+              <div className="w-px h-6 bg-slate-700 hidden sm:block mx-1"></div>
               
               {/* Profil léger */}
               <div className="flex items-center gap-2 pl-1 cursor-pointer group">
