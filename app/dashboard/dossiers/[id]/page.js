@@ -24,7 +24,7 @@ const DOCUMENT_SLOTS = [
   { key: 'controle_technique', label: 'Contrôle Technique', patterns: ['controle_technique', 'ct'] },
   { key: 'cession', label: 'Cession de créance', patterns: ['cession', 'documents_complets', 'signature'] },
   { key: 'photo_vehicule', label: 'Photo du véhicule', patterns: ['photo_vehicule', 'vehicule'] },
-  { key: 'photo_impact', label: 'Photo de l\'impact', patterns: ['photo_impact', 'impact'] },
+  { key: 'photo_impact', label: 'Photo de l{client?.adresse ? (client?.code_postal ? ${client.adresse},   : client.adresse) : \'Non renseignée\'}'impact', patterns: ['photo_impact', 'impact'] },
   { key: 'photo_avant', label: 'Photo avant pose', patterns: ['photo_avant', 'avant_pose'] },
   { key: 'photo_apres', label: 'Photo après pose', patterns: ['photo_apres', 'apres_pose'] },
 ];
@@ -307,7 +307,7 @@ export default function DetailDossierPremium() {
               label = matchingSlot.label;
             }
             
-            const isImage = fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i) !== null;
+            const isImage = fileName.match(/{client?.adresse ? (client?.code_postal ? ${client.adresse},   : client.adresse) : \'Non renseignée\'}.(jpg|jpeg|png|gif|webp)$/i) !== null;
             const mayBeImage = !fileName.includes('.') && !fileName.includes('pdf');
             
             return { 
@@ -514,7 +514,7 @@ export default function DetailDossierPremium() {
       
     } catch (err) {
       console.error('Erreur envoi message:', err);
-      alert('Erreur lors de l\'envoi du message');
+      alert('Erreur lors de l{client?.adresse ? (client?.code_postal ? ${client.adresse},   : client.adresse) : \'Non renseignée\'}'envoi du message');
     } finally {
       setSendingMessage(false);
     }
@@ -573,7 +573,7 @@ export default function DetailDossierPremium() {
       scrollToBottom();
     } catch (err) {
       console.error('Erreur téléversement fichier chat:', err);
-      alert('Impossible d\'envoyer le fichier : ' + err.message);
+      alert('Impossible d{client?.adresse ? (client?.code_postal ? ${client.adresse},   : client.adresse) : \'Non renseignée\'}'envoyer le fichier : ' + err.message);
     } finally {
       setChatUploading(false);
       e.target.value = '';
@@ -1669,7 +1669,7 @@ export default function DetailDossierPremium() {
                           const parts = msg.message.replace('📎 Fichier : ', '').split(' | ');
                           const fileName = parts[0] || 'Fichier';
                           const fileUrl = parts[1] || '#';
-                          const isImg = fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i) !== null;
+                          const isImg = fileName.match(/{client?.adresse ? (client?.code_postal ? ${client.adresse},   : client.adresse) : \'Non renseignée\'}.(jpg|jpeg|png|gif|webp)$/i) !== null;
                           return (
                             <div className="flex flex-col gap-2 min-w-[200px]">
                               <div className="flex items-center gap-2">
