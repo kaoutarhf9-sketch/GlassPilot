@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 import { REFERENTIEL_ASSURANCES } from '@/lib/referentielAssurances';
+import { generatePDF } from '@/lib/pdfGenerator';
 
 const DOCUMENT_SLOTS = [
   { key: 'facture', label: 'Facture / Devis', patterns: ['facture', 'devis'] },
@@ -100,6 +101,7 @@ export default function GestionnaireDetailDossier() {
   const [selectedQuickStatus, setSelectedQuickStatus] = useState('envoi_courrier');
   const [showMenuId, setShowMenuId] = useState(null);
   const [sendingClearBus, setSendingClearBus] = useState(false);
+  const [isRegenerating, setIsRegenerating] = useState(false);
 
   useEffect(() => {
     fetchUser();
@@ -749,6 +751,127 @@ Gestionnaire administratif du garage ${garageNom}
       alert(err.message || "Impossible d'envoyer le dossier.");
     } finally {
       setSendingClearBus(false);
+    }
+  };
+
+  const handleRegenerateCession = async () => {
+    if (!dossier) return;
+    if (!formData.assurance_nom || !formData.num_contrat) {
+      alert("Veuillez renseigner le nom de l'assurance et le numéro de contrat avant de régénérer la cession.");
+      return;
+    }
+
+    setIsRegenerating(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      // 1. Récupérer la signature du client
+      let signatureDataUrl = null;
+      try {
+        const { data: sigBlob, error: sigErr } = await supabase.storage
+          .from('documents')
+          .download(`dossiers/${dossierId}/signature_client.png`);
+
+        if (sigBlob && !sigErr) {
+          const reader = new FileReader();
+          signatureDataUrl = await new Promise((resolve) => {
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(sigBlob);
+          });
+        }
+      } catch (sigCatch) {
+        console.warn("Signature client brute non trouvée dans storage:", sigCatch);
+      }
+
+      // Si pas trouvée via le fichier png direct et que signature_url est une image
+      if (!signatureDataUrl && dossier.signature_url && /\.(png|jpe?g|webp)$/i.test(dossier.signature_url)) {
+        try {
+          const res = await fetch(dossier.signature_url);
+          const blob = await res.blob();
+          const reader = new FileReader();
+          signatureDataUrl = await new Promise((resolve) => {
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+          });
+        } catch (fetchSigErr) {
+          console.warn("Impossible de charger signature_url:", fetchSigErr);
+        }
+      }
+
+      // 2. Préparer l'objet dossier à jour avec les nouvelles valeurs saisies
+      const updatedDossier = {
+        ...dossier,
+        num_contrat: formData.num_contrat,
+        assurance_nom: formData.assurance_nom,
+        assurances: {
+          ...(dossier.assurances || {}),
+          nom: formData.assurance_nom
+        }
+      };
+
+      // 3. Générer le nouveau PDF avec la signature client réutilisée
+      const doc = generatePDF(updatedDossier, signatureDataUrl);
+      const pdfBlob = doc.output('blob');
+
+      // 4. Téléverser le nouveau PDF dans Supabase Storage
+      const fileName = `documents_complets_${dossier.numero || dossierId}_${Date.now()}.pdf`;
+      const filePath = `dossiers/${dossierId}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('documents')
+        .upload(filePath, pdfBlob, { contentType: 'application/pdf', upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage.from('documents').getPublicUrl(filePath);
+
+      // 5. Mettre à jour le dossier dans Supabase
+      const { error: updateError } = await supabase
+        .from('dossiers')
+        .update({
+          signature_url: publicUrl,
+          num_contrat: formData.num_contrat,
+          assurance_nom: formData.assurance_nom
+        })
+        .eq('id', dossierId);
+
+      if (updateError) throw updateError;
+
+      // 6. Mettre à jour l'état local
+      setDossier(prev => ({
+        ...prev,
+        signature_url: publicUrl,
+        num_contrat: formData.num_contrat,
+        assurance_nom: formData.assurance_nom,
+        assurances: {
+          ...(prev?.assurances || {}),
+          nom: formData.assurance_nom
+        }
+      }));
+
+      // Ajouter une entrée d'activité dans le chat
+      if (user?.id) {
+        await supabase.from('messages').insert({
+          dossier_id: dossierId,
+          garage_id: dossier.garage_id,
+          sender_id: user.id,
+          sender_name: 'Système',
+          sender_role: 'system',
+          message: `${user.user_metadata?.prenom || 'Le gestionnaire'} a régénéré la cession de créance avec le contrat n° ${formData.num_contrat} et l'assurance ${formData.assurance_nom}.`,
+          is_read: false
+        });
+      }
+
+      setSuccess('Cession de créance régénérée avec succès !');
+      window.open(publicUrl, '_blank');
+      setTimeout(() => setSuccess(''), 4000);
+
+    } catch (err) {
+      console.error('Erreur régénération cession:', err);
+      setError('Erreur lors de la régénération de la cession : ' + (err.message || 'erreur inconnue'));
+    } finally {
+      setIsRegenerating(false);
     }
   };
 
@@ -1573,9 +1696,9 @@ Gestionnaire administratif du garage ${garageNom}
               {dossier?.statut !== 'nouveau' && dossier?.signature_url && (
                 <button
                   onClick={handleRegenerateCession}
-                  disabled={isRegenerating || !formData.assurances_id || !formData.num_contrat}
-                  title={(!formData.assurances_id || !formData.num_contrat) ? "Remplissez l'assurance et le numéro de contrat pour régénérer" : ""}
-                  className={`w-full py-3 px-4 border border-[#1454FF] hover:bg-[#1454FF]/10 text-[#1454FF] font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm ${(isRegenerating || !formData.assurances_id || !formData.num_contrat) ? 'opacity-50 cursor-not-allowed' : 'active:scale-98'}`}
+                  disabled={isRegenerating || !formData.assurance_nom || !formData.num_contrat}
+                  title={(!formData.assurance_nom || !formData.num_contrat) ? "Remplissez l'assurance et le numéro de contrat pour régénérer" : ""}
+                  className={`w-full py-3 px-4 border border-[#1454FF] hover:bg-[#1454FF]/10 text-[#1454FF] font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm ${(isRegenerating || !formData.assurance_nom || !formData.num_contrat) ? 'opacity-50 cursor-not-allowed' : 'active:scale-98'}`}
                 >
                   {isRegenerating ? <Loader2 className="animate-spin" size={16} /> : <FileSignature size={16} />}
                   Régénérer Cession
