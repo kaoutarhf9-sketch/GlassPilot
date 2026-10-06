@@ -11,20 +11,39 @@ import {
   Sparkles, Phone, Mail, MapPin, Key, Gauge,
   Building2, Calendar, Gift, Euro, ImageIcon, ShieldCheck,
   Star, Crown, Camera, Loader2, CheckCircle2, Plus, ScanLine,
-  AlertTriangle
+  AlertTriangle, ChevronDown
 } from 'lucide-react';
 import clsx from 'clsx';
 import AddressAutocomplete from '@/app/components/AddressAutocomplete';
 import { extractDocumentData } from '@/lib/extractDocumentData';
 
 const TYPES_VITRAGE = [
-  'Pare-brise', 'Lunette arrière', 'Latérale AV Gauche',
-  'Latérale AV Droite', 'Latérale AR Gauche',
-  'Latérale AR Droite', 'Toit pano.', 'Optique phare',
+  'Pare-brise',
+  'Lunette arrière',
+  'Latérale AV Gauche',
+  'Latérale AV Droite',
+  'Latérale AR Gauche',
+  'Latérale AR Droite',
+  'Custode AV Gauche',
+  'Custode AV Droite',
+  'Custode AR Gauche',
+  'Custode AR Droite',
+  'Déflecteur',
+  'Toit panoramique',
+  'Toit ouvrant',
+  'Optique de phare',
+  'Feu antibrouillard',
 ];
 
 const RAISONS_SINISTRE = [
-  'Bris de glace', 'Impact', 'Fissure', 'Choc', 'Vandalisme', 'Autre'
+  'Bris de glace',
+  'Projection de gravillons / Impact',
+  'Fissure thermique / spontanée',
+  'Choc / Accident de la circulation',
+  'Vandalisme / Tentative d\'effraction',
+  'Intempéries / Grêle / Tempête',
+  'Chute d\'objet / Branche d\'arbre',
+  'Autre motif',
 ];
 
 // Styles des champs de saisie - FOND CLAIR sur fond sombre (comme la maquette)
@@ -853,10 +872,19 @@ export default function NouveauDossier() {
                   <label className={labelClass}>RAISON DU SINISTRE <span className="text-rose-400">*</span></label>
                   <div className="relative">
                     <AlertCircle size={14} className={iconClass} />
-                    <select className={clsx(inputWithIconClass, 'appearance-none')} value={vehicule.raison_sinistre} onChange={e => setV('raison_sinistre', e.target.value)}>
-                      <option value="">Choisir une raison</option>
-                      {RAISONS_SINISTRE.map(r => <option key={r} value={r}>{r}</option>)}
+                    <select
+                      className={clsx(inputWithIconClass, 'appearance-none pr-10 cursor-pointer')}
+                      value={vehicule.raison_sinistre}
+                      onChange={e => setV('raison_sinistre', e.target.value)}
+                    >
+                      <option value="" className="bg-[#0d1428] text-slate-400">Choisir une raison</option>
+                      {RAISONS_SINISTRE.map(r => (
+                        <option key={r} value={r} className="bg-[#0d1428] text-slate-200">
+                          {r}
+                        </option>
+                      ))}
                     </select>
+                    <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                   </div>
                 </div>
 
@@ -868,13 +896,18 @@ export default function NouveauDossier() {
                       <div className="relative">
                         <Car size={14} className={iconClass} />
                         <select
-                          className={clsx(inputWithIconClass, 'appearance-none', errors.type_vitrage && 'border-rose-500')}
+                          className={clsx(inputWithIconClass, 'appearance-none pr-10 cursor-pointer', errors.type_vitrage && 'border-rose-500')}
                           value={vehicule.type_vitrage}
                           onChange={e => setV('type_vitrage', e.target.value)}
                         >
-                          <option value="">Choisir un type de vitrage</option>
-                          {TYPES_VITRAGE.map(t => <option key={t} value={t}>{t}</option>)}
+                          <option value="" className="bg-[#0d1428] text-slate-400">Choisir un type de vitrage</option>
+                          {TYPES_VITRAGE.map(t => (
+                            <option key={t} value={t} className="bg-[#0d1428] text-slate-200">
+                              {t}
+                            </option>
+                          ))}
                         </select>
+                        <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                       </div>
                       <button
                         type="button"
