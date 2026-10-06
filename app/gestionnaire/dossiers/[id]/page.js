@@ -667,6 +667,17 @@ Gestionnaire administratif du garage ${garageNom}
       // Auto-add system note!
       const friendlyLabel = STATUTS.find(s => s.value === statusValue)?.label || statusValue;
       addSystemNote(`🔄 Le statut du dossier a été changé en : "${friendlyLabel}"`);
+      
+      // Enregistrer également dans le journal d'activité (tchat)
+      await supabase.from('messages').insert({
+        dossier_id: dossierId,
+        garage_id: dossier.garage_id,
+        sender_id: user.id,
+        sender_name: 'Système',
+        sender_role: 'system',
+        message: `${user.user_metadata?.prenom || user.user_metadata?.first_name || 'Le gestionnaire'} a changé le statut du dossier en "${friendlyLabel}".`,
+        is_read: false
+      });
     } catch (err) {
       console.error('Erreur mise à jour statut:', err);
       setError('Impossible de mettre à jour le statut.');
@@ -1648,6 +1659,17 @@ Gestionnaire administratif du garage ${garageNom}
               </div>
             ) : (
               messages.map((msg, idx) => {
+
+                if (msg.sender_role === 'system') {
+                  return (
+                    <div key={idx} className="flex justify-center my-3 w-full">
+                      <div className="bg-slate-200/30 border border-slate-300/30 text-slate-500 text-[11px] font-medium px-4 py-1.5 rounded-full flex items-center gap-1.5 max-w-[85%] text-center backdrop-blur-sm">
+                        <AlertCircle size={12} className="shrink-0" />
+                        <span>{msg.message}</span>
+                      </div>
+                    </div>
+                  );
+                }
                 const isMe = msg.sender_role === 'gestionnaire';
                 return (
                   <div

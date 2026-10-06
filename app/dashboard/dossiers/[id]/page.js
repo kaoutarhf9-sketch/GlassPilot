@@ -625,6 +625,17 @@ export default function DetailDossierPremium() {
       };
       const friendlyLabel = statusLabels[newStatut] || newStatut;
       await addSystemNote(`🔄 Le statut du dossier a été changé en : "${friendlyLabel}"`);
+      
+      // Enregistrer également dans le journal d'activité (tchat)
+      await supabase.from('messages').insert({
+        dossier_id: dossier.id,
+        garage_id: dossier.garage_id,
+        sender_id: user.id,
+        sender_name: 'Système',
+        sender_role: 'system',
+        message: `${user.user_metadata?.prenom || user.user_metadata?.first_name || 'Le garagiste'} a changé le statut du dossier en "${friendlyLabel}".`,
+        is_read: false
+      });
 
       setDossier(prev => ({ 
         ...prev, 
@@ -1529,26 +1540,6 @@ export default function DetailDossierPremium() {
 
                 <div className="h-px bg-[var(--white)] my-4" />
 
-                {/* Pose terminée */}
-                <button
-                  onClick={() => handleUpdateStatus('termine')}
-                  disabled={updatingStatut}
-                  className="w-full py-2.5 px-4 border border-amber-500 hover:bg-amber-500/10 text-amber-400 font-semibold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm active:scale-98"
-                >
-                  <Mail size={16} className="text-amber-500" />
-                  Pose terminée
-                </button>
-
-                {/* Paiement reçu */}
-                <button
-                  onClick={() => handleUpdateStatus('reglement_recu')}
-                  disabled={updatingStatut}
-                  className="w-full py-2.5 px-4 border border-emerald-500 hover:bg-emerald-500/10 text-emerald-400 font-semibold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm active:scale-98"
-                >
-                  <CheckCircle2 size={16} className="text-emerald-500" />
-                  Paiement reçu
-                </button>
-
                 {/* Désistement */}
                 <button
                   onClick={() => handleUpdateStatus('desistement')}
@@ -1648,6 +1639,17 @@ export default function DetailDossierPremium() {
               </div>
             ) : (
               messages.map((msg, idx) => {
+
+                if (msg.sender_role === 'system') {
+                  return (
+                    <div key={idx} className="flex justify-center my-3 w-full">
+                      <div className="bg-slate-200/30 border border-slate-300/30 text-slate-500 text-[11px] font-medium px-4 py-1.5 rounded-full flex items-center gap-1.5 max-w-[85%] text-center backdrop-blur-sm">
+                        <AlertCircle size={12} className="shrink-0" />
+                        <span>{msg.message}</span>
+                      </div>
+                    </div>
+                  );
+                }
                 const isMe = msg.sender_role === 'garagiste';
                 return (
                   <div
