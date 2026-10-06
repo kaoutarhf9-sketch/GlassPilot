@@ -177,6 +177,8 @@ export default function NouveauDossier() {
   const compressImage = (file) => {
     return new Promise((resolve) => {
       if (!file || !file.type.startsWith('image/')) return resolve(file);
+      // Conserver la netteté maximale pour l'OCR si le fichier fait moins de 4 Mo
+      if (file.size < 4 * 1024 * 1024) return resolve(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
@@ -185,12 +187,12 @@ export default function NouveauDossier() {
         img.onload = () => {
           const canvas = document.createElement('canvas');
           let width = img.width; let height = img.height;
-          const MAX_DIM = 1280;
-          if (width > height && width > MAX_DIM) { height *= MAX_DIM / width; width = MAX_DIM; }
-          else if (height > MAX_DIM) { width *= MAX_DIM / height; height = MAX_DIM; }
+          const MAX_DIM = 2000;
+          if (width > height && width > MAX_DIM) { height = Math.round(height * (MAX_DIM / width)); width = MAX_DIM; }
+          else if (height > MAX_DIM) { width = Math.round(width * (MAX_DIM / height)); height = MAX_DIM; }
           canvas.width = width; canvas.height = height;
           canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-          canvas.toBlob((blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })), 'image/jpeg', 0.85);
+          canvas.toBlob((blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })), 'image/jpeg', 0.92);
         };
         img.onerror = () => resolve(file);
       };
@@ -280,6 +282,7 @@ export default function NouveauDossier() {
         setScanMessage("Analyse OCR directe en cours...");
         const { createWorker } = await import('tesseract.js');
         const worker = await createWorker('fra');
+        await worker.setParameters({ tessedit_pageseg_mode: '11' });
         const ret = await worker.recognize(file);
         await worker.terminate();
 

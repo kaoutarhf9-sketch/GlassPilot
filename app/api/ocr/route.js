@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import Tesseract from 'tesseract.js';
+import sharp from 'sharp';
 import { extractDocumentData } from '@/lib/extractDocumentData';
 const PDFParser = require("pdf2json");
 
@@ -18,7 +19,7 @@ export async function POST(request) {
     let text = "";
 
     if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
-      console.log(`[OCR] Extraction texte du PDF natif: ${file.name}`);
+      console.log(`[OCR] Extraction texte du PDF: ${file.name}`);
       try {
         text = await new Promise((resolve, reject) => {
           const pdfParser = new PDFParser(null, 1);
@@ -38,15 +39,37 @@ export async function POST(request) {
       }
     }
 
-    // Si le texte est vide (image ou PDF scanné sans texte sélectionnable)
+    // Si pas de texte (image ou PDF scanné sans flux texte)
     if (!text || text.trim().length === 0) {
       if (!file.name.toLowerCase().endsWith('.pdf')) {
-        console.log(`[OCR] Lancement Tesseract pour image...`);
+        console.log(`[OCR] Traitement image avec Sharp & Tesseract...`);
         const ocrPromise = new Promise(async (resolve, reject) => {
           let worker;
           try {
+            let imageBufferToProcess = nodeBuffer;
+            try {
+              const meta = await sharp(nodeBuffer).metadata();
+              if (meta && meta.width) {
+                // Agrandissement pour les images basse résolution (ex: captures d'écran mobiles)
+                const targetW = meta.width < 1400 ? Math.min(Math.round(meta.width * 2.8), 2000) : meta.width;
+                imageBufferToProcess = await sharp(nodeBuffer)
+                  .resize(targetW, null, { kernel: 'lanczos3' })
+                  .grayscale()
+                  .normalize()
+                  .sharpen()
+                  .png()
+                  .toBuffer();
+              }
+            } catch (sharpErr) {
+              console.warn("Notice sharp:", sharpErr.message);
+            }
+
             worker = await Tesseract.createWorker('fra');
-            const ret = await worker.recognize(nodeBuffer);
+            await worker.setParameters({
+              tessedit_pageseg_mode: '11', // Sparse text mode adapté aux documents scannés complexes
+            });
+
+            const ret = await worker.recognize(imageBufferToProcess);
             await worker.terminate();
             resolve(ret.data.text);
           } catch (err) {
@@ -56,13 +79,13 @@ export async function POST(request) {
         });
 
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("Timeout OCR (20s)")), 20000)
+          setTimeout(() => reject(new Error("Timeout OCR")), 22000)
         );
 
         try {
           text = await Promise.race([ocrPromise, timeoutPromise]);
         } catch (err) {
-          console.warn("[OCR] Tesseract timeout ou erreur:", err.message);
+          console.warn("[OCR] Timeout ou notice:", err.message);
         }
       }
     }
