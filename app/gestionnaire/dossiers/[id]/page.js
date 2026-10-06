@@ -203,7 +203,7 @@ export default function GestionnaireDetailDossier() {
         parsedNotes = JSON.parse(data.notes || '{}');
       } catch (e) {}
 
-      const initialRelanceNotes = parsedNotes.relance_notes || [];
+      const initialRelanceNotes = (parsedNotes.relance_notes || []).filter(note => !note.text?.includes('Le statut du dossier a été changé'));
       setRelanceNotes(initialRelanceNotes);
 
       if (parsedNotes.facture_lignes && Array.isArray(parsedNotes.facture_lignes)) {
