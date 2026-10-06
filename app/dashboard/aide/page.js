@@ -128,8 +128,8 @@ export default function AidePage() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Téléphone</p>
-                  <a href="tel:+33123456789" className="text-[var(--ink)] font-semibold hover:text-[var(--blue)] transition-colors">
-                    01 23 45 67 89
+                  <a href="tel:+33756993583" className="text-[var(--ink)] font-semibold hover:text-[var(--blue)] transition-colors">
+                    07 56 99 35 83
                   </a>
                   <p className="text-xs text-slate-500 mt-0.5">Lun-Ven, 9h-18h</p>
                 </div>
