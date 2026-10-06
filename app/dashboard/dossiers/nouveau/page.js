@@ -248,38 +248,44 @@ export default function NouveauDossier() {
     };
 
     let populated = false;
+    const isImage = file.type?.startsWith('image/') || /\.(jpe?g|png|webp|gif|bmp)$/i.test(file.name);
+    const isPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
-    // 1. Tentative d'analyse via l'API serveur
-    try {
-      const fileToUpload = await compressImage(file);
-      const formData = new FormData();
-      formData.append('file', fileToUpload);
-      formData.append('type', docType || 'attestation_assurance');
+    // 1. Pour les PDFs : extraction via l'API serveur (pdf2json = rapide, pas d'OCR)
+    if (isPDF) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('type', docType || 'attestation_assurance');
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 20000);
-      const response = await fetch('/api/ocr', { method: 'POST', body: formData, signal: controller.signal });
-      clearTimeout(timeoutId);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s max pour PDF
+        const response = await fetch('/api/ocr', { method: 'POST', body: formData, signal: controller.signal });
+        clearTimeout(timeoutId);
 
-      if (response.ok) {
-        const data = await response.json();
-        const count = applyData(data);
-        if (count > 0) {
-          populated = true;
-          setScanSuccess(true);
-          setScanMessage(`✓ ${count} information(s) préremplie(s) avec succès !`);
-          setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3500);
-          return;
+        if (response.ok) {
+          const data = await response.json();
+          const count = applyData(data);
+          if (count > 0) {
+            populated = true;
+            setScanSuccess(true);
+            setScanMessage(`✓ ${count} information(s) préremplie(s) avec succès !`);
+            setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3500);
+            setIsScanning(false);
+            return;
+          }
         }
+      } catch (err) {
+        // Timeout PDF ou erreur réseau — on continue vers le moteur local
+        if (err?.name !== 'AbortError') console.warn("Échec OCR PDF serveur:", err?.message);
       }
-    } catch (err) {
-      console.warn("Échec appel OCR serveur, passage au moteur local...", err);
     }
 
-    // 2. Moteur de secours : OCR local côté client si fichier image
-    if (!populated && file && (file.type?.startsWith('image/') || /\.(jpe?g|png|webp)$/i.test(file.name))) {
+    // 2. Pour les images (et PDFs sans résultat) : OCR directement dans le navigateur
+    // (Le serveur Vercel dépasse toujours les 10s sur une image — on n'essaie pas)
+    if (!populated && (isImage || isPDF)) {
       try {
-        setScanMessage("Analyse OCR directe en cours...");
+        setScanMessage("Analyse IA en cours… (peut prendre 15-20 secondes)");
         const { createWorker } = await import('tesseract.js');
         const worker = await createWorker('fra');
         await worker.setParameters({ tessedit_pageseg_mode: '11' });
@@ -293,10 +299,11 @@ export default function NouveauDossier() {
           setScanSuccess(true);
           setScanMessage(`✓ ${count} information(s) préremplie(s) avec succès !`);
           setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3500);
+          setIsScanning(false);
           return;
         }
       } catch (clientErr) {
-        console.error("Échec OCR de secours:", clientErr);
+        console.error("Échec OCR local:", clientErr);
       }
     }
 
