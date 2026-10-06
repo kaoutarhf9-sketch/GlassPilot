@@ -143,8 +143,8 @@ export default function AidePage() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Email</p>
-                  <a href="mailto:support@glasspilot.fr" className="text-[var(--ink)] font-semibold hover:text-[var(--blue)] transition-colors break-all">
-                    support@glasspilot.fr
+                  <a href="mailto:glasspilotcontact@gmail.com" className="text-[var(--ink)] font-semibold hover:text-[var(--blue)] transition-colors break-all">
+                    glasspilotcontact@gmail.com
                   </a>
                   <p className="text-xs text-slate-500 mt-0.5">Réponse sous 24h</p>
                 </div>
@@ -169,7 +169,7 @@ export default function AidePage() {
             <p className="text-sm text-slate-600 mb-4">
               GlassPilot évolue grâce à vos retours. N'hésitez pas à nous faire part de vos idées d'amélioration !
             </p>
-            <a href="mailto:contact@glasspilot.fr" className="text-sm font-semibold text-[var(--blue)] hover:underline">
+            <a href="mailto:glasspilotcontact@gmail.com" className="text-sm font-semibold text-[var(--blue)] hover:underline">
               Envoyer une suggestion &rarr;
             </a>
           </div>
