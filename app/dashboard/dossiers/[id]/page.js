@@ -119,14 +119,26 @@ export default function DetailDossierPremium() {
         return;
       }
 
+      // Vérification obligatoire : le contrat et le sinistre doivent être renseignés
+      const contrat = (dev.num_contrat || dossier.num_contrat || currentNotes.num_contrat || '').toString().trim();
+      const sinistre = (dev.num_sinistre || dossier.num_sinistre || currentNotes.num_sinistre || '').toString().trim();
+
+      if (!contrat || !sinistre || contrat === '—' || sinistre === '—') {
+        alert("Attention : Le numéro de contrat et le numéro de sinistre sont obligatoires pour générer la facture (indispensables pour la prise en charge assurance).\n\nVeuillez les renseigner dans le formulaire de devis.");
+        router.push(`/dashboard/dossiers/${dossier.id}/devis`);
+        return;
+      }
+
       const year = new Date().getFullYear();
       const rand = Math.floor(1000 + Math.random() * 9000);
-      const facNum = `${year}10${dossier.numero?.replace(/[^0-9]/g, '').slice(-4) || rand}`;
+      const facNum = dev.numero || `FAC-${year}-${dossier.numero?.replace(/[^0-9]/g, '').slice(-4) || rand}`;
 
       const fac = {
         numero: facNum,
         date_emission: dev.date_emission || new Date().toISOString().split('T')[0],
         date_echeance: dev.date_validite,
+        num_contrat: contrat,
+        num_sinistre: sinistre,
         lignes: dev.lignes || [],
         total_ht: dev.total_ht || 0,
         montant_tva: dev.montant_tva || 0,
@@ -137,15 +149,21 @@ export default function DetailDossierPremium() {
       };
 
       currentNotes.facture = fac;
+      currentNotes.num_contrat = contrat;
+      currentNotes.num_sinistre = sinistre;
       if (currentNotes.devis) {
         currentNotes.devis.statut = 'facture';
+        currentNotes.devis.num_contrat = contrat;
+        currentNotes.devis.num_sinistre = sinistre;
       }
 
       await supabase
         .from('dossiers')
         .update({ 
           notes: JSON.stringify(currentNotes),
-          montant: dev.total_ttc || 0
+          montant: dev.total_ttc || 0,
+          num_contrat: contrat,
+          num_sinistre: sinistre
         })
         .eq('id', dossier.id);
 
@@ -153,7 +171,11 @@ export default function DetailDossierPremium() {
       setDevisData(currentNotes.devis);
 
       const doc = generateFacturePDF({
-        dossier,
+        dossier: {
+          ...dossier,
+          num_contrat: contrat,
+          num_sinistre: sinistre
+        },
         garage: garageObj || { nom_garage: garageName },
         devisData: dev,
         factureData: fac,
@@ -170,8 +192,18 @@ export default function DetailDossierPremium() {
 
   const handleViewFacturePDF = () => {
     try {
+      const currentNotes = typeof dossier?.notes === 'string' 
+        ? JSON.parse(dossier?.notes || '{}') 
+        : (dossier?.notes || {});
+      const contrat = factureData?.num_contrat || devisData?.num_contrat || dossier?.num_contrat || currentNotes.num_contrat || '';
+      const sinistre = factureData?.num_sinistre || devisData?.num_sinistre || dossier?.num_sinistre || currentNotes.num_sinistre || '';
+
       const doc = generateFacturePDF({
-        dossier,
+        dossier: {
+          ...dossier,
+          num_contrat: contrat,
+          num_sinistre: sinistre
+        },
         garage: garageObj || { nom_garage: garageName },
         devisData,
         factureData,

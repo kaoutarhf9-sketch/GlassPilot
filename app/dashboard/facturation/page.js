@@ -42,6 +42,9 @@ export default function ListeFacturationPage() {
           numero,
           immatriculation,
           modele_vehicule,
+          kilometrage,
+          num_contrat,
+          num_sinistre,
           created_at,
           notes,
           clients (*)

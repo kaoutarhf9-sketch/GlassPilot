@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { 
   ArrowLeft, Plus, Trash2, Save, FileText, 
   Loader2, Sparkles, CheckCircle2, FileSignature, 
-  Download, Eye, Calculator
+  Download, Eye, Calculator, ShieldCheck
 } from 'lucide-react';
 import clsx from 'clsx';
 import { generateFacturePDF } from '@/lib/generateFacturePDF';
@@ -31,6 +31,10 @@ export default function NouveauDevisPage({ params }) {
     d.setDate(d.getDate() + 30);
     return d.toISOString().split('T')[0];
   });
+
+  // Contrat & Sinistre
+  const [numContrat, setNumContrat] = useState('');
+  const [numSinistre, setNumSinistre] = useState('');
 
   // Remise générale
   const [remiseGenerale, setRemiseGenerale] = useState(0);
@@ -75,17 +79,23 @@ export default function NouveauDevisPage({ params }) {
       if (error) throw error;
       setDossier(d);
 
+      // Récupérer le numéro de contrat et de sinistre
+      let loadedContrat = d.num_contrat || '';
+      let loadedSinistre = d.num_sinistre || '';
+
       // Générer ou charger le numéro de devis
       let loadedNum = '';
       if (d?.notes) {
         try {
-          const parsed = JSON.parse(d.notes);
+          const parsed = typeof d.notes === 'string' ? JSON.parse(d.notes) : d.notes;
           if (parsed.devis) {
             const dev = parsed.devis;
             loadedNum = dev.numero || '';
             if (dev.date_emission) setDateEmission(dev.date_emission);
             if (dev.date_validite) setDateValidite(dev.date_validite);
             if (dev.taux_tva) setTauxTvaDefault(dev.taux_tva.toString());
+            if (dev.num_contrat) loadedContrat = dev.num_contrat;
+            if (dev.num_sinistre) loadedSinistre = dev.num_sinistre;
             if (dev.remise_generale !== undefined) setRemiseGenerale(dev.remise_generale);
             if (dev.remise_type) setRemiseType(dev.remise_type);
             if (dev.lignes && dev.lignes.length > 0) setLignes(dev.lignes);
@@ -100,10 +110,16 @@ export default function NouveauDevisPage({ params }) {
               details: ''
             })));
           }
+
+          if (!loadedContrat && parsed.facture?.num_contrat) loadedContrat = parsed.facture.num_contrat;
+          if (!loadedSinistre && parsed.facture?.num_sinistre) loadedSinistre = parsed.facture.num_sinistre;
         } catch (e) {
           console.error('Erreur parsing devis existant:', e);
         }
       }
+
+      setNumContrat(loadedContrat);
+      setNumSinistre(loadedSinistre);
 
       if (!loadedNum) {
         const year = new Date().getFullYear();
@@ -128,7 +144,7 @@ export default function NouveauDevisPage({ params }) {
       MAIN: {
         designation: "MAIN D'OEUVRE POSE / DEPOSE PARE-BRISE",
         prix_ht: 92.00,
-        quantite: 2.5,
+        quantite: 2,
         tva: Number(tauxTvaDefault) || 20,
         remise: 0
       },
@@ -179,7 +195,6 @@ export default function NouveauDevisPage({ params }) {
     const sc = shortcuts[shortcutType];
     if (!sc) return;
 
-    // Si la première ligne est vide, la remplacer au lieu d'en ajouter une nouvelle
     if (lignes.length === 1 && !lignes[0].designation && lignes[0].prix_ht === 0) {
       setLignes([{
         ...lignes[0],
@@ -267,6 +282,14 @@ export default function NouveauDevisPage({ params }) {
 
   // Enregistrement
   const handleSaveDevis = async (options = { generateFacture: false }) => {
+    // Si génération de facture demandée, le contrat et le sinistre sont strictement requis
+    if (options.generateFacture) {
+      if (!numContrat || !numContrat.trim() || !numSinistre || !numSinistre.trim()) {
+        alert("Attention : Le numéro de contrat et le numéro de sinistre sont obligatoires pour générer la facture (indispensables pour la prise en charge assurance).\n\nVeuillez renseigner ces deux champs dans 'Informations de base' avant de continuer.");
+        return;
+      }
+    }
+
     setSaving(true);
     try {
       const devisData = {
@@ -274,6 +297,8 @@ export default function NouveauDevisPage({ params }) {
         date_emission: dateEmission,
         date_validite: dateValidite,
         taux_tva: generalTvaRate,
+        num_contrat: numContrat.trim(),
+        num_sinistre: numSinistre.trim(),
         lignes: lignes.map(l => ({
           ...l,
           prix_ht: Number(l.prix_ht) || 0,
@@ -300,11 +325,15 @@ export default function NouveauDevisPage({ params }) {
         .eq('id', dossierId)
         .single();
 
-      const currentNotes = JSON.parse(currentDossier?.notes || '{}');
+      const currentNotes = typeof currentDossier?.notes === 'string' 
+        ? JSON.parse(currentDossier.notes || '{}') 
+        : (currentDossier?.notes || {});
+
       const updatedNotes = {
         ...currentNotes,
         devis: devisData,
-        // Compatibilité avec les anciennes factures
+        num_contrat: numContrat.trim(),
+        num_sinistre: numSinistre.trim(),
         facture_lignes: lignes.map(l => ({
           id: l.id,
           desc: l.designation,
@@ -314,14 +343,14 @@ export default function NouveauDevisPage({ params }) {
       };
 
       if (options.generateFacture) {
-        const year = new Date().getFullYear();
-        const rand = Math.floor(1000 + Math.random() * 9000);
-        const facNum = `${year}10${dossier?.numero?.replace(/[^0-9]/g, '').slice(-4) || rand}`;
+        const facNum = numeroDevis;
         
         updatedNotes.facture = {
           numero: facNum,
           date_emission: dateEmission,
           date_echeance: dateValidite,
+          num_contrat: numContrat.trim(),
+          num_sinistre: numSinistre.trim(),
           lignes: devisData.lignes,
           total_ht: finalTotalHT,
           montant_tva: finalMontantTVA,
@@ -336,14 +365,36 @@ export default function NouveauDevisPage({ params }) {
         .from('dossiers')
         .update({ 
           notes: JSON.stringify(updatedNotes),
-          montant: finalTotalTTC
+          montant: finalTotalTTC,
+          num_contrat: numContrat.trim() || null,
+          num_sinistre: numSinistre.trim() || null
         })
         .eq('id', dossierId);
 
       if (updateError) throw updateError;
 
+      // Télécharger directement le PDF si l'utilisateur a cliqué sur "Générer la facture"
+      if (options.generateFacture) {
+        try {
+          const doc = generateFacturePDF({
+            dossier: {
+              ...dossier,
+              num_contrat: numContrat.trim(),
+              num_sinistre: numSinistre.trim()
+            },
+            garage: garage || {},
+            devisData,
+            factureData: updatedNotes.facture,
+            isDevis: false
+          });
+          doc.save(`${numeroDevis}.pdf`);
+        } catch (pdfErr) {
+          console.error("Erreur téléchargement automatique:", pdfErr);
+        }
+      }
+
       alert(options.generateFacture 
-        ? "Devis et Facture générés avec succès !" 
+        ? "Facture générée avec succès et contrat / sinistre enregistrés !" 
         : "Devis enregistré avec succès !"
       );
 
@@ -364,6 +415,8 @@ export default function NouveauDevisPage({ params }) {
         date_emission: dateEmission,
         date_validite: dateValidite,
         taux_tva: generalTvaRate,
+        num_contrat: numContrat,
+        num_sinistre: numSinistre,
         lignes,
         total_ht: finalTotalHT,
         montant_tva: finalMontantTVA,
@@ -371,7 +424,11 @@ export default function NouveauDevisPage({ params }) {
       };
 
       const doc = generateFacturePDF({
-        dossier,
+        dossier: {
+          ...dossier,
+          num_contrat: numContrat,
+          num_sinistre: numSinistre
+        },
         garage: garage || {},
         devisData,
         isDevis: true
@@ -435,7 +492,7 @@ export default function NouveauDevisPage({ params }) {
         </div>
       </div>
 
-      {/* Carte 1 : Informations de base */}
+      {/* Carte 1 : Informations de base (Dates, TVA, Numéro, Contrat, Sinistre) */}
       <div className="bg-[#0d1428] rounded-2xl border border-[#1e2d4a] p-5 sm:p-6 shadow-lg space-y-4">
         <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
           Informations de base
@@ -492,9 +549,11 @@ export default function NouveauDevisPage({ params }) {
 
         </div>
 
-        {/* Date limite de validité */}
-        <div className="pt-2">
-          <div className="max-w-md">
+        {/* Date limite de validité & Contrat & Sinistre */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+          
+          {/* Date limite de validité */}
+          <div>
             <label className="block text-[11px] font-bold uppercase text-slate-400 mb-1.5">
               Date limite de validité
             </label>
@@ -506,6 +565,39 @@ export default function NouveauDevisPage({ params }) {
             />
             <span className="text-[10px] text-slate-500 mt-1 block">Optionnel - Date d'expiration du devis</span>
           </div>
+
+          {/* Numéro de contrat (Indispensable pour la facture demandée) */}
+          <div>
+            <label className="block text-[11px] font-bold uppercase text-[#00d4ff] mb-1.5 flex items-center justify-between">
+              <span className="flex items-center gap-1.5"><ShieldCheck size={13} /> Numéro de contrat</span>
+              <span className="text-[10px] text-amber-400 font-semibold tracking-normal lowercase">(requis pour facturer *)</span>
+            </label>
+            <input 
+              type="text"
+              value={numContrat}
+              onChange={(e) => setNumContrat(e.target.value)}
+              placeholder="Ex: 100142865415"
+              className={`w-full px-3.5 py-2.5 bg-[#111c35] border ${!numContrat.trim() ? 'border-amber-500/50 focus:border-amber-400' : 'border-[#00d4ff]/40 focus:border-[#00d4ff]'} rounded-xl text-sm font-mono font-bold text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#00d4ff]/30`}
+            />
+            <span className="text-[10px] text-slate-400 mt-1 block">Numéro de police / contrat assurance</span>
+          </div>
+
+          {/* Numéro de sinistre (Indispensable pour la facture demandée) */}
+          <div>
+            <label className="block text-[11px] font-bold uppercase text-[#00d4ff] mb-1.5 flex items-center justify-between">
+              <span className="flex items-center gap-1.5"><FileText size={13} /> Numéro de sinistre</span>
+              <span className="text-[10px] text-amber-400 font-semibold tracking-normal lowercase">(requis pour facturer *)</span>
+            </label>
+            <input 
+              type="text"
+              value={numSinistre}
+              onChange={(e) => setNumSinistre(e.target.value)}
+              placeholder="Ex: SC123413526"
+              className={`w-full px-3.5 py-2.5 bg-[#111c35] border ${!numSinistre.trim() ? 'border-amber-500/50 focus:border-amber-400' : 'border-[#00d4ff]/40 focus:border-[#00d4ff]'} rounded-xl text-sm font-mono font-bold text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#00d4ff]/30`}
+            />
+            <span className="text-[10px] text-slate-400 mt-1 block">Numéro de déclaration sinistre</span>
+          </div>
+
         </div>
       </div>
 
@@ -525,7 +617,7 @@ export default function NouveauDevisPage({ params }) {
           </span>
         </div>
 
-        {/* Boutons Raccourcis (fidèle à la maquette de la capture 3) */}
+        {/* Boutons Raccourcis */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
           
           <button
@@ -811,7 +903,7 @@ export default function NouveauDevisPage({ params }) {
         </div>
       </div>
 
-      {/* Carte 5 : Totaux (3 grands blocs comme Image 3) */}
+      {/* Carte 5 : Totaux */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         <div className="bg-[#0d1428] rounded-2xl border border-[#1e2d4a] p-5 sm:p-6 shadow-xl">
