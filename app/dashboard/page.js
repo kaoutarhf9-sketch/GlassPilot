@@ -320,22 +320,27 @@ export default function DashboardHome() {
       <div className="bg-[var(--white)] rounded-2xl border border-[var(--stone)] shadow-md p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center border border-indigo-100">
-              <TrendingUp size={18} className="text-indigo-600" />
+            <div className="w-10 h-10 bg-[var(--stone)] rounded-xl flex items-center justify-center border border-[var(--stone)]">
+              <TrendingUp size={18} className="text-[var(--blue)]" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-[var(--ink)] tracking-tight">Chiffre d'Affaires</h2>
-              <p className="text-xs text-[var(--muted)]">Basé sur le montant des dossiers</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-xl font-bold text-[var(--ink)]">
+                  {revenueData[chartFilter].reduce((sum, item) => sum + item.revenu, 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                </span>
+                <span className="text-xs text-[var(--muted)]">sur la période</span>
+              </div>
             </div>
           </div>
 
-          <div className="flex p-1 bg-slate-50 border border-slate-200 rounded-xl w-fit">
+          <div className="flex p-1 bg-[var(--surface2)] border border-[var(--stone)] rounded-xl w-fit">
             <button
               onClick={() => setChartFilter('jour')}
               className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${
  chartFilter === 'jour' 
- ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
- : 'text-slate-500 hover:text-slate-700'
+ ? 'bg-[var(--surface)] text-[var(--blue)] shadow-sm border border-[var(--stone)]' 
+ : 'text-[var(--muted)] hover:text-[var(--ink)]'
  }`}
             >
               7 Jours
@@ -344,8 +349,8 @@ export default function DashboardHome() {
               onClick={() => setChartFilter('semaine')}
               className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${
  chartFilter === 'semaine' 
- ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
- : 'text-slate-500 hover:text-slate-700'
+ ? 'bg-[var(--surface)] text-[var(--blue)] shadow-sm border border-[var(--stone)]' 
+ : 'text-[var(--muted)] hover:text-[var(--ink)]'
  }`}
             >
               4 Semaines
@@ -354,8 +359,8 @@ export default function DashboardHome() {
               onClick={() => setChartFilter('mois')}
               className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${
  chartFilter === 'mois' 
- ? 'bg-white text-[var(--blue)] shadow-sm border border-slate-200/50' 
- : 'text-slate-500 hover:text-slate-700'
+ ? 'bg-[var(--surface)] text-[var(--blue)] shadow-sm border border-[var(--stone)]' 
+ : 'text-[var(--muted)] hover:text-[var(--ink)]'
  }`}
             >
               Année
