@@ -325,21 +325,26 @@ export default function NouveauDossier() {
         await worker.terminate();
 
         const extracted = extractDocumentData(ret?.data?.text || '');
+        console.log('[Scan IA] Texte brut extrait:', ret?.data?.text);
+        console.log('[Scan IA] Données extraites:', extracted);
+
         const count = applyData(extracted);
         if (count > 0) {
           populated = true;
           setScanSuccess(true);
           setScanMessage(`✓ ${count} information(s) préremplie(s) avec succès !`);
           setTimeout(() => { setScanMessage(''); setScanSuccess(false); }, 3500);
-          setIsScanning(false);
           return;
         }
       } catch (clientErr) {
         console.error("Échec OCR local:", clientErr);
+      } finally {
+        setIsScanning(false);
       }
     }
 
     if (!populated) {
+      setIsScanning(false);
       setScanMessage("Aucune donnée lisible détectée. Vous pouvez renseigner les champs manuellement.");
       setTimeout(() => setScanMessage(''), 4500);
     }
