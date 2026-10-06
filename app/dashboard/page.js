@@ -54,7 +54,7 @@ export default function DashboardHome() {
     
     try {
       const user = await getValidUser();
-      if (userError || !user) {
+      if (!user) {
         router.push('/connexion');
         return;
       }
