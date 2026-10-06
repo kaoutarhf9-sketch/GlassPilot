@@ -826,14 +826,48 @@ Gestionnaire administratif du garage ${garageNom}
 
       const { data: { publicUrl } } = supabase.storage.from('documents').getPublicUrl(filePath);
 
-      // 5. Mettre à jour le dossier dans Supabase
+      // 5. Récupérer et mettre à jour les notes actuelles (l'assurance est stockée dans notes JSON)
+      const { data: latestData } = await supabase
+        .from('dossiers')
+        .select('notes, assurance_id')
+        .eq('id', dossierId)
+        .single();
+
+      let currentNotesObj = {};
+      try {
+        currentNotesObj = JSON.parse(latestData?.notes || '{}');
+      } catch (e) {}
+
+      const updatedNotesObj = {
+        ...currentNotesObj,
+        assurance_nom: formData.assurance_nom,
+        assurance_telephone: formData.assurance_telephone,
+        assurance_email: formData.assurance_email
+      };
+
+      // Tenter de lier assurance_id si existante dans la table assurances
+      let matchedAssuranceId = latestData?.assurance_id || null;
+      try {
+        const { data: assMatch } = await supabase
+          .from('assurances')
+          .select('id')
+          .ilike('nom', formData.assurance_nom.trim())
+          .limit(1)
+          .maybeSingle();
+        if (assMatch?.id) matchedAssuranceId = assMatch.id;
+      } catch (e) {}
+
+      const dossierUpdatePayload = {
+        signature_url: publicUrl,
+        num_contrat: formData.num_contrat,
+        notes: JSON.stringify(updatedNotesObj)
+      };
+      if (matchedAssuranceId) dossierUpdatePayload.assurance_id = matchedAssuranceId;
+
+      // Mettre à jour le dossier dans Supabase
       const { error: updateError } = await supabase
         .from('dossiers')
-        .update({
-          signature_url: publicUrl,
-          num_contrat: formData.num_contrat,
-          assurance_nom: formData.assurance_nom
-        })
+        .update(dossierUpdatePayload)
         .eq('id', dossierId);
 
       if (updateError) throw updateError;
@@ -843,7 +877,8 @@ Gestionnaire administratif du garage ${garageNom}
         ...prev,
         signature_url: publicUrl,
         num_contrat: formData.num_contrat,
-        assurance_nom: formData.assurance_nom,
+        notes: JSON.stringify(updatedNotesObj),
+        assurance_id: matchedAssuranceId || prev?.assurance_id,
         assurances: {
           ...(prev?.assurances || {}),
           nom: formData.assurance_nom
