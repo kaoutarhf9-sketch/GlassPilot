@@ -227,7 +227,6 @@ export default function NouveauDossier() {
         if (data.immatriculation) { u.immatriculation = data.immatriculation; fieldsFound++; }
         if (data.modele) { u.modele = data.modele; fieldsFound++; }
         if (data.num_contrat) { u.num_contrat = data.num_contrat; fieldsFound++; }
-        if (data.num_contrat && !prev.num_sinistre) { u.num_sinistre = data.num_contrat; }
         if (data.nom_assurance) { u.nom_assurance = data.nom_assurance; fieldsFound++; }
         return u;
       });
