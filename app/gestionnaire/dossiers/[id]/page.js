@@ -1569,6 +1569,20 @@ Gestionnaire administratif du garage ${garageNom}
                 Cession de créance
               </button>
 
+              {/* Régénérer Cession de créance button */}
+              {dossier?.statut !== 'nouveau' && dossier?.signature_url && (
+                <button
+                  onClick={handleRegenerateCession}
+                  disabled={isRegenerating || !formData.assurances_id || !formData.num_contrat}
+                  title={(!formData.assurances_id || !formData.num_contrat) ? "Remplissez l'assurance et le numéro de contrat pour régénérer" : ""}
+                  className={`w-full py-3 px-4 border border-[#1454FF] hover:bg-[#1454FF]/10 text-[#1454FF] font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 text-sm ${(isRegenerating || !formData.assurances_id || !formData.num_contrat) ? 'opacity-50 cursor-not-allowed' : 'active:scale-98'}`}
+                >
+                  {isRegenerating ? <Loader2 className="animate-spin" size={16} /> : <FileSignature size={16} />}
+                  Régénérer Cession
+                </button>
+              )}
+
+
               {/* Archiver le dossier (uniquement si Règlement reçu) */}
               {dossier?.statut === 'reglement_recu' && (
                 <button
