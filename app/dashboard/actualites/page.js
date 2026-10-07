@@ -56,17 +56,7 @@ export default function GaragisteActualitesPage() {
         </div>
 
         {/* Tab switch */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
-          <span className="px-4 py-2 text-xs font-bold text-[var(--ink)] bg-white rounded-xl shadow-sm border border-slate-200/60">
-            Actualités
-          </span>
-          <Link
-            href="/dashboard/referentiel-assurance"
-            className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-900 rounded-xl transition-colors"
-          >
-            Référentiel Assurance
-          </Link>
-        </div>
+        
       </div>
 
       {/* List */}

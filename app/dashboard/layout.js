@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { ShoppingBag , Megaphone } from 'lucide-react';
-import { 
+import {
+  Plus,
   LayoutDashboard, 
   Users, 
   FileText, 
@@ -338,7 +339,6 @@ export default function DashboardLayout({ children }) {
       title: 'COMMUNICATION',
       items: [
         { href: '/dashboard/actualites', label: 'Actualités', icon: Newspaper },
-        { href: '/dashboard/referentiel-assurance', label: 'Référentiel Assurance', icon: BookOpen },
       ]
     },
     {
@@ -473,6 +473,13 @@ export default function DashboardLayout({ children }) {
             <p className="font-bold text-[var(--ink)] text-sm truncate">{garageName || 'Mon Garage'}</p>
             <p className="text-xs text-[#64748B] mt-0.5 truncate">Espace professionnel</p>
           </div>
+          <Link
+            href="/dashboard/dossiers/nouveau"
+            className="mt-3 w-full flex items-center justify-center gap-2 px-3.5 py-2.5 bg-[#1454FF] hover:bg-[#1060ff] text-white text-xs font-bold rounded-xl shadow-md shadow-[#1454FF]/25 transition-all group"
+          >
+            <Plus size={15} className="group-hover:rotate-90 transition-transform duration-300" />
+            <span>Nouveau dossier</span>
+          </Link>
         </div>
 
         {/* Navigation */}
@@ -566,6 +573,16 @@ export default function DashboardLayout({ children }) {
             </div>
 
             <div className="flex items-center gap-2 sm:gap-4">
+              {/* BOUTON NOUVEAU DOSSIER */}
+              <Link
+                href="/dashboard/dossiers/nouveau"
+                className="flex items-center gap-2 px-3.5 py-2 bg-[#1454FF] hover:bg-[#1060ff] text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-[#1454FF]/25 hover:shadow-lg hover:shadow-[#1454FF]/35 transition-all cursor-pointer active:scale-95 shrink-0"
+              >
+                <Plus size={16} className="text-white" />
+                <span className="hidden sm:inline">Nouveau dossier</span>
+                <span className="sm:hidden">Nouveau</span>
+              </Link>
+
               {/* NOTIFICATIONS */}
               <div className="relative">
                 <button 
@@ -797,7 +814,14 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <p className="font-bold text-[var(--ink)] text-sm truncate">{garageName || 'Mon Garage'}</p>
                 <p className="text-xs text-[#64748B] mt-0.5 truncate">Espace professionnel</p>
-              </div>
+          </div>
+          <Link
+            href="/dashboard/dossiers/nouveau"
+            className="mt-3 w-full flex items-center justify-center gap-2 px-3.5 py-2.5 bg-[#1454FF] hover:bg-[#1060ff] text-white text-xs font-bold rounded-xl shadow-md shadow-[#1454FF]/25 transition-all group"
+          >
+            <Plus size={15} className="group-hover:rotate-90 transition-transform duration-300" />
+            <span>Nouveau dossier</span>
+          </Link>
             </div>
 
             <nav className="flex-1 px-3 py-6 overflow-y-auto custom-scrollbar">
