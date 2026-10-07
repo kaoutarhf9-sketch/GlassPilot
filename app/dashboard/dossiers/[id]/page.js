@@ -19,6 +19,7 @@ import clsx from 'clsx';
 import { generateFacturePDF } from '@/lib/generateFacturePDF';
 
 const DOCUMENT_SLOTS = [
+  { key: 'bon_commande', label: 'Bon de commande', patterns: ['bon_commande', 'bon_de_commande', 'commande', 'bdc'] },
   { key: 'facture', label: 'Facture / Devis', patterns: ['facture', 'devis'] },
   { key: 'carte_grise', label: 'Carte Grise', patterns: ['carte_grise'] },
   { key: 'assurance', label: 'Assurance', patterns: ['assurance', 'attestation'] },
@@ -541,7 +542,9 @@ export default function DetailDossierPremium() {
     try {
       for (const file of files) {
         let prefix = 'photo_vehicule';
-        if (file.type.includes('pdf')) {
+        if (file.name.toLowerCase().includes('commande') || file.name.toLowerCase().includes('bdc')) {
+          prefix = 'bon_commande';
+        } else if (file.type.includes('pdf')) {
           prefix = 'document_assurance';
         } else if (file.name.toLowerCase().includes('grise')) {
           prefix = 'carte_grise';

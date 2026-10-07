@@ -115,6 +115,7 @@ export default function NouveauDossier() {
   const [docs, setDocs] = useState({
     attestation_assurance: null,
     carte_grise: null,
+    bon_commande: null,
     controle_technique: null,
     photo_vehicule: null,
     photo_impact: null,
@@ -767,6 +768,13 @@ export default function NouveauDossier() {
                   hint="Formats acceptés : PDF, JPG, PNG (max 5MB)"
                   file={docs.controle_technique}
                   onChange={f => setDocs(p => ({ ...p, controle_technique: f }))}
+                />
+
+                <DocUploadRow
+                  label="Bon de commande"
+                  hint="Formats acceptés : PDF, JPG, PNG (max 5MB)"
+                  file={docs.bon_commande}
+                  onChange={f => setDocs(p => ({ ...p, bon_commande: f }))}
                 />
               </div>
             </div>

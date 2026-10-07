@@ -91,6 +91,7 @@ export async function POST(request) {
           const lowerName = file.name.toLowerCase();
           if (lowerName.includes('carte_grise')) friendlyLabel = `Carte_Grise_${immat.replace(/\s+/g, '_')}.pdf`;
           else if (lowerName.includes('attestation') || lowerName.includes('assurance')) friendlyLabel = `Attestation_Assurance_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('bon_commande') || lowerName.includes('commande') || lowerName.includes('bdc')) friendlyLabel = `Bon_De_Commande_${immat.replace(/\s+/g, '_')}.pdf`;
           else if (lowerName.includes('photo_vehicule') || lowerName.includes('vehicule')) friendlyLabel = `Photo_Vehicule_${immat.replace(/\s+/g, '_')}.jpg`;
           else if (lowerName.includes('photo_impact') || lowerName.includes('impact')) friendlyLabel = `Photo_Impact_${immat.replace(/\s+/g, '_')}.jpg`;
           else if (lowerName.includes('cession')) friendlyLabel = `Contrat_Signe_Cession_${immat.replace(/\s+/g, '_')}.pdf`;
