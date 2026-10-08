@@ -445,42 +445,7 @@ export default function GestionnaireDashboard() {
             </div>
           </div>
 
-          {/* Vrais Messages */}
-          <div className="bg-[var(--white)] rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
-            <div className="p-4 border-b border-slate-200 bg-transparent/50">
-              <h3 className="font-bold text-[var(--ink)] flex items-center gap-2">
-                <MessageSquare size={16} className="text-indigo-600" />
-                Derniers messages
-              </h3>
-            </div>
-            <div className="divide-y divide-slate-100">
-              {recentMessages.length === 0 ? (
-                <div className="p-6 text-center">
-                  <p className="text-sm text-slate-500">Aucun message récent.</p>
-                </div>
-              ) : (
-                recentMessages.map((msg) => (
-                  <div 
-                    key={msg.id} 
-                    className={clsx("p-4 hover:bg-transparent transition-colors cursor-pointer", !msg.is_read && "bg-indigo-50/30")}
-                    onClick={() => router.push(`/gestionnaire/dossiers/${msg.dossier_id}`)}
-                  >
-                    <div className="flex justify-between items-start mb-1">
-                      <span className={clsx("text-sm", !msg.is_read ? "font-semibold text-[var(--ink)]" : "font-medium text-slate-700")}>
-                        {msg.sender_name || 'Garagiste'}
-                      </span>
-                      <span className="text-[10px] text-[var(--muted)]">
-                        {new Date(msg.created_at).toLocaleDateString('fr-FR')}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-500 line-clamp-2">{msg.message}</p>
-                  </div>
-                ))
-              )}
-            </div>
           </div>
-          
-        </div>
       </div>
     </div>
   );

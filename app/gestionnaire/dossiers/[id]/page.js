@@ -571,6 +571,34 @@ export default function GestionnaireDetailDossier() {
     }
   };
 
+
+  const formatMessageDate = (dateString) => {
+    if (!dateString) return '';
+    try {
+      const d = new Date(dateString);
+      const pad = (n) => n.toString().padStart(2, '0');
+      return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    } catch (e) {
+      return '';
+    }
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    if (!messageId) return;
+    if (!confirm('Supprimer ce message ?')) return;
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .delete()
+        .eq('id', messageId);
+      if (error) throw error;
+      setMessages(prev => prev.filter(m => m.id !== messageId));
+    } catch (err) {
+      console.error('Erreur suppression message:', err);
+      alert('Impossible de supprimer le message.');
+    }
+  };
+
   const scrollToBottom = () => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -578,7 +606,6 @@ export default function GestionnaireDetailDossier() {
   };
 
   const handleOpenChat = async () => {
-    setChatOpen(true);
     if (unreadCount > 0) {
       setUnreadCount(0);
       await supabase
@@ -586,6 +613,14 @@ export default function GestionnaireDetailDossier() {
         .update({ is_read: true })
         .eq('dossier_id', dossierId)
         .eq('sender_role', 'garagiste');
+    }
+    const el = document.getElementById('messagerie-dossier');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const textarea = el.querySelector('textarea');
+        if (textarea) textarea.focus();
+      }, 300);
     }
     scrollToBottom();
   };
@@ -1670,6 +1705,194 @@ Gestionnaire administratif du garage ${garageNom}
         {/* Colonne Latérale (Contexte) */}
         <div className="space-y-6">
           
+          {/* Widget 0: MESSAGERIE DU DOSSIER */}
+          <div id="messagerie-dossier" className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-5 text-white overflow-hidden relative space-y-4">
+            <h3 className="text-base font-bold text-white tracking-wide">
+              Messagerie du Dossier
+            </h3>
+
+            {/* Boîte de messages avec fond blanc */}
+            <div className="bg-white rounded-2xl p-4 h-[280px] overflow-y-auto space-y-3 custom-scrollbar">
+              {messages.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center text-center">
+                  <MessageSquare size={28} className="text-slate-300 mb-2" />
+                  <p className="text-xs font-medium text-slate-400">Aucun message pour ce dossier.</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Commencez l'échange avec le garagiste.</p>
+                </div>
+              ) : (
+                messages.map((msg, idx) => {
+                  if (msg.sender_role === 'system') {
+                    return (
+                      <div key={idx} className="flex justify-center my-2 w-full">
+                        <div className="bg-slate-100 border border-slate-200 text-slate-600 text-[11px] font-medium px-3 py-1 rounded-full text-center">
+                          {msg.message}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  const isMe = msg.sender_role === 'gestionnaire';
+
+                  return (
+                    <div
+                      key={msg.id || idx}
+                      className={clsx(
+                        "flex flex-col max-w-[85%]",
+                        isMe ? "ml-auto" : "mr-auto"
+                      )}
+                    >
+                      <div
+                        className={clsx(
+                          "p-3 rounded-2xl shadow-sm text-xs",
+                          isMe
+                            ? "bg-[#dbeafe] text-slate-800 rounded-tr-sm"
+                            : "bg-[#f1f5f9] text-slate-800 rounded-tl-sm"
+                        )}
+                      >
+                        {/* En-tête de la bulle */}
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <span className={clsx(
+                            "text-xs font-bold",
+                            isMe ? "text-slate-600" : "text-slate-500 uppercase tracking-wide"
+                          )}>
+                            {isMe ? "Gestionnaire" : (msg.sender_name || dossier?.garages?.nom_garage || "Garagiste")}
+                          </span>
+                          {isMe && (
+                            <button
+                              onClick={() => handleDeleteMessage(msg.id)}
+                              className="text-[#38bdf8] hover:text-rose-500 transition-colors p-0.5 cursor-pointer"
+                              title="Supprimer ce message"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Contenu */}
+                        {msg.message?.startsWith('📎 Fichier :') ? (
+                          (() => {
+                            const parts = msg.message.replace('📎 Fichier : ', '').split(' | ');
+                            const fileName = parts[0] || 'Fichier';
+                            const fileUrl = parts[1] || '#';
+                            const isImg = fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i) !== null;
+                            return (
+                              <div className="flex flex-col gap-1.5 min-w-[180px]">
+                                <div className="flex items-center gap-1.5">
+                                  <FileText size={14} className="text-sky-600 shrink-0" />
+                                  <span className="font-semibold underline break-all text-xs">{fileName}</span>
+                                </div>
+                                {isImg && (
+                                  <img
+                                    src={fileUrl}
+                                    alt={fileName}
+                                    className="max-w-full max-h-36 object-cover rounded-lg border border-slate-200 mt-1 cursor-pointer hover:opacity-90 transition-opacity"
+                                    onClick={() => setSelectedImage(fileUrl)}
+                                  />
+                                )}
+                                <a
+                                  href={fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-50 text-sky-700 rounded-lg text-[11px] font-semibold transition-all border border-slate-200"
+                                >
+                                  <Download size={11} /> Télécharger
+                                </a>
+                              </div>
+                            );
+                          })()
+                        ) : (
+                          <p className={clsx(
+                            "break-words leading-relaxed",
+                            isMe ? "font-medium text-slate-800" : "font-semibold text-slate-800 uppercase"
+                          )}>
+                            {msg.message}
+                          </p>
+                        )}
+
+                        {/* Date & Heure */}
+                        <p className="text-[10px] text-slate-400 mt-1.5 font-medium">
+                          {formatMessageDate(msg.created_at)}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+              {chatUploading && (
+                <div className="flex items-center justify-center gap-2 p-2 bg-sky-50 text-sky-700 rounded-xl text-xs font-medium">
+                  <Loader2 size={14} className="animate-spin" />
+                  <span>Envoi du fichier...</span>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Zone d'écriture : Textarea + Bouton Pièce jointe + Bouton Envoyer */}
+            <div className="flex items-start gap-2.5">
+              <textarea
+                rows={2}
+                placeholder="Écrire un message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                  }
+                }}
+                disabled={chatUploading}
+                className="flex-1 px-3.5 py-2.5 bg-[#dbeafe]/80 text-slate-900 placeholder-slate-500 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-sky-400/40 border border-sky-200/50 resize-none h-[54px]"
+              />
+
+              <input
+                type="file"
+                id="sidebar-chat-upload"
+                className="hidden"
+                onChange={handleChatFileUpload}
+                disabled={chatUploading}
+              />
+              <label
+                htmlFor="sidebar-chat-upload"
+                className="w-[44px] h-[54px] bg-[#0c182b] hover:bg-[#132742] text-[#38bdf8] border border-[#1e3a5f] rounded-xl flex items-center justify-center cursor-pointer transition-all shrink-0 active:scale-95"
+                title="Joindre un fichier"
+              >
+                <Paperclip size={18} />
+              </label>
+
+              <button
+                onClick={sendMessage}
+                disabled={!newMessage.trim() || sendingMessage || chatUploading}
+                className="w-[44px] h-[54px] bg-[#0c182b] hover:bg-[#132742] text-[#38bdf8] border border-[#1e3a5f] disabled:opacity-40 rounded-xl flex items-center justify-center transition-all shrink-0 active:scale-95 cursor-pointer"
+                title="Envoyer"
+              >
+                {sendingMessage ? <Loader2 size={16} className="animate-spin" /> : <Send size={18} />}
+              </button>
+            </div>
+
+            {/* Badges / Raccourcis rapides */}
+            <div className="flex flex-wrap gap-2 pt-1">
+              {[
+                { label: "D.T", text: "D.T" },
+                { label: "D.E", text: "D.E" },
+                { label: "Travaux ?", text: "Travaux ?" },
+                { label: "Règlement ?", text: "Règlement ?" },
+                { label: "Cession", text: "Cession" },
+                { label: "Facture", text: "Facture" }
+              ].map((pill, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setNewMessage(prev => prev ? `${prev} ${pill.text}` : pill.text);
+                  }}
+                  className="px-3 py-1.5 bg-[#0a1324] hover:bg-[#13233c] hover:border-[#38bdf8] text-white border border-[#1e2f4d] rounded-xl text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
+                >
+                  {pill.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Widget 1: RELANCE & INFORMATION */}
           <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-white overflow-hidden relative space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
