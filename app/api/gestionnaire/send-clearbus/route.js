@@ -92,6 +92,13 @@ export async function POST(request) {
           if (lowerName.includes('carte_grise')) friendlyLabel = `Carte_Grise_${immat.replace(/\s+/g, '_')}.pdf`;
           else if (lowerName.includes('attestation') || lowerName.includes('assurance')) friendlyLabel = `Attestation_Assurance_${immat.replace(/\s+/g, '_')}.pdf`;
           else if (lowerName.includes('bon_commande') || lowerName.includes('commande') || lowerName.includes('bdc')) friendlyLabel = `Bon_De_Commande_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('avis_depot') || lowerName.includes('depot')) friendlyLabel = `Avis_De_Depot_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('avis_reception') || lowerName.includes('reception')) friendlyLabel = `Avis_De_Reception_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('rapport_expertise') || lowerName.includes('expertise')) friendlyLabel = `Rapport_Expertise_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('accord_prise_en_charge') || lowerName.includes('accord') || lowerName.includes('pec')) friendlyLabel = `Accord_Prise_En_Charge_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('declaration')) friendlyLabel = `Declaration_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('mail_assurance') || lowerName.includes('mail')) friendlyLabel = `Mail_Assurance_${immat.replace(/\s+/g, '_')}.pdf`;
+          else if (lowerName.includes('autre')) friendlyLabel = `Autre_Document_${immat.replace(/\s+/g, '_')}.pdf`;
           else if (lowerName.includes('photo_vehicule') || lowerName.includes('vehicule')) friendlyLabel = `Photo_Vehicule_${immat.replace(/\s+/g, '_')}.jpg`;
           else if (lowerName.includes('photo_impact') || lowerName.includes('impact')) friendlyLabel = `Photo_Impact_${immat.replace(/\s+/g, '_')}.jpg`;
           else if (lowerName.includes('cession')) friendlyLabel = `Contrat_Signe_Cession_${immat.replace(/\s+/g, '_')}.pdf`;

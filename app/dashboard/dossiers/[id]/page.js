@@ -25,10 +25,17 @@ const DOCUMENT_SLOTS = [
   { key: 'assurance', label: 'Assurance', patterns: ['assurance', 'attestation'] },
   { key: 'controle_technique', label: 'Contrôle Technique', patterns: ['controle_technique', 'ct'] },
   { key: 'cession', label: 'Cession de créance', patterns: ['cession', 'documents_complets', 'signature'] },
+  { key: 'avis_depot', label: 'Avis de dépôt', patterns: ['avis_depot', 'depot'] },
+  { key: 'avis_reception', label: 'Avis de réception', patterns: ['avis_reception', 'reception', 'ar_'] },
+  { key: 'rapport_expertise', label: 'Rapport d’expertise', patterns: ['rapport_expertise', 'expertise'] },
+  { key: 'accord_prise_en_charge', label: 'Accord prise en charge', patterns: ['accord_prise_en_charge', 'accord', 'pec', 'prise_en_charge'] },
+  { key: 'declaration', label: 'Déclaration', patterns: ['declaration'] },
+  { key: 'mail_assurance', label: 'Mail assurance', patterns: ['mail_assurance', 'mail'] },
   { key: 'photo_vehicule', label: 'Photo du véhicule', patterns: ['photo_vehicule', 'vehicule'] },
   { key: 'photo_impact', label: "Photo de l'impact", patterns: ['photo_impact', 'impact'] },
   { key: 'photo_avant', label: 'Photo avant pose', patterns: ['photo_avant', 'avant_pose'] },
   { key: 'photo_apres', label: 'Photo après pose', patterns: ['photo_apres', 'apres_pose'] },
+  { key: 'autre', label: 'Autre', patterns: ['autre', 'divers'] },
 ];
 
 export default function DetailDossierPremium() {
@@ -541,15 +548,42 @@ export default function DetailDossierPremium() {
     
     try {
       for (const file of files) {
-        let prefix = 'photo_vehicule';
-        if (file.name.toLowerCase().includes('commande') || file.name.toLowerCase().includes('bdc')) {
+                let prefix = 'autre';
+        const lowerName = file.name.toLowerCase();
+        if (lowerName.includes('commande') || lowerName.includes('bdc')) {
           prefix = 'bon_commande';
-        } else if (file.type.includes('pdf')) {
-          prefix = 'document_assurance';
-        } else if (file.name.toLowerCase().includes('grise')) {
+        } else if (lowerName.includes('depot')) {
+          prefix = 'avis_depot';
+        } else if (lowerName.includes('reception') || lowerName.includes('avis_rec')) {
+          prefix = 'avis_reception';
+        } else if (lowerName.includes('expertise') || lowerName.includes('rapport')) {
+          prefix = 'rapport_expertise';
+        } else if (lowerName.includes('accord') || lowerName.includes('pec')) {
+          prefix = 'accord_prise_en_charge';
+        } else if (lowerName.includes('declaration')) {
+          prefix = 'declaration';
+        } else if (lowerName.includes('mail')) {
+          prefix = 'mail_assurance';
+        } else if (lowerName.includes('grise')) {
           prefix = 'carte_grise';
-        } else if (file.name.toLowerCase().includes('impact')) {
+        } else if (lowerName.includes('facture') || lowerName.includes('devis')) {
+          prefix = 'facture';
+        } else if (lowerName.includes('attestation') || lowerName.includes('assurance')) {
+          prefix = 'assurance';
+        } else if (lowerName.includes('controle') || lowerName.includes('ct')) {
+          prefix = 'controle_technique';
+        } else if (lowerName.includes('cession') || lowerName.includes('signature')) {
+          prefix = 'cession';
+        } else if (lowerName.includes('impact')) {
           prefix = 'photo_impact';
+        } else if (lowerName.includes('avant')) {
+          prefix = 'photo_avant';
+        } else if (lowerName.includes('apres')) {
+          prefix = 'photo_apres';
+        } else if (lowerName.includes('vehicule')) {
+          prefix = 'photo_vehicule';
+        } else if (file.type.includes('pdf')) {
+          prefix = 'autre';
         }
         
         const path = `dossiers/${params.id}/${prefix}_${Date.now()}_${file.name}`;
@@ -1379,7 +1413,7 @@ export default function DetailDossierPremium() {
                                 {slot.label}
                               </span>
                               <span className="text-[10px] text-slate-300 mt-1">
-                                {isSlotUploading ? 'Importation...' : 'Ajouter le document'}
+                                {isSlotUploading ? 'Importation...' : 'Cliquer ou déposer ici'}
                               </span>
                               <input 
                                 type="file" 
