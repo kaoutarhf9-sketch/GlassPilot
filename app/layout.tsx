@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -12,10 +13,27 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 1. Mise à jour pour le SEO et le nom de l'onglet du navigateur
+// SEO + nom de l'onglet du navigateur
 export const metadata: Metadata = {
-  title: "GlassPilot | Espace Pro",
-  description: "La plateforme tout-en-un pour la gestion de votre centre de vitrage automobile.",
+  metadataBase: new URL("https://www.glasspilotgestion.com"),
+  title: {
+    default: "GlassPilot Gestion | Logiciel de gestion de vitrage automobile",
+    template: "%s | GlassPilot Gestion",
+  },
+  description:
+    "GlassPilot Gestion : la plateforme tout-en-un pour la gestion de votre centre de vitrage automobile (devis, clients, interventions et suivi).",
+  applicationName: "GlassPilot Gestion",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "https://www.glasspilotgestion.com",
+    siteName: "GlassPilot Gestion",
+    title: "GlassPilot Gestion | Logiciel de gestion de vitrage automobile",
+    description:
+      "La plateforme tout-en-un pour la gestion de votre centre de vitrage automobile.",
+    locale: "fr_FR",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -25,11 +43,11 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="fr" // 2. Passé en français
+      lang="fr" // Passé en français
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning // 3. Le correctif pour l'erreur d'hydratation (Extensions)
+      suppressHydrationWarning // Correctif pour l'erreur d'hydratation (extensions)
     >
-      <body 
+      <body
         className="min-h-full flex flex-col"
         suppressHydrationWarning // Ajouté ici aussi pour une sécurité maximale
       >
@@ -44,10 +62,10 @@ export default function RootLayout({
             <circle cx="50%" cy="20%" r="750" stroke="rgba(56, 189, 248, 0.015)" strokeWidth="1.5" />
             <circle cx="50%" cy="20%" r="900" stroke="rgba(56, 189, 248, 0.01)" strokeWidth="1.5" strokeDasharray="9 9" />
             <circle cx="50%" cy="20%" r="1050" stroke="rgba(56, 189, 248, 0.005)" strokeWidth="1.5" />
-            
+
             <circle cx="15%" cy="60%" r="200" stroke="rgba(56, 189, 248, 0.03)" strokeWidth="1.5" strokeDasharray="5 5" />
             <circle cx="15%" cy="60%" r="400" stroke="rgba(56, 189, 248, 0.02)" strokeWidth="1.5" />
-            
+
             <circle cx="85%" cy="45%" r="300" stroke="rgba(56, 189, 248, 0.03)" strokeWidth="1.5" strokeDasharray="7 7" />
             <circle cx="85%" cy="45%" r="500" stroke="rgba(56, 189, 248, 0.02)" strokeWidth="1.5" />
 
