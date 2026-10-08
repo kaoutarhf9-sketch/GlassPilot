@@ -10,16 +10,33 @@ export default function ConnexionPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
+    useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       if (params.get('reset') === 'success') {
         setSuccessMessage("Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.");
+      }
+
+      // Pré-remplir les identifiants si 'Se souvenir de moi' était activé
+      try {
+        const savedRemember = localStorage.getItem('glasspilot_remember_me');
+        if (savedRemember === 'true' || savedRemember === null) {
+          setRememberMe(true);
+          const savedEmail = localStorage.getItem('glasspilot_remember_email');
+          const savedPassword = localStorage.getItem('glasspilot_remember_password');
+          if (savedEmail) setEmail(savedEmail);
+          if (savedPassword) setPassword(savedPassword);
+        } else {
+          setRememberMe(false);
+        }
+      } catch (err) {
+        console.error("Erreur lecture 'Se souvenir de moi':", err);
       }
     }
   }, []);
@@ -41,6 +58,21 @@ export default function ConnexionPage() {
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) throw new Error('Utilisateur non trouvé');
+
+      // Mémoriser les identifiants si 'Se souvenir de moi' est activé
+      try {
+        if (rememberMe) {
+          localStorage.setItem('glasspilot_remember_me', 'true');
+          localStorage.setItem('glasspilot_remember_email', email);
+          localStorage.setItem('glasspilot_remember_password', password);
+        } else {
+          localStorage.removeItem('glasspilot_remember_me');
+          localStorage.removeItem('glasspilot_remember_email');
+          localStorage.removeItem('glasspilot_remember_password');
+        }
+      } catch (storageErr) {
+        console.error('Erreur stockage identifiants:', storageErr);
+      }
 
       // Vérifier si l'utilisateur est un gestionnaire
       const { data: gestionnaire, error: gestionnaireError } = await supabase
@@ -427,6 +459,8 @@ export default function ConnexionPage() {
                     <Mail size={16} className="input-icon" />
                     <input
                       type="email"
+                      name="email"
+                      autoComplete="username email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -436,15 +470,14 @@ export default function ConnexionPage() {
                   </div>
                 </div>
 
-                <div className="input-group">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.5rem' }}>
-                    <label className="input-label">Mot de passe</label>
-                    <Link href="/mot-de-passe-oublie" className="forgot-link">Mot de passe oublié ?</Link>
-                  </div>
+                <div className="input-group" style={{ marginBottom: '0.85rem' }}>
+                  <label className="input-label">Mot de passe</label>
                   <div className="input-wrapper">
                     <Lock size={16} className="input-icon" />
                     <input
                       type={showPassword ? "text" : "password"}
+                      name="password"
+                      autoComplete="current-password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -460,6 +493,27 @@ export default function ConnexionPage() {
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', marginTop: '-0.25rem' }}>
+                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.85rem', color: 'var(--muted)', userSelect: 'none' }}>
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      style={{
+                        accentColor: '#38bdf8',
+                        width: '16px',
+                        height: '16px',
+                        cursor: 'pointer',
+                        borderRadius: '4px'
+                      }}
+                    />
+                    <span style={{ color: rememberMe ? 'var(--ink)' : 'var(--muted)', fontWeight: 500, transition: 'color .2s' }}>
+                      Se souvenir de moi
+                    </span>
+                  </label>
+                  <Link href="/mot-de-passe-oublie" className="forgot-link">Mot de passe oublié ?</Link>
                 </div>
 
                 <button type="submit" disabled={loading} className="btn-main">
