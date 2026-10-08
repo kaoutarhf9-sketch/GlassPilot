@@ -71,6 +71,9 @@ export default function ListeDossiers() {
       signe: { label: 'Signature validée', color: 'bg-teal-50 text-teal-700 border-teal-200', dot: 'bg-teal-500', icon: FileSignature },
       en_cours: { label: 'En cours', color: 'bg-sky-50 text-sky-700 border-sky-200', dot: 'bg-sky-500', icon: Car },
       reglement_recu: { label: 'Règlement reçu', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', dot: 'bg-emerald-500', icon: CheckCircle2 },
+      envoi_courrier: { label: 'Envoi courrier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200', dot: 'bg-indigo-500', icon: Mail },
+      relance: { label: 'Relance', color: 'bg-orange-50 text-orange-700 border-orange-200', dot: 'bg-orange-500', icon: Clock },
+      recouvrement: { label: 'Recouvrement', color: 'bg-rose-50 text-rose-700 border-rose-200', dot: 'bg-rose-500', icon: AlertCircle },
       termine: { label: 'Terminé', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', dot: 'bg-emerald-500', icon: CheckCircle2 },
     };
     return configs[statut] || configs.en_attente;

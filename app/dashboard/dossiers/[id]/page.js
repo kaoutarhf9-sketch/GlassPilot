@@ -797,7 +797,10 @@ export default function DetailDossierPremium() {
         termine: 'Terminé',
         reglement_en_cours: 'Règlement en cours',
         reglement_recu: 'Règlement reçu',
-        desistement: 'Désistement'
+        envoi_courrier: { bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200', dot: 'bg-indigo-500', label: 'Envoi courrier', icon: Mail },
+      relance: { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', dot: 'bg-orange-500', label: 'Relance', icon: Clock },
+      recouvrement: { bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200', dot: 'bg-rose-500', label: 'Recouvrement', icon: AlertCircle },
+      desistement: 'Désistement'
       };
       const friendlyLabel = statusLabels[newStatut] || newStatut;
       

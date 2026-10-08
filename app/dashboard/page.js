@@ -197,6 +197,10 @@ export default function DashboardHome() {
       signe: { label: 'Signature Validée', color: 'bg-teal-50 text-teal-700 border-teal-200', dot: 'bg-teal-500' },
       en_cours: { label: 'En cours', color: 'bg-sky-50 text-sky-700 border-sky-200', dot: 'bg-sky-500' },
       reglement_recu: { label: 'Règlement reçu', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', dot: 'bg-emerald-500' },
+      envoi_courrier: { label: 'Envoi courrier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200', dot: 'bg-indigo-500' },
+      relance: { label: 'Relance', color: 'bg-orange-50 text-orange-700 border-orange-200', dot: 'bg-orange-500' },
+      recouvrement: { label: 'Recouvrement', color: 'bg-rose-50 text-rose-700 border-rose-200', dot: 'bg-rose-500' },
+      reglement_en_cours: { label: 'Règlement en cours', color: 'bg-purple-50 text-purple-700 border-purple-200', dot: 'bg-purple-500' },
       termine: { label: 'Terminé', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', dot: 'bg-emerald-500' },
       facture: { label: 'Facturé', color: 'bg-purple-50 text-purple-700 border-purple-200', dot: 'bg-purple-500' }
     };
