@@ -639,7 +639,7 @@ export default function GestionnaireDetailDossier() {
     const numSinistre = formData.num_sinistre || '_________________';
     const garageNom = dossier?.garages?.nom_garage || '____________';
 
-    const subject = encodeURIComponent(`Dossier Sinistre - ${clientNom} - ${immat}`);
+    const subject = encodeURIComponent(`BDG N° ${numSinistre} - ${clientNom} - ${immat}`);
     const body = encodeURIComponent(`Bonjour,
 
 Je vous prie de trouver ci-joint les éléments demandés suite au remplacement du ${vitrage} effectué ce jour pour le sociétaire ${clientNom}, sur le véhicule ${vehicule}, immatriculé ${immat}.
@@ -1872,12 +1872,11 @@ Gestionnaire administratif du garage ${garageNom}
             {/* Badges / Raccourcis rapides */}
             <div className="flex flex-wrap gap-2 pt-1">
               {[
-                { label: "D.T", text: "D.T" },
-                { label: "D.E", text: "D.E" },
-                { label: "Travaux ?", text: "Travaux ?" },
-                { label: "Règlement ?", text: "Règlement ?" },
-                { label: "Cession", text: "Cession" },
-                { label: "Facture", text: "Facture" }
+              { label: "D.T", text: "Démarrer travaux" },
+              { label: "D.E", text: "Dossier envoyé" },
+              { label: "Travaux ?", text: "Avez-vous terminé les Travaux ?" },
+              { label: "Règlement ?", text: "Avez-vous reçu le règlement ?" },
+              { label: "Cession ?", text: "Merci de signer la cession de créance." }
               ].map((pill, idx) => (
                 <button
                   key={idx}
@@ -2217,7 +2216,7 @@ Gestionnaire administratif du garage ${garageNom}
                 <span>Envoi du fichier en cours...</span>
               </div>
             )}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} />  
           </div>
 
           {/* Messages suggérés */}
@@ -2225,7 +2224,7 @@ Gestionnaire administratif du garage ${garageNom}
             {[
               { label: "D.T", text: "Démarrer travaux" },
               { label: "D.E", text: "Dossier envoyé" },
-              { label: "Travaux ?", text: "Où en sont les travaux ?" },
+              { label: "Travaux ?", text: "Avez-vous terminé les Travaux ?" },
               { label: "Règlement ?", text: "Avez-vous reçu le règlement ?" },
               { label: "Cession ?", text: "Merci de signer la cession de créance." }
             ].map((pill, idx) => (
