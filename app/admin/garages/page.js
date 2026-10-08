@@ -296,7 +296,7 @@ export default function GaragesPage() {
               </div>
               <div className="px-4 py-2 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-center">
                 <p className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider">SIRET</p>
-                <p className="text-sm font-mono font-bold text-[var(--ink)] mt-0.5">{selectedGarage.siret}</p>
+                <p className="text-sm font-mono font-bold text-rose-500 mt-0.5">{selectedGarage.siret}</p>
               </div>
             </div>
           </div>
@@ -521,7 +521,7 @@ export default function GaragesPage() {
                       <FileText size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">SIRET</p>
-                        <p className="text-sm text-[var(--blue)] font-mono font-bold">{garage.siret || '—'}</p>
+                        <p className="text-sm text-rose-500 font-mono font-bold">{garage.siret || '—'}</p>
                       </div>
                     </div>
 

@@ -73,26 +73,30 @@ export default function ProfilPage() {
         }
       }
       
-      let street = '', cp = '', city = '';
-      if (garageData?.adresse) {
+      // Utiliser les colonnes dédiées si disponibles, sinon parser l'adresse
+      let street = garageData?.adresse || '';
+      let cp = garageData?.code_postal || '';
+      let city = garageData?.ville || '';
+
+      if ((!cp || !city) && garageData?.adresse) {
         const parts = garageData.adresse.split(',');
         if (parts.length > 1) {
           street = parts[0].trim();
           const rest = parts.slice(1).join(',').trim();
           const cpMatch = rest.match(/^(\d{5})\s+(.*)$/);
           if (cpMatch) {
-            cp = cpMatch[1];
-            city = cpMatch[2].trim();
+            cp = cp || cpMatch[1];
+            city = city || cpMatch[2].trim();
           } else {
-            city = rest;
+            city = city || rest;
           }
         } else {
           const cpMatch = garageData.adresse.match(/(\d{5})/);
           if (cpMatch) {
-            cp = cpMatch[1];
-            const index = garageData.adresse.indexOf(cp);
+            cp = cp || cpMatch[1];
+            const index = garageData.adresse.indexOf(cpMatch[1]);
             street = garageData.adresse.substring(0, index).trim();
-            city = garageData.adresse.substring(index + 5).trim();
+            city = city || garageData.adresse.substring(index + 5).trim();
           } else {
             street = garageData.adresse;
           }
@@ -202,6 +206,8 @@ export default function ProfilPage() {
           email_contact: formData.email,
           telephone: formData.telephone,
           adresse: `${formData.adresse}, ${formData.code_postal} ${formData.ville}`.trim().replace(/^,\s*/, ''),
+          code_postal: formData.code_postal || null,
+          ville: formData.ville || null,
           siret: formData.siret,
           logo_url: finalLogoUrl
         });

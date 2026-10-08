@@ -120,7 +120,9 @@ export default function GaragesPage() {
     garage.nom_garage?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     garage.responsable?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     garage.email_contact?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    garage.siret?.toLowerCase().includes(searchTerm.toLowerCase())
+    garage.siret?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    garage.ville?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    garage.code_postal?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -311,11 +313,22 @@ export default function GaragesPage() {
                         <p className="text-sm text-white font-medium">{garage.adresse || '—'}</p>
                       </div>
                     </div>
+                    {(garage.code_postal || garage.ville) && (
+                      <div className="flex items-start gap-3">
+                        <Building2 size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
+                        <div>
+                          <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">Code postal & Ville</p>
+                          <p className="text-sm text-white font-medium">
+                            {[garage.code_postal, garage.ville].filter(Boolean).join(' ')}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                     <div className="flex items-start gap-3">
-                      <FileText size={14} className="text-[var(--blue)] mt-0.5 shrink-0" />
+                      <FileText size={14} className="text-rose-400 mt-0.5 shrink-0" />
                       <div>
                         <p className="text-[10px] text-[#6B8299] uppercase tracking-wider font-semibold">SIRET</p>
-                        <p className="text-sm text-[var(--blue)] font-mono font-bold">{garage.siret || '—'}</p>
+                        <p className="text-sm text-rose-400 font-mono font-bold">{garage.siret || '—'}</p>
                       </div>
                     </div>
 

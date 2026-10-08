@@ -97,8 +97,31 @@ export async function GET(req) {
       const ribPath = meta.onboarding_rib_url || garage.rib_url || null;
       const cniPath = meta.onboarding_cni_url || garage.cni_url || null;
 
+      let codePostal = garage.code_postal || meta.code_postal || null;
+      let ville = garage.ville || meta.ville || null;
+
+      if ((!codePostal || !ville) && garage.adresse) {
+        const parts = garage.adresse.split(',');
+        if (parts.length > 1) {
+          const rest = parts.slice(1).join(',').trim();
+          const cpMatch = rest.match(/(\d{5})\s*(.*)/);
+          if (cpMatch) {
+            if (!codePostal) codePostal = cpMatch[1];
+            if (!ville) ville = cpMatch[2]?.trim() || null;
+          }
+        } else {
+          const cpMatch = garage.adresse.match(/(\d{5})\s*(.*)/);
+          if (cpMatch) {
+            if (!codePostal) codePostal = cpMatch[1];
+            if (!ville) ville = cpMatch[2]?.trim() || null;
+          }
+        }
+      }
+
       return {
         ...garage,
+        code_postal: codePostal,
+        ville: ville,
         siret: garage.siret || meta.onboarding_siret || null,
         iban: meta.onboarding_rib_iban || garage.iban || null,
         bic: meta.onboarding_rib_bic || garage.bic || null,
