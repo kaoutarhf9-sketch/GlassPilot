@@ -7,7 +7,7 @@ import {
   Search, Plus, Filter, FileText, Loader2, 
   Car, Calendar, ChevronRight, CheckCircle2, AlertCircle,
   Sparkles, User, Phone, Clock, Eye, FileSignature,
-  Star, Award, TrendingUp, ShieldCheck
+  Star, Award, TrendingUp, ShieldCheck, Mail
 } from 'lucide-react';
 
 export default function ListeDossiers() {
