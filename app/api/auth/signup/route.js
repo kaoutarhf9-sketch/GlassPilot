@@ -123,7 +123,7 @@ export async function POST(req) {
         .insert({
           garage_id: garageData.id,
           simple: 0,
-          prestige: 2
+          prestige: 1
         });
 
       if (stockError) {

@@ -92,13 +92,13 @@ export async function POST(req) {
       if (insertError) throw insertError;
       garageId = newGarage.id;
 
-      // Créer le stock de jetons (2 prestige offerts)
+      // Créer le stock de jetons (1 prestige offert)
       const { error: stockError } = await supabaseAdmin
         .from('stock_jetons')
         .insert({
           garage_id: garageId,
           simple: 0,
-          prestige: 2
+          prestige: 1
         });
 
       if (stockError) {
