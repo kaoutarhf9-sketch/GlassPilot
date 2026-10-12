@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
@@ -31,6 +31,7 @@ export default function GestionnaireLayout({ children }) {
   const [garagesCount, setGaragesCount] = useState(0);
   const [dossiersCount, setDossiersCount] = useState(0);
   const [gestionnaireId, setGestionnaireId] = useState(null);
+  const gestionnaireIdRef = useRef(null);
   
   const [statusFiltersOpen, setStatusFiltersOpen] = useState(true);
   const [currentStatus, setCurrentStatus] = useState('');
@@ -43,19 +44,22 @@ export default function GestionnaireLayout({ children }) {
   }, [pathname]);
 
   // Notifications globales
-  const [globalUnreadCount, setGlobalUnreadCount] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [latestMessage, setLatestMessage] = useState(null);
   
+  // Toutes les notifications (lues et non lues) : elles restent tant qu'on ne les supprime pas
   const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  // Le compteur de la cloche = notifications non lues uniquement
+  const globalUnreadCount = notifications.filter(n => !n.is_read).length;
 
   useEffect(() => {
     const initialize = async () => {
       const gId = await fetchGestionnaireInfo();
       if (gId) {
         await fetchStats(gId);
-        await fetchGlobalUnreadCount(gId);
+        await fetchNotifications(gId);
       }
     };
     initialize();
@@ -75,7 +79,7 @@ export default function GestionnaireLayout({ children }) {
       }
     });
     
-    // S'abonner à TOUS les nouveaux messages destinés au gestionnaire et mises à jour
+    // Temps réel : nouvelles notifications, mises à jour (lue) et suppressions
     const subscription = supabase
       .channel('global-notifications')
       .on(
@@ -86,20 +90,31 @@ export default function GestionnaireLayout({ children }) {
           table: 'notifications',
         },
         (payload) => {
-          const newNotif = payload.new;
-          if (!newNotif) return;
+          // Suppression : on retire simplement la notification de la liste
+          if (payload.eventType === 'DELETE') {
+            const oldId = payload.old?.id;
+            if (oldId) setNotifications(prev => prev.filter(n => n.id !== oldId));
+            return;
+          }
+
+          const notif = payload.new;
+          if (!notif) return;
 
           // On vérifie que la notification est bien pour ce gestionnaire
-          if (gestionnaireId && newNotif.gestionnaire_id !== gestionnaireId) return;
+          if (!gestionnaireIdRef.current || notif.gestionnaire_id !== gestionnaireIdRef.current) return;
 
           if (payload.eventType === 'INSERT') {
-            if (!newNotif.is_read) {
+            setNotifications(prev => (prev.some(n => n.id === notif.id) ? prev : [notif, ...prev]));
+
+            if (!notif.is_read) {
               setLatestMessage({
-                sender_name: newNotif.title,
-                message: newNotif.message
+                sender_name: notif.title,
+                message: notif.message,
+                type: notif.type,
+                link: notif.link || (notif.dossier_id ? `/gestionnaire/dossiers/${notif.dossier_id}` : null)
               });
               setShowToast(true);
-              
+
               // Jouer le son de notification
               try {
                 const audio = new Audio('/notification.mp3');
@@ -107,18 +122,17 @@ export default function GestionnaireLayout({ children }) {
               } catch (e) {
                 console.error("Erreur lecture son:", e);
               }
-              
+
               // Notification navigateur (si autorisé)
-              if (Notification.permission === 'granted') {
-                new Notification(newNotif.title || 'Nouvelle notification', {
-                  body: newNotif.message,
+              if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+                new Notification(notif.title || 'Nouvelle notification', {
+                  body: notif.message,
                   icon: '/favicon.ico'
                 });
               }
-              
-              setNotifications(prev => [newNotif, ...prev]);
-              setGlobalUnreadCount(prev => prev + 1);
             }
+          } else if (payload.eventType === 'UPDATE') {
+            setNotifications(prev => prev.map(n => (n.id === notif.id ? { ...n, ...notif } : n)));
           }
         }
       )
@@ -138,9 +152,10 @@ export default function GestionnaireLayout({ children }) {
     };
   }, []);
 
-  const fetchGlobalUnreadCount = async (gId) => {
+  // Charge TOUTES les notifications du gestionnaire (lues et non lues)
+  const fetchNotifications = async (gId) => {
     try {
-      let targetGId = gId || gestionnaireId;
+      let targetGId = gId || gestionnaireIdRef.current;
       if (!targetGId) {
         const user = await getValidUser();
         if (!user) return;
@@ -150,40 +165,81 @@ export default function GestionnaireLayout({ children }) {
       
       if (!targetGId) return;
 
-      const { data: notifs, count } = await supabase
+      const { data: notifs, error } = await supabase
         .from('notifications')
-        .select('*', { count: 'exact' })
+        .select('*')
         .eq('gestionnaire_id', targetGId)
-        .eq('is_read', false)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(100);
+
+      if (error) throw error;
       
-      setGlobalUnreadCount(count || 0);
       setNotifications(notifs || []);
     } catch (err) {
-      console.error("Erreur unread count:", err);
+      console.error("Erreur chargement notifications:", err);
     }
   };
 
-  const markAsRead = async (msgId) => {
+  // Marque comme lue : la notification RESTE dans la liste (elle change juste de couleur)
+  const markAsRead = async (notifId) => {
+    const target = notifications.find(n => n.id === notifId);
+    if (!target || target.is_read) return;
+
+    // Mise à jour immédiate de l'affichage
+    setNotifications(prev => prev.map(n => (n.id === notifId ? { ...n, is_read: true } : n)));
+
     try {
-      await supabase.from('notifications').update({ is_read: true }).eq('id', msgId);
-      setNotifications(prev => prev.filter(n => n.id !== msgId));
-      setGlobalUnreadCount(prev => Math.max(0, prev - 1));
+      const { error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('id', notifId);
+      if (error) throw error;
     } catch (err) {
       console.error("Erreur markAsRead:", err);
+      // On remet l'état d'origine si la base a refusé
+      setNotifications(prev => prev.map(n => (n.id === notifId ? { ...n, is_read: false } : n)));
     }
   };
 
+  // Marque toutes les notifications comme lues (elles restent dans la liste)
   const markAllAsRead = async () => {
+    const unreadIds = notifications.filter(n => !n.is_read).map(n => n.id);
+    if (unreadIds.length === 0) return;
+
+    setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
+
     try {
-      const msgIds = notifications.map(n => n.id);
-      if (msgIds.length === 0) return;
-      await supabase.from('notifications').update({ is_read: true }).in('id', msgIds);
-      setNotifications([]);
-      setGlobalUnreadCount(0);
-      setNotificationsOpen(false);
+      const { error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .in('id', unreadIds);
+      if (error) throw error;
     } catch (err) {
       console.error("Erreur markAllAsRead:", err);
+      setNotifications(prev => prev.map(n => (unreadIds.includes(n.id) ? { ...n, is_read: false } : n)));
+    }
+  };
+
+  // Suppression définitive : uniquement quand le gestionnaire clique sur la corbeille
+  const deleteNotification = async (notifId) => {
+    try {
+      const { data, error } = await supabase
+        .from('notifications')
+        .delete()
+        .eq('id', notifId)
+        .select('id');
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        alert("Impossible de supprimer cette notification (droits de suppression manquants dans Supabase).");
+        return;
+      }
+
+      setNotifications(prev => prev.filter(n => n.id !== notifId));
+    } catch (err) {
+      console.error("Erreur suppression notification:", err);
+      alert("Impossible de supprimer cette notification.");
     }
   };
 
@@ -200,6 +256,7 @@ export default function GestionnaireLayout({ children }) {
       
       if (managerData?.id) {
         setGestionnaireId(managerData.id);
+        gestionnaireIdRef.current = managerData.id;
         return managerData.id;
       }
       return null;
@@ -520,20 +577,25 @@ export default function GestionnaireLayout({ children }) {
                           </div>
                         ) : (
                           notifications.map((notif) => {
+                            const isRead = !!notif.is_read;
                             let NotifIcon = MessageSquare;
                             let iconColor = 'text-[#00d4ff]';
                             if (notif.type === 'actualite') { NotifIcon = Megaphone; iconColor = 'text-emerald-400'; }
                             else if (notif.type === 'assignation') { NotifIcon = CheckCheck; iconColor = 'text-amber-400'; }
                             else if (notif.type === 'document') { NotifIcon = FileText; iconColor = 'text-blue-400'; }
                             else if (notif.type === 'statut') { NotifIcon = ShieldCheck; iconColor = 'text-purple-400'; }
+                            // Une notification lue devient grisée
+                            if (isRead) iconColor = 'text-[#64748b]';
                             const destination = notif.link || (notif.dossier_id ? `/gestionnaire/dossiers/${notif.dossier_id}` : '/gestionnaire/dashboard');
                             
                             return (
                               <div
                                 key={notif.id}
                                 className={clsx(
-                                  "p-4 hover:bg-[#16223d]/80 transition-colors cursor-pointer relative group flex items-start gap-3.5",
-                                  !notif.is_read ? "bg-[#1454FF]/15 border-l-4 border-l-[#00d4ff]" : "bg-transparent"
+                                  "p-4 transition-colors cursor-pointer relative group flex items-start gap-3.5 border-l-4",
+                                  !isRead
+                                    ? "bg-[#1454FF]/15 border-l-[#00d4ff] hover:bg-[#1454FF]/25"
+                                    : "bg-transparent border-l-transparent hover:bg-[#16223d]/60"
                                 )}
                                 onClick={() => {
                                   markAsRead(notif.id);
@@ -541,38 +603,66 @@ export default function GestionnaireLayout({ children }) {
                                   setNotificationsOpen(false);
                                 }}
                               >
-                                <div className="flex-shrink-0 mt-0.5 bg-[#111c35] p-2.5 rounded-xl border border-[#1e2d4a] shadow-sm group-hover:border-[#00d4ff]/40 transition-colors">
+                                <div className={clsx(
+                                  "flex-shrink-0 mt-0.5 p-2.5 rounded-xl border shadow-sm transition-colors",
+                                  !isRead
+                                    ? "bg-[#111c35] border-[#1e2d4a] group-hover:border-[#00d4ff]/40"
+                                    : "bg-[#0f172a] border-[#1a2338]"
+                                )}>
                                   <NotifIcon size={16} className={iconColor} />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center justify-between gap-2">
                                     <p className={clsx(
                                       "text-sm sm:text-base leading-snug",
-                                      !notif.is_read ? "font-bold text-white" : "font-semibold text-slate-200"
+                                      !isRead ? "font-bold text-white" : "font-medium text-[#7f8ea3]"
                                     )}>
                                       {notif.title || 'Nouvelle notification'}
                                     </p>
-                                    {!notif.is_read && (
+                                    {!isRead && (
                                       <span className="w-2.5 h-2.5 rounded-full bg-[#00d4ff] shrink-0 shadow-sm shadow-[#00d4ff]/50"></span>
                                     )}
                                   </div>
-                                  <p className="text-xs sm:text-sm text-slate-300 mt-1.5 line-clamp-2 leading-relaxed">
+                                  <p className={clsx(
+                                    "text-xs sm:text-sm mt-1.5 line-clamp-2 leading-relaxed",
+                                    !isRead ? "text-slate-300" : "text-[#64748b]"
+                                  )}>
                                     {notif.message}
                                   </p>
-                                  <p className="text-xs font-semibold text-[#00d4ff]/90 mt-2 flex items-center gap-1.5">
+                                  <p className={clsx(
+                                    "text-xs font-semibold mt-2 flex items-center gap-1.5",
+                                    !isRead ? "text-[#00d4ff]/90" : "text-[#64748b]"
+                                  )}>
                                     <Clock size={13} /> {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+                                    {isRead && <span className="ml-1 px-1.5 py-0.5 rounded bg-white/5 text-[10px] font-bold uppercase tracking-wide">Lue</span>}
                                   </p>
                                 </div>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    markAsRead(notif.id);
-                                  }}
-                                  className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/20 p-2 rounded-lg transition-all flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
-                                  title="Marquer comme lu"
-                                >
-                                  <CheckCheck size={16} />
-                                </button>
+
+                                {/* Actions : marquer lu (si non lue) + supprimer */}
+                                <div className="flex flex-col items-center gap-1 flex-shrink-0">
+                                  {!isRead && (
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        markAsRead(notif.id);
+                                      }}
+                                      className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/20 p-2 rounded-lg transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                                      title="Marquer comme lu"
+                                    >
+                                      <CheckCheck size={16} />
+                                    </button>
+                                  )}
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      deleteNotification(notif.id);
+                                    }}
+                                    className="text-slate-500 hover:text-rose-400 hover:bg-rose-500/20 p-2 rounded-lg transition-all opacity-60 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                                    title="Supprimer cette notification"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                </div>
                               </div>
                             );
                           })

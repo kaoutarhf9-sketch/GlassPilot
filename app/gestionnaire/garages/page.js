@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { 
   Search, Building2, Phone, Mail, MapPin, 
   FileText, Users, Loader2, ChevronRight, ChevronDown, ChevronUp,
-  Eye, CheckCircle2, XCircle, TrendingUp, FolderKanban, Landmark, ShieldCheck, Download
+  Eye, CheckCircle2, XCircle, TrendingUp, FolderKanban, Landmark, ShieldCheck, Download, Coins
 } from 'lucide-react';
+
+// En dessous de ce total de jetons (Simple + Prestige), le garage est signalé « Stock faible »
+const LOW_STOCK = 3;
 
 export default function GaragesPage() {
   const [garages, setGarages] = useState([]);
@@ -18,6 +21,8 @@ export default function GaragesPage() {
   const [error, setError] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
   const [visibleIbanIds, setVisibleIbanIds] = useState({});
+  const [stock, setStock] = useState({});
+  const [stockLoaded, setStockLoaded] = useState(false);
 
   const toggleIban = (e, id) => {
     e.stopPropagation();
@@ -89,6 +94,35 @@ export default function GaragesPage() {
       
       setGarages(garagesData || []);
 
+      // Récupérer le stock de jetons de chaque garage (non bloquant si ça échoue)
+      try {
+        const resJetons = await fetch('/api/gestionnaire/jetons', {
+          headers: {
+            'Authorization': `Bearer ${session?.access_token}`
+          },
+          cache: 'no-store'
+        });
+
+        if (resJetons.ok) {
+          const { stock: stockRows } = await resJetons.json();
+          const map = {};
+          (stockRows || []).forEach(row => {
+            map[row.garage_id] = {
+              simple: row.simple ?? 0,
+              prestige: row.prestige ?? 0
+            };
+          });
+          setStock(map);
+          setStockLoaded(true);
+        } else {
+          console.warn("Stock de jetons indisponible (statut " + resJetons.status + ")");
+          setStockLoaded(false);
+        }
+      } catch (jetonsErr) {
+        console.warn("Impossible de charger le stock de jetons:", jetonsErr);
+        setStockLoaded(false);
+      }
+
       // Récupérer le nombre de dossiers pour chaque garage (uniquement ceux de ce gestionnaire)
       const counts = {};
       let total = 0;
@@ -125,6 +159,10 @@ export default function GaragesPage() {
     garage.code_postal?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Totaux de jetons restants (tous garages)
+  const totalSimple = garages.reduce((acc, g) => acc + (stock[g.id]?.simple || 0), 0);
+  const totalPrestige = garages.reduce((acc, g) => acc + (stock[g.id]?.prestige || 0), 0);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -150,7 +188,7 @@ export default function GaragesPage() {
       </div>
 
       {/* Statistiques globales */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
         <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
@@ -182,6 +220,22 @@ export default function GaragesPage() {
             {garages.length > 0 ? Math.round(totalDossiers / garages.length) : 0}
           </p>
           <p className="text-xs text-[var(--muted)] mt-1">Dossiers/garage</p>
+        </div>
+        <div className="bg-[var(--white)] rounded-2xl p-5 border border-[var(--stone)] shadow-md">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-amber-400/10 rounded-xl flex items-center justify-center">
+              <Coins size={20} className="text-amber-400" />
+            </div>
+            <span className="text-xs text-[var(--muted)]">Jetons</span>
+          </div>
+          <p className="text-3xl font-bold text-[var(--ink)]">
+            {stockLoaded ? totalSimple + totalPrestige : '—'}
+          </p>
+          <p className="text-xs text-[var(--muted)] mt-1">
+            {stockLoaded
+              ? `Simple : ${totalSimple} · Prestige : ${totalPrestige}`
+              : 'Stock indisponible'}
+          </p>
         </div>
         <div className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] rounded-2xl p-5 shadow-md">
           <div className="flex items-center gap-3 mb-3">
@@ -244,6 +298,8 @@ export default function GaragesPage() {
             const logoUrl = garage.logo_url
               ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/documents/${garage.logo_url}`
               : null;
+            const garageStock = stock[garage.id] || { simple: 0, prestige: 0 };
+            const garageTotal = garageStock.simple + garageStock.prestige;
             return (
               <div key={garage.id} className="bg-[#0D1B2A] rounded-2xl border border-[#1E3A5F] shadow-lg overflow-hidden transition-all duration-300 flex flex-col">
                 {/* Logo + Nom */}
@@ -260,6 +316,30 @@ export default function GaragesPage() {
                   <h3 className="text-[var(--blue)] font-bold text-center text-sm uppercase tracking-wide leading-tight">
                     {garage.nom_garage || 'Sans nom'}
                   </h3>
+
+                  {/* Stock de jetons */}
+                  {stockLoaded && (
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-[#16223d] border border-[#25375c] text-[11px] font-bold text-[#e2e8f0]">
+                          Simple : <span className="text-[#38bdf8]">{garageStock.simple}</span>
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-[#16223d] border border-[#25375c] text-[11px] font-bold text-[#e2e8f0]">
+                          Prestige : <span className="text-[#fbbf24]">{garageStock.prestige}</span>
+                        </span>
+                      </div>
+                      {garageTotal === 0 && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/40 text-[10px] font-bold text-rose-300 uppercase tracking-wide">
+                          Plus de jetons
+                        </span>
+                      )}
+                      {garageTotal > 0 && garageTotal <= LOW_STOCK && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-[10px] font-bold text-amber-300 uppercase tracking-wide">
+                          Stock faible
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Bouton accordéon */}

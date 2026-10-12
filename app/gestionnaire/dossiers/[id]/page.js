@@ -7,12 +7,13 @@ import Link from 'next/link';
 import AddressAutocomplete from '@/app/components/AddressAutocomplete';
 import {
   ArrowLeft, Save, Loader2, Calendar, ShieldCheck, FileText, FileSignature,
-  Clock, CheckCircle, AlertTriangle, User, Car, Building2, Phone, Mail, FileDigit, ReceiptEuro,
+  Clock, CheckCircle, AlertTriangle, AlertCircle, Edit3, User, Car, Building2, Phone, Mail, FileDigit, ReceiptEuro,
   Image as ImageIcon, Maximize2, Download, X, MessageSquare, Send, Minimize2, MoreVertical, Trash2, Check, ChevronRight, Paperclip, Upload, Plus, Pencil, Eye
 } from 'lucide-react';
 import clsx from 'clsx';
 import { REFERENTIEL_ASSURANCES } from '@/lib/referentielAssurances';
 import { generatePDF } from '@/lib/pdfGenerator';
+import { generateFacturePDF } from '@/lib/generateFacturePDF';
 
 const DOCUMENT_SLOTS = [
   { key: 'bon_commande', label: 'Bon de commande', patterns: ['bon_commande', 'bon_de_commande', 'commande', 'bdc'] },
@@ -50,6 +51,7 @@ const STATUTS = [
 
 export default function GestionnaireDetailDossier() {
   const params = useParams();
+  const router = useRouter();
   const dossierId = params?.id;
 
   const [user, setUser] = useState(null);
@@ -110,6 +112,10 @@ export default function GestionnaireDetailDossier() {
   const [showMenuId, setShowMenuId] = useState(null);
   const [sendingClearBus, setSendingClearBus] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
+
+  // Raccourcis Devis / Facture
+  const [devisData, setDevisData] = useState(null);
+  const [factureData, setFactureData] = useState(null);
 
   useEffect(() => {
     fetchUser();
@@ -221,6 +227,9 @@ export default function GestionnaireDetailDossier() {
       } else {
         setInvoiceLines([]);
       }
+
+      setDevisData(parsedNotes.devis || null);
+      setFactureData(parsedNotes.facture || null);
 
       setFormData({
         statut: data.statut || 'en_attente',
@@ -788,6 +797,183 @@ Gestionnaire administratif du garage ${garageNom}
     }
   };
 
+
+  // ===== RACCOURCIS DEVIS / FACTURE =====
+  const getLatestNotes = async () => {
+    const { data } = await supabase
+      .from('dossiers')
+      .select('notes')
+      .eq('id', dossierId)
+      .single();
+    try {
+      return JSON.parse(data?.notes || '{}');
+    } catch (e) {
+      return {};
+    }
+  };
+
+  const handleGenerateFactureFromDossier = async () => {
+    if (!dossier) return;
+    try {
+      const currentNotes = await getLatestNotes();
+      const dev = currentNotes.devis || devisData;
+      if (!dev) {
+        router.push(`/dashboard/dossiers/${dossier.id}/devis`);
+        return;
+      }
+
+      // Le contrat et le sinistre sont obligatoires (prise en charge assurance)
+      const contrat = (dev.num_contrat || formData.num_contrat || dossier.num_contrat || currentNotes.num_contrat || '').toString().trim();
+      const sinistre = (dev.num_sinistre || formData.num_sinistre || dossier.num_sinistre || currentNotes.num_sinistre || '').toString().trim();
+
+      if (!contrat || !sinistre || contrat === '—' || sinistre === '—') {
+        alert("Attention : le numéro de contrat et le numéro de sinistre sont obligatoires pour générer la facture (indispensables pour la prise en charge assurance).\n\nRenseignez-les dans « Informations clés », enregistrez, puis relancez la génération.");
+        return;
+      }
+
+      const year = new Date().getFullYear();
+      const rand = Math.floor(1000 + Math.random() * 9000);
+      const facNum = dev.numero || `FAC-${year}-${dossier.numero?.replace(/[^0-9]/g, '').slice(-4) || rand}`;
+
+      const fac = {
+        numero: facNum,
+        date_emission: dev.date_emission || new Date().toISOString().split('T')[0],
+        date_echeance: dev.date_validite,
+        num_contrat: contrat,
+        num_sinistre: sinistre,
+        lignes: dev.lignes || [],
+        total_ht: dev.total_ht || 0,
+        montant_tva: dev.montant_tva || 0,
+        total_ttc: dev.total_ttc || 0,
+        du_client: Number(dossier.franchise_montant || 0),
+        statut: 'en_attente',
+        created_at: new Date().toISOString()
+      };
+
+      currentNotes.facture = fac;
+      currentNotes.num_contrat = contrat;
+      currentNotes.num_sinistre = sinistre;
+      if (currentNotes.devis) {
+        currentNotes.devis.statut = 'facture';
+        currentNotes.devis.num_contrat = contrat;
+        currentNotes.devis.num_sinistre = sinistre;
+      }
+
+      const { error: updErr } = await supabase
+        .from('dossiers')
+        .update({
+          notes: JSON.stringify(currentNotes),
+          montant: dev.total_ttc || 0,
+          num_contrat: contrat,
+          num_sinistre: sinistre
+        })
+        .eq('id', dossier.id);
+
+      if (updErr) throw updErr;
+
+      setFactureData(fac);
+      setDevisData(currentNotes.devis || dev);
+      setDossier(prev => ({
+        ...prev,
+        notes: JSON.stringify(currentNotes),
+        montant: dev.total_ttc || 0,
+        num_contrat: contrat,
+        num_sinistre: sinistre
+      }));
+      setFormData(prev => ({ ...prev, num_contrat: contrat, num_sinistre: sinistre }));
+
+      const doc = generateFacturePDF({
+        dossier: { ...dossier, num_contrat: contrat, num_sinistre: sinistre },
+        garage: dossier.garages || { nom_garage: dossier.garages?.nom_garage },
+        devisData: dev,
+        factureData: fac,
+        isDevis: false
+      });
+      doc.save(`facture_${fac.numero}.pdf`);
+
+      alert("Facture générée avec succès !");
+    } catch (err) {
+      console.error("Erreur génération facture:", err);
+      alert("Impossible de générer la facture : " + err.message);
+    }
+  };
+
+  const handleViewDevisPDF = () => {
+    try {
+      let currentNotes = {};
+      try {
+        currentNotes = typeof dossier?.notes === 'string' ? JSON.parse(dossier?.notes || '{}') : (dossier?.notes || {});
+      } catch (e) {}
+
+      const contrat = devisData?.num_contrat || formData.num_contrat || dossier?.num_contrat || currentNotes.num_contrat || '';
+      const sinistre = devisData?.num_sinistre || formData.num_sinistre || dossier?.num_sinistre || currentNotes.num_sinistre || '';
+
+      const doc = generateFacturePDF({
+        dossier: { ...dossier, num_contrat: contrat, num_sinistre: sinistre },
+        garage: dossier?.garages || { nom_garage: dossier?.garages?.nom_garage },
+        devisData,
+        factureData: null,
+        isDevis: true
+      });
+      const num = devisData?.numero || dossier?.numero;
+      doc.save(`devis_${num}.pdf`);
+    } catch (err) {
+      console.error("Erreur PDF devis:", err);
+      alert("Erreur génération du devis PDF : " + err.message);
+    }
+  };
+
+  const handleViewFacturePDF = () => {
+    try {
+      let currentNotes = {};
+      try {
+        currentNotes = typeof dossier?.notes === 'string' ? JSON.parse(dossier?.notes || '{}') : (dossier?.notes || {});
+      } catch (e) {}
+
+      const contrat = factureData?.num_contrat || devisData?.num_contrat || formData.num_contrat || dossier?.num_contrat || currentNotes.num_contrat || '';
+      const sinistre = factureData?.num_sinistre || devisData?.num_sinistre || formData.num_sinistre || dossier?.num_sinistre || currentNotes.num_sinistre || '';
+
+      const doc = generateFacturePDF({
+        dossier: { ...dossier, num_contrat: contrat, num_sinistre: sinistre },
+        garage: dossier?.garages || { nom_garage: dossier?.garages?.nom_garage },
+        devisData,
+        factureData,
+        isDevis: false
+      });
+      const num = factureData?.numero || devisData?.numero || dossier?.numero;
+      doc.save(`facture_${num}.pdf`);
+    } catch (err) {
+      console.error("Erreur téléchargement PDF:", err);
+      alert("Erreur génération PDF : " + err.message);
+    }
+  };
+
+  const handleDeleteFacture = async () => {
+    if (!window.confirm("Voulez-vous vraiment supprimer cette facture ?")) return;
+    try {
+      const currentNotes = await getLatestNotes();
+      delete currentNotes.facture;
+      if (currentNotes.devis) {
+        currentNotes.devis.statut = 'brouillon';
+      }
+
+      const { error: delErr } = await supabase
+        .from('dossiers')
+        .update({ notes: JSON.stringify(currentNotes) })
+        .eq('id', dossier.id);
+
+      if (delErr) throw delErr;
+
+      setFactureData(null);
+      if (currentNotes.devis) setDevisData(currentNotes.devis);
+      setDossier(prev => ({ ...prev, notes: JSON.stringify(currentNotes) }));
+      alert("Facture supprimée.");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur suppression facture : " + err.message);
+    }
+  };
+
   const handleSendClearBus = async () => {
     if (!dossier) return;
     setSendingClearBus(true);
@@ -1170,18 +1356,6 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={handleOpenChat}
-            className="relative flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--white)] text-slate-300 font-medium rounded-xl border border-white/10 hover:border-[#1454FF] hover:text-[var(--blue)] hover:bg-blue-50 transition-all shadow-md"
-          >
-            <MessageSquare size={16} />
-            <span className="hidden sm:inline">Message Garagiste</span>
-            {unreadCount > 0 && !chatOpen && (
-              <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-[var(--ink)] text-xs font-bold rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
-                {unreadCount > 9 ? '9+' : unreadCount}
-              </span>
-            )}
-          </button>
           <button
             onClick={handleSave}
             disabled={saving}
@@ -1745,22 +1919,22 @@ Gestionnaire administratif du garage ${garageNom}
                         className={clsx(
                           "p-3 rounded-2xl shadow-sm text-xs",
                           isMe
-                            ? "bg-[#dbeafe] text-slate-800 rounded-tr-sm"
-                            : "bg-[#f1f5f9] text-slate-800 rounded-tl-sm"
+                            ? "bg-[#bfdbfe] text-[#0f172a] rounded-tr-sm"
+                            : "bg-[#fef08a] text-[#0f172a] rounded-tl-sm"
                         )}
                       >
                         {/* En-tête de la bulle */}
                         <div className="flex items-center justify-between gap-2 mb-1">
                           <span className={clsx(
                             "text-xs font-bold",
-                            isMe ? "text-slate-600" : "text-slate-500 uppercase tracking-wide"
+                            isMe ? "text-[#1e40af]" : "text-[#854d0e] uppercase tracking-wide"
                           )}>
                             {isMe ? "Gestionnaire" : (msg.sender_name || dossier?.garages?.nom_garage || "Garagiste")}
                           </span>
                           {isMe && (
                             <button
                               onClick={() => handleDeleteMessage(msg.id)}
-                              className="text-[#38bdf8] hover:text-rose-500 transition-colors p-0.5 cursor-pointer"
+                              className="text-[#64748b] hover:text-rose-600 transition-colors p-0.5 cursor-pointer"
                               title="Supprimer ce message"
                             >
                               <Trash2 size={13} />
@@ -1778,14 +1952,14 @@ Gestionnaire administratif du garage ${garageNom}
                             return (
                               <div className="flex flex-col gap-1.5 min-w-[180px]">
                                 <div className="flex items-center gap-1.5">
-                                  <FileText size={14} className="text-sky-600 shrink-0" />
-                                  <span className="font-semibold underline break-all text-xs">{fileName}</span>
+                                  <FileText size={14} className="text-[#0369a1] shrink-0" />
+                                  <span className="font-semibold underline break-all text-xs text-[#0f172a]">{fileName}</span>
                                 </div>
                                 {isImg && (
                                   <img
                                     src={fileUrl}
                                     alt={fileName}
-                                    className="max-w-full max-h-36 object-cover rounded-lg border border-slate-200 mt-1 cursor-pointer hover:opacity-90 transition-opacity"
+                                    className="max-w-full max-h-36 object-cover rounded-lg border border-[#cbd5e1] mt-1 cursor-pointer hover:opacity-90 transition-opacity"
                                     onClick={() => setSelectedImage(fileUrl)}
                                   />
                                 )}
@@ -1793,7 +1967,7 @@ Gestionnaire administratif du garage ${garageNom}
                                   href={fileUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-50 text-sky-700 rounded-lg text-[11px] font-semibold transition-all border border-slate-200"
+                                  className="inline-flex items-center justify-center gap-1 px-2.5 py-1 bg-[#ffffff] hover:bg-[#f1f5f9] text-[#0369a1] rounded-lg text-[11px] font-semibold transition-all border border-[#cbd5e1]"
                                 >
                                   <Download size={11} /> Télécharger
                                 </a>
@@ -1802,15 +1976,15 @@ Gestionnaire administratif du garage ${garageNom}
                           })()
                         ) : (
                           <p className={clsx(
-                            "break-words leading-relaxed",
-                            isMe ? "font-medium text-slate-800" : "font-semibold text-slate-800 uppercase"
+                            "break-words leading-relaxed text-[#0f172a]",
+                            isMe ? "font-medium" : "font-semibold uppercase"
                           )}>
                             {msg.message}
                           </p>
                         )}
 
                         {/* Date & Heure */}
-                        <p className="text-[10px] text-slate-400 mt-1.5 font-medium">
+                        <p className="text-[10px] text-[#475569] mt-1.5 font-medium">
                           {formatMessageDate(msg.created_at)}
                         </p>
                       </div>
@@ -1984,6 +2158,98 @@ Gestionnaire administratif du garage ${garageNom}
             </div>
           </div>
 
+          {/* Widget RACCOURCIS : Devis / Facture */}
+          <div className="bg-[#0d1428] rounded-2xl border border-[#1e2d4a] p-5 shadow-lg space-y-4">
+            <h3 className="text-xs font-black uppercase tracking-wider text-slate-400">
+              RACCOURCIS
+            </h3>
+
+            {/* Ligne Devis */}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <FileText size={18} className="text-[#00d4ff]" />
+                <span className="text-base font-bold text-white">
+                  Devis {devisData?.total_ttc ? `( ${Number(devisData.total_ttc).toFixed(2)} € )` : ''}
+                </span>
+              </div>
+
+              <Link
+                href={`/dashboard/dossiers/${dossier.id}/devis`}
+                className="px-3.5 py-1.5 bg-[#16223d] hover:bg-[#1454FF] text-white rounded-xl text-xs font-bold border border-[#25375c] hover:border-[#1454FF] transition-all flex items-center gap-1.5 shadow-sm"
+              >
+                <Plus size={14} className="text-[#00d4ff]" />
+                {devisData ? 'Modifier devis' : 'Créer un devis'}
+              </Link>
+            </div>
+
+            {devisData && (
+              <div className="flex items-center justify-end gap-2">
+                <button
+                  onClick={handleViewDevisPDF}
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-600/80 hover:bg-slate-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
+                >
+                  <FileText size={13} className="text-[#00d4ff]" />
+                  Voir PDF devis
+                </button>
+              </div>
+            )}
+
+            <div className="h-px bg-[#1e2d4a]" />
+
+            {/* Ligne Facture */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <FileText size={18} className="text-emerald-400" />
+                  <span className="text-base font-bold text-white">
+                    Facture {factureData?.total_ttc ? `( ${Number(factureData.total_ttc).toFixed(2)} € )` : (devisData?.total_ttc ? `( ${Number(devisData.total_ttc).toFixed(2)} € )` : '')}
+                  </span>
+                </div>
+
+                {!factureData && devisData && (
+                  <button
+                    onClick={handleGenerateFactureFromDossier}
+                    className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <FileText size={13} />
+                    Générer la facture
+                  </button>
+                )}
+              </div>
+
+              {/* Ouvrir/Modifier, Voir PDF, Supprimer */}
+              <div className="flex items-center justify-end gap-2 pt-1 flex-wrap">
+                <Link
+                  href={`/dashboard/dossiers/${dossier.id}/devis`}
+                  className="px-3 py-1.5 rounded-xl border border-emerald-500/30 hover:border-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  <Edit3 size={13} className="text-emerald-400" />
+                  Ouvrir / Modifier
+                </Link>
+
+                {factureData && (
+                  <>
+                    <button
+                      onClick={handleViewFacturePDF}
+                      className="px-3.5 py-1.5 rounded-xl bg-slate-600/80 hover:bg-slate-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
+                    >
+                      <FileText size={13} className="text-[#00d4ff]" />
+                      Voir PDF facture
+                    </button>
+
+                    <button
+                      onClick={handleDeleteFacture}
+                      className="p-2 rounded-xl bg-[#16223d] hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 border border-[#25375c] transition-all cursor-pointer"
+                      title="Supprimer la facture"
+                    >
+                      <Trash2 size={15} />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Widget 2: Actions rapides */}
           <div className="bg-[#120052] rounded-2xl shadow-md border border-[#120052] p-6 text-white overflow-hidden space-y-5">
             <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2">
@@ -2039,12 +2305,12 @@ Gestionnaire administratif du garage ${garageNom}
                     onChange={(e) => setSelectedQuickStatus(e.target.value)}
                     className="w-full pl-4 pr-10 py-3 bg-white/10 text-white border-white/20 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
                   >
-                    <option value="relance">Relance</option>
-                    <option value="reglement_en_cours">Règlement en cours</option>
-                    <option value="reglement_recu">Règlement reçu</option>
-                    <option value="envoi_courrier">Envoi courrier</option>
-                    <option value="recouvrement">Recouvrement</option>
-                    <option value="desistement">Désistement</option>
+                    <option value="relance" className="bg-[#120052] text-white">Relance</option>
+                    <option value="reglement_en_cours" className="bg-[#120052] text-white">Règlement en cours</option>
+                    <option value="reglement_recu" className="bg-[#120052] text-white">Règlement reçu</option>
+                    <option value="envoi_courrier" className="bg-[#120052] text-white">Envoi courrier</option>
+                    <option value="recouvrement" className="bg-[#120052] text-white">Recouvrement</option>
+                    <option value="desistement" className="bg-[#120052] text-white">Désistement</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[var(--muted)]">
                     <ChevronRight className="rotate-90" size={16} />
