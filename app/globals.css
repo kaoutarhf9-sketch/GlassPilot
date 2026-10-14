@@ -66,6 +66,12 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2) !important;
 }
 
+/* Fix native select dropdown options visibility on dark background */
+option {
+  background-color: #0b1528 !important;
+  color: #ffffff !important;
+}
+
 /* Card Shadows and Backgrounds for Dark Theme */
 .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
   box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5) !important;
