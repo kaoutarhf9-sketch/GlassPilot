@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { 
   Plus, Search, Mail, User, Phone, MapPin, 
   FileText, Building2, Loader2, CheckCircle2, 
-  AlertCircle, Trash2, Copy, Check, ChevronLeft, ChevronRight, CalendarDays,
+  AlertCircle, Trash2, Copy, Check, ChevronLeft, ChevronRight, CalendarDays, Pencil, X,
   ChevronDown, ChevronUp, Eye, Landmark, ShieldCheck, Download
 } from 'lucide-react';
 import clsx from 'clsx';
@@ -38,6 +38,115 @@ export default function GaragesPage() {
   const toggleIban = (e, id) => {
     e.stopPropagation();
     setVisibleIbanIds(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  // Edit modal states
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    garageId: '',
+    ownerId: '',
+    nom_garage: '',
+    responsable: '',
+    email: '',
+    telephone: '',
+    adresse: '',
+    code_postal: '',
+    ville: '',
+    siret: '',
+    iban: '',
+    bic: '',
+    password: ''
+  });
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [editResult, setEditResult] = useState(null);
+
+  const handleOpenEdit = (garage) => {
+    setEditResult(null);
+    setEditFormData({
+      garageId: garage.id,
+      ownerId: garage.owner_id || '',
+      nom_garage: garage.nom_garage || '',
+      responsable: garage.responsable || '',
+      email: garage.email_contact || garage.email || '',
+      telephone: garage.telephone || '',
+      adresse: garage.adresse || '',
+      code_postal: garage.code_postal || '',
+      ville: garage.ville || '',
+      siret: garage.siret || '',
+      iban: garage.iban || '',
+      bic: garage.bic || '',
+      password: ''
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    setEditResult(null);
+
+    try {
+      const response = await fetch('/api/admin/update-garagiste', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editFormData),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Erreur lors de la modification');
+
+      setEditResult({
+        type: 'success',
+        message: 'Informations du garagiste modifiées avec succès !'
+      });
+
+      // Mettre à jour en local
+      setGarages(prev => prev.map(g => {
+        if (g.id === editFormData.garageId) {
+          return {
+            ...g,
+            nom_garage: editFormData.nom_garage,
+            responsable: editFormData.responsable,
+            email_contact: editFormData.email,
+            telephone: editFormData.telephone,
+            adresse: editFormData.adresse,
+            code_postal: editFormData.code_postal,
+            ville: editFormData.ville,
+            siret: editFormData.siret,
+            iban: editFormData.iban,
+            bic: editFormData.bic
+          };
+        }
+        return g;
+      }));
+
+      if (selectedGarage && selectedGarage.id === editFormData.garageId) {
+        setSelectedGarage(prev => ({
+          ...prev,
+          nom_garage: editFormData.nom_garage,
+          responsable: editFormData.responsable,
+          email_contact: editFormData.email,
+          telephone: editFormData.telephone,
+          adresse: editFormData.adresse,
+          code_postal: editFormData.code_postal,
+          ville: editFormData.ville,
+          siret: editFormData.siret,
+          iban: editFormData.iban,
+          bic: editFormData.bic
+        }));
+      }
+
+      await fetchGarages();
+
+      setTimeout(() => {
+        setIsEditModalOpen(false);
+        setEditResult(null);
+      }, 1200);
+    } catch (err) {
+      setEditResult({ type: 'error', message: err.message });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   // Delete modal states
@@ -289,7 +398,15 @@ export default function GaragesPage() {
               </div>
             </div>
             
-            <div className="flex gap-4">
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => handleOpenEdit(selectedGarage)}
+                className="px-4 py-2.5 bg-[var(--blue)]/10 hover:bg-[var(--blue)]/20 border border-[var(--blue)]/30 text-[var(--blue)] rounded-2xl text-xs font-bold flex items-center gap-2 transition-all shadow-sm active:scale-95 cursor-pointer"
+                title="Modifier les informations de ce garagiste"
+              >
+                <Pencil size={14} />
+                Modifier les infos
+              </button>
               <div className="px-4 py-2 bg-[var(--white)] border border-[var(--stone)] rounded-2xl text-center">
                 <p className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider">Téléphone</p>
                 <p className="text-sm font-bold text-[var(--ink)] mt-0.5">{selectedGarage.telephone}</p>
@@ -615,17 +732,26 @@ export default function GaragesPage() {
                     <div className="pt-2 border-t border-[#1E3A5F] flex justify-between items-center">
                       <button
                         onClick={() => setSelectedGarage(garage)}
-                        className="text-[var(--blue)] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity"
+                        className="text-[var(--blue)] text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity cursor-pointer"
                       >
                         <FileText size={12} /> Voir les dossiers
                       </button>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setGarageToDelete(garage); }}
-                        className="p-1.5 text-[#6B8299] hover:text-rose-400 hover:bg-rose-900/20 rounded-lg transition-all"
-                        title="Supprimer"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleOpenEdit(garage); }}
+                          className="p-1.5 text-[#6B8299] hover:text-[var(--blue)] hover:bg-[var(--blue)]/10 rounded-lg transition-all cursor-pointer"
+                          title="Modifier les informations"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setGarageToDelete(garage); }}
+                          className="p-1.5 text-[#6B8299] hover:text-rose-400 hover:bg-rose-900/20 rounded-lg transition-all cursor-pointer"
+                          title="Supprimer"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -726,6 +852,230 @@ export default function GaragesPage() {
           </div>
         </div>
       )}
+    
+      {/* MODAL MODIFICATION GARAGISTE */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-[#090D16]/70 backdrop-blur-sm" onClick={() => !isUpdating && setIsEditModalOpen(false)}></div>
+          <div className="bg-[#0B1528] rounded-3xl max-w-xl w-full relative z-10 animate-in zoom-in-95 duration-200 border border-[#1E3A5F] shadow-2xl overflow-hidden text-white">
+            
+            <div className="p-6 border-b border-[#1E3A5F] bg-[#0A1220] flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-bold font-serif-premium text-white flex items-center gap-2">
+                  <Pencil size={20} className="text-[var(--blue)]" />
+                  Modifier le Garagiste
+                </h3>
+                <p className="text-xs text-[#8BA3BC] mt-0.5">
+                  Mettez à jour les coordonnées et informations administratives du garage.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => !isUpdating && setIsEditModalOpen(false)}
+                className="p-2 text-[#8BA3BC] hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleEditSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar">
+              {editResult && (
+                <div className={clsx(
+                  "p-4 rounded-2xl border flex items-start gap-3",
+                  editResult.type === 'success'
+                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                    : "bg-rose-500/10 border-rose-500/30 text-rose-300"
+                )}>
+                  {editResult.type === 'success' ? (
+                    <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-emerald-400" />
+                  ) : (
+                    <AlertCircle size={18} className="mt-0.5 shrink-0 text-rose-400" />
+                  )}
+                  <p className="text-xs font-bold leading-relaxed">{editResult.message}</p>
+                </div>
+              )}
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                    Nom du garage *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editFormData.nom_garage}
+                    onChange={e => setEditFormData({...editFormData, nom_garage: e.target.value})}
+                    className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                      Responsable *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={editFormData.responsable}
+                      onChange={e => setEditFormData({...editFormData, responsable: e.target.value})}
+                      className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                      SIRET *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={editFormData.siret}
+                      onChange={e => setEditFormData({...editFormData, siret: e.target.value})}
+                      className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-mono font-bold text-rose-400 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                      Email de contact / connexion *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={editFormData.email}
+                      onChange={e => setEditFormData({...editFormData, email: e.target.value})}
+                      className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                      Téléphone *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={editFormData.telephone}
+                      onChange={e => setEditFormData({...editFormData, telephone: e.target.value})}
+                      className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                    Adresse complète *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editFormData.adresse}
+                    onChange={e => setEditFormData({...editFormData, adresse: e.target.value})}
+                    className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                      Code Postal
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex: 75001"
+                      value={editFormData.code_postal}
+                      onChange={e => setEditFormData({...editFormData, code_postal: e.target.value})}
+                      className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                      Ville
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Paris"
+                      value={editFormData.ville}
+                      onChange={e => setEditFormData({...editFormData, ville: e.target.value})}
+                      className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-semibold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Section Coordonnées Bancaires */}
+                <div className="pt-3 border-t border-[#1E3A5F] space-y-3">
+                  <p className="text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider">
+                    Informations Bancaires (IBAN / BIC)
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                        IBAN
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="FR76..."
+                        value={editFormData.iban}
+                        onChange={e => setEditFormData({...editFormData, iban: e.target.value})}
+                        className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-mono font-bold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                        BIC / SWIFT
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="BNPAFRPP"
+                        value={editFormData.bic}
+                        onChange={e => setEditFormData({...editFormData, bic: e.target.value})}
+                        className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-mono font-bold text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Réinitialisation de mot de passe (optionnel) */}
+                <div className="pt-3 border-t border-[#1E3A5F]">
+                  <label className="block text-[10px] font-bold text-[#8BA3BC] uppercase tracking-wider mb-1.5">
+                    Nouveau mot de passe (laisser vide pour ne pas changer)
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="••••••••••••"
+                    value={editFormData.password}
+                    onChange={e => setEditFormData({...editFormData, password: e.target.value})}
+                    className="w-full px-3.5 py-2.5 bg-[#070D18] border border-[#1E3A5F] rounded-xl text-xs font-mono text-white focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all"
+                  />
+                  <p className="text-[10px] text-[#6B8299] mt-1">
+                    Optionnel. Si vous saisissez un mot de passe, l'ancien mot de passe de ce garagiste sera remplacé.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t border-[#1E3A5F]">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  disabled={isUpdating}
+                  className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 border border-[#1E3A5F] rounded-xl text-xs font-bold uppercase text-[#8BA3BC] hover:text-white transition-colors cursor-pointer"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  disabled={isUpdating}
+                  className="flex-1 py-2.5 bg-[var(--blue)] hover:bg-sky-400 text-slate-950 rounded-xl text-xs font-bold uppercase transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {isUpdating ? <Loader2 size={15} className="animate-spin" /> : 'Enregistrer'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
