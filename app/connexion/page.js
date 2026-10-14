@@ -16,12 +16,24 @@ export default function ConnexionPage() {
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
 
-    useEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       if (params.get('reset') === 'success') {
         setSuccessMessage("Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.");
       }
+
+      // Nettoyer automatiquement si un token expiré/invalide est présent
+      supabase.auth.getSession().then(({ data, error }) => {
+        if (error && (error.message?.includes('Refresh Token') || error.status === 400)) {
+          console.warn("Nettoyage du refresh token invalide...");
+          supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+        }
+      }).catch(err => {
+        if (err?.message?.includes('Refresh Token') || err?.status === 400) {
+          supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+        }
+      });
 
       // Pré-remplir les identifiants si 'Se souvenir de moi' était activé
       try {
@@ -74,34 +86,43 @@ export default function ConnexionPage() {
         console.error('Erreur stockage identifiants:', storageErr);
       }
 
+      // Redirection selon le rôle
+      if (user.user_metadata?.role === 'admin') {
+        router.push('/admin');
+        return;
+      }
+
+      if (user.user_metadata?.role === 'gestionnaire') {
+        router.push('/gestionnaire/dashboard');
+        return;
+      }
+
       // Vérifier si l'utilisateur est un gestionnaire
-      const { data: gestionnaire, error: gestionnaireError } = await supabase
+      const { data: gestionnaire } = await supabase
         .from('gestionnaires')
         .select('id, role')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
+
+      if (gestionnaire) {
+        router.push('/gestionnaire/dashboard');
+        return;
+      }
 
       // Vérifier si l'utilisateur est un garagiste
-      const { data: garage, error: garageError } = await supabase
+      const { data: garage } = await supabase
         .from('garages')
         .select('id')
         .eq('owner_id', user.id)
-        .single();
+        .maybeSingle();
 
-      // Redirection selon le rôle
-      if (user.user_metadata?.role === 'admin') {
-        // C'est un administrateur
-        router.push('/admin');
-      } else if (gestionnaire && !gestionnaireError) {
-        // C'est un gestionnaire
-        router.push('/gestionnaire/dashboard');
-      } else if (garage && !garageError) {
-        // C'est un garagiste
+      if (garage) {
         router.push('/dashboard');
-      } else {
-        // Par défaut, rediriger vers le dashboard garagiste
-        router.push('/dashboard');
+        return;
       }
+
+      // Par défaut, rediriger vers le dashboard garagiste
+      router.push('/dashboard');
       
     } catch (err) {
       console.error("Erreur de connexion:", err);
