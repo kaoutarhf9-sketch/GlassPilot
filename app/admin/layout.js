@@ -36,11 +36,13 @@ export default function AdminLayout({ children }) {
 
   const fetchUserInfo = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { getValidUser } = await import('@/lib/supabase');
+      const user = await getValidUser();
       if (user) {
         setUserName(user.email || 'Administrateur');
       } else {
         router.push('/');
+        return;
       }
     } catch (err) {
       console.error(err);

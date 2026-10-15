@@ -199,7 +199,9 @@ export default function DashboardLayout({ children }) {
 
   const fetchUserInfo = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      // Utilise getValidUser() qui gère proprement les refresh tokens expirés
+      const { getValidUser } = await import('@/lib/supabase');
+      const user = await getValidUser();
       if (user) {
         setUserEmail(user.email || '');
         setUserName(user.user_metadata?.first_name || user.user_metadata?.prenom || 'Garagiste');
@@ -214,6 +216,7 @@ export default function DashboardLayout({ children }) {
         }
       } else {
         router.push('/connexion');
+        return;
       }
       
       const { data: garage } = await supabase
