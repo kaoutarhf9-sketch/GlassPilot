@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, clearStaleSession } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, Loader2, ArrowLeft, Eye, EyeOff, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, Loader2, ArrowLeft, Eye, EyeOff, Sparkles, CheckCircle2, ShieldCheck, RefreshCw } from 'lucide-react';
 
 export default function ConnexionPage() {
   const [email, setEmail] = useState('');
@@ -23,15 +23,14 @@ export default function ConnexionPage() {
         setSuccessMessage("Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.");
       }
 
-      // Nettoyer automatiquement si un token expiré/invalide est présent
+      // Nettoyer automatiquement si un token expiré/invalide est présent dans le navigateur
       supabase.auth.getSession().then(({ data, error }) => {
         if (error && (error.message?.includes('Refresh Token') || error.status === 400)) {
-          console.warn("Nettoyage du refresh token invalide...");
-          supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+          clearStaleSession();
         }
       }).catch(err => {
         if (err?.message?.includes('Refresh Token') || err?.status === 400) {
-          supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+          clearStaleSession();
         }
       });
 
@@ -545,6 +544,31 @@ export default function ConnexionPage() {
               <div className="signup-link">
                 Nouveau sur GlassPilot ?{' '}
                 <Link href="/inscription">Créer un compte</Link>
+              </div>
+
+              <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await clearStaleSession();
+                    window.location.reload();
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--muted)',
+                    fontSize: '0.75rem',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    opacity: 0.8,
+                    textDecoration: 'underline'
+                  }}
+                  title="Efface les anciens cookies et sessions expirées du navigateur"
+                >
+                  <RefreshCw size={12} /> Réinitialiser la session du navigateur
+                </button>
               </div>
 
               <div className="security-badges">
