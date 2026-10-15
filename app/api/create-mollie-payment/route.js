@@ -4,7 +4,7 @@ import { createMollieClient } from '@mollie/api-client';
 export async function POST(request) {
   try {
     const mollieClient = createMollieClient({ apiKey: process.env.MOLLIE_API_KEY });
-    const { forfait, garageId, garageName, userEmail, consent, consentDate } = await request.json();
+    const { forfait, garageId, garageName, userEmail, consent, consentDate, redirectTo } = await request.json();
 
     // Vérification RGPD obligatoire
     if (!consent) {
@@ -43,7 +43,7 @@ export async function POST(request) {
         value: formattedAmount,
       },
       description: description,
-      redirectUrl: `${appUrl}/dashboard/abonnement?success=true`,
+      redirectUrl: `${appUrl}${redirectTo || '/dashboard/abonnement?success=true'}`,
       webhookUrl: webhookUrl,
       metadata: {
         garage_id: garageId,
