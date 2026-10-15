@@ -1,5 +1,5 @@
 "use client";
-import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, formatMessageDate, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect, useRef } from 'react';
 import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
@@ -582,16 +582,7 @@ export default function GestionnaireDetailDossier() {
   };
 
 
-  const formatMessageDate = (dateString) => {
-    if (!dateString) return '';
-    try {
-      const d = new Date(dateString);
-      const pad = (n) => n.toString().padStart(2, '0');
-      return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    } catch (e) {
-      return '';
-    }
-  };
+  // formatMessageDate importé depuis @/lib/dateUtils (fuseau France garanti)
 
   const handleDeleteMessage = async (messageId) => {
     if (!messageId) return;
@@ -2098,15 +2089,7 @@ Gestionnaire administratif du garage ${garageNom}
                 </div>
               ) : (
                 relanceNotes.map((note) => {
-                  const formattedDate = (() => {
-                    try {
-                      const d = new Date(note.created_at);
-                      const pad = (n) => n.toString().padStart(2, '0');
-                      return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-                    } catch (e) {
-                      return '';
-                    }
-                  })();
+                  const formattedDate = formatMessageDate(note.created_at);
                   
                   return (
                     <div

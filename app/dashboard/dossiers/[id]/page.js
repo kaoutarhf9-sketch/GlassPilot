@@ -1,5 +1,5 @@
 "use client";
-import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, formatMessageDate, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect, useRef } from 'react';
 import jsPDF from 'jspdf';
@@ -1843,9 +1843,7 @@ export default function DetailDossierPremium() {
                       <span className="text-[10px] text-slate-300">
                         {isMe ? 'Vous' : msg.sender_name || 'Gestionnaire'}
                       </span>
-                      <span className="text-[10px] text-slate-300">
-                        {formatTime(msg.created_at)}
-                      </span>
+                      <span className="text-[10px] text-slate-300">{formatMessageDate(msg.created_at)}</span>
                     </div>
                   </div>
                 );

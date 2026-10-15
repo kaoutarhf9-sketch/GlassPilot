@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateTime } from '@/lib/dateUtils';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -35,7 +36,7 @@ function buildLastMonths(n) {
   for (let i = n - 1; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-    const label = d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+    const label = d.toLocaleDateString('fr-FR', { month: 'short', timeZone: 'Europe/Paris' }).replace('.', '');
     out.push({ key, label, start: d });
   }
   return out;
@@ -45,15 +46,6 @@ function monthKey(dateStr) {
   const d = new Date(dateStr);
   if (isNaN(d.getTime())) return null;
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-}
-
-function formatDateTime(dateStr) {
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
-  } catch (e) {
-    return '';
-  }
 }
 
 function readLastSeen() {

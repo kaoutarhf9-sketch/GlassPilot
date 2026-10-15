@@ -1,4 +1,5 @@
 "use client";
+import { todayFormatted } from '@/lib/dateUtils';
 
 import Link from 'next/link';
 import { ArrowLeft, Shield, Lock, Database, Eye, Trash2, CreditCard, Server, Clock, Mail, AlertCircle } from 'lucide-react';
@@ -15,7 +16,7 @@ export default function PolitiqueConfidentialite() {
         <div className="bg-white rounded-2xl border border-[#E6E4DD] shadow-sm overflow-hidden">
           <div className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] px-8 py-6 text-white">
             <h1 className="text-2xl md:text-3xl font-serif mb-2">Politique de confidentialité</h1>
-            <p className="text-white/70 text-sm">Version RGPD - {new Date().toLocaleDateString('fr-FR')}</p>
+            <p className="text-white/70 text-sm">Version RGPD - {todayFormatted()}</p>
           </div>
 
           <div className="p-8 space-y-6 text-[#89867A] text-sm">
@@ -73,7 +74,7 @@ export default function PolitiqueConfidentialite() {
             <div className="bg-[#F0F5FF] rounded-xl p-4 mt-6">
               <p className="text-[#89867A] text-xs">
                 Cette politique peut être modifiée à tout moment. La version en vigueur est accessible sur cette page.
-                Dernière modification : {new Date().toLocaleDateString('fr-FR')}
+                Dernière modification : {todayFormatted()}
               </p>
             </div>
           </div>

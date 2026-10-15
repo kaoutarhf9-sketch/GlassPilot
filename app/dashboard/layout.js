@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateTime, formatTime } from '@/lib/dateUtils';
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
@@ -401,7 +402,7 @@ export default function DashboardLayout({ children }) {
     if (diff < 1) return "À l'instant";
     if (diff < 60) return `Il y a ${diff} min`;
     if (diff < 1440) return `Il y a ${Math.floor(diff / 60)}h`;
-    return date.toLocaleDateString('fr-FR');
+    return formatDate(date);
   };
 
   if (checkingOnboarding) {

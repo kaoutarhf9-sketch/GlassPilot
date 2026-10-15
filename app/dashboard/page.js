@@ -128,7 +128,7 @@ export default function DashboardHome() {
       // --- CALCUL DU REVENU (Graphique) ---
       // On somme le champ 'montant' (s'il existe) des dossiers pour estimer le revenu
       const revenusParMois = Array.from({ length: 12 }, (_, i) => ({
-        name: new Date(now.getFullYear(), i, 1).toLocaleDateString('fr-FR', { month: 'short' }),
+        name: new Date(now.getFullYear(), i, 1).toLocaleDateString('fr-FR', { month: 'short', timeZone: 'Europe/Paris' }),
         revenu: 0
       }));
       
@@ -142,7 +142,7 @@ export default function DashboardHome() {
         d.setDate(d.getDate() - (6 - i));
         return {
           dateObj: d,
-          name: d.toLocaleDateString('fr-FR', { weekday: 'short' }),
+          name: d.toLocaleDateString('fr-FR', { weekday: 'short', timeZone: 'Europe/Paris' }),
           revenu: 0
         };
       });
@@ -223,7 +223,7 @@ export default function DashboardHome() {
     if (diff === 0) return "Aujourd'hui";
     if (diff === 1) return "Hier";
     if (diff < 7) return `Il y a ${diff} jours`;
-    return date.toLocaleDateString('fr-FR');
+    return formatDate(date);
   };
 
   if (!isMounted || loading) {
