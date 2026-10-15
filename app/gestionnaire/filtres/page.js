@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
@@ -242,7 +243,7 @@ export default function FiltresPage() {
                           })()}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Calendar size={10} /> {new Date(dossier.created_at).toLocaleDateString('fr-FR')}
+                          <Calendar size={10} /> {formatDate(dossier.created_at)}
                         </span>
                         <span className="flex items-center gap-1">
                           <Car size={10} /> {dossier.immatriculation}

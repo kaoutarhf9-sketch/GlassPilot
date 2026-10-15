@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -633,7 +634,7 @@ export default function GestionnaireLayout({ children }) {
                                     "text-xs font-semibold mt-2 flex items-center gap-1.5",
                                     !isRead ? "text-[#00d4ff]/90" : "text-[#64748b]"
                                   )}>
-                                    <Clock size={13} /> {new Date(notif.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+                                    <Clock size={13} /> {formatDateTime(notif.created_at)}
                                     {isRead && <span className="ml-1 px-1.5 py-0.5 rounded bg-white/5 text-[10px] font-bold uppercase tracking-wide">Lue</span>}
                                   </p>
                                 </div>

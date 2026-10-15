@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -102,7 +103,7 @@ export default function GaragisteActualitesPage() {
                   )}
                   
                   <div className="text-[10px] font-semibold text-slate-400 mt-4 flex items-center justify-between">
-                    <span>{new Date(actu.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+                    <span>{formatDateLong(actu.created_at)}</span>
                   </div>
                 </div>
               </div>

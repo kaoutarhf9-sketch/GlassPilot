@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -254,7 +255,7 @@ export default function ListeFacturationPage() {
                   {/* Date */}
                   <div className="flex items-center gap-2 text-xs text-slate-400">
                     <Calendar size={14} className="text-slate-400" />
-                    <span>Émise le {new Date(item.date_emission).toLocaleDateString('fr-FR')}</span>
+                    <span>Émise le {formatDate(item.date_emission)}</span>
                   </div>
 
                 </div>

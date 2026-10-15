@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase, getValidUser } from '@/lib/supabase';
@@ -271,7 +272,7 @@ export default function ListeDossiers() {
                     <td className="p-4">
                       <div className="flex items-center gap-1.5 text-[var(--muted)]">
                         <Calendar size={12} />
-                        <span className="text-sm">{new Date(dossier.created_at).toLocaleDateString('fr-FR')}</span>
+                        <span className="text-sm">{formatDate(dossier.created_at)}</span>
                       </div>
                      </td>
                     <td className="p-4">
@@ -328,7 +329,7 @@ export default function ListeDossiers() {
                   </div>
                   <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
                     <Calendar size={12} />
-                    {new Date(dossier.created_at).toLocaleDateString('fr-FR')}
+                    {formatDate(dossier.created_at)}
                   </div>
                 </div>
                 

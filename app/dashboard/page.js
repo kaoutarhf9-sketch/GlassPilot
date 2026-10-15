@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase, getValidUser } from '@/lib/supabase';
@@ -517,7 +518,7 @@ export default function DashboardHome() {
           </div>
         </div>
         <div className="text-xs text-[var(--muted)]">
-          Dernière mise à jour : {new Date().toLocaleTimeString('fr-FR')}
+          Dernière mise à jour : {nowTimeFormatted()}
         </div>
       </div>
 

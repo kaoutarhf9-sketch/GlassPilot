@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -551,7 +552,7 @@ export default function AdminDossiersPage() {
                         <div className="flex items-center gap-2 text-[var(--ink)] text-xs font-semibold">
                           <CalendarDays size={13} className="text-[var(--muted)] shrink-0" />
                           <span className="tabular-nums">
-                            {new Date(dossier.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                            {formatDateShort(dossier.created_at)}
                           </span>
                         </div>
                       </td>

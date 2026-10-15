@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
@@ -166,7 +167,7 @@ export default function ArchivesPage() {
                       </p>
                       <div className="flex items-center gap-3 mt-2 text-xs text-[var(--muted)]">
                         <span className="flex items-center gap-1">
-                          <Calendar size={10} /> {new Date(archive.created_at).toLocaleDateString('fr-FR')}
+                          <Calendar size={10} /> {formatDate(archive.created_at)}
                         </span>
                         <span className="flex items-center gap-1">
                           <Building2 size={10} /> {archive.modele_vehicule}

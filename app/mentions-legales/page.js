@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import Link from 'next/link';
 import { ArrowLeft, Shield, Lock, Database, Eye, Trash2, CreditCard, Server, Clock, Mail, AlertCircle } from 'lucide-react';
@@ -17,7 +18,7 @@ export default function MentionsLegales() {
           {/* En-tête */}
           <div className="bg-gradient-to-r from-[#1454FF] to-[#0040CC] px-8 py-6 text-white">
             <h1 className="text-2xl md:text-3xl font-serif mb-2">Mentions légales & RGPD</h1>
-            <p className="text-white/70 text-sm">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+            <p className="text-white/70 text-sm">Dernière mise à jour : {todayFormatted()}</p>
           </div>
 
           <div className="p-8 space-y-8">

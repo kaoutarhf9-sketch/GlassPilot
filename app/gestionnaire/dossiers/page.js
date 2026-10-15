@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -410,7 +411,7 @@ function DossiersList() {
                       <div className="flex items-center gap-3 text-sm">
                         <CalendarDays size={16} className="text-[var(--blue)] shrink-0" />
                         <span className="text-white text-sm font-medium">
-                          {new Date(dossier.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })}
+                          {formatDateLong(dossier.created_at)}
                         </span>
                       </div>
                     </div>

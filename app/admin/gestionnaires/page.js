@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -228,7 +229,7 @@ export default function GestionnairesPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-[var(--muted)] font-medium">
-                      {new Date(gestionnaire.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                      {formatDateShort(gestionnaire.created_at)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-3 py-1 inline-flex text-[10px] leading-5 font-bold rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10">

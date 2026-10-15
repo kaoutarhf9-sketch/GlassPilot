@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect, useRef } from 'react';
 import { supabase, getValidUser, getGestionnaire } from '@/lib/supabase';
@@ -1350,7 +1351,7 @@ Gestionnaire administratif du garage ${garageNom}
                 </div>
               </div>
               <p className="text-sm text-slate-400 mt-0.5 flex items-center gap-1.5">
-                <Calendar size={14} /> Créé le {new Date(dossier?.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}
+                <Calendar size={14} /> Créé le {formatDateTime(dossier?.created_at)}
               </p>
             </div>
           </div>
@@ -2470,7 +2471,7 @@ Gestionnaire administratif du garage ${garageNom}
                       )}
                     </div>
                     <span className="text-[10px] text-slate-300 font-medium mt-1.5 px-1">
-                      {new Date(msg.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                      {formatTime(msg.created_at)}
                     </span>
                   </div>
                 );

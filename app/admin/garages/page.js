@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -473,7 +474,7 @@ export default function GaragesPage() {
                           <div className="font-mono font-bold text-[var(--ink)] text-xs">{dossier.immatriculation || '-'}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-xs text-[var(--muted)] font-semibold">
-                          {new Date(dossier.created_at).toLocaleDateString('fr-FR')}
+                          {formatDate(dossier.created_at)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2.5 py-1 text-[10px] font-bold rounded-full bg-slate-100 text-slate-600 ring-1 ring-slate-200">

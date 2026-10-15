@@ -1,4 +1,5 @@
 "use client";
+import { formatDate, formatDateLong, formatDateShort, formatTime, formatDateTime, todayFormatted, nowTimeFormatted } from '@/lib/dateUtils';
 
 import { useState, useEffect, useRef } from 'react';
 import jsPDF from 'jspdf';
@@ -263,7 +264,7 @@ export default function DetailDossierPremium() {
       doc.setTextColor(0, 0, 0);
       doc.text(`Garage: ${garageName || 'Votre Garage'}`, 14, 30);
       doc.text(`Dossier N°: ${dossier.id.substring(0,8)}`, 14, 36);
-      doc.text(`Date: ${new Date().toLocaleDateString('fr-FR')}`, 14, 42);
+      doc.text(`Date: ${todayFormatted()}`, 14, 42);
       
       doc.setFontSize(14);
       doc.text("CLIENT", 120, 30);
@@ -1032,11 +1033,11 @@ export default function DetailDossierPremium() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--muted)]">
                 <span className="flex items-center gap-1.5">
                   <Calendar size={14} className="text-[var(--blue)]" />
-                  Créé le {new Date(dossier.created_at).toLocaleDateString('fr-FR')}
+                  Créé le {formatDate(dossier.created_at)}
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Clock size={14} className="text-[var(--blue)]" />
-                  {new Date(dossier.created_at).toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})}
+                  {formatTime(dossier.created_at)}
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Car size={14} className="text-[var(--blue)]" />
@@ -1199,7 +1200,7 @@ export default function DetailDossierPremium() {
                       </div>
                       <div>
                         <p className="text-xl font-bold text-[var(--ink)]">{client?.prenom} {client?.nom}</p>
-                        <p className="text-xs text-[var(--muted)]">Client depuis le {new Date(dossier.created_at).toLocaleDateString('fr-FR')}</p>
+                        <p className="text-xs text-[var(--muted)]">Client depuis le {formatDate(dossier.created_at)}</p>
                       </div>
                     </div>
                     
@@ -1225,10 +1226,10 @@ export default function DetailDossierPremium() {
                         <Calendar size={12} /> RDV PROGRAMMÉ
                       </p>
                       <p className="text-base font-bold text-[var(--ink)]">
-                        {new Date(dossier.date_rdv).toLocaleDateString('fr-FR', {day: 'numeric', month: 'long'})}
+                        {formatDateLong(dossier.date_rdv)}
                       </p>
                       <p className="text-sm text-[var(--muted)] mt-1">
-                        {new Date(dossier.date_rdv).toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})}
+                        {formatTime(dossier.date_rdv)}
                       </p>
                     </div>
                   )}
@@ -1271,7 +1272,7 @@ export default function DetailDossierPremium() {
                   </div>
                   <div>
                     <p className="text-xs font-medium text-[var(--muted)] uppercase tracking-wider mb-1">Date sinistre</p>
-                    <p className="text-[var(--ink)] font-medium">{dossier.date_sinistre ? new Date(dossier.date_sinistre).toLocaleDateString('fr-FR') : '-'}</p>
+                    <p className="text-[var(--ink)] font-medium">{dossier.date_sinistre ? formatDate(dossier.date_sinistre) : '-'}</p>
                   </div>
                   <div className="md:col-span-2 pt-5 border-t border-[var(--stone)] mt-2">
                     <div className="flex flex-wrap items-center justify-between gap-4">
@@ -1843,7 +1844,7 @@ export default function DetailDossierPremium() {
                         {isMe ? 'Vous' : msg.sender_name || 'Gestionnaire'}
                       </span>
                       <span className="text-[10px] text-slate-300">
-                        {new Date(msg.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                        {formatTime(msg.created_at)}
                       </span>
                     </div>
                   </div>
