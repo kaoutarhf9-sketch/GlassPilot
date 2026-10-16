@@ -72,6 +72,10 @@ export default function GestionnaireDetailDossier() {
   const calculateTVA = () => calculateTotalHT() * 0.20;
   const calculateTotalTTC = () => calculateTotalHT() + calculateTVA();
 
+  // Mode édition (champs verrouillés par défaut pour éviter les modifications accidentelles)
+  const [isEditing, setIsEditing] = useState(false);
+  const [initialFormData, setInitialFormData] = useState(null);
+
   // Form state
   const [formData, setFormData] = useState({
     statut: 'en_attente',
@@ -232,7 +236,7 @@ export default function GestionnaireDetailDossier() {
       setDevisData(parsedNotes.devis || null);
       setFactureData(parsedNotes.facture || null);
 
-      setFormData({
+      const initialFormValues = {
         statut: data.statut || 'en_attente',
         date_sinistre: data.date_sinistre || '',
         franchise_montant: data.franchise_montant || 0,
@@ -254,7 +258,9 @@ export default function GestionnaireDetailDossier() {
         client_adresse: data.clients?.adresse || '',
         client_cp: data.clients?.code_postal || '',
         client_ville: data.clients?.ville || ''
-      });
+      };
+      setFormData(initialFormValues);
+      setInitialFormData(initialFormValues);
 
       // Documents (via API to bypass RLS)
       const resDocs = await fetch(`/api/gestionnaire/documents?dossierId=${dossierId}`);
@@ -1251,6 +1257,8 @@ Gestionnaire administratif du garage ${garageNom}
 
       // 5. Mettre à jour l'état local
       setDossier(prev => ({ ...prev, statut: formData.statut, notes: JSON.stringify(updatedNotesObj) }));
+      setInitialFormData({ ...formData });
+      setIsEditing(false);
       setSuccess('Modifications enregistrées avec succès.');
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
@@ -1348,14 +1356,40 @@ Gestionnaire administratif du garage ${garageNom}
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[var(--blue)] text-[var(--ink)] font-medium rounded-xl hover:bg-[var(--blue)] transition-all shadow-md shadow-blue-200 disabled:opacity-50"
-          >
-            {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-            <span className="hidden sm:inline">Enregistrer</span>
-          </button>
+          {!isEditing ? (
+            <button
+              type="button"
+              onClick={() => setIsEditing(true)}
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#38bdf8] text-[#0b1528] font-bold rounded-xl hover:bg-[#0284c7] transition-all shadow-md shadow-sky-500/20 active:scale-95 cursor-pointer"
+            >
+              <Pencil size={16} />
+              <span>Modifier le dossier</span>
+            </button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (initialFormData) setFormData({ ...initialFormData });
+                  setIsEditing(false);
+                }}
+                disabled={saving}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium rounded-xl transition-all border border-white/20 active:scale-95 cursor-pointer"
+              >
+                <X size={16} />
+                <span>Annuler</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saving}
+                className="flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-md shadow-emerald-900/30 disabled:opacity-50 active:scale-95 cursor-pointer"
+              >
+                {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+                <span>Enregistrer</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1384,7 +1418,18 @@ Gestionnaire administratif du garage ${garageNom}
               <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                 <FileText size={16} className="text-[var(--blue)]" />
               </div>
-              <h2 className="text-lg font-bold text-white">Informations clés</h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="text-lg font-bold text-white">Informations clés</h2>
+                {!isEditing ? (
+                  <span className="text-[11px] font-semibold text-slate-300 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15 flex items-center gap-1.5">
+                    <ShieldCheck size={13} className="text-slate-400" /> Champs verrouillés
+                  </span>
+                ) : (
+                  <span className="text-[11px] font-semibold text-emerald-300 bg-emerald-500/15 px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1.5 animate-pulse">
+                    <Pencil size={13} className="text-emerald-400" /> Mode édition actif
+                  </span>
+                )}
+              </div>
             </div>
             
             <div className="p-6 space-y-6">
@@ -1394,6 +1439,7 @@ Gestionnaire administratif du garage ${garageNom}
                   <select
                     value={formData.statut}
                     onChange={(e) => setFormData({...formData, statut: e.target.value})}
+                    disabled={!isEditing}
                     className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm font-medium text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                   >
                     {STATUTS.map(s => <option key={s.value} value={s.value} className="bg-[#120052] text-white">{s.label}</option>)}
@@ -1409,6 +1455,7 @@ Gestionnaire administratif du garage ${garageNom}
                       list="assurances-list-gestionnaire"
                       placeholder="Ex: AXA, ALLIANZ, MACIF..."
                       value={formData.assurance_nom || ''}
+                      disabled={!isEditing}
                       onChange={(e) => {
                         const val = e.target.value;
                         const found = REFERENTIEL_ASSURANCES.find(a => a.nom.toLowerCase() === val.toLowerCase());
@@ -1433,6 +1480,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="date"
                       value={formData.date_sinistre}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, date_sinistre: e.target.value})}
                       className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1447,6 +1495,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       placeholder="Ex: 3545081056"
                       value={formData.num_sinistre}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, num_sinistre: e.target.value})}
                       className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1463,6 +1512,7 @@ Gestionnaire administratif du garage ${garageNom}
                       step="0.01"
                       placeholder="0.00"
                       value={formData.franchise_montant}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, franchise_montant: e.target.value})}
                       className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1477,6 +1527,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="tel"
                       placeholder="Ex: 09 70 80 82 82"
                       value={formData.assurance_telephone}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, assurance_telephone: e.target.value})}
                       className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1491,6 +1542,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="email"
                       placeholder="Ex: contact@assurance.fr"
                       value={formData.assurance_email}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, assurance_email: e.target.value})}
                       className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1505,6 +1557,7 @@ Gestionnaire administratif du garage ${garageNom}
                       type="text"
                       placeholder="Numéro de contrat"
                       value={formData.num_contrat}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, num_contrat: e.target.value})}
                       className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1541,6 +1594,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.client_prenom}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_prenom: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1550,6 +1604,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.client_nom}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_nom: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1559,6 +1614,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="tel"
                       value={formData.client_telephone}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_telephone: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1568,6 +1624,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="email"
                       value={formData.client_email}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_email: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1577,6 +1634,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <AddressAutocomplete
                       name="client_adresse"
                       value={formData.client_adresse}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_adresse: e.target.value})}
                       onSelect={(sugg) => {
                         setFormData({
@@ -1594,6 +1652,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.client_cp}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_cp: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1603,6 +1662,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.client_ville}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, client_ville: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1626,6 +1686,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <label className="block text-sm font-semibold text-slate-300 mb-1.5">Type de jeton utilisé</label>
                     <select
                       value={formData.type}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, type: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm font-medium text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     >
@@ -1638,6 +1699,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.immatriculation}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, immatriculation: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1647,6 +1709,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.modele_vehicule}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, modele_vehicule: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1656,6 +1719,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="number"
                       value={formData.kilometrage}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, kilometrage: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1665,6 +1729,7 @@ Gestionnaire administratif du garage ${garageNom}
                     <input
                       type="text"
                       value={formData.type_vitrage}
+                      disabled={!isEditing}
                       onChange={(e) => setFormData({...formData, type_vitrage: e.target.value})}
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-md outline-none transition-all"
                     />
@@ -1685,6 +1750,7 @@ Gestionnaire administratif du garage ${garageNom}
                 rows={4}
                 placeholder="Ajouter une note ou une remarque sur ce dossier..."
                 value={formData.commentaire}
+                disabled={!isEditing}
                 onChange={(e) => setFormData({...formData, commentaire: e.target.value})}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white rounded-xl text-sm text-slate-300 focus:ring-2 focus:ring-[#1454FF]/20 focus:border-[#1454FF] shadow-inner outline-none transition-all resize-y"
               />

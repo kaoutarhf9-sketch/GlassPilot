@@ -12,7 +12,8 @@ export default function AddressAutocomplete({
   icon = <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" />,
   required = false,
   name = "adresse",
-  searchType = "default"
+  searchType = "default",
+  disabled = false
 }) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -100,6 +101,7 @@ export default function AddressAutocomplete({
         className={className}
         placeholder={placeholder}
         autoComplete="off"
+        disabled={disabled}
       />
       
       {loading && (
