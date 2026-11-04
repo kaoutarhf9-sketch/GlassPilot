@@ -34,6 +34,14 @@ export const metadata: Metadata = {
     locale: "fr_FR",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
