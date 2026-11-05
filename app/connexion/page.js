@@ -23,16 +23,23 @@ export default function ConnexionPage() {
         setSuccessMessage("Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.");
       }
 
-      // Nettoyer automatiquement si un token expiré/invalide est présent dans le navigateur
-      supabase.auth.getSession().then(({ data, error }) => {
-        if (error && (error.message?.includes('Refresh Token') || error.status === 400)) {
-          clearStaleSession();
+      // Sur la page de connexion, si une session expirée traîne dans le localStorage,
+      // on la purge silencieusement sans déclencher d'appel réseau qui échouerait en 400
+      try {
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && (key.startsWith('sb-') || key.includes('supabase.auth') || key.includes('-auth-token'))) {
+            const raw = localStorage.getItem(key);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (parsed && parsed.expires_at && (parsed.expires_at * 1000) < Date.now()) {
+                clearStaleSession();
+                break;
+              }
+            }
+          }
         }
-      }).catch(err => {
-        if (err?.message?.includes('Refresh Token') || err?.status === 400) {
-          clearStaleSession();
-        }
-      });
+      } catch (_) {}
 
       // Pré-remplir les identifiants si 'Se souvenir de moi' était activé
       try {

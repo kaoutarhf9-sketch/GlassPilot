@@ -247,7 +247,10 @@ export default function GestionnaireLayout({ children }) {
   const fetchGestionnaireInfo = async () => {
     try {
       const user = await getValidUser();
-      if (!user) return null;
+      if (!user) {
+        router.push('/connexion');
+        return null;
+      }
       
       if (user.user_metadata) {
         setGestionnaireName(user.user_metadata.prenom || 'Gestionnaire');
@@ -259,10 +262,13 @@ export default function GestionnaireLayout({ children }) {
         setGestionnaireId(managerData.id);
         gestionnaireIdRef.current = managerData.id;
         return managerData.id;
+      } else {
+        router.push('/connexion');
       }
       return null;
     } catch (err) {
       console.error(err);
+      router.push('/connexion');
       return null;
     }
   };

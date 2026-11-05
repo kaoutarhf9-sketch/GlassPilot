@@ -98,7 +98,11 @@ function DossiersList() {
     isRefresh ? setRefreshing(true) : setLoading(true);
     try {
       const user = await getValidUser();
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        setRefreshing(false);
+        return;
+      }
 
       const gestionnaireData = await getGestionnaire(user);
       
